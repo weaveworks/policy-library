@@ -11,6 +11,6 @@ excluded_dirs = {
     "ControllerTolerations",
     "IngressHostname",
     "Standards",
-    "test_policies"
-    
+    "test_policies",
+    "utils"
 }
