@@ -1,0 +1,9 @@
+sync: true
+
+name: Missing a Probe constraint 2
+targets: {cluster: [], kind: []}
+tags: []
+enabled: false
+parameters: {
+  "probe": livenessProbe
+}

@@ -1,0 +1,81 @@
+controls:
+- description: 'Taking into account the nature, scope, context and purposes of processing
+    as well as the risks of varying likelihood and severity for the rights and freedoms
+    of natural persons, the controller shall implement appropriate technical and organisational
+    measures to ensure and to be able to demonstrate that processing is performed
+    in accordance with this Regulation Those measures shall be reviewed and updated
+    where necessary.
+
+    '
+  dev_id: d1113e2b-8124-4a98-9a27-a55722bcf31b
+  id: 4117f4a7-9263-4643-8b31-4aa9d639fdb5
+  name: Article 24 - Responsibility of the controller
+  order: 24
+- description: 'Taking into account the state of the art, the cost of implementation
+    and the nature, scope, context and purposes of processing as well as the risks
+    of varying likelihood and severity for rights and freedoms of natural persons
+    posed by the processing, the controller shall, both at the time of the determination
+    of the means for processing and at the time of the processing itself, implement
+    appropriate technical and organisational measures, such as pseudonymisation, which
+    are designed to implement data-protection principles, such as data minimisation,
+    in an effective manner and to integrate the necessary safeguards into the processing
+    in order to meet the requirements of this Regulation and protect the rights of
+    data subjects.
+
+    '
+  dev_id: 51bc762e-d061-456c-8253-8eaebc08d5d5
+  id: 6ba714ba-f225-45fb-8e54-270baf987310
+  name: Article 25 - Data Protection by design and by default
+  order: 25
+- description: 'Where processing is to be carried out on behalf of a controller, the
+    controller shall use only processors providing sufficient guarantees to implement
+    appropriate technical and organisational measures in such a manner that processing
+    will meet the requirements of this Regulation and ensure the protection of the
+    rights of the data subject.
+
+    '
+  dev_id: 3fc1d6ad-4edd-4bbe-b60f-e0f0d18ce897
+  id: 8797416e-fe31-4fc7-90e8-acfadacf5d14
+  name: Article 28 - Processor
+  order: 28
+- description: 'The processor and any person acting under the authority of the controller
+    or of the processor, who has access to personal data, shall not process those
+    data except on instructions from the controller, unless required to do so by Union
+    or Member State law.
+
+    '
+  dev_id: ed70f567-1f9a-4155-a25f-818f05c1ee79
+  id: ca82ef99-1fb3-4efe-92c9-d52ae0f8f815
+  name: Article 29 - Processing under the authority of the controller or processor
+  order: 29
+- description: "Taking into account the state of the art, the costs of implementation\
+    \ and the nature, scope, context and purposes of processing as well as the risk\
+    \ of varying likelihood and severity for the rights and freedoms of natural persons,\
+    \ the controller and the processor shall implement appropriate technical and organisational\
+    \ measures to ensure a level of security appropriate to the risk, including inter\
+    \ alia as appropriate:\n- the pseudonymisation and encryption of personal data;\n\
+    - the ability to ensure the ongoing confidentiality, integrity, availability and\
+    \ resilience of processing systems and services;\n- the ability to restore the\
+    \ availability and access to personal data in a timely manner in the event of\
+    \ a physical or technical incident;\n- a process for regularly testing, assessing\
+    \ and evaluating the effectiveness of technical and organisational measures for\
+    \ ensuring the security of the processing    \n"
+  dev_id: d4e5f05e-ed5b-4494-b4b5-3604a4cc3142
+  id: d22c177c-45a6-42f2-b928-75d15f0ecb0a
+  name: Article 35 - Security for processing
+  order: 32
+description: 'The General Data Protection Regulation is a European Union law that
+  was implemented May 25, 2018, and requires organizations to safeguard personal data
+  and uphold the privacy rights of anyone in EU territory. The regulation includes
+  seven principles of data protection that must be implemented and eight privacy rights
+  that must be facilitated. It also empowers member state-level data protection authorities
+  to enforce the GDPR with sanctions and fines. The GDPR replaced the 1995 Data Protection
+  Directive, which created a country-by-country patchwork of data protection laws.
+  The GDPR, passed in European Parliament by overwhelming majority, unifies the EU
+  under a single data protection regime.
+
+  '
+dev_id: 9dd609d2-02b5-4577-a0f9-8ef2737cc84f
+id: ef284389-8548-4360-87a9-3a639ccf59d6
+name: General Data Protection Regulation
+rid: mglx_gdpr
