@@ -1,0 +1,82 @@
+version: 2.1
+orbs:
+  slack: circleci/slack@4.4.3
+jobs:
+  automated_test:
+    docker:
+      - image: circleci/golang:1.15
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    steps:
+      - checkout
+      - run:
+          name: Test Policies
+          command: |
+            cd test_policies
+            go build
+            ./test_policies --root-dir ./..
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+  sync:
+    docker:
+      - image: mgxinternal/mgx-circle-deployer:1
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    steps:
+      - checkout
+      - run:
+          name: Auth to cluster
+          command: |
+            /bin/auth_to_cluster
+      - run:
+          name: Build binary
+          command: |
+            apk add --no-cache python3 py3-pip
+            pip3 install pyyaml click requests
+            kubectl port-forward -n cluster-advisor service/policies-service 8080:80 &
+            while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
+
+            if [[ "$CIRCLE_BRANCH" == "master" ]]
+            then
+              export ENVIRONMENT=prod
+            elif [[ "$CIRCLE_BRANCH" != "master" ]]
+            then
+              export ENVIRONMENT=dev
+            fi
+
+            python3 sync_policies/sync_all.py --policies_service http://localhost:8080/api/v1 --environment $ENVIRONMENT
+            python3 Standards/sync.py --standards-dir Standards --policies-service http://localhost:8080/api/v1 --environment $ENVIRONMENT
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+      - setup_remote_docker:
+          reusable: true
+          exclusive: true
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - automated_test:
+          context:
+            - org-global
+            - slack-solutions
+      - sync:
+          context: 
+            - org-global
+            - slack-solutions
+          requires:
+            - automated_test
+          filters:
+            branches:
+              only:
+                - master
+                - dev

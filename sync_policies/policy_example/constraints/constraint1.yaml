@@ -1,0 +1,9 @@
+sync: true
+
+name: Missing a Probe constraint 1 updated
+targets: {cluster: [], kind: []}
+tags: []
+enabled: false
+parameters: {
+  "probe": readinessProbe
+}

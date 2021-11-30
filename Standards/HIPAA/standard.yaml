@@ -1,0 +1,136 @@
+controls:
+- description: "The Security Rule defines access in \xA7 164.304 as \u201Cthe ability\
+    \ or the means necessary to read, write, modify, or communicate data/information\
+    \ or otherwise use any system resource. (This definition applies to \u201Caccess\u201D\
+    \ as used in this subpart, not as used in subpart E of this part [the HIPAA Privacy\
+    \ Rule]).\u201D Access controls provide users with rights and/or privileges to\
+    \ access and perform functions using information systems, applications, programs,\
+    \ or files. Access controls should enable authorized users to access the minimum\
+    \ necessary information needed to perform job functions. Rights and/or privileges\
+    \ should be granted to authorized users based on a set of access rules that the\
+    \ covered entity is required to implement as part of \xA7 164.308(a)(4), the Information\
+    \ Access Management standard under the Administrative Safeguards section of the\
+    \ Rule.\n"
+  dev_id: d102356e-a986-4723-b972-481cfe98e01e
+  id: d11550ec-c3bc-4925-9618-94761f3b7aa4
+  name: Access Control
+  order: 164.312.a.1
+- description: 'The Unique User Identification implementation specification states
+    that a covered entity must:  `"Assign a unique name and/or number for identifying
+    and tracking user identity."`
+
+    '
+  dev_id: 63462437-3736-4904-b6e9-bbf79c5c2fa5
+  id: a5e9a134-78bc-4672-9312-d019f6670fe5
+  name: UNIQUE USER IDENTIFICATION
+  order: 164.312.a.2.i
+- description: 'This implementation specification requires a covered entity to: `"Establish
+    (and implement as needed) procedures for obtaining necessary electronic protected
+    health information during an emergency."`
+
+    '
+  dev_id: 70bcc1a1-dda8-4dce-aced-9d8ea276e58a
+  id: 9c5c8775-16db-47ab-b3fe-58dbee85c58c
+  name: EMERGENCY ACCESS PROCEDURE
+  order: 164.312.a.2.ii
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement electronic
+    procedures that terminate an electronic session after a predetermined time of
+    inactivity."`
+
+    '
+  dev_id: 79bce7ab-d55d-4f59-8057-95a81c925409
+  id: d6e607f6-0784-4694-9016-a0d45038e50e
+  name: AUTOMATIC LOGOFF
+  order: 164.312.a.2.iii
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement a mechanism
+    to encrypt and decrypt electronic protected health information."`
+
+    '
+  dev_id: 0d910018-f932-42f6-83f1-e4daceaa80cf
+  id: 6511187b-c55c-403a-aac8-1c07f9c6081d
+  name: ENCRYTION AND DECRYPTION
+  order: 164.312.a.2.iv
+- description: 'This standard has no implementation specifications. The Audit Controls
+    standard requires a covered entity to: `"Implement hardware, software, and/or
+    procedural mechanisms that record and examine activity in information systems
+    that contain or use electronic protected health information."`
+
+    '
+  dev_id: 31d64a45-d189-48e2-96df-b4635cd48e93
+  id: 2ccb9849-2d52-406b-9ac2-86ab67bf6bf6
+  name: Audit Controls
+  order: 164.312.b
+- description: "Integrity is defined in the Security Rule, at \xA7 164.304, as \u201C\
+    the property that data or information have not been altered or destroyed in an\
+    \ unauthorized manner.\u201D Protecting the  integrity of EPHI is a primary goal\
+    \ of the Security Rule. The Integrity standard requires a covered entity to: `\"\
+    Implement policies and procedures to protect electronic protected health information\
+    \ from improper alteration or destruction.\"`\n"
+  dev_id: 92632005-2a75-4f9b-94c1-8f32d8ccd7d6
+  id: 9f18c40a-ebc9-4c56-85ef-d521906569c4
+  name: Integrity
+  order: 164.312.c.1
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement electronic
+    mechanisms to corroborate that electronic protected health information has not
+    been altered or destroyed in an unauthorized manner."`
+
+    '
+  dev_id: 6946df3e-3c7d-4e35-9a90-0c0e57fd5545
+  id: 600634bc-71f7-4f06-aeb9-ddf0ec2bf676
+  name: MECHANISM TO AUTHENTICATE ELECTRONIC PROTECTED HEALTH INFORMATION
+  order: 164.312.c.2
+- description: 'The Person or Entity Authentication standard has no implementation
+    specifications. This standard requires a covered entity to: `"Implement procedures
+    to verify that a person or entity seeking access to electronic protected health
+    information is the one claimed."`
+
+    '
+  dev_id: 5d711f7a-2129-495b-8041-76c2c436a892
+  id: ca99e765-f232-4131-8d4a-5d17dbd1b60c
+  name: Person or Entity Authentication
+  order: 164.312.d
+- description: 'This standard requires a covered entity to: `"Implement technical
+    security measures to guard against unauthorized access to electronic protected
+    health information that is being transmitted over an electronic communications
+    network."`
+
+    '
+  dev_id: f1e17227-6fe0-4f02-aa04-a3e51bbb0d88
+  id: 4b66c167-8aeb-4300-a38f-012a41f9bcce
+  name: Transmission Security
+  order: 164.312.e.1
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement security
+    measures to ensure that electronically transmitted electronic protected health
+    information is not improperly modified without detection until disposed of."`
+
+    '
+  dev_id: 90615efa-8d25-4412-a4aa-26e8f9acf692
+  id: 2e744f5b-d54d-4874-8b4e-fee574ba2916
+  name: INTEGRITY CONTROLS
+  order: 164.312.e.2.i
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement a mechanism
+    to encrypt electronic protected health information whenever deemed appropriate."`
+
+    '
+  dev_id: 11ee7f80-bedd-45cb-bf8e-befdf45c00e6
+  id: 687d1d29-e486-42ba-ad85-c9dc0d1b6e01
+  name: ENCRYPTION
+  order: 164.312.e.2.ii
+description: |
+    The Health Insurance Portability and Accountability Act of 1996 (HIPAA)\
+    is a US federal law that required the creation of national standards to protect sensitive\
+    patient health information from being disclosed without the patient\u2019s consent\
+    or knowledge.
+
+    The Security Rule defines technical safeguards in § 164.304 as "the technology and the policy and procedures for its use that protect electronic protected health information and control access to it." As outlined in previous papers in this series, the Security Rule is based on the fundamental concepts of flexibility, scalability and technology neutrality. Therefore, no specific requirements for types of technology to implement are identified. The Rule allows a covered entity to use any security measures that allows it reasonably and appropriately to implement the standards and implementation specifications. A covered entity must determine which security measures and specific technologies are reasonable and appropriate for implementation in its organization.
+
+    Magalix supports those Technical Safeguards, where applicapble. 
+dev_id: 4b497d29-c682-4ba9-898a-2d67af47a242
+id: dc9c36e2-bd75-40eb-9945-15fceab41519
+name: HIPAA
+rid: mglx_hipaa
