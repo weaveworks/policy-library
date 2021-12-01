@@ -7,7 +7,7 @@ violation[result] {
 	not containers.securityContext	# Container securityContext missing
 	result = {
 		"issue detected": true,
-		"msg": sprintf("Container missing spec.template.spec.containers[%v].securityContext and pod spec.template.spec.securityContext is not defined as well.", [i]),
+		"msg": sprintf("Container missing spec.template.spec.containers[%v].securityContext while Pod spec.template.spec.securityContext is not defined as well.", [i]),
 		"violating_key": "spec.template.spec.containers[%v]",
 	}
 }
