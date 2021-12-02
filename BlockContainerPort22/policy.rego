@@ -1,16 +1,13 @@
 package magalix.advisor.containers.block_port
 
-import data.exclusions
-import data.utils
-
 container_port := input.parameters.container_port
 exclude_namespace := input.parameters.exclude_namespace
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-	not exclusions.excludeNamespace(exclude_namespace)
-	not exclusions.excludeLabel(exclude_label_key, exclude_label_value)
+	not exclude_namespace == controller_input.metadata.namespace
+	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 	some i, j
 	container := controller_spec.containers[i]
 	port := container.ports[j]
@@ -22,10 +19,16 @@ violation[result] {
 	}
 }
 
-controller_spec = utils.controller_input.spec.template.spec {
-	utils.contains(utils.controller_input.kind, {"StatefulSet", "DaemonSet", "Deployment", "Job"})
-} else = utils.controller_input.spec {
-	utils.controller_input.kind == "Pod"
-} else = utils.controller_input.spec.jobTemplate.spec.template.spec {
-	utils.controller_input.kind == "CronJob"
+controller_input = input.review.object
+
+controller_spec = controller_input.spec.template.spec {
+	contains(controller_input.kind, {"StatefulSet", "DaemonSet", "Deployment", "Job"})
+} else = controller_input.spec {
+	controller_input.kind == "Pod"
+} else = controller_input.spec.jobTemplate.spec.template.spec {
+	controller_input.kind == "CronJob"
+}
+
+contains(kind, kinds) {
+	kinds[_] = kind
 }
