@@ -2,9 +2,11 @@ sync: true
 enabled: true
 name: MGLX_CONTAINER_RUNNING_AS_ROOT
 description: |
-  Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to true. 
+  Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to `true`. 
+risks: |
+  If containers are running as root within your Kubernetes cluster, and that container is somehow compromised, an attacker could potentially have root privileges on the host that the container is running on. With root privileges at the host level, an attacker can launch a number of additional processes to do whatever they want. Manually enforcing the usage of a user that isn’t root within your containers can become an impossible feat. 
 how_to_solve: |
-  You should set runAsNonRoot to true. Not setting it will default to giving the container root user rights on the VM that it is running on. 
+  You should set `securityContext.runAsNonRoot` to `true`. Not setting it will default to giving the container root user rights on the VM that it is running on. 
   ```
   ...
     spec:
@@ -40,6 +42,10 @@ tags: [
   "gdpr",
   "default",
 ]
+exclusions:
+- namespaces
+- labels
+auto_remedy: false
 parameters:
 - default: kube-system
   name: exclude_namespace

@@ -3,6 +3,8 @@ enabled: true
 name: MGLX_BLOCK_CONTAINER_PORT_22
 description: |
   This Policy checks if the container is exposing ssh port (22).
+risks: |
+  Exposing ssh port (22) on containers increases your potential attack surface. This port maybe used by attackers to gain access to your container.
 how_to_solve: |
   Make sure you are not exposing ssh port (22) on containers.
   ```
@@ -30,6 +32,10 @@ controls:
 tags: [
   "pci-dss",
 ]
+exclusions:
+- namespaces
+- labels
+auto_remedy: false
 parameters:
 - name: container_port
   type: integer

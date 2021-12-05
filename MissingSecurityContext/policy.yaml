@@ -3,8 +3,10 @@ enabled: true
 name: MGLX_MISSING_SECURITY_CONTEXT
 description: |
   This Policy checks if the container is missing securityContext while there is no securityContext defined on the Pod level as well. The security settings that are specified on the Pod level apply to all containers in the Pod.
+risks: |
+  A security context defines privilege and access control settings for a Pod or container. Not defining any security settings on your Pod or container increases potential attacks on your system and exposes any vulnerabilities in your system to be exploited by attackers.
 how_to_solve: |
-  Make sure you secure your containers by specifying a securityContext whether on each container or on the Pod level. The security settings that you specify on the Pod level apply to all containers in the Pod.
+  Make sure you secure your containers by specifying a `securityContext` whether on each container or on the Pod level. The security settings that you specify on the Pod level apply to all containers in the Pod.
   ```
   ...
     spec:
@@ -40,3 +42,7 @@ tags: [
   "gdpr",
   "default",
 ]
+exclusions:
+- namespaces
+- labels
+auto_remedy: false

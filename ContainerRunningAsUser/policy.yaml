@@ -3,8 +3,10 @@ enabled: true
 name: MGLX_CONTAINER_RUNNING_AS_USER
 description: |
   Containers has a feature in which you specify the ID of the user which all processes in the container will run with. This Policy enforces that the `securityContext.runAsUser` attribute is set to a uid greater than root uid. Running as root user gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. 
+risks: |
+  If containers are running as root within your Kubernetes cluster, and that container is somehow compromised, an attacker could potentially have root privileges on the host that the container is running on. With root privileges at the host level, an attacker can launch a number of additional processes to do whatever they want. Manually enforcing the usage of a user that isn’t root within your containers can become an impossible feat.  Enabling this Policy your deployments are setting a proper user ID so that no containers can be run as root. 
 how_to_solve: |
-  You should set runAsUser uid to something greater than root uid. Not setting it will default to giving the container root user rights on the VM that it is running on. 
+  You should set `securityContext.runAsUser` uid to something greater than root uid. Not setting it will default to giving the container root user rights on the VM that it is running on. 
   ```
   ...
     spec:
@@ -40,6 +42,10 @@ tags: [
   "gdpr",
   "default",
 ]
+exclusions:
+- namespaces
+- labels
+auto_remedy: false
 parameters:
 - default: kube-system
   name: exclude_namespace
