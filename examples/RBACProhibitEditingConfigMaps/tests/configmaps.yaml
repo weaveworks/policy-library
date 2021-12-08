@@ -1,7 +1,7 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: prevent-edit-configmaps-kubedns
+  name: prohibit-edit-configmaps-kubedns
   namespace: kube-system
   labels:
     kubernetes.io/bootstrapping: rbac-defaults

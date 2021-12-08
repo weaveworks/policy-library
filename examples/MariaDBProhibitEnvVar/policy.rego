@@ -1,4 +1,4 @@
-package magalix.advisor.mariadb.prevent_env_vars
+package magalix.advisor.mariadb.prohibit_env_vars
 
 env_name = input.parameters.envvar_name
 app_name = input.parameters.app_name
