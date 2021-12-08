@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-sharing-process-namespace
 description: |
   This Policy allows check if sharing process namespace with other containers in the pod should be allowed or not. Resources that can be shared with the container include:

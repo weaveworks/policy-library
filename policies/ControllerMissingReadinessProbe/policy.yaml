@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-missing-readiness-probe
 description: |
   This Policy detects whether or not a readinessProbe has been set for containers. Containers probes are:

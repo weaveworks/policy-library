@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.mongo-express-enforce-environment-variable
 description: |
   This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 

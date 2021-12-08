@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.container-running-as-user
 description: |
   Containers has a feature in which you specify the ID of the user which all processes in the container will run with. This Policy enforces that the `securityContext.runAsUser` attribute is set to a uid greater than root uid. Running as root user gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. 

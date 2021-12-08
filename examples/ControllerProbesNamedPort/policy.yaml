@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.container-named-port
 description: |
   This Policy checks the named port of your containers to see if they are set in your container probes. 

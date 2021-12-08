@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-not-using-runtime-default-seccomp-profile
 description: |
   This Policy checks for runtime/default seccomp annotation. 

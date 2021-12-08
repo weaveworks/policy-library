@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.enforce-prometheus-service-annotation-key
 description: |
   This Policy checks to see if Services have the specified Prometheus annotations like  `prometheus.io/scrape` and `filter.by.port.name`. These annotations are used to send metric data to your Prometheus instance. 

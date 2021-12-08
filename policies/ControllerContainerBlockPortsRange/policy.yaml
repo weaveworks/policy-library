@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-blocke-ports-range
 description: |
   This Policy checks for container ports that are set below the set value. TCP ports under 1024 are reserved so we recommend setting your Policy to 1024 or higher. 

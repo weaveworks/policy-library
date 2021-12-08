@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.istio-injected-namespaces
 description: |
   # Istio-Injected Namespaces
