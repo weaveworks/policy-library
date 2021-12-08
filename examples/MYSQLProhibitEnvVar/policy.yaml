@@ -1,4 +1,4 @@
-name: MYSQL prohibit Environment Variable
+name: magalix.policies.mysql-prohibit-environment-variable
 description: |
   This Policy checks for the following environment variables for your MySQL deployments using the official Docker image. 
   ### MYSQL_ALLOW_EMPTY_PASSWORD
@@ -10,12 +10,9 @@ how_to_solve: |
   For futher information about the MySQL Docker container, check here: https://hub.docker.com/_/mysql
 category: magalix.categories.access-control
 severity: medium
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.1
 - magalix.controls.hipaa.164.312.a.2.i
-tags: [pci-dss, hipaa]
 parameters:
 - default:
   name: envvar_name

@@ -1,4 +1,4 @@
-name: namespace missing Resource Quota
+name: magalix.policies.namespace-missing-resource-quota
 description: |
   When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
 how_to_solve: |
@@ -14,10 +14,8 @@ how_to_solve: |
   https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
 category: magalix.categories.capacity-management
 severity: medium
-targets: {kind: []}
 controls:
 - magalix.controls.soc2-type1.2.1.1
-tags: [soc2-type1]
 parameters:
 - default:
   name: resource_type

@@ -1,4 +1,4 @@
-name: Containers enforce restart Policy
+name: magalix.policies.containers-enforce-restart-policy
 description: |
   This Policy checks if a specific restartPolicy is configured in your workloads.
 how_to_solve: |

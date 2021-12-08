@@ -1,4 +1,4 @@
-name: Prometheus RBAC prohibit verbs
+name: magalix.policies.prometheus-rbac-prohibit-verbs
 description: |
   This Policy blocks certain verbs from being set for Prometheus RBAC. This Policy applies to RBAC names containing the word `prometheus`. 
 how_to_solve: |

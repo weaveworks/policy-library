@@ -1,4 +1,4 @@
-name: Containers sharing host IPC
+name: magalix.policies.containers-sharing-host-ipc
 description: |
   This Policy allows check if sharing host IPC namespace with the container should be allowed or not. Resources that can be shared with the container include:
 

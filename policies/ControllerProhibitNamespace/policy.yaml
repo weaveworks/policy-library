@@ -1,4 +1,4 @@
-name: Containers should not run in namespace
+name: magalix.policies.containers-should-not-run-in-namespace
 description: |
   This Policy ensure workloads are not running in a specified namespace. 
 how_to_solve: |

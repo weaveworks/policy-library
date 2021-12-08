@@ -1,4 +1,4 @@
-name: Containers using hostPath
+name: magalix.policies.containers-using-hostpath
 description: |
   This Policy checks for containers that are trying to use HostPath. 
 

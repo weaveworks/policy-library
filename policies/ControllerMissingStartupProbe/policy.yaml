@@ -1,4 +1,4 @@
-name: Containers missing Startup Probe
+name: magalix.policies.containers-missing-startup-probe
 description: |
   This Policy detects whether or not a startupProbe has been set for containers. Containers probes are:
 

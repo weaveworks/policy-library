@@ -1,4 +1,4 @@
-name: Persistent Volume Max Size
+name: magalix.policies.persistent-volume-max-size
 description: |
   This Policy sets a max size on your Persistent Volumes. When specifying a size, be sure to include the size and sizing suffix (e.g. 1Gi).
 how_to_solve: |

@@ -1,4 +1,4 @@
-name: RBAC Prohibit resources Wildcards
+name: magalix.policies.rbac-prohibit-resources-wildcards
 description: |
   This Policy prohbits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
 
@@ -24,7 +24,6 @@ how_to_solve: |
   https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [ClusterRole, ClusterRoleBinding, Role, RoleBinding]}
 controls:
 - magalix.controls.pci-dss.7.1.1
 - magalix.controls.pci-dss.7.1.2
@@ -33,7 +32,6 @@ controls:
 - magalix.controls.gdpr.32
 - magalix.controls.gdpr.24
 - magalix.controls.soc2-type1.1.6.3
-tags: [pci-dss, cis-benchmark, gdpr, hipaa, soc2-type1, default]
 parameters:
 - default:
   name: attributes

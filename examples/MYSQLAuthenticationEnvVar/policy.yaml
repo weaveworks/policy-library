@@ -1,4 +1,4 @@
-name: MySQL Enforce Environment Variable
+name: magalix.policies.mysql-enforce-environment-variable
 description: |
   This Policy checks for the following environment variables for your MySQL deployments using the official Docker image. 
   ### MYSQL_USER
@@ -22,8 +22,6 @@ how_to_solve: |
   For futher information about the MySQL Docker container, check here: https://hub.docker.com/_/mysql
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.1
 - magalix.controls.hipaa.164.312.a.2.i
@@ -31,7 +29,6 @@ controls:
 - magalix.controls.gdpr.32
 - magalix.controls.gdpr.24
 - magalix.controls.hipaa.164.312.a.1
-tags: [pci-dss, mitre-attack, hipaa, gdpr]
 parameters:
 - default:
   name: envvar_name

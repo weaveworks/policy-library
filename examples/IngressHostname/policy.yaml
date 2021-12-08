@@ -1,4 +1,4 @@
-name: Ingress approved hostnames
+name: magalix.policies.ingress-approved-hostnames
 description: |
   This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 
 how_to_solve: |

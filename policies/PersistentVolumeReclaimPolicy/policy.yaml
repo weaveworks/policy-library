@@ -1,4 +1,4 @@
-name: Persistent Volume Reclaim Policy should be set to Retain
+name: magalix.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
 description: |
   This Policy checks to see whether or not the persistent volume reclaim policy is set.
 

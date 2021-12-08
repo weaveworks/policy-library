@@ -1,4 +1,4 @@
-name: Containers are missing a controller spec key
+name: magalix.policies.containers-are-missing-a-controller-spec-key
 description: |
   This Policy will allow you to set your own Policies for the Pod spec. 
 how_to_solve: |
@@ -10,9 +10,6 @@ how_to_solve: |
   ```
 category: magalix.categories.organizational-standards
 severity: medium
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
 parameters:
 - default:
   name: controller_spec_key

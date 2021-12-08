@@ -1,4 +1,4 @@
-name: Node missing label
+name: magalix.policies.node-missing-label
 description: |
   This Policy only looks for specific node label keys.
 
@@ -27,10 +27,8 @@ how_to_solve: |
   https://kubernetes.io/docs/reference/labels-annotations-taints/
 category: magalix.categories.organizational-standards
 severity: low
-targets: {kind: [Node]}
 controls:
 - magalix.controls.nist-800-190.4.5.1
-tags: []
 parameters:
 - default:
   name: node_label

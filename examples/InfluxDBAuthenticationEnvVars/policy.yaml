@@ -1,4 +1,4 @@
-name: InfluxDB Enforce Environment Variable
+name: magalix.policies.influxdb-enforce-environment-variable
 description: |
   This Policy ensures specific environment variables are in place when using the official container images from Docker Hub.
   ### DOCKER_INFLUXDB_INIT_USERNAME
@@ -23,8 +23,6 @@ how_to_solve: |
   For futher information about the InfluxDB Docker container, check here:https://hub.docker.com/_/influxdb
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.1
 - magalix.controls.hipaa.164.312.a.2.i
@@ -32,7 +30,6 @@ controls:
 - magalix.controls.gdpr.32
 - magalix.controls.gdpr.24
 - magalix.controls.hipaa.164.312.a.1
-tags: [pci-dss, mitre-attack, hipaa, gdpr]
 parameters:
 - default:
   name: envvar_name

@@ -1,4 +1,4 @@
-name: Enforce Prometheus Annotation Key
+name: magalix.policies.enforce-prometheus-annotation-key
 description: |
   This Policy ensures annotation keys like `prometheus.io/scrape`, `prometheus.io/port`, or `prometheus.io/path` are set in your Policy's metadata annotation. This is based on the default configuration of Prometheus.
 how_to_solve: |
@@ -13,9 +13,6 @@ how_to_solve: |
   https://prometheus.io/docs/prometheus/latest/configuration/configuration/#pod
 category: magalix.categories.observability
 severity: medium
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
 parameters:
 - default:
   name: prometheus_annotation_key

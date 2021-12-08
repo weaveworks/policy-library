@@ -1,4 +1,4 @@
-name: Containers sharing host Network
+name: magalix.policies.containers-sharing-host-network
 description: |
   This Policy allows check if sharing host network namespace with the container should be allowed or not. Resources that can be shared with the container include:
 

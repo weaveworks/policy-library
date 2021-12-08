@@ -1,4 +1,4 @@
-name: Containers are missing a spec template label
+name: magalix.policies.containers-are-missing-a-spec-template-label
 description: |
   This Policy allows setting a custom label in `spec.template.metadata`.
 how_to_solve: |
@@ -14,9 +14,6 @@ how_to_solve: |
   https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
 category: magalix.categories.organizational-standards
 severity: low
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
 parameters:
 - default:
   name: label
