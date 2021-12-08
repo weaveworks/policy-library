@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.services-prohibit-type
 description: |
   This Policy checks your Kubernetes Service kind to see what Service type is set. If a specified service type is found, this Policy will be in violation. Security practices suggest using types `ServiceType` of `ClusterIP` or `LoadBalancer` and not `NodePort`. 

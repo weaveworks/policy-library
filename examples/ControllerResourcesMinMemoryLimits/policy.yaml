@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.container-minimum-memory-limits
 description: |
   This Policy is to ensure a minimum Memory Limit value is set. The policy will fail if the set Memory limit is lower than the one specified in the policy. You must specify a unit size (e.g Mi, Gi, etc).

@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-read-only-root-filesystem
 description: |
   This Policy will cause a violation if the root file system is not mounted as specified. As a security practice, the root file system should be read-only or expose risk to your nodes if compromised. 

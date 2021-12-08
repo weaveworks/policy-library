@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.missing-kubernetes-app-version-label
 description: |
   Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 

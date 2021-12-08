@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.namespace-missing-resource-quota
 description: |
   When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.

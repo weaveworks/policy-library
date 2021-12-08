@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-block-specific-image-names
 description: |
   This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 

@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
 description: |
   Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. 

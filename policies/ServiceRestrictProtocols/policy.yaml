@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.services-restrict-protocols
 description: |
   This Policy specifies what protocols should set for your Service. Any protocol not listed in this Policy will be in violation. 

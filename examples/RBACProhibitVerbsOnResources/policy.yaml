@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.rbac-prohibit-verbs-on-resources
 description: |
   This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific Resource and Verb combination. For example, if you wanted to deny deployments, you would create a Policy with a resource of `deployments` and the verb `create`. 

@@ -1,3 +1,4 @@
+enable: true
 name: magalix.policies.containers-running-with-privilege-escalation
 description: |
   Containers are running with PrivilegeEscalation configured. Setting this Policy to `true` allows child processes to gain more privileges than its parent process.  
