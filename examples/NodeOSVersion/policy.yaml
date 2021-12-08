@@ -1,0 +1,27 @@
+name: Node OS version
+description: |
+  This Policy allows enforcement of the type of OS image used for each node. Build consistency throughout your cluster by provisioning the same OS version across all the nodes. 
+how_to_solve: |
+  When provisioning new Kubernetes nodes, ensure your provisiong process specifies an operating system that is equal to the OS Image listed in the Policy. 
+  ```
+  status:
+    nodeInfo:
+      osImage: <os>
+  ```
+category: magalix.categories.organizational-standards
+severity: medium
+targets: {kind: [Node]}
+tags: []
+parameters:
+- default:
+  name: os
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

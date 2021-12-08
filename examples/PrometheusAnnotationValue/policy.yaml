@@ -1,0 +1,38 @@
+name: Enforce Prometheus Annotation Value
+description: |
+  This Policy ensures custom annotation values are set like Prometheus scrape, path, and port values in your Prometheus annotations. If you are using something other than the default values, you can customize those requirements here. 
+how_to_solve: |
+  Ensure the values in the Policy match your custom Prometheus configurations. 
+  ```
+  metadata:
+    annotations:
+      <prometheus_annotation_key>: <prometheus_annotation_value>
+  ```
+  https://prometheus.io/docs/prometheus/latest/configuration/configuration/#pod
+category: magalix.categories.observability
+severity: medium
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+tags: []
+parameters:
+- default:
+  name: prometheus_annotation_key
+  required: true
+  type: string
+- default:
+  name: prometheus_annotation_value
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

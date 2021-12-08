@@ -1,0 +1,132 @@
+controls:
+- description: This section consists of security recommendations for the direct configuration
+    of Kubernetes control plane processes. These recommendations may not be directly
+    applicable for cluster operators in environments where these components are managed
+    by a 3rd party.
+  id: magalix.controls.cis-benchmark.1
+  name: Control Plane Components
+  order: 1
+- description: This section covers recommendations for etcd configuration.
+  id: magalix.controls.cis-benchmark.2
+  name: etcd Controls
+  order: 2
+- description: This section contains recommendations for cluster-wide areas, such
+    as authentication and logging. Unlike section 1 these recommendations should apply
+    to all deployments.
+  id: magalix.controls.cis-benchmark.3
+  name: Control Plane Configuration
+  order: 3
+- description: This section consists of security recommendations for the components
+    that run on Kubernetes worker nodes. Note that these components may also run on
+    Kubernetes control plane nodes, so the recommendations in this section should
+    be applied to control plane nodes as well as worker nodes where the control plane
+    nodes make use of these components.
+  id: magalix.controls.cis-benchmark.4
+  name: Worker Nodes
+  order: 4
+- description: This section contains recommendations for various Kubernetes policies
+    which are important to the security of the environment.
+  id: magalix.controls.cis-benchmark.5
+  name: Policies
+  order: 5
+- description: The RBAC role `cluster-admin` provides wide-ranging powers over the
+    environment and should be used only where and when needed.
+  id: magalix.controls.cis-benchmark.5.1.1
+  name: Ensure that the cluster-admin role is only used where required
+  order: 5.1.1
+- description: 'Kubernetes Roles and ClusterRoles provide access to resources based
+    on sets of objects and actions that can be taken on those objects. It is possible
+    to set either of these to be the wildcard "*" which matches all items.
+
+
+    Use of wildcards is not optimal from a security perspective as it may allow for
+    inadvertent access to be granted when new resources are added to the Kubernetes
+    API either as CRDs or in later versions of the product.
+
+    '
+  id: magalix.controls.cis-benchmark.5.1.3
+  name: Minimize wildcard use in Roles and ClusterRoles
+  order: 5.1.3
+- description: The ability to create pods in a namespace can provide a number of opportunities
+    for privilege escalation, such as assigning privileged service accounts to these
+    pods or mounting hostPaths with access to sensitive data (unless Pod Security
+    Policies are implemented to restrict this access). As such, access to create new  pods
+    should be restricted to the smallest possible group of users.
+  id: magalix.controls.cis-benchmark.5.1.4
+  name: Minimize access to create pods
+  order: 5.1.4
+- description: The `default` service account should not be used to ensure that rights
+    granted to applications can be more easily audited and reviewed.
+  id: magalix.controls.cis-benchmark.5.1.5
+  name: Ensure that default service accounts are not actively used
+  order: 5.1.5
+- description: Service accounts tokens should not be mounted in pods except where
+    the workload running in the pod explicitly needs to communicate with the API server.
+  id: magalix.controls.cis-benchmark.5.1.6
+  name: Ensure that Service Account Tokens are only mounted where necessary
+  order: 5.1.6
+- description: A Pod Security Policy (PSP) is a cluster-level resource that controls
+    security settings for pods.
+  id: magalix.controls.cis-benchmark.5.2
+  name: Pod Security Policies
+  order: 5.2
+- description: Do not generally permit containers to be run with the `securityContext.privileged`
+    flag set to `true`.
+  id: magalix.controls.cis-benchmark.5.2.1
+  name: Minimize the admission of privileged containers
+  order: 5.2.1
+- description: Do not generally permit containers to be run with the `hostIPC` flag
+    set to `true`.
+  id: magalix.controls.cis-benchmark.5.2.3
+  name: Minimize the admission of containers wishing to share the host IPC namespace
+  order: 5.2.3
+- description: Do not generally permit containers to be run with the `hostNetwork`
+    flag set to `true`.
+  id: magalix.controls.cis-benchmark.5.2.4
+  name: Minimize the admission of containers wishing to share the host network namespace
+  order: 5.2.4
+- description: Do not generally permit containers to be run with the allowPrivilegeEscalation
+    flag set to true.
+  id: magalix.controls.cis-benchmark.5.2.5
+  name: Minimize the admission of containers with allowPrivilegeEscalation
+  order: 5.2.5
+- description: Do not generally permit containers to be run as the root user.
+  id: magalix.controls.cis-benchmark.5.2.6
+  name: Minimize the admission of root containers
+  order: 5.2.6
+- description: Do not generally permit containers with the potentially dangerous NET_RAW
+    capability.
+  id: magalix.controls.cis-benchmark.5.2.7
+  name: Minimize the admission of containers with the NET_RAW capability
+  order: 5.2.7
+- description: Do not generally permit containers with capabilities assigned beyond
+    the default set.
+  id: magalix.controls.cis-benchmark.5.2.8
+  name: Minimize the admission of containers with added capabilities
+  order: 5.2.8
+- description: Do not generally permit containers with capabilities.
+  id: magalix.controls.cis-benchmark.5.2.9
+  name: Minimize the admission of containers with capabilities assigned
+  order: 5.2.9
+- description: Configure Image Provenance for your deployment.
+  id: magalix.controls.cis-benchmark.5.5.1
+  name: Configure Image Provenance using ImagePolicyWebhook admission controller
+  order: 5.5.1
+- description: Enable `docker/default` seccomp profile in your pod definitions.
+  id: magalix.controls.cis-benchmark.5.7.2
+  name: Ensure that the seccomp profile is set to docker default in your pod definitions
+  order: 5.7.2
+- description: Apply Security Context to Your Pods and Containers.
+  id: magalix.controls.cis-benchmark.5.7.3
+  name: Apply Security Context to Your Pods and Containers
+  order: 5.7.3
+- description: Kubernetes provides a default namespace, where objects are placed if
+    no namespace is specified for them. Placing objects in this namespace makes application
+    of RBAC and other controls more difficult.
+  id: magalix.controls.cis-benchmark.5.7.4
+  name: The default namespace should not be used
+  order: 5.7.4
+description: An objective, consensus-driven security guideline for the Kubernetes
+  Server Software.
+name: CIS Benchmark
+id: magalix.standards.cis-benchmark

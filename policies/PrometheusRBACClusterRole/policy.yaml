@@ -1,0 +1,38 @@
+name: Prometheus RBAC prohibit verbs
+description: |
+  This Policy blocks certain verbs from being set for Prometheus RBAC. This Policy applies to RBAC names containing the word `prometheus`. 
+how_to_solve: |
+  Check the `rules.verbs` for the verb(s) list and check the policy to see what value is set. 
+  ```
+  metadata:
+    name: prometheus
+  ...
+  rules:
+    - verbs:
+        - <prometheus_verb>
+  ```
+
+  https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+category: magalix.categories.access-control
+severity: high
+targets: {kind: [ClusterRole]}
+controls:
+- magalix.controls.pci-dss.7.1.1
+- magalix.controls.pci-dss.7.1.2
+- magalix.controls.hipaa.164.312.a.1
+- magalix.controls.soc2-type1.1.6.3
+tags: [pci-dss, hipaa, soc2-type1]
+parameters:
+- default: put
+  name: prometheus_verb
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

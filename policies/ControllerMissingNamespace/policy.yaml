@@ -1,0 +1,25 @@
+name: Prevent the creation of workloads without setting a namespace
+description: |
+  Using this Policy, you can prevent workloads from being created in a default namespace due to the lack of a namespace label. 
+how_to_solve: |
+  Specify a `namespace` label. 
+  ```
+  metadata:
+    namespace:
+  ```
+  https://kubernetes.io/docs/tasks/administer-cluster/namespaces/#understanding-the-motivation-for-using-namespaces
+category: magalix.categories.organizational-standards
+severity: low
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+tags: []
+parameters:
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

@@ -1,0 +1,34 @@
+name: Container Minimum Memory Limits
+description: |
+  This Policy is to ensure a minimum Memory Limit value is set. The policy will fail if the set Memory limit is lower than the one specified in the policy. You must specify a unit size (e.g Mi, Gi, etc).
+how_to_solve: |
+  ```
+  ...
+    spec:
+      containers:
+      - resources:
+          limits:
+            memory: <size>
+  ```
+  https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+category: magalix.categories.capacity-management
+severity: medium
+controls:
+- magalix.controls.soc2-type1.2.1.1
+parameters:
+- default:
+  name: size
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

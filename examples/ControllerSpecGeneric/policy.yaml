@@ -1,0 +1,32 @@
+name: Containers are missing a controller spec key
+description: |
+  This Policy will allow you to set your own Policies for the Pod spec. 
+how_to_solve: |
+  Ensure the key you have specified in your constraint exists in your workloads. 
+  ```
+  ...
+    spec:
+      <controller_spec_key>
+  ```
+category: magalix.categories.organizational-standards
+severity: medium
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+tags: []
+parameters:
+- default:
+  name: controller_spec_key
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

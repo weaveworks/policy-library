@@ -1,0 +1,54 @@
+name: RBAC Protect Cluster Admin ClusterRoleBindings
+description: |
+  This Policy allows you to select which groups you can set for Cluster-admin. The default policy checks for the 
+
+  ```
+  subjects:
+  - kind: Group
+    name: system:masters
+  ```
+
+  `cluster-admin` allows super-user access to perform any action on any resource. When used in a ClusterRoleBinding, it gives full control over every resource in the cluster and in all namespaces. When used in a RoleBinding, it gives full control over every resource in the role binding's namespace, including the namespace itself. Be selective when adding additional subjects. 
+how_to_solve: |
+  Remove any kinds and names that are not consistent with the constraint. 
+  ```
+  kind: ClusterRoleBinding
+  metadata:
+    name: cluster-admin
+  ...
+  subjects:
+  - kind: Group
+    name: system:masters
+  ```  
+  https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+category: magalix.categories.access-control
+severity: high
+targets: {kind: [ClusterRoleBinding]}
+controls:
+- magalix.controls.pci-dss.7.1.1
+- magalix.controls.pci-dss.7.1.2
+- magalix.controls.cis-benchmark.5.1.1
+- magalix.controls.mitre-attack.4.2
+- magalix.controls.gdpr.25
+- magalix.controls.gdpr.32
+- magalix.controls.gdpr.24
+- magalix.controls.hipaa.164.312.a.1
+- magalix.controls.soc2-type1.1.6.3
+tags: [pci-dss, cis-benchmark, mitre-attack, gdpr, hipaa, soc2-type1]
+parameters:
+- default: system:masters
+  name: subjects_name
+  required: true
+  type: string
+- default: system:masters
+  name: subjects_kind
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

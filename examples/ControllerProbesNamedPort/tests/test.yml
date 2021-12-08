@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoservice
+  labels:
+    app: demoservice
+    owner: tony
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demoservice
+  template:
+    metadata:
+      labels:
+        app: demoservice
+    spec:
+      containers:
+      - name: demoservice
+        command: ["node", "app.js"]
+        image: airwavetechio/demoservice:v0.0.2
+        env:
+          - name: PORT
+            value: "5000"
+        ports:
+        - containerPort: 5000
+          name: liveness-port
+        livenessProbe:
+          exec:
+            command: 
+            - ls 
+            - /
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command: 
+            - ls 
+            - /
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        startupProbe:
+          exec:
+            command: 
+            - ls 
+            - /
+          failureThreshold: 30
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 10m
+            memory: 25Mi
+          requests:
+            cpu: 10m
+            memory: 25Mi
+      - name: demoservice2
+        command: ["node", "app.js"]
+        image: airwavetechio/demoservice:v0.0.1
+        env:
+          - name: PORT
+            value: "5000"
+        ports:
+        - containerPort: 5000
+          name: liveness-port2
+        livenessProbe:
+          httpGet:
+            path: /
+            port: liveness-port2
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: liveness-port2
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        startupProbe:
+          httpGet:
+            path: /
+            port: liveness-port2
+          failureThreshold: 30
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 10m
+            memory: 25Mi
+          requests:
+            cpu: 10m
+            memory: 25Mi
+      - name: demoservice3
+        command: ["node", "app.js"]
+        image: airwavetechio/demoservice:latest
+        env:
+          - name: PORT
+            value: "5000"
+        ports:
+        - containerPort: 5000
+          name: liveness-port2
+        livenessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 3
+          failureThreshold: 1
+          periodSeconds: 5
+        startupProbe:
+          tcpSocket:
+            port: 5000
+          failureThreshold: 30
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 10m
+            memory: 25Mi
+          requests:
+            cpu: 10m
+            memory: 25Mi
+      restartPolicy: Always

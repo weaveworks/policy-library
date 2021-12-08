@@ -1,0 +1,29 @@
+package magalix.advisor.istio.approved_hosts
+
+hostnames := input.parameters.hostnames
+
+violation[result] {
+  servers := gateway_spec.servers[_]
+  hosts := servers.hosts[_]
+  not array_contains(hostnames, hosts)
+  result = {
+    "issue detected": true,
+    "msg": sprintf("You have specified hosts: '%v'; detected '%v'", [hostnames, hosts]),
+    "violating_key": "spec.servers.hosts"
+  }
+}
+
+array_contains(array, element) {
+  array[_] = element
+}
+
+# controller_container acts as an iterator to get containers from the template
+gateway_spec = input.review.object.spec {
+  contains_kind(input.review.object.kind, {"Gateway"})
+} 
+
+contains_kind(kind, kinds) {
+  kinds[_] = kind
+}
+
+

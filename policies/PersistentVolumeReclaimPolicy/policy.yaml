@@ -1,0 +1,34 @@
+name: Persistent Volume Reclaim Policy should be set to Retain
+description: |
+  This Policy checks to see whether or not the persistent volume reclaim policy is set.
+
+  PersistentVolumes can have various reclaim policies, including "Retain", "Recycle", and "Delete". For dynamically provisioned PersistentVolumes, the default reclaim policy is "Delete". This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. This automatic behavior might be inappropriate if the volume contains precious data. In that case, it is more appropriate to use the "Retain" policy. With the "Retain" policy, if a user deletes a PersistentVolumeClaim, the corresponding PersistentVolume is not be deleted. Instead, it is moved to the Released phase, where all of its data can be manually recovered.
+how_to_solve: |
+  Check your reclaim policy configuration within your PersistentVolume configuration. 
+  ```
+  spec:
+    persistentVolumeReclaimPolicy: <pv_policy>
+  ```
+
+  https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/#why-change-reclaim-policy-of-a-persistentvolume
+category: magalix.categories.data-protection
+severity: medium
+targets: {kind: [PersistentVolume]}
+controls:
+- magalix.controls.pci-dss.3.1
+- magalix.controls.soc2-type1.2.1.2
+tags: [pci-dss, soc2-type1]
+parameters:
+- default: Retain
+  name: pv_policy
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+
