@@ -1,4 +1,4 @@
-name: RBAC Protect Cluster Admin ClusterRoleBindings
+name: magalix.policies.rbac-protect-cluster-admin-clusterrolebindings
 description: |
   This Policy allows you to select which groups you can set for Cluster-admin. The default policy checks for the 
 

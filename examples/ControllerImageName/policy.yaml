@@ -1,4 +1,4 @@
-name: Containers block specific image names
+name: magalix.policies.containers-block-specific-image-names
 description: |
   This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 
 how_to_solve: |
@@ -11,8 +11,6 @@ how_to_solve: |
   ```
 category: magalix.categories.software-supply-chain
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.cis-benchmark.5.5.1
 - magalix.controls.mitre-attack.1.2
@@ -22,7 +20,6 @@ controls:
 - magalix.controls.gdpr.32
 - magalix.controls.gdpr.24
 - magalix.controls.soc2-type1.1.6.8
-tags: [cis-benchmark, mitre-attack, nist800-190, gdpr, soc2-type1]
 parameters:
 - default:
   name: restricted_image_names

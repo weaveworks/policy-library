@@ -1,4 +1,4 @@
-name: Container Maximum CPU Requests
+name: magalix.policies.container-maximum-cpu-requests
 description: |
   This Policy is to ensure a maxiumum CPU Request value is set. The policy will fail if the set CPU request is higher than the one specified in the policy. You must specify a unit size (m, g, etc).
 how_to_solve: |

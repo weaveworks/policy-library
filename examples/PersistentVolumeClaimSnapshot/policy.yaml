@@ -1,4 +1,4 @@
-name: Persistent Volume Claim Snapshot
+name: magalix.policies.persistent-volume-claim-snapshot
 description: |
   This Policy checks for a PVC Snapshot. 
 how_to_solve: |

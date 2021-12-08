@@ -1,4 +1,4 @@
-name: Enforce specific Ingress class
+name: magalix.policies.enforce-specific-ingress-class
 description: |
   This Policy allows for a custom Ingress annotation key and value. When using Kubernetes Ingress, various annotation can be used to define different configurations, even different ingress controllers. Values may vary depending on your use case. 
 how_to_solve: |
@@ -10,10 +10,8 @@ how_to_solve: |
   https://kubernetes.io/docs/concepts/services-networking/ingress/
 category: magalix.categories.network-security
 severity: medium
-targets: {kind: [Ingress]}
 controls:
 - magalix.controls.pci-dss.1.1.4
-tags: [pci-dss]
 parameters:
 - default:
   name: class

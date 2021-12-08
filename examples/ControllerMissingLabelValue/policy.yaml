@@ -1,4 +1,4 @@
-name: Metadata Missing label and value
+name: magalix.policies.metadata-missing-label-and-value
 description: |
   Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensures a key and value are set in the entity's `metadata.labels` path. The Policy detects the presence of the following: 
 
@@ -19,9 +19,6 @@ how_to_solve: |
   * https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
 category: magalix.categories.organizational-standards
 severity: low
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
 parameters:
 - default:
   name: label

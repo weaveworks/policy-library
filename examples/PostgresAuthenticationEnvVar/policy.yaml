@@ -1,4 +1,4 @@
-name: Postgres Enforce Environment Variable
+name: magalix.policies.postgres-enforce-environment-variable
 description: |
   This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 
   ### POSTGRES_PASSWORD
@@ -19,15 +19,12 @@ how_to_solve: |
   For futher information about the Postgres Docker container, check here: https://hub.docker.com/_/postgres
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.hipaa.164.312.a.2.i
 - magalix.controls.gdpr.25
 - magalix.controls.gdpr.32
 - magalix.controls.gdpr.24
 - magalix.controls.hipaa.164.312.a.1
-tags: [pci-dss, mitre-attack, gdpr, hipaa]
 parameters:
 - default:
   name: envvar_name

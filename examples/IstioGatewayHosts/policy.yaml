@@ -1,4 +1,4 @@
-name: Istio Gateway Approved Hosts
+name: magalix.policies.istio-gateway-approved-hosts
 description: |
   # Istio Gateway Approved Hosts
   This ensures you are only serving traffic for approved hostnames. 

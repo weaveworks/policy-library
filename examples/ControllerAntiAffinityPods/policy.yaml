@@ -1,4 +1,4 @@
-name: AntiAffinity Pod simple
+name: magalix.policies.antiaffinity-pod-simple
 description: |
   This Policy sets antiPodAffinity keys, regardless of the Anti Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Anti-Affinity types:
   - preferredDuringSchedulingIgnoredDuringExecution 

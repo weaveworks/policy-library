@@ -1,8 +1,6 @@
-name: containers Block SSH port
+name: magalix.policies.containers-block-ssh-port
 description: |
   This Policy checks if the container is exposing ssh port.
-risks: |
-  Exposing ssh port on containers increases your potential attack surface. This port maybe used by attackers to gain access to your container.
 how_to_solve: |
   Make sure you are not exposing ssh port on containers.
   ```
@@ -14,26 +12,13 @@ how_to_solve: |
   ```
 category: magalix.categories.network-security
 severity: high
-targets: [
-  "Deployment",
-  "Job",
-  "ReplicationController",
-  "ReplicaSet",
-  "DaemonSet",
-  "StatefulSet",
-  "CronJob",
-]
+targets: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+  CronJob]
 controls:
 - magalix.controls.pci-dss.1.1.6
 - magalix.controls.pci-dss.1.3.1
 - magalix.controls.pci-dss.2.2.2
-tags: [
-  "pci-dss",
-]
-exclusions:
-- namespaces
-- labels
-auto_remedy: false
+tags: [pci-dss]
 parameters:
 - name: container_port
   type: integer

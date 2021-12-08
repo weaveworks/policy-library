@@ -1,4 +1,4 @@
-name: Mongo Enforce Environment Variable
+name: magalix.policies.mongo-enforce-environment-variable
 description: |
   This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 
   ### MONGO_INITDB_ROOT_USERNAME. 
@@ -19,13 +19,10 @@ how_to_solve: |
   For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.1
 - magalix.controls.hipaa.164.312.a.2.i
 - magalix.controls.hipaa.164.312.a.1
-tags: [pci-dss, mitre-attack, hipaa]
 parameters:
 - default:
   name: envvar_name

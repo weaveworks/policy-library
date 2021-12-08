@@ -1,4 +1,4 @@
-name: Network Block all Egress traffic from Namespace
+name: magalix.policies.network-block-all-egress-traffic-from-namespace
 description: |
   If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic from a specified namespace. 
 

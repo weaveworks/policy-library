@@ -1,4 +1,4 @@
-name: Kubernetes - Minimum Kubelet Version
+name: magalix.policies.kubernetes---minimum-kubelet-version
 description: |
   This Policy checks the minimum kubelet version for your Nodes. Please use this type of versioning (`v1.0.0`) and omit any suffix starting with a hyphen (`-`)
 how_to_solve: |

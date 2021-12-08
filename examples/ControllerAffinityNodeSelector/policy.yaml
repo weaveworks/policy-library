@@ -1,4 +1,4 @@
-name: Affinity Node Selector
+name: magalix.policies.affinity-node-selector
 description: |
   This Policy allows setting a key and value for `nodeSelector` when assigning pods to nodes. 
 

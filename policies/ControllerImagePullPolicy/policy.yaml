@@ -1,4 +1,4 @@
-name: Container Image Pull Policy
+name: magalix.policies.container-image-pull-policy
 description: |
   This Policy is to ensure you are setting a value for your `imagePullPolicy`. 
 

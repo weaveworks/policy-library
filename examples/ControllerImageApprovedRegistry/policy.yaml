@@ -1,4 +1,4 @@
-name: Approved Registry
+name: magalix.policies.approved-registry
 description: |
   This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 
 how_to_solve: |

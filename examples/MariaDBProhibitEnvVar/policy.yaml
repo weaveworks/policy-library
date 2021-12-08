@@ -1,4 +1,4 @@
-name: MariaDB prohibit Environment Variable
+name: magalix.policies.mariadb-prohibit-environment-variable
 description: |
   This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 
   ### MARIADB_ALLOW_EMPTY_ROOT_PASSWORD 
@@ -10,12 +10,9 @@ how_to_solve: |
   For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
 category: magalix.categories.access-control
 severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.1
 - magalix.controls.hipaa.164.312.a.2.i
-tags: [pci-dss, hipaa]
 parameters:
 - default:
   name: envvar_name

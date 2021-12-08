@@ -1,4 +1,4 @@
-name: Node Kernel Versions
+name: magalix.policies.node-kernel-versions
 description: |
   This Policy allows you to select the type of OS image you have, the minimum kernel version
 how_to_solve: |

@@ -1,4 +1,4 @@
-name: Missing matchlabels key
+name: magalix.policies.missing-matchlabels-key
 description: |
   This Policy will enforce a custom match label key in `spec.selector`.
 how_to_solve: |
@@ -13,9 +13,6 @@ how_to_solve: |
   https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#resources-that-support-set-based-requirements
 category: magalix.categories.organizational-standards
 severity: low
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
 parameters:
 - default:
   name: label

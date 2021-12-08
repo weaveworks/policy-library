@@ -1,4 +1,4 @@
-name: Node OS version
+name: magalix.policies.node-os-version
 description: |
   This Policy allows enforcement of the type of OS image used for each node. Build consistency throughout your cluster by provisioning the same OS version across all the nodes. 
 how_to_solve: |
@@ -10,8 +10,6 @@ how_to_solve: |
   ```
 category: magalix.categories.organizational-standards
 severity: medium
-targets: {kind: [Node]}
-tags: []
 parameters:
 - default:
   name: os
