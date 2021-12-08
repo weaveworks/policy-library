@@ -1,6 +1,6 @@
-name: Prevent creating namespace starting with kube-
+name: Prohibit creating namespace starting with prefix
 description: |
-  Using this Policy, you can prevent certain namespaces from containing a specified combination of letters and/or numbers. 
+  Using this Policy, you can prohibit certain namespaces from containing a specified combination of letters and/or numbers. 
 how_to_solve: |
   Specify a `namespace` that is something other than what is listed in the Policy. 
   ```

@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.prevent_kube_dash
+package magalix.advisor.namespace.prohibit
 
 namespace_name := input.parameters.namespace_name
 

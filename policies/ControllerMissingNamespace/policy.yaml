@@ -1,6 +1,6 @@
-name: Prevent the creation of workloads without setting a namespace
+name: Prohibit the creation of workloads without setting a namespace
 description: |
-  Using this Policy, you can prevent workloads from being created in a default namespace due to the lack of a namespace label. 
+  Using this Policy, you can prohibit workloads from being created in a default namespace due to the lack of a namespace label. 
 how_to_solve: |
   Specify a `namespace` label. 
   ```

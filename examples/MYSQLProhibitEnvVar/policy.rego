@@ -1,4 +1,4 @@
-package magalix.advisor.mysql.prevent_env_vars
+package magalix.advisor.mysql.prohibit_env_vars
 
 env_name = input.parameters.envvar_name
 app_name = input.parameters.app_name

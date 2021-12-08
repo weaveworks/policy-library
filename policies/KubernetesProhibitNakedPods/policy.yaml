@@ -1,6 +1,6 @@
-name: Prevent naked pods from being scheduled
+name: Prohibit naked pods from being scheduled
 description: |
-  This Policy checks for a `kind` and can prevent it from being schedule to your cluster. A common example is running "naked" pods. 
+  This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running "naked" pods. 
 how_to_solve: |
   Ensure you are not using a kind that is specified within the Policy.
   ```
