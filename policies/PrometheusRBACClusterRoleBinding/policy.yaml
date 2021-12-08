@@ -1,0 +1,38 @@
+name: Prometheus ClusterRoleBinding has incorrect bindings
+description: |
+  This Policy checks to see if the Prometheus Cluster Role Binding is bound to a `ClusterRole`, and is tied to a `ServiceAccount` name containing text of your choosing. The default policy is set for search for the Service Account name containing the word `prometheus`. 
+how_to_solve: |
+  Ensure the subject name you specify in the Policy matches what you are deploying. 
+  ```
+  kind: ClusterRoleBinding
+  metadata:
+    name: prometheus
+  ...
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus
+  ```
+  https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+category: magalix.categories.access-control
+severity: high
+targets: {kind: [ClusterRoleBinding]}
+controls:
+- magalix.controls.pci-dss.7.1.1
+- magalix.controls.pci-dss.7.1.2
+- magalix.controls.hipaa.164.312.a.1
+- magalix.controls.soc2-type1.1.6.3
+tags: [pci-dss, hipaa, soc2-type1]
+parameters:
+- default: prometheus
+  name: prometheus_subject_name
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

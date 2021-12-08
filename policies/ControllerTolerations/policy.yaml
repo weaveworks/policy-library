@@ -1,0 +1,37 @@
+name: Containers should not run on Kubernetes Control Plane nodes
+description: |
+  Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. 
+how_to_solve: |
+  Check your tolerations against the Policy. 
+  ```
+  ...
+    spec:
+      tolerations:
+      - key: <toleration_key>
+  ```
+
+  https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+category: magalix.categories.capacity-management
+severity: medium
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+controls:
+- magalix.controls.soc2-type1.2.1.1
+tags: [soc2-type1]
+parameters:
+- default: node-role.kubernetes.io/master
+  name: toleration_key
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

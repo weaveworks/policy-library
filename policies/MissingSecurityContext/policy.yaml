@@ -1,0 +1,59 @@
+name: Missing security context
+description: |
+  This Policy checks if the container is missing securityContext while there is no securityContext defined on the Pod level as well. The security settings that are specified on the Pod level apply to all containers in the Pod.
+risks: |
+  A security context defines privilege and access control settings for a Pod or container. Not defining any security settings on your Pod or container increases potential attacks on your system and exposes any vulnerabilities in your system to be exploited by attackers.
+how_to_solve: |
+  Make sure you secure your containers by specifying a `securityContext` whether on each container or on the Pod level. The security settings that you specify on the Pod level apply to all containers in the Pod.
+  ```
+  ...
+    spec:
+      securityContext:
+        <securityContext attributes>
+  ```
+  https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+category: magalix.categories.pod-security
+severity: high
+targets: [
+  "Deployment",
+  "Job",
+  "ReplicationController",
+  "ReplicaSet",
+  "DaemonSet",
+  "StatefulSet",
+  "CronJob",
+]
+controls:
+- magalix.controls.pci-dss.2.2.4
+- magalix.controls.pci-dss.2.2.5
+- magalix.controls.cis-benchmark.5.2.6
+- magalix.controls.mitre-attack.4.1
+- magalix.controls.nist-800-190.3.3.1
+- magalix.controls.gdpr.24
+- magalix.controls.gdpr.25
+- magalix.controls.gdpr.32
+tags: [
+  "pci-dss",
+  "cis-benchmark",
+  "mitre-attack",
+  "nist800-190",
+  "gdpr",
+  "default",
+]
+exclusions:
+- namespaces
+- labels
+auto_remedy: false
+parameters:
+- default: kube-system
+  name: exclude_namespace
+  required: false
+  type: string
+- default: 
+  name: exclude_label_key
+  required: false
+  type: string
+- default: 
+  name: exclude_label_value
+  required: false
+  type: string

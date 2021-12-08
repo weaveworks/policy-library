@@ -1,0 +1,13 @@
+name: Istio Gateway Approved Hosts
+description: |
+  # Istio Gateway Approved Hosts
+  This ensures you are only serving traffic for approved hostnames. 
+how_to_solve: |
+  Ensure your domain name is the same as the one you are hosting.
+category: magalix.categories.network-security
+severity: high
+parameters:
+- default:
+  name: hostnames
+  required: true
+  type: array

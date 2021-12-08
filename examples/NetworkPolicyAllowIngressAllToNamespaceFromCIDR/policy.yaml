@@ -1,0 +1,32 @@
+name: Network Allow all Ingress traffic to Namespace from CIDR block.
+description: |
+  If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic from a specified namespace to a CIDR block of IP addresses. 
+
+  By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
+how_to_solve: |
+  Validate your use case and check network policies for traffic blocking. 
+
+  https://kubernetes.io/docs/concepts/services-networking/network-policies/
+category: magalix.categories.network-security
+severity: medium
+controls:
+- magalix.controls.pci-dss.1.2.1
+- magalix.controls.soc2-type1.1.6.1
+parameters:
+- default:
+  name: namespace
+  required: true
+  type: string
+- default:
+  name: cidr
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

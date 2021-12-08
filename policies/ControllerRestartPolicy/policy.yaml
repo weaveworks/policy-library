@@ -1,0 +1,32 @@
+name: Containers enforce restart Policy
+description: |
+  This Policy checks if a specific restartPolicy is configured in your workloads.
+how_to_solve: |
+  Ensure the restartPolicy is set to some specific policy in your workloads. 
+  ```
+  ...
+    spec:
+      restartPolicy: <policy>
+  ```
+category: magalix.categories.organizational-standards
+severity: medium
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+tags: []
+parameters:
+- default: Always
+  name: restart_policy
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

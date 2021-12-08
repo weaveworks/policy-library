@@ -1,0 +1,51 @@
+name: Container custom Probe
+description: |
+  This Policy allows defining the various container probes, and ensures consistent probes are configured across all containers. You can set the type of probe `livenessProbe`, `readinessProbe`, `startupProbe` along with a `command`, a `path` and a `port`. 
+how_to_solve: |
+  ```
+  ...
+    spec:
+      containers:
+      - container1
+        <probe_type>:
+          exec:
+            command: 
+            - <command>
+      - container2
+        <probe_type>:
+          httpGet:
+            path: <path>
+            port: <port>
+  ```
+  https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe
+category: magalix.categories.reliability
+severity: high
+parameters:
+- default:
+  name: probe_type
+  required: true
+  type: string
+- default:
+  name: command
+  required: false
+  type: array
+- default:
+  name: path
+  required: false
+  type: string
+- default:
+  name: port
+  required: false
+  type: integer
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

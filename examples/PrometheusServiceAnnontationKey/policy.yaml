@@ -1,0 +1,34 @@
+name: Enforce Prometheus service annotation key
+description: |
+  This Policy checks to see if Services have the specified Prometheus annotations like  `prometheus.io/scrape` and `filter.by.port.name`. These annotations are used to send metric data to your Prometheus instance. 
+how_to_solve: |
+  ```
+  kind: Service
+  metadata:
+    annotations:
+      <prometheus_service_annotation>: value
+  ```
+
+  https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+category: magalix.categories.observability
+severity: medium
+targets: {kind: [Service]}
+tags: []
+parameters:
+- default:
+  name: prometheus_service_annotation
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

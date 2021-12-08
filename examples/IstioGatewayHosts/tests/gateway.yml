@@ -1,0 +1,26 @@
+kind: Gateway
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: console
+  namespace: magalix
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - console.gcp.dev.magalix.com
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: console
+        mode: SIMPLE
+    - hosts:
+        - console.gcp.dev.magalix.com
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+      tls:
+        httpsRedirect: true

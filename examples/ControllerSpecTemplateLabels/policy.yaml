@@ -1,0 +1,36 @@
+name: Containers are missing a spec template label
+description: |
+  This Policy allows setting a custom label in `spec.template.metadata`.
+how_to_solve: |
+  Add a custom label to `spec.template.metadata.label` as specified in your constraint.  
+  ```
+  ...
+    spec:
+      template:
+        metadata:
+          labels:
+            <label>
+  ```
+  https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
+category: magalix.categories.organizational-standards
+severity: low
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
+tags: []
+parameters:
+- default:
+  name: label
+  required: true
+  type: string
+- default:
+  name: exclude_namespace
+  required: false
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string

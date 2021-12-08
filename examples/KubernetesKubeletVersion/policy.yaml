@@ -1,0 +1,16 @@
+name: Kubernetes - Minimum Kubelet Version
+description: |
+  This Policy checks the minimum kubelet version for your Nodes. Please use this type of versioning (`v1.0.0`) and omit any suffix starting with a hyphen (`-`)
+how_to_solve: |
+  Upgrade your kubelet to a version that is equal to or later than the version specified in the policy. 
+  ```
+  nodeInfo:
+    kubeletVersion: <version>
+  ```
+category: magalix.categories.organizational-standards
+severity: medium
+parameters:
+- default:
+  name: version
+  required: true
+  type: string

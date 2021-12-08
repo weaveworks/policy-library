@@ -1,0 +1,49 @@
+name: Disable Service Account Token Automount in specific namespace
+description: |
+  This Policy allows you to enforce the enabling or disabling the automounting of service account tokens. 
+
+  When a pod is created without a service account defined, the default service account within the same namespace will be assigned automatically. 
+
+  This is a security concern because a kubernetes client can load a container's service account token. With that token a compromoised contaienr can then access the Kubernetes API to perform actions such as creating and deleting pods.
+
+  In version 1.6+, you can opt out of automounting API credentials for a service account by setting automountServiceAccountToken: false on the service account.
+how_to_solve: |
+  Add the key:value pair `automountServiceAccountToken: false` to your Service Account declaration. 
+  ```
+  kind: ServiceAccount
+  automountServiceAccountToken: false
+  ```
+
+  https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+category: magalix.categories.access-control
+severity: high
+targets: {kind: [ServiceAccount]}
+controls:
+- magalix.controls.pci-dss.7.1.1
+- magalix.controls.cis-benchmark.5.1.6
+- magalix.controls.mitre-attack.6.3
+- magalix.controls.hipaa.164.312.a.2.i
+- magalix.controls.gdpr.25
+- magalix.controls.gdpr.32
+- magalix.controls.gdpr.24
+- magalix.controls.hipaa.164.312.a.1
+- magalix.controls.soc2-type1.1.6.3
+tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
+parameters:
+- default: false
+  name: automount
+  required: true
+  type: boolean
+- default: default
+  name: namespace
+  required: true
+  type: string
+- default:
+  name: exclude_label_key
+  required: false
+  type: string
+- default:
+  name: exclude_label_value
+  required: false
+  type: string
+

@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluentd-logging
+      version: v1
+  template:
+    metadata:
+      labels:
+        k8s-app: fluentd-logging
+        version: v1
+    spec:
+      serviceAccount: fluentd
+      serviceAccountName: fluentd
+      imagePullSecrets:
+          - name: regcred
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: bastions
+        effect: NoSchedule
+      - key: dedicated
+        operator: Equal
+        value: spinnaker
+        effect: NoSchedule
+      - key: dedicated
+        operator: Equal
+        value: operations
+        effect: NoSchedule
+      - key: dedicated
+        operator: Equal
+        value: rodata
+        effect: NoSchedule
+      containers:
+      - name: fluentd
+        image: lamdax/fluent:tony7
+        imagePullPolicy: Always
+        env:
+          - name:  FLUENT_ELASTICSEARCH_HOST
+            valueFrom:
+              secretKeyRef:
+                key: FLUENT_ELASTICSEARCH_HOST
+                name: fluentd
+          - name:  FLUENT_ELASTICSEARCH_PORT
+            value: "443"
+          - name: FLUENT_ELASTICSEARCH_SCHEME
+            value: "https"
+          # Option to configure elasticsearch plugin with self signed certs
+          # ================================================================
+          - name: FLUENT_ELASTICSEARCH_SSL_VERIFY
+            value: "true"
+          # Option to configure elasticsearch plugin with tls
+          # ================================================================
+          - name: FLUENT_ELASTICSEARCH_SSL_VERSION
+            value: "TLSv1_2"
+          # X-Pack Authentication
+          # =====================
+          # - name: FLUENT_ELASTICSEARCH_USER
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: FLUENT_ELASTICSEARCH_USER
+          #       name: fluentd
+          # - name: FLUENT_ELASTICSEARCH_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: FLUENT_ELASTICSEARCH_PASSWORD
+          #       name: fluentd
+          - name: S3_BUCKET_REGION
+            valueFrom:
+              secretKeyRef:
+                key: S3_BUCKET_REGION
+                name: fluentd
+          - name: S3_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                key: S3_BUCKET_NAME
+                name: fluentd
+          - name: S3_PATH
+            valueFrom:
+              secretKeyRef:
+                key: S3_PATH
+                name: fluentd
+          - name: FLUENTD_SYSTEMD_CONF
+            value: "disable"
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: fluentdconf-volume
+          mountPath: /fluentd/etc/
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: fluentdconf-volume
+        configMap:
+          name: fluentd-conf
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers

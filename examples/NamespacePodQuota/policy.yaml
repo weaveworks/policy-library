@@ -1,0 +1,16 @@
+name: Namespace Pod Quota
+description: |
+  When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. 
+how_to_solve: |
+  Specify a value for the maximum number of pods you'd like in a namespace. 
+
+  https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-pod-namespace/
+category: magalix.categories.capacity-management
+severity: low
+controls:
+- magalix.controls.soc2-type1.2.1.1
+parameters:
+- default:
+  name: pod_quota
+  required: true
+  type: integer
