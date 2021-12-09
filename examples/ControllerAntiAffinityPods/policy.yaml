@@ -1,32 +1,54 @@
-enable: true
-name: magalix.policies.antiaffinity-pod-simple
-description: |
-  This Policy sets antiPodAffinity keys, regardless of the Anti Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Anti-Affinity types:
-  - preferredDuringSchedulingIgnoredDuringExecution 
-  - requiredDuringSchedulingIgnoredDuringExecution 
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.antiaffinity-pod-simple
+spec:
+  enable: true
+  name: magalix.policies.antiaffinity-pod-simple
+  description: |
+    This Policy sets antiPodAffinity keys, regardless of the Anti Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Anti-Affinity types:
+    - preferredDuringSchedulingIgnoredDuringExecution 
+    - requiredDuringSchedulingIgnoredDuringExecution 
 
-  There is 1 parameter for this Policy:
-  - keys (array) : The policy will check for `key` you are basing the anti-affinty on. 
-how_to_solve: |
-  When working with Pod Anti-Affinity, this Policy will traverse through the entity and find the proper keys, regardless of pod affinity type. The follwing is an example of where the key is located. 
-  ```
-  ...
-    spec:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-        - podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: <keys>
-  ```       
-  https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-  https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodAffinity
-category: magalix.categories.capacity-management
-severity: medium
-controls:
-- magalix.controls.soc2-type1.2.1.1
-parameters:
-- name: keys
-  type: array
-  required: true
-  default:
+    There is 1 parameter for this Policy:
+    - keys (array) : The policy will check for `key` you are basing the anti-affinty on. 
+  how_to_solve: |
+    When working with Pod Anti-Affinity, this Policy will traverse through the entity and find the proper keys, regardless of pod affinity type. The follwing is an example of where the key is located. 
+    ```
+    ...
+      spec:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: <keys>
+    ```       
+    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+    https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodAffinity
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type1.2.1.1
+  parameters:
+  - name: keys
+    type: array
+    required: true
+    default:
+  code: "package magalix.advisor.antiaffinity.pods\n\nkeys := input.parameters.keys\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  walk(controller_spec.affinity.podAntiAffinity, [path, value])\n  key := path[count(path)\
+    \ - 1]\n  key == \"key\"\n  not array_contains(keys, value)\n  result = {\n  \
+    \  \"issue detected\": true,\n    \"msg\": sprintf(\"Expecting key '%v'; detected\
+    \ '%v'\", [keys, value]),\n    \"violating_key\": \"spec.template.spec.affinity.podAntiAffinity\"\
+    \n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\n# Controller\
+    \ input\ncontroller_input = input.review.object\n\n# controller_container acts\
+    \ as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}"

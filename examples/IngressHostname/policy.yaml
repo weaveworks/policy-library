@@ -1,30 +1,47 @@
-enable: true
-name: magalix.policies.ingress-approved-hostnames
-description: |
-  This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 
-how_to_solve: |
-  Ensure your domain name is the same as the one you are hosting.
-  ```
-  spec:
-    rules:
-    - host: <hostnames>
-  ```
-category: magalix.categories.network-security
-severity: high
-parameters:
-- name: hostnames
-  type: array
-  required: true
-  default:
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.ingress-approved-hostnames
+spec:
+  enable: true
+  name: magalix.policies.ingress-approved-hostnames
+  description: |
+    This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 
+  how_to_solve: |
+    Ensure your domain name is the same as the one you are hosting.
+    ```
+    spec:
+      rules:
+      - host: <hostnames>
+    ```
+  category: magalix.categories.network-security
+  severity: high
+  parameters:
+  - name: hostnames
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.ingress.approved_hostnames\n\nhostnames := input.parameters.hostnames\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  rules := ingress_spec.rules[i]\n  hosts := rules.host\n  not array_contains(hostnames,\
+    \ hosts)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
+    Approved domain names should be '%v'; detected '%v'\", [hostnames, hosts]),\n\
+    \    \"violating_key\": sprintf(\"spec.rules[%v].host\", [i])\n  }\n}\n\narray_contains(array,\
+    \ element) {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input\
+    \ = input.review.object\n\ningress_spec = input.review.object.spec {\n  contains_kind(input.review.object.kind,\
+    \ {\"Ingress\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\n"

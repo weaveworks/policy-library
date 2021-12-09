@@ -1,34 +1,50 @@
-enable: true
-name: magalix.policies.containers-are-missing-a-spec-template-label
-description: |
-  This Policy allows setting a custom label in `spec.template.metadata`.
-how_to_solve: |
-  Add a custom label to `spec.template.metadata.label` as specified in your constraint.  
-  ```
-  ...
-    spec:
-      template:
-        metadata:
-          labels:
-            <label>
-  ```
-  https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
-category: magalix.categories.organizational-standards
-severity: low
-parameters:
-- name: label
-  type: string
-  required: true
-  default:
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-are-missing-a-spec-template-label
+spec:
+  enable: true
+  name: magalix.policies.containers-are-missing-a-spec-template-label
+  description: |
+    This Policy allows setting a custom label in `spec.template.metadata`.
+  how_to_solve: |
+    Add a custom label to `spec.template.metadata.label` as specified in your constraint.  
+    ```
+    ...
+      spec:
+        template:
+          metadata:
+            labels:
+              <label>
+    ```
+    https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
+  category: magalix.categories.organizational-standards
+  severity: low
+  parameters:
+  - name: label
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.labels.missing_spec_template_label\n\nlabel := input.parameters.label\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\"\
+    , \"Job\"})\n  not controller_input.spec.template.metadata.labels[label]\n  result\
+    \ = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"you are missing a\
+    \ template spec label with the key '%v'\", [label]),\n    \"violating_key\": \"\
+    spec.template.metadata.labels\"  \n  }\n}\n\n# Controller input\ncontroller_input\
+    \ = input.review.object\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

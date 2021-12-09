@@ -1,33 +1,56 @@
-enable: true
-name: magalix.policies.persistent-volume-claim-snapshot
-description: |
-  This Policy checks for a PVC Snapshot. 
-how_to_solve: |
-  When using Persistent Volume Claim snapshots, ensure both the `snapshot_class` and `pvc_name` define match what's in the Policy. 
-  ```
-  spec:
-    volumeSnapshotClassName: <snapshot_class>
-    source:
-      persistentVolumeClaimName: <pvc_name>
-  ```
-category: magalix.categories.capacity-management
-severity: medium
-controls:
-- magalix.controls.soc2-type1.2.1.2
-parameters:
-- name: snapshot_class
-  type: string
-  required: true
-  default:
-- name: pvc_name
-  type: string
-  required: true
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.persistent-volume-claim-snapshot
+spec:
+  enable: true
+  name: magalix.policies.persistent-volume-claim-snapshot
+  description: |
+    This Policy checks for a PVC Snapshot. 
+  how_to_solve: |
+    When using Persistent Volume Claim snapshots, ensure both the `snapshot_class` and `pvc_name` define match what's in the Policy. 
+    ```
+    spec:
+      volumeSnapshotClassName: <snapshot_class>
+      source:
+        persistentVolumeClaimName: <pvc_name>
+    ```
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type1.2.1.2
+  parameters:
+  - name: snapshot_class
+    type: string
+    required: true
+    default:
+  - name: pvc_name
+    type: string
+    required: true
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.template.persistentvolumeclaim_snapshot\n\nsnapshot_class\
+    \ := input.parameters.snapshot_class\npvc_name := input.parameters.pvc_name\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n  snapshot := volume_spec.volumeSnapshotClassName\n\
+    \  not snapshot == snapshot_class\n  result = {\n\t\"issue detected\": true,\n\
+    \    \"msg\": sprintf(\"VolumeSnapshotClassName names should be '%v', detected\
+    \ '%v'\",[snapshot_class, snapshot]),\n    \"violating_key\": \"spec.volumeSnapshotClassName\"\
+    ,\n    \"recommended_value\": snapshot_class\n\t}\n}\n\nviolation[result] {\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  claim_name := volume_spec.source.persistentVolumeClaimName\n  not claim_name\
+    \ == pvc_name\n  result = {\n\t\"issue\": true,\n    \"msg\": sprintf(\"PVC names\
+    \ should be '%v', detected '%v'\",[pvc_name, claim_name]),\n    \"violating_key\"\
+    : \"spec.source.persistentVolumeClaimName\"\n\t}\n}\n\n# Controller input\ncontroller_input\
+    \ = input.review.object\n\n# controller_container acts as an iterator to get containers\
+    \ from the template\nvolume_spec = controller_input.spec {\n  contains_kind(controller_input.kind,\
+    \ {\"VolumeSnapshot\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
+    }\n"
