@@ -25,23 +25,23 @@ controls:
 - magalix.controls.soc2-type1.1.6.8
 - magalix.controls.soc2-type1.1.6.3
 parameters:
-- default:
-  name: resource_name
-  required: true
+- name: resource_name
   type: string
-- default:
-  name: verb
   required: true
+  default:
+- name: verb
   type: string
-- default:
-  name: namespace
   required: true
+  default:
+- name: namespace
   type: string
-- default:
-  name: exclude_label_key
+  required: true
+  default:
+- name: exclude_label_key
+  type: string
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

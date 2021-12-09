@@ -34,19 +34,19 @@ controls:
 - magalix.controls.gdpr.24
 - magalix.controls.soc2-type1.1.6.3
 parameters:
-- default:
-  name: attributes
+- name: attributes
+  type: string
   required: true
+  default:
+- name: exclude_role_name
   type: string
-- default:
-  name: exclude_role_name
   required: true
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

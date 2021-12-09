@@ -26,7 +26,7 @@ severity: medium
 controls:
 - magalix.controls.soc2-type1.2.1.1
 parameters:
-- default:
-  name: keys
-  required: true
+- name: keys
   type: array
+  required: true
+  default:

@@ -19,19 +19,19 @@ severity: high
 controls:
 - magalix.controls.soc2-type1.1.6.8
 parameters:
-- default:
-  name: registries
-  required: true
+- name: registries
   type: array
-- default:
-  name: exclude_namespace
-  required: false
+  required: true
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
+  required: false
+  default:

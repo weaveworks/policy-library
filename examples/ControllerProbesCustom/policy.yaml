@@ -22,31 +22,31 @@ how_to_solve: |
 category: magalix.categories.reliability
 severity: high
 parameters:
-- default:
-  name: probe_type
+- name: probe_type
+  type: string
   required: true
-  type: string
-- default:
-  name: command
-  required: false
+  default:
+- name: command
   type: array
-- default:
-  name: path
   required: false
+  default:
+- name: path
   type: string
-- default:
-  name: port
   required: false
+  default:
+- name: port
   type: integer
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
+  required: false
+  default:

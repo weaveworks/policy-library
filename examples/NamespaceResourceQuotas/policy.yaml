@@ -18,11 +18,11 @@ severity: medium
 controls:
 - magalix.controls.soc2-type1.2.1.1
 parameters:
-- default:
-  name: resource_type
-  required: true
+- name: resource_type
   type: string
-- default:
-  name: resource_setting
   required: true
+  default:
+- name: resource_setting
   type: string
+  required: true
+  default:

@@ -12,19 +12,19 @@ how_to_solve: |
 category: magalix.categories.organizational-standards
 severity: medium
 parameters:
-- default:
-  name: controller_spec_key
+- name: controller_spec_key
+  type: string
   required: true
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

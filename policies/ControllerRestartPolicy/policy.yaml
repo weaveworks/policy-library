@@ -15,19 +15,19 @@ targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, 
     CronJob]}
 tags: []
 parameters:
-- default: Always
-  name: restart_policy
+- name: restart_policy
+  type: string
   required: true
+  default: Always
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

@@ -31,15 +31,15 @@ severity: low
 controls:
 - magalix.controls.nist-800-190.4.5.1
 parameters:
-- default:
-  name: node_label
+- name: node_label
+  type: string
   required: true
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

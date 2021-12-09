@@ -16,7 +16,7 @@ controls:
 - magalix.controls.cis-benchmark.5.1.4
 tags: [cis-benchmark]
 parameters:
-- default: Pods
-  name: kind
-  required: true
+- name: kind
   type: string
+  required: true
+  default: Pods

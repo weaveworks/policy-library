@@ -24,16 +24,15 @@ controls:
 - magalix.controls.soc2-type1.1.6.3
 tags: [pci-dss, hipaa, soc2-type1]
 parameters:
-- default: prometheus
-  name: prometheus_subject_name
+- name: prometheus_subject_name
+  type: string
   required: true
+  default: prometheus
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
-
+  default:

@@ -14,24 +14,23 @@ severity: medium
 controls:
 - magalix.controls.pci-dss.1.1.4
 parameters:
-- default:
-  name: class
+- name: class
+  type: string
   required: true
+  default:
+- name: annotation
   type: string
-- default:
-  name: annotation
   required: true
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
-
+  default:

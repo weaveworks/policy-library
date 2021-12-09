@@ -11,7 +11,7 @@ severity: low
 controls:
 - magalix.controls.soc2-type1.2.1.1
 parameters:
-- default:
-  name: pod_quota
-  required: true
+- name: pod_quota
   type: integer
+  required: true
+  default:

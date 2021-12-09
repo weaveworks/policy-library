@@ -8,7 +8,7 @@ how_to_solve: |
 category: 816805bb-8311-4312-afac-ef3ba41d1287
 severity: low
 parameters:
-- default:
-  name: namespaces
-  required: true
+- name: namespaces
   type: array
+  required: true
+  default:

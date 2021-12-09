@@ -15,20 +15,19 @@ how_to_solve: |
 category: magalix.categories.observability
 severity: medium
 parameters:
-- default:
-  name: prometheus_annotation_key
+- name: prometheus_annotation_key
+  type: string
   required: true
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
-
+  default:

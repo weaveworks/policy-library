@@ -8,7 +8,7 @@ severity: medium
 controls:
 - magalix.controls.soc2-type1.1.6.8
 parameters:
-- default:
-  name:
-  required: true
+- name:
   type: array
+  required: true
+  default:
