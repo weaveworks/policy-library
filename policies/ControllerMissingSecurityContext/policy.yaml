@@ -13,8 +13,8 @@ how_to_solve: |
   https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 category: magalix.categories.pod-security
 severity: high
-targets: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-  CronJob]
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
 controls:
 - magalix.controls.pci-dss.2.2.4
 - magalix.controls.pci-dss.2.2.5

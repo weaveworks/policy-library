@@ -13,8 +13,8 @@ how_to_solve: |
   ```
 category: magalix.categories.network-security
 severity: high
-targets: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-  CronJob]
+targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
+    CronJob]}
 controls:
 - magalix.controls.pci-dss.1.1.6
 - magalix.controls.pci-dss.1.3.1
