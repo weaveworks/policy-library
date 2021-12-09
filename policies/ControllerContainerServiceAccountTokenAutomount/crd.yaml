@@ -1,0 +1,77 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.controller-serviceaccount-tokens-automount
+spec:
+  enable: true
+  name: magalix.policies.controller-serviceaccount-tokens-automount
+  description: |
+    This Policy allows for the option of enabling or disabling Service Accounts that are created for a Pod. The recommended practice is to set the `automount_token` to `false.  
+
+    When a pod is created without specifying a service account, it is automatically assigned the default service account in the same namespace. This is a security concern because a compromised container can access the API using automatically mounted service account credentials. The API permissions of the service account depend on the authorization plugin and policy in use, but could possibly create and delete pods. 
+
+    We recommend setting the `automount_token` to `false`. 
+
+    In version 1.6+, you can opt out of automounting API credentials for a particular pod.
+  how_to_solve: |
+    Ensure the setting in the Policy matches the Service Account declaration in the controller. 
+    ```
+    ...
+      spec:
+        automountServiceAccountToken: false
+    ```
+
+    https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  category: magalix.categories.access-control
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.pci-dss.7.2.1
+  - magalix.controls.cis-benchmark.5.1.5
+  - magalix.controls.mitre-attack.1.4
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.soc2-type1.1.6.3
+  tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
+  parameters:
+  - name: automount_token
+    type: boolean
+    required: true
+    default: false
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.pods.service_account_token_automount\n\nautomount_token\
+    \ := input.parameters.automount_token\nexclude_namespace := input.parameters.exclude_namespace\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
+    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  automount := controller_spec\n  not has_key(automount, \"automountServiceAccountToken\"\
+    )\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"'automountServiceAccountToken'\
+    \ must be set; found '%v'\",[automount]),\n    \"violating_key\": \"spec.template.spec\"\
+    \n  }\n}\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  automount := controller_spec.automountServiceAccountToken\n  not automount\
+    \ == automount_token\n  result = {\n    \"issue detected\": true,\n    \"msg\"\
+    : sprintf(\"automountServiceAccountToken must be '%v'; found '%v'\",[automount_token,\
+    \ automount]),\n    \"violating_key\": \"spec.template.spec.automountServiceAccountToken\"\
+    ,\n    \"recommended_value\": automount_token\n  }\n}\n\nhas_key(x, k) {\n  type_name(x[k])\n\
+    }\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
+    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}\n"

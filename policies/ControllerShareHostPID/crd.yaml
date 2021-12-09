@@ -1,0 +1,75 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-sharing-host-pid
+spec:
+  enable: true
+  name: magalix.policies.containers-sharing-host-pid
+  description: |
+    This Policy allows check if sharing host PID namespace with the container should be allowed or not. Resources that can be shared with the container include:
+
+    ### hostNetwork
+    Controls whether the pod may use the node network namespace. Doing so gives the pod access to the loopback device, services listening on localhost, and could be used to snoop on network activity of other pods on the same node.
+
+    ### hostPID
+    Controls whether the pod containers can share the host process ID namespace. Note that when paired with ptrace this can be used to escalate privileges outside of the container (ptrace is forbidden by default).
+
+    ### shareProcessNamespace
+    When process namespace sharing is enabled, processes in a container are visible to all other containers in that pod.
+
+    ### hostIPC
+    Controls whether the pod containers can share the host IPC namespace.
+  how_to_solve: |
+    Match the shared resource with either true or false, as set in your constraint. 
+    ```
+    ...
+      spec:
+        <shared_resource>: <resource_enabled>
+    ```
+    https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.cis-benchmark.5.2.4
+  - magalix.controls.cis-benchmark.5.2.3
+  - magalix.controls.nist-800-190.4.5.2
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  tags: [cis-benchmark, nist800-190, gdpr, default]
+  parameters:
+  - name: resource_enabled
+    type: boolean
+    required: true
+    default: false
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.podSecurity.deny_shared_host_pid\n\nresource_enabled\
+    \ := input.parameters.resource_enabled\nexclude_namespace := input.parameters.exclude_namespace\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
+    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  shared_resource := \"hostPID\"\n  resource := controller_spec[shared_resource]\n\
+    \  not resource == resource_enabled\n  result = {\n    \"issue detected\": true,\n\
+    \    \"msg\": sprintf(\"'%v' should be set to '%v'; found '%v'\", [shared_resource,\
+    \ resource_enabled, resource]),\n    \"violating_key\": sprintf(\"spec.template.spec[%v]\"\
+    , [shared_resource]),\n    \"recommended_value\": resource_enabled\n  }\n}\n\n\
+    # Controller input\ncontroller_input = input.review.object\n\n# controller_container\
+    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}"

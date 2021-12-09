@@ -1,0 +1,48 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.enforce-prometheus-service-annotation-key
+spec:
+  enable: true
+  name: magalix.policies.enforce-prometheus-service-annotation-key
+  description: |
+    This Policy checks to see if Services have the specified Prometheus annotations like  `prometheus.io/scrape` and `filter.by.port.name`. These annotations are used to send metric data to your Prometheus instance. 
+  how_to_solve: |
+    ```
+    kind: Service
+    metadata:
+      annotations:
+        <prometheus_service_annotation>: value
+    ```
+
+    https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+  category: magalix.categories.observability
+  severity: medium
+  parameters:
+  - name: prometheus_service_annotation
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.annotations.prometheus_service\n\nannotation := input.parameters.prometheus_service_annotation\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not service_input.metadata.annotations[annotation]\n\
+    \  not exclude_namespace == service_input.metadata.namespace\n  not exclude_label_value\
+    \ == service_input.metadata.labels[exclude_label_key]\n  result = {\n    \"issue\
+    \ detected\": true,\n    \"msg\": sprintf(\"Annotation must contain '%v'; found\
+    \ '%v'\", [annotation, service_input.metadata.annotations]),\n    \"violating_key\"\
+    : \"metadata.annotations\"\n  }\n}\n\nservice_input = input.review.object {\n\t\
+    contains_kind(input.review.object.kind, {\"Service\"})\n} \n\ncontains_kind(kind,\
+    \ kinds) {\n  kinds[_] = kind\n}"

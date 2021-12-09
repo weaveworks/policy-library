@@ -1,0 +1,78 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.missing-kubernetes-app-created-by-label
+spec:
+  enable: true
+  name: magalix.policies.missing-kubernetes-app-created-by-label
+  description: |
+    Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
+
+    ### owner
+    A label key of `owner` will help identify who the owner of this entity is. 
+
+    ### app.kubernetes.io/name
+    The name of the application	
+
+    ### app.kubernetes.io/instance
+    A unique name identifying the instance of an application	  
+
+    ### app.kubernetes.io/version
+    The current version of the application (e.g., a semantic version, revision hash, etc.)
+
+    ### app.kubernetes.io/part-of
+    The name of a higher level application this one is part of	
+
+    ### app.kubernetes.io/managed-by
+    The tool being used to manage the operation of an application	
+
+    ### app.kubernetes.io/created-by
+    The controller/user who created this resource	
+  how_to_solve: |
+    Add these custom labels to `metadata`.
+    * owner
+    * app.kubernetes.io/name
+    * app.kubernetes.io/instance
+    * app.kubernetes.io/version
+    * app.kubernetes.io/name
+    * app.kubernetes.io/part-of
+    * app.kubernetes.io/managed-by
+    * app.kubernetes.io/created-by
+
+    ```
+    metadata:
+      labels:
+        <label>: value
+    ```  
+    For additional information, please check
+    * https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
+  category: magalix.categories.organizational-standards
+  severity: low
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  tags: []
+  parameters:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.labels.missing_kubernetes_app_created_by_label\n\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  label := \"app.kubernetes.io/created-by\"\n  # Filter the type of entity before\
+    \ moving on since this shouldn't apply to all entities\n  contains_kind(controller_input.kind,\
+    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n  not controller_input.metadata.labels[label]\n\
+    \  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Missing '%v'\
+    \ label\", [label]),\n    \"violating_key\": \"metadata.labels\",\n    \"recommended_value\"\
+    : label\n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
+    \ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

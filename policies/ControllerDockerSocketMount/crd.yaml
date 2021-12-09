@@ -1,0 +1,66 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-mounting-docker-socket
+spec:
+  enable: true
+  name: magalix.policies.containers-mounting-docker-socket
+  description: |
+    This Policy checks the mounting of the `docker.sock` socket of the node into the container. The docker socket filename can be altered based on your configuration. The full path is unnecessary as the Policy accounts for any path.  
+  how_to_solve: |
+    Ensure workloads aren't mounting the `docker.sock` (or other configured socket name) in order to avoid a violation. 
+    ```
+    ...
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: docker-sock
+                hostPath:
+                  path: "<path>/<this value>"
+                  type: File
+    ```
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.nist-800-190.4.4.3
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  tags: [nist800-190, gdpr, default]
+  parameters:
+  - name: docker_sock
+    type: string
+    required: true
+    default: docker.sock
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.podSecurity.deny_docker_socket_mount\n\ndocker_socket_name\
+    \ := input.parameters.docker_socket\nexclude_namespace := input.parameters.exclude_namespace\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
+    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i, j\n  sock := controller_spec.containers[i]\n  vmounts := sock.volumeMounts[j]\n\
+    \  sock_path := vmounts.hostPath.path \n  contains(sock_path, docker_socket_name)\
+    \ \n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"'%v' is\
+    \ being mounted. The hostPath we found was '%v'\",[docker_socket_name, sock_path]),\n\
+    \    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].volumeMonuts[%v].hostPath.path\"\
+    , [i,j])  \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
+    \n# controller_container acts as an iterator to get containers from the template\n\
+    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
+    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
+    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
+    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
+    \  kinds[_] = kind\n}"

@@ -1,0 +1,63 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.affinity-node-simple
+spec:
+  enable: true
+  name: magalix.policies.affinity-node-simple
+  description: |
+    This Policy sets NodeAffinity keys, regardless of the Node Affinity selector or scheduling type. List out the keys you want to check to ensure you are using the right keys. This Policy supports the following Node Affinity types:
+    - preferredDuringSchedulingIgnoredDuringExecution
+    - requiredDuringSchedulingIgnoredDuringExecution
+  how_to_solve: |
+    When working with Node Affinity, this policy will traverse through the entity and find the proper keys, regardless of affinity type. The follwing is an example of where the key is located. 
+
+    ```
+    ...
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: <keys>
+    ```
+
+    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type1.2.1.1
+  parameters:
+  - name: keys
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.affinity.nodes\n\nkeys := input.parameters.keys\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  walk(controller_spec, [path, value])\n  key := path[count(path) - 1]\n  key\
+    \ == \"key\"\n  not array_contains(keys, value)\n  result = {\n    \"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"Expecting key '%v'; detected '%v'\", [keys, value]),\n\
+    \    \"violating_key\": \"spec.template.spec.affinity.nodeAffinity\"\n  }\n}\n\
+    \narray_contains(array, element) {\n  array[_] = element\n}\n\n# Controller input\n\
+    controller_input = input.review.object\n\ncontroller_spec = controller_input.spec.template.spec.affinity.nodeAffinity\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec.affinity.nodeAffinity\
+    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
+    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
+    \  kinds[_] = kind\n}"
