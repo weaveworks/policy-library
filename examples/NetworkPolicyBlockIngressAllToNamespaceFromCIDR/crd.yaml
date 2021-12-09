@@ -1,0 +1,50 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.network-block-all-ingress-traffic-to-namespace-from-cidr-block.
+spec:
+  enable: true
+  name: magalix.policies.network-block-all-ingress-traffic-to-namespace-from-cidr-block.
+  description: |
+    If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic from a specified namespace to a CIDR block of IP addresses. 
+
+    By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
+  how_to_solve: |
+    Validate your use case and check network policies for traffic blocking. 
+
+    https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  category: magalix.categories.network-security
+  severity: medium
+  controls:
+  - magalix.controls.pci-dss.1.2.1
+  - magalix.controls.soc2-type1.1.6.1
+  parameters:
+  - name: namespace
+    type: string
+    required: true
+    default:
+  - name: cidr
+    type: string
+    required: true
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.network.block.ingress.to.namespace.from.cidr\n\n\
+    namespace := input.parameters.namespace\ncidr := input.parameters.cidr\nexclude_label_key\
+    \ := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_label_value == np_input.metadata.labels[exclude_label_key]\n\
+    \  namespace == np_input.metadata.namespace\n  some i, j\n  spec_ingress := np_input.spec.ingress[i]\n\
+    \  ingress_from := spec_ingress.from[j]\n  not array_contains(ingress_from.ipBlock.except,\
+    \ cidr)\n  result = {\n    \"issue_detected\": true,\n    \"msg\": sprintf(\"\
+    CIDR block should contain '%v'; but %v was detected\", [cidr, ingress_from.ipBlock.except]),\n\
+    \    \"violating_key\": sprintf(\"spec.egress[%v].from[%v].ipBlock.cidr.except\"\
+    , [i, j]),\n    \"recommended_value\": cidr\n  }\n}\n\narray_contains(array, element)\
+    \ {\n  array[_] = element\n}\n\nnp_input = input.review.object {\n  contains_kind(input.review.object.kind,\
+    \ {\"NetworkPolicy\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
+    }"

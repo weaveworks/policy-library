@@ -1,0 +1,51 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.namespace-resources-limitrange
+spec:
+  enable: true
+  name: magalix.policies.namespace-resources-limitrange
+  description: |
+    When setting up default CPU and Memory values for your namespace, this policy will check if both requests and limits are set. This policy checks for the following:
+
+    | Resource Setting | Resource Type  |
+    |---|---|
+    |  default | cpu  |
+    |  default  | memory  |
+    |  defaultRequest |  cpu |
+    |  defaultRequest | memory  |
+    |  min | memory  |
+    |  min | cpu  |
+    |  max | cpu |
+    |  max | memory  |
+  how_to_solve: |
+    Ensure you are specifying both CPU and Memory requests and limits in your LimitRange
+    ```
+    spec:
+    limits:
+    - <resource_setting>:
+        <resource_type>: value
+    ```
+
+    https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/
+    https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type1.2.1.1
+  parameters:
+  - name: resource_type
+    type: string
+    required: true
+    default:
+  - name: resource_setting
+    type: string
+    required: true
+    default:
+  code: "package magalix.advisor.namespace.default_resource_values\n\nresource_type\
+    \ := input.parameters.resource_type\nresource_setting := input.parameters.resource_setting\n\
+    \nviolation[result] {\n  values := lr_spec.limits[_]\n  not values[resource_setting][resource_type]\n\
+    \  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"You are missing\
+    \ '%v': '%v'\", [resource_setting, resource_type]),\n    \"violating_key\": \"\
+    spec.limits\"\n\n  }\n}\n\nlr_spec = input.review.object.spec {\n  contains_kind(input.review.object.kind,\
+    \ {\"LimitRange\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

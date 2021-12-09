@@ -1,0 +1,28 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.namespace-pod-quota
+spec:
+  enable: true
+  name: magalix.policies.namespace-pod-quota
+  description: |
+    When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. 
+  how_to_solve: |
+    Specify a value for the maximum number of pods you'd like in a namespace. 
+
+    https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-pod-namespace/
+  category: magalix.categories.capacity-management
+  severity: low
+  controls:
+  - magalix.controls.soc2-type1.2.1.1
+  parameters:
+  - name: pod_quota
+    type: integer
+    required: true
+    default:
+  code: "package magalix.advisor.namespace.pod_quotas\n\npod_quota := input.parameters.pod_quota\n\
+    \nviolation[result] {\n  pods := rq_spec.hard.pods\n  not pods <= pod_quota\n\
+    \  result = {\n  \t\"issue detected\": true,\n    \"msg\": \"You are missing the\
+    \ number of Pods\",\n    \"violating_key\": \"spec.hard.pods\"\n  }\n}\n\nrq_spec\
+    \ = input.review.object.spec{\n  contains_kind(input.review.object.kind, {\"ResourceQuota\"\
+    })\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

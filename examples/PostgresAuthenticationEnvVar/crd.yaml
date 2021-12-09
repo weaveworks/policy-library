@@ -1,0 +1,77 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.postgres-enforce-environment-variable
+spec:
+  enable: true
+  name: magalix.policies.postgres-enforce-environment-variable
+  description: |
+    This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 
+    ### POSTGRES_PASSWORD
+    The POSTGRES_PASSWORD environment variable is required for you to use the PostgreSQL image. It must not be empty or undefined. This environment variable sets the superuser password for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable.
+    ### POSTGRES_USER     
+    The POSTGRES_USER environment variable is used in conjunction with POSTGRES_PASSWORD to set a user and its password. This variable will create the specified user with superuser power and a database with the same name. If it is not specified, then the default user of postgres will be used.
+
+    Be aware that if this parameter is specified, PostgreSQL will still show The files belonging to this database system will be owned by user "postgres" during initialization. This refers to the Linux system user (from /etc/passwd in the image) that the postgres daemon runs as, and as such is unrelated to the POSTGRES_USER option. See the section titled "Arbitrary --user Notes" for more details.
+
+    ### POSTGRES_HOST_AUTH_METHOD
+    The POSTGRES_HOST_AUTH_METHOD environment variable is used to control the auth-method for host connections for all databases, all users, and all addresses. If unspecified then md5 password authentication is used. 
+  how_to_solve: |
+    If you encounter a violation, ensure one of the following environment variables is set. 
+    - POSTGRES_PASSWORD
+    - POSTGRES_USER 
+    - POSTGRES_HOST_AUTH_METHOD
+
+    For futher information about the Postgres Docker container, check here: https://hub.docker.com/_/postgres
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.hipaa.164.312.a.1
+  parameters:
+  - name: envvar_name
+    type: string
+    required: true
+    default:
+  - name: app_name
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.postgres.enforce_env_vars\n\nenv_name = input.parameters.envvar_name\n\
+    app_name = input.parameters.app_name\nexclude_namespace = input.parameters.exclude_namespace\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
+    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  containers := controller_spec.containers[i]\n  contains(containers.image,\
+    \ app_name)\n  not containers.env\n  result = {\n    \"issue detected\": true,\n\
+    \    \"msg\": \"environment variables needs to be set\",\n    \"violating_key\"\
+    : sprintf(\"spec.template.spec.containers[%v]\", [i]),\n  }\n}\n\nviolation[result]\
+    \ {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers\
+    \ := controller_spec.containers[i]\n  contains(containers.image, app_name)\n \
+    \ envs := containers.env\n  not array_contains(envs, env_name)\n  result = {\n\
+    \    \"issue detected\": true,\n    \"msg\": sprintf(\"'%v' is missing'; detected\
+    \ '%v'\", [env_name, envs]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].env.name\"\
+    , [i]),\n  }\n}\n\n\narray_contains(array, element) {\n  array[_].name = element\n\
+    }\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
+    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}"

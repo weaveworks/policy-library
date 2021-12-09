@@ -1,0 +1,65 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-using-hostpath
+spec:
+  enable: true
+  name: magalix.policies.containers-using-hostpath
+  description: |
+    This Policy checks for containers that are trying to use HostPath. 
+
+    A `hostPath` volume mounts a file or directory from the host node's filesystem into your Pod. This is not something that most Pods will need, but it offers a powerful escape hatch for some applications.
+  how_to_solve: |
+    Using HostPath could allow mounting the entire host’s filesystem into your pod, giving you read/write access on the host’s filesystem. This leaves your cluster vulnerable to escape Kubernetes constraints and access components at the Node (OS) level. 
+    ```
+    ...
+      spec:
+        template:
+          spec:
+            volumes:
+              - hostPath:
+    ```
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.mitre-attack.3.2
+  - magalix.controls.nist-800-190.4.4.5
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  tags: [mitre-attack, nist800-190, gdpr, default]
+  parameters:
+  - name: hostpath_key
+    type: string
+    required: true
+    default: hostPath
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.pods.hostpath\n\nhostpath_key := input.parameters.hostpath_key\n\
+    exclude_namespace = input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
+    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
+    \ {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n  some i\n  volumes\
+    \ := controller_spec.volumes[i]\n  has_key(volumes, hostpath_key)\n  result =\
+    \ {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Containers should not\
+    \ be using hostPath; found %v\", [volumes]),\n    \"violating_key\": sprintf(\"\
+    spec.template.spec.volumes[%v]\", [i])\n  }\n}\n\nhas_key(x, k) { \n  type_name(x[k])\n\
+    }\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
+    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}"

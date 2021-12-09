@@ -1,0 +1,92 @@
+apiVersion: weaveworks.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-not-using-runtime-default-seccomp-profile
+spec:
+  enable: true
+  name: magalix.policies.containers-not-using-runtime-default-seccomp-profile
+  description: |
+    This Policy checks for runtime/default seccomp annotation. 
+
+    Seccomp stands for secure computing mode and has been a feature of the Linux kernel since version 2.6.12. It can be used to sandbox the privileges of a process, restricting the calls it is able to make from userspace into the kernel. Kubernetes lets you automatically apply seccomp profiles loaded onto a Node to your Pods and containers.
+  how_to_solve: |
+    Depending on the version of Kubernetes, you either need to set an annotation or a seccomp type in your `securityContext`. 
+    ```
+    metadata:
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: <seccomp_annotation>
+    ```
+    AND
+    ```
+    ...
+      spec:
+        seccompProfile:
+          type: <seccomp_type>
+    ```
+    https://kubernetes.io/docs/tutorials/clusters/seccomp/#create-pod-that-uses-the-container-runtime-default-seccomp-profile
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.cis-benchmark.5.7.2
+  - magalix.controls.nist-800-190.4.4.3
+  - magalix.controls.soc2-type1.1.6.1
+  tags: [cis-benchmark, nist800-190, soc2-type1]
+  parameters:
+  - name: seccomp_annotation
+    type: string
+    required: true
+    default: runtime/default
+  - name: seccomp_type
+    type: string
+    required: true
+    default: RuntimeDefault
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.podSecurity.seccomp_runtime_default\n\nseccomp_annotation\
+    \ := input.parameters.seccomp_annotation\nseccomp_type := input.parameters.seccomp_type\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  annotation := input.review.object.metadata.annotations[\"seccomp.security.alpha.kubernetes.io/pod\"\
+    ]\n  not annotation == seccomp_annotation\n  result = {\n    \"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"The value of the annotation must be '%v'; found\
+    \ '%v'\",[seccomp_annotation, annotation]),\n    \"violating_key\": \"spec.metadata.annotations\"\
+    \  \n  }\n}\n\n# Pods\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  type := controller_spec.securityContext.seccompProfile.type\n  not type ==\
+    \ seccomp_type\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
+    The secompProfile type must be '%v'; found '%v'\",[seccomp_type, type]),\n   \
+    \ \"violating_key\": \"spec.template.spec.securityContext.seccompProfile.type\"\
+    \  \n  }\n}\n\n# Non Pods - \"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"\
+    Job\"\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  type := controller_spec.template.spec.securityContext.seccompProfile.type\n\
+    \  not type == seccomp_type\n  result = {\n    \"issue detected\": true,\n   \
+    \ \"msg\": sprintf(\"The secompProfile type must be '%v'; found '%v'\",[seccomp_type,\
+    \ type]),\n    \"violating_key\": \"spec.template.spec.securityContext.seccompProfile.type\"\
+    \  \n  }\n}\n\n# CronJobs\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  type := controller_input.spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type\n\
+    \  not type == seccomp_type\n  result = {\n    \"issue detected\": true,\n   \
+    \ \"msg\": sprintf(\"The secompProfile type must be '%v'; found '%v'\",[seccomp_type,\
+    \ type]),\n    \"violating_key\": \"spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type\"\
+    \  \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n\
+    # controller_container acts as an iterator to get containers from the template\n\
+    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
+    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
+    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
+    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
+    \  kinds[_] = kind\n}\n"
