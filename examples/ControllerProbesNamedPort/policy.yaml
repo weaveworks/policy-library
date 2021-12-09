@@ -1,13 +1,35 @@
-enable: true
-name: magalix.policies.container-named-port
-description: |
-  This Policy checks the named port of your containers to see if they are set in your container probes. 
-how_to_solve: |
-  https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
-category: magalix.categories.best-practices
-severity: high
-parameters:
-- name: probe
-  type: string
-  required: true
-  default: livenessProbe
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-named-port
+spec:
+  enable: true
+  name: magalix.policies.container-named-port
+  description: |
+    This Policy checks the named port of your containers to see if they are set in your container probes. 
+  how_to_solve: |
+    https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
+  category: magalix.categories.best-practices
+  severity: high
+  parameters:
+  - name: probe
+    type: string
+    required: true
+    default: livenessProbe
+  code: "package magalix.advisor.observability.named_port\n\nhealthcheck_name := \"\
+    healthcheck\"\n\n\n### Need to be able to check if element exists inside array\n\
+    # violation[result] {\n#     named_port := controller_container[_].ports[_]\n\
+    #     not healthcheck_name == named_port.name\n#     result = {\n#     \t\"issue_detected\"\
+    : true,\n#         \"msg\": sprintf(\"Port name expected to be '%v', found '%v'\"\
+    , [healthcheck_name, named_port.name]),      \n#     }\n# }\n\n\n\n\nviolation[result]\
+    \ {\n  named_port := controller_container[_][p][_].port\n  contains(p, \"Probe\"\
+    )\n  not named_port == healthcheck_name\n  result = {\n    \"issue_detected\"\
+    : true,\n    \"msg\": sprintf(\"Liveness Probe port must be '%v', found '%v'\"\
+    , [healthcheck_name, named_port]),\n    \"violating_key\": \"spec.template.spec.containers\"\
+    \  \n  }\n}\n\n\n\n\ncontroller_container[container] {\n    container := controller_spec.containers[_]\n\
+    }\n\n# controller_container acts as an iterator to get containers from the template\n\
+    controller_spec = input.review.object.spec.template.spec {\n\tcontains_kind(input.review.object.kind,\
+    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = input.review.object.spec\
+    \ {\n\tinput.review.object.kind == \"Pod\"\n} else = input.review.object.spec.jobTemplate.spec.template.spec\
+    \ {\n\tinput.review.object.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds)\
+    \ {\n  kinds[_] = kind\n}"

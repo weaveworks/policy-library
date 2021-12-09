@@ -1,40 +1,78 @@
-enable: true
-name: magalix.policies.container-running-as-root
-description: |
-  Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to `true`. 
-how_to_solve: |
-  You should set `securityContext.runAsNonRoot` to `true`. Not setting it will default to giving the container root user rights on the VM that it is running on. 
-  ```
-  ...
-    spec:
-      securityContext:
-        runAsNonRoot: true
-  ```
-  https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-category: magalix.categories.pod-security
-severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-controls:
-- magalix.controls.pci-dss.2.2.4
-- magalix.controls.pci-dss.2.2.5
-- magalix.controls.cis-benchmark.5.2.6
-- magalix.controls.mitre-attack.4.1
-- magalix.controls.nist-800-190.3.3.1
-- magalix.controls.gdpr.24
-- magalix.controls.gdpr.25
-- magalix.controls.gdpr.32
-tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, default]
-parameters:
-- name: exclude_namespace
-  type: string
-  required: false
-  default: kube-system
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-running-as-root
+spec:
+  enable: true
+  name: magalix.policies.container-running-as-root
+  description: |
+    Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to `true`. 
+  how_to_solve: |
+    You should set `securityContext.runAsNonRoot` to `true`. Not setting it will default to giving the container root user rights on the VM that it is running on. 
+    ```
+    ...
+      spec:
+        securityContext:
+          runAsNonRoot: true
+    ```
+    https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.pci-dss.2.2.4
+  - magalix.controls.pci-dss.2.2.5
+  - magalix.controls.cis-benchmark.5.2.6
+  - magalix.controls.mitre-attack.4.1
+  - magalix.controls.nist-800-190.3.3.1
+  - magalix.controls.gdpr.24
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, default]
+  parameters:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default: kube-system
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.podSecurity.runningAsRoot\n\nexclude_namespace :=\
+    \ input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
+    exclude_label_value := input.parameters.exclude_label_value\n\n# Check for missing\
+    \ securityContext.runAsNonRoot (missing in both, pod and container)\nviolation[result]\
+    \ {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\tnot exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n\n\tcontroller_spec.securityContext\n\
+    \tnot controller_spec.securityContext.runAsNonRoot\n\tnot controller_spec.securityContext.runAsNonRoot\
+    \ == false\n\n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
+    \tnot containers.securityContext.runAsNonRoot\n\tnot containers.securityContext.runAsNonRoot\
+    \ == false\n\n\tresult = {\n\t\t\"issue detected\": true,\n\t\t\"msg\": sprintf(\"\
+    Container missing spec.template.spec.containers[%v].securityContext.runAsNonRoot\
+    \ while Pod spec.template.spec.securityContext.runAsNonRoot is not defined as\
+    \ well.\", [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext\"\
+    , [i]),\n\t}\n}\n\n# Container security context\n# Check if containers.securityContext.runAsNonRoot\
+    \ exists and = false\nviolation[result] {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\
+    \tnot exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
+    \tcontainers.securityContext.runAsNonRoot == false\n\n\tresult = {\n\t\t\"issue\
+    \ detected\": true,\n\t\t\"msg\": sprintf(\"Container spec.template.spec.containers[%v].securityContext.runAsNonRoot\
+    \ should be set to true \", [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext.runAsNonRoot\"\
+    , [i]),\n\t\t\"recommended_value\": true,\n\t}\n}\n\n# Pod security context\n\
+    # Check if spec.securityContext.runAsNonRoot exists and = false\nviolation[result]\
+    \ {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\tnot exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n\n\tcontroller_spec.securityContext\n\
+    \tcontroller_spec.securityContext.runAsNonRoot == false\n\n\tresult = {\n\t\t\"\
+    issue detected\": true,\n\t\t\"msg\": \"Pod spec.template.spec.securityContext.runAsNonRoot\
+    \ should be set to true\",\n\t\t\"violating_key\": \"spec.template.spec.securityContext.runAsNonRoot\"\
+    ,\n\t\t\"recommended_value\": true,\n\t}\n}\n\ncontroller_input = input.review.object\n\
+    \ncontroller_spec = controller_input.spec.template.spec {\n\tcontains(controller_input.kind,\
+    \ {\"StatefulSet\", \"DaemonSet\", \"Deployment\", \"Job\", \"ReplicaSet\"})\n\
+    } else = controller_input.spec {\n\tcontroller_input.kind == \"Pod\"\n} else =\
+    \ controller_input.spec.jobTemplate.spec.template.spec {\n\tcontroller_input.kind\
+    \ == \"CronJob\"\n}\n\ncontains(kind, kinds) {\n\tkinds[_] = kind\n}"

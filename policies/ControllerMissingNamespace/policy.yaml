@@ -1,25 +1,37 @@
-enable: true
-name: magalix.policies.block-workloads-created-without-specifying-namespace
-description: |
-  Using this Policy, you can prohibit workloads from being created in a default namespace due to the lack of a namespace label. 
-how_to_solve: |
-  Specify a `namespace` label. 
-  ```
-  metadata:
-    namespace:
-  ```
-  https://kubernetes.io/docs/tasks/administer-cluster/namespaces/#understanding-the-motivation-for-using-namespaces
-category: magalix.categories.organizational-standards
-severity: low
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-tags: []
-parameters:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.block-workloads-created-without-specifying-namespace
+spec:
+  enable: true
+  name: magalix.policies.block-workloads-created-without-specifying-namespace
+  description: |
+    Using this Policy, you can prohibit workloads from being created in a default namespace due to the lack of a namespace label. 
+  how_to_solve: |
+    Specify a `namespace` label. 
+    ```
+    metadata:
+      namespace:
+    ```
+    https://kubernetes.io/docs/tasks/administer-cluster/namespaces/#understanding-the-motivation-for-using-namespaces
+  category: magalix.categories.organizational-standards
+  severity: low
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  tags: []
+  parameters:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.namespace.missing_namespace\n\nexclude_label_key\
+    \ := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  not controller_input.metadata.namespace\n  result = {\n  \t\"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"Missing namespace. Workloads should be deployed\
+    \ in a non-default namespace;\",[]),\n    \"violating_key\": \"metadata\"\n  }\n\
+    }\n\ncontroller_input = input.review.object\n"

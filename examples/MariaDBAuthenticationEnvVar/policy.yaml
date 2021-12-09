@@ -1,50 +1,78 @@
-enable: true
-name: magalix.policies.mariadb-enforce-environment-variable
-description: |
-  This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 
-  ### MARIADB_USER
-  The MARIADB_USER environment variable sets up a superuser with the same name. 
-  ### MARIADB_ROOT_PASSWORD
-  The MARIADB_ROOT_PASSWORD environment variable specifies a password for the MARIADB root account. 
-  ### MARIADB_PASSWORD
-  The MARIADB_PASSWORD environment variable specifies a password for MARIADB_USER user. 
-  ### MARIADB_RANDOM_ROOT_PASSWORD
-  The MARIADB_RANDOM_ROOT_PASSWORD environment variable creates random password for the server's root user when the Docker container is started.
-how_to_solve: |
-  If you encounter a violation, ensure one of the following environment variables is set. 
-  - MARIADB_USER
-  - MARIADB_ROOT_PASSWORD
-  - MARIADB_PASSWORD
-  - MARIADB_RANDOM_ROOT_PASSWORD
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.mariadb-enforce-environment-variable
+spec:
+  enable: true
+  name: magalix.policies.mariadb-enforce-environment-variable
+  description: |
+    This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 
+    ### MARIADB_USER
+    The MARIADB_USER environment variable sets up a superuser with the same name. 
+    ### MARIADB_ROOT_PASSWORD
+    The MARIADB_ROOT_PASSWORD environment variable specifies a password for the MARIADB root account. 
+    ### MARIADB_PASSWORD
+    The MARIADB_PASSWORD environment variable specifies a password for MARIADB_USER user. 
+    ### MARIADB_RANDOM_ROOT_PASSWORD
+    The MARIADB_RANDOM_ROOT_PASSWORD environment variable creates random password for the server's root user when the Docker container is started.
+  how_to_solve: |
+    If you encounter a violation, ensure one of the following environment variables is set. 
+    - MARIADB_USER
+    - MARIADB_ROOT_PASSWORD
+    - MARIADB_PASSWORD
+    - MARIADB_RANDOM_ROOT_PASSWORD
 
-  For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
-category: magalix.categories.access-control
-severity: high
-controls:
-- magalix.controls.pci-dss.2.1
-- magalix.controls.hipaa.164.312.a.2.i
-- magalix.controls.gdpr.25
-- magalix.controls.gdpr.32
-- magalix.controls.gdpr.24
-- magalix.controls.hipaa.164.312.a.1
-parameters:
-- name: envvar_name
-  type: string
-  required: true
-  default:
-- name: app_name
-  type: string
-  required: true
-  default:
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+    For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.2.1
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.hipaa.164.312.a.1
+  parameters:
+  - name: envvar_name
+    type: string
+    required: true
+    default:
+  - name: app_name
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.mariadb.enforce_env_vars\n\nenv_name = input.parameters.envvar_name\n\
+    app_name = input.parameters.app_name\nexclude_namespace = input.parameters.exclude_namespace\n\
+    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
+    \ input.parameters.exclude_label_value\n\n\nviolation[result] {\n  not exclude_namespace\
+    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  containers := controller_spec.containers[i]\n  contains(containers.image,\
+    \ app_name)\n  not containers.env\n  result = {\n    \"issue detected\": true,\n\
+    \    \"msg\": \"environment variables needs to be set\",\n    \"violating_key\"\
+    : sprintf(\"spec.template.spec.containers[%v]\", [i]),  }\n}\n\nviolation[result]\
+    \ {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value\
+    \ == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers\
+    \ := controller_spec.containers[i]\n  contains(containers.image, app_name)\n \
+    \ envs := containers.env\n  not array_contains(envs, env_name)\n  result = {\n\
+    \    \"issue detected\": true,\n    \"msg\": sprintf(\"'%v' is missing'; detected\
+    \ '%v'\", [env_name, envs]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].env.name\"\
+    , [i])\n  }\n}\n\n\narray_contains(array, element) {\n  array[_].name = element\n\
+    }\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
+    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
+    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
+    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
+    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
+    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
+    \ kinds[_] = kind\n}"

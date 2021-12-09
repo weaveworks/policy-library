@@ -1,44 +1,77 @@
-enable: true
-name: magalix.policies.container-prohibit-image-tag
-description: |
-  Prohibit certain image tags by specifying them in the Policy. The Policy will also violate if the a tag is not set, or is set to `latest`. 
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-prohibit-image-tag
+spec:
+  enable: true
+  name: magalix.policies.container-prohibit-image-tag
+  description: |
+    Prohibit certain image tags by specifying them in the Policy. The Policy will also violate if the a tag is not set, or is set to `latest`. 
 
-  Note: You should avoid using the :latest tag when deploying containers in production as it is harder to track which version of the image is running and more difficult to roll back properly.
-how_to_solve: |
-  Configure an image tag that is not in the Policy. 
-  ```
-  ...
-    spec:
-      containers:
-      - image: registry/image_name:<tag>
-  ```
-  https://kubernetes.io/docs/concepts/configuration/overview/#container-images
-category: magalix.categories.software-supply-chain
-severity: high
-targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet,
-    CronJob]}
-controls:
-- magalix.controls.cis-benchmark.5.5.1
-- magalix.controls.mitre-attack.1.2
-- magalix.controls.gdpr.25
-- magalix.controls.gdpr.32
-- magalix.controls.gdpr.24
-- magalix.controls.soc2-type1.1.6.8
-tags: [cis-benchmark, mitre-attack, gdpr, soc2-type1, default]
-parameters:
-- name: image_tag
-  type: string
-  required: true
-  default: latest
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+    Note: You should avoid using the :latest tag when deploying containers in production as it is harder to track which version of the image is running and more difficult to roll back properly.
+  how_to_solve: |
+    Configure an image tag that is not in the Policy. 
+    ```
+    ...
+      spec:
+        containers:
+        - image: registry/image_name:<tag>
+    ```
+    https://kubernetes.io/docs/concepts/configuration/overview/#container-images
+  category: magalix.categories.software-supply-chain
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.cis-benchmark.5.5.1
+  - magalix.controls.mitre-attack.1.2
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.soc2-type1.1.6.8
+  tags: [cis-benchmark, mitre-attack, gdpr, soc2-type1, default]
+  parameters:
+  - name: image_tag
+    type: string
+    required: true
+    default: latest
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.images.image_tag_enforce\n\nimage_tag := input.parameters.image_tag\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  containers = controller_spec.containers[i]\n  splittedUrl = split(containers.image,\
+    \ \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n  not contains(image, \"\
+    :\")\n  result = {\n    \"issue detected\": true,\n    \"msg\": \"Image is not\
+    \ tagged\",\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\"\
+    , [i])\n  }\n}\n\nviolation[result] {\n  some i\n  containers = controller_spec.containers[i]\n\
+    \  splittedUrl = split(containers.image, \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n\
+    \  count(split(image, \":\")) == 2\n  [image_name, tag] = split(image, \":\")\n\
+    \  tag == image_tag\n  result = {\n    \"issue detected\": true,\n    \"msg\"\
+    : sprintf(\"Image contains unapproved tag '%v'\", [image_tag]),\n    \"image\"\
+    : image,\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\"\
+    , [i])\n  }\n}\n\nviolation[result] {\n  some i\n  containers = controller_spec.containers[i]\n\
+    \  splittedUrl = split(containers.image, \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n\
+    \  count(split(image, \":\")) == 3\n  [image_name, port, tag] = split(image, \"\
+    :\")\n  tag == image_tag\n  result = {\n    \"issue detected\": true,\n    \"\
+    msg\": sprintf(\"Image contains unapproved tag:'%v'\", [image_tag]),\n    \"image\"\
+    : image,\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\"\
+    , [i])\n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
+    \n# controller_container acts as an iterator to get containers from the template\n\
+    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
+    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
+    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
+    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
+    \  kinds[_] = kind\n}"

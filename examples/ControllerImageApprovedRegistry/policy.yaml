@@ -1,37 +1,62 @@
-enable: true
-name: magalix.policies.approved-registry
-description: |
-  This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 
-how_to_solve: |
-  Ensure the image registry you are using matches the registries specified in the policy. If you are using multiple containers, be sure to check those as well. 
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.approved-registry
+spec:
+  enable: true
+  name: magalix.policies.approved-registry
+  description: |
+    This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 
+  how_to_solve: |
+    Ensure the image registry you are using matches the registries specified in the policy. If you are using multiple containers, be sure to check those as well. 
 
-  Replace the violating registry with one that is approved. 
-  ```
-  ...
-    spec:
-      template:
-        spec:
-          containers:
-          - image:<registries>/container_name:tag
-  ```
-category: magalix.categories.software-supply-chain
-severity: high
-controls:
-- magalix.controls.soc2-type1.1.6.8
-parameters:
-- name: registries
-  type: array
-  required: true
-  default:
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+    Replace the violating registry with one that is approved. 
+    ```
+    ...
+      spec:
+        template:
+          spec:
+            containers:
+            - image:<registries>/container_name:tag
+    ```
+  category: magalix.categories.software-supply-chain
+  severity: high
+  controls:
+  - magalix.controls.soc2-type1.1.6.8
+  parameters:
+  - name: registries
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.images.approved_registry\n\nmy_registries := input.parameters.registries\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  container_controller := controller_spec.containers[i]\n  image_path\
+    \ := container_controller.image\n  registry := get_registry(image_path)\n  not\
+    \ array_contains(my_registries, registry)\n  result = {\n    \"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"regsitry must be from '%v'; found '%v'\", [my_registries,\
+    \ registry]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\"\
+    , [i])\n  }\n}\n\nget_registry(str) = registry {\n  contains(str, \"/\")\n  path\
+    \ := split(str, \"/\")\n  registry := path[0]\n}\n\nget_registry(str) = registry\
+    \ {\n  not contains(str, \"/\")\n  registry := \"\"\n}\n\narray_contains(array,\
+    \ element) {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input\
+    \ = input.review.object\n\n# controller_container acts as an iterator to get containers\
+    \ from the template\ncontroller_spec = controller_input.spec.template.spec {\n\
+    \  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\"\
+    , \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\
+    \n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind\
+    \ == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

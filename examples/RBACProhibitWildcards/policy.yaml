@@ -1,52 +1,67 @@
-enable: true
-name: magalix.policies.rbac-prohibit-resources-wildcards
-description: |
-  This Policy prohbits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.rbac-prohibit-resources-wildcards
+spec:
+  enable: true
+  name: magalix.policies.rbac-prohibit-resources-wildcards
+  description: |
+    This Policy prohbits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
 
-  ### Resources
-  In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
+    ### Resources
+    In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
 
-  ### Verbs
-  API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
+    ### Verbs
+    API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
 
-  ### API Groups
-  The API Group being accessed (for resource requests only).
+    ### API Groups
+    The API Group being accessed (for resource requests only).
 
-  ### Non Resource URLs
-  Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
-how_to_solve: |
-  Replace the `*` with the appropriate resource. The type of 
-  ```
-  rules:
-  - <attributes>:
-    - '*'
-      
-  ```
-  https://kubernetes.io/docs/reference/access-authn-authz/rbac/
-category: magalix.categories.access-control
-severity: high
-controls:
-- magalix.controls.pci-dss.7.1.1
-- magalix.controls.pci-dss.7.1.2
-- magalix.controls.cis-benchmark.5.1.3
-- magalix.controls.gdpr.25
-- magalix.controls.gdpr.32
-- magalix.controls.gdpr.24
-- magalix.controls.soc2-type1.1.6.3
-parameters:
-- name: attributes
-  type: string
-  required: true
-  default:
-- name: exclude_role_name
-  type: string
-  required: true
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+    ### Non Resource URLs
+    Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
+  how_to_solve: |
+    Replace the `*` with the appropriate resource. The type of 
+    ```
+    rules:
+    - <attributes>:
+      - '*'
+        
+    ```
+    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.7.1.1
+  - magalix.controls.pci-dss.7.1.2
+  - magalix.controls.cis-benchmark.5.1.3
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.soc2-type1.1.6.3
+  parameters:
+  - name: attributes
+    type: string
+    required: true
+    default:
+  - name: exclude_role_name
+    type: string
+    required: true
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.rbac.prohibit_wildcards\n\nattributes := input.parameters.attributes\n\
+    exclude_role_name := input.parameters.exclude_role_name\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \n\nviolation[result] {\n  not exclude_label_value == cr_input.metadata.labels[exclude_label_key]\n\
+    \  not exclude_role_name == cr_input.metadata.name\n  some i, j\n  rules := cr_input.rules[i]\n\
+    \  path := rules[attributes][j]\n  path == \"*\"\n  result = {\n  \t\"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"'%v' cannot be set to '*'; found '%v'\",[attributes,\
+    \ path]),\n    \"violating_key\": sprintf(\"rules[%v].attributes[%v]\", [i,j])\n\
+    \  }\n}\n\ncr_input = input.review.object {\n\tcontains(input.review.object.kind,\
+    \ \"Role\")\n} \n"

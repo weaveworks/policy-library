@@ -1,30 +1,49 @@
-enable: true
-name: magalix.policies.node-custom-label
-description: |
-  This Policy checks for custom labels on your node. This Policy looks for both a key and value. 
-how_to_solve: |
-  Add the custom label specified in the policy to all nodes. 
-  ```
-  metadata: 
-    labels: 
-        <key>: <value>
-  ```
-category: magalix.categories.organizational-standards
-severity: low
-parameters:
-- name: key
-  type: string
-  required: true
-  default:
-- name: value
-  type: string
-  required: true
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.node-custom-label
+spec:
+  enable: true
+  name: magalix.policies.node-custom-label
+  description: |
+    This Policy checks for custom labels on your node. This Policy looks for both a key and value. 
+  how_to_solve: |
+    Add the custom label specified in the policy to all nodes. 
+    ```
+    metadata: 
+      labels: 
+          <key>: <value>
+    ```
+  category: magalix.categories.organizational-standards
+  severity: low
+  parameters:
+  - name: key
+    type: string
+    required: true
+    default:
+  - name: value
+    type: string
+    required: true
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.nodes.custom_node_label\n\nkey := input.parameters.key\n\
+    value := input.parameters.value\nexclude_label_key := input.parameters.exclude_label_key\n\
+    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
+    \ {\n  not exclude_label_value == node_metadata.labels[exclude_label_key]\n  not\
+    \ node_metadata.labels[key]\n  result = {\n \t\"issue_detected\": true,\n    \"\
+    msg\": sprintf(\"Node is missing key '%v'; found %v\", [key, node_metadata.labels]),\n\
+    \    \"violating_key\": \"metadata.labels\"\n  }\n}\n\nviolation[result] {\n \
+    \ not exclude_label_value == node_metadata.labels[exclude_label_key]\n  label_value\
+    \ := node_metadata.labels[key]\n  not value == label_value\n  result = {\n  \t\
+    \"issue_detected\": true,\n    \"msg\": sprintf(\"Node label '%v' should have\
+    \ the value of '%v'; found '%v'\", [key, value, label_value]),\n    \"violating_key\"\
+    : sprintf(\"metadata.labels[%v]\", [key]),\n    \"recommended_value\": value\n\
+    \  }\n}\n\nnode_metadata = input.review.object.metadata {\n\tcontains_kind(input.review.object.kind,\
+    \ {\"Node\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

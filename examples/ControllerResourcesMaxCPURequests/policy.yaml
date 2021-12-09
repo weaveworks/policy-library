@@ -1,35 +1,58 @@
-enable: true
-name: magalix.policies.container-maximum-cpu-requests
-description: |
-  This Policy is to ensure a maxiumum CPU Request value is set. The policy will fail if the set CPU request is higher than the one specified in the policy. You must specify a unit size (m, g, etc).
-how_to_solve: |
-  ```
-   ...
-     spec:
-       containers:
-       - resources:
-           requests:
-             cpu: <size>
-   ```
-   https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-category: magalix.categories.capacity-management
-severity: medium
-controls:
-- magalix.controls.soc2-type1.2.1.1
-parameters:
-- name: size
-  type: string
-  required: true
-  default:
-- name: exclude_namespace
-  type: string
-  required: false
-  default:
-- name: exclude_label_key
-  type: string
-  required: false
-  default:
-- name: exclude_label_value
-  type: string
-  required: false
-  default:
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-maximum-cpu-requests
+spec:
+  enable: true
+  name: magalix.policies.container-maximum-cpu-requests
+  description: |
+    This Policy is to ensure a maxiumum CPU Request value is set. The policy will fail if the set CPU request is higher than the one specified in the policy. You must specify a unit size (m, g, etc).
+  how_to_solve: |
+    ```
+     ...
+       spec:
+         containers:
+         - resources:
+             requests:
+               cpu: <size>
+     ```
+     https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type1.2.1.1
+  parameters:
+  - name: size
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
+  code: "package magalix.advisor.controller.max_cpu_requests\n\nmax_size := input.parameters.size\n\
+    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
+    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
+    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
+    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
+    \  some i\n  container := controller_spec.containers[i]\n  cpu_requests := container.resources.requests.cpu\n\
+    \  cpu_requests_value := units.parse_bytes(cpu_requests)\n  max_size_value :=\
+    \ units.parse_bytes(max_size)\n  cpu_requests_value > max_size_value\n  result\
+    \ = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"CPU requests must\
+    \ be a maximum of '%v'; found '%v'\", [max_size, cpu_requests]),\n    \"violating_key\"\
+    : sprintf(\"spec.template.spec.containers[%v].resources.requests.cpu\", [i]),\n\
+    \    \"recommended_value\": max_size\n  }\n}\n\n# Controller input\ncontroller_input\
+    \ = input.review.object\n\n# controller_container acts as an iterator to get containers\
+    \ from the template\ncontroller_spec = controller_input.spec.template.spec {\n\
+    \  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\"\
+    , \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\
+    \n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind\
+    \ == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"
