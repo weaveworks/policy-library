@@ -33,7 +33,7 @@ controls:
 - magalix.controls.soc2-type1.1.6.1
 tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, soc2-type1, default]
 parameters:
-- default:
-  name: exclude_namespace
-  required: false
+- name: exclude_namespace
   type: string
+  required: false
+  default:

@@ -30,19 +30,19 @@ controls:
 - magalix.controls.soc2-type1.1.6.1
 tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, soc2-type1, default]
 parameters:
-- default:
-  name: exclude_namespace
-  required: false
-  type: string
-- default: false
-  name: privilege
-  required: true
+- name: privilege
   type: boolean
-- default:
-  name: exclude_label_key
-  required: false
+  required: true
+  default: false
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_key
   type: string
+  required: false
+  default:
+- name: exclude_label_value
+  type: string
+  required: false
+  default:

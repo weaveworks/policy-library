@@ -19,20 +19,19 @@ controls:
 - magalix.controls.pci-dss.2.2.2
 tags: [pci-dss]
 parameters:
-- default: NodePort
-  name: type
+- name: type
+  type: string
   required: true
+  default: NodePort
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
-
+  default:

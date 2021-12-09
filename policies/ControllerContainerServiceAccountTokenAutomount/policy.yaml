@@ -32,19 +32,19 @@ controls:
 - magalix.controls.soc2-type1.1.6.3
 tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
 parameters:
-- default: false
-  name: automount_token
-  required: true
+- name: automount_token
   type: boolean
-- default:
-  name: exclude_namespace
-  required: false
+  required: true
+  default: false
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
+  required: false
+  default:

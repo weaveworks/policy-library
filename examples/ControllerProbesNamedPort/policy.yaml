@@ -7,7 +7,7 @@ how_to_solve: |
 category: magalix.categories.best-practices
 severity: high
 parameters:
-- default: livenessProbe
-  name: probe
-  required: true
+- name: probe
   type: string
+  required: true
+  default: livenessProbe

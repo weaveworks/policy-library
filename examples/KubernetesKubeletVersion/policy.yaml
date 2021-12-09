@@ -11,7 +11,7 @@ how_to_solve: |
 category: magalix.categories.organizational-standards
 severity: medium
 parameters:
-- default:
-  name: version
-  required: true
+- name: version
   type: string
+  required: true
+  default:

@@ -26,15 +26,15 @@ controls:
 - magalix.controls.gdpr.32
 tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, default]
 parameters:
-- default: kube-system
-  name: exclude_namespace
-  required: false
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default: kube-system
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
+  required: false
+  default:

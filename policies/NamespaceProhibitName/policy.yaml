@@ -14,7 +14,7 @@ severity: medium
 targets: {kind: [Namespace]}
 tags: []
 parameters:
-- default: kube-
-  name: namespace_name
-  required: true
+- name: namespace_name
   type: string
+  required: true
+  default: kube-

@@ -28,23 +28,23 @@ controls:
 - magalix.controls.hipaa.164.312.a.2.i
 - magalix.controls.hipaa.164.312.a.1
 parameters:
-- default:
-  name: envvar_name
+- name: envvar_name
+  type: string
   required: true
+  default:
+- name: app_name
   type: string
-- default:
-  name: app_name
   required: true
+  default:
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_namespace
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_value
   type: string
-- default:
-  name: exclude_label_value
   required: false
-  type: string
+  default:

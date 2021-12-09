@@ -18,19 +18,19 @@ controls:
 - magalix.controls.pci-dss.2.2.2
 tags: [pci-dss]
 parameters:
-- default: 1024
-  name: target_port
-  required: true
+- name: target_port
   type: integer
-- default:
-  name: exclude_namespace
-  required: false
+  required: true
+  default: 1024
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
+  required: false
+  default:

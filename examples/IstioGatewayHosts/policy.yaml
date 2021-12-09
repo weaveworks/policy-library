@@ -8,7 +8,7 @@ how_to_solve: |
 category: magalix.categories.network-security
 severity: high
 parameters:
-- default:
-  name: hostnames
-  required: true
+- name: hostnames
   type: array
+  required: true
+  default:

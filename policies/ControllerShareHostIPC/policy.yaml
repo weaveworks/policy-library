@@ -35,21 +35,19 @@ controls:
 - magalix.controls.gdpr.24
 tags: [nist800-190, gdpr, default]
 parameters:
-- default: false
-  name: resource_enabled
-  required: true
+- name: resource_enabled
   type: boolean
-- default:
-  name: exclude_namespace
-  required: false
+  required: true
+  default: false
+- name: exclude_namespace
   type: string
-- default:
-  name: exclude_label_key
   required: false
+  default:
+- name: exclude_label_key
   type: string
-- default:
-  name: exclude_label_value
   required: false
+  default:
+- name: exclude_label_value
   type: string
-
-
+  required: false
+  default:
