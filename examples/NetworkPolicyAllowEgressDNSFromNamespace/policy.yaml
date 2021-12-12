@@ -34,7 +34,7 @@ spec:
   severity: medium
   controls:
   - magalix.controls.pci-dss.1.2.1
-  - magalix.controls.soc2-type1.1.6.1
+  - magalix.controls.soc2-type-1.1.6.1
   parameters:
   - name: namespace
     type: string
