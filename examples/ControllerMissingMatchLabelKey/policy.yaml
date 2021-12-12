@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.missing-matchlabels-key
 spec:
-  enable: true
   name: magalix.policies.missing-matchlabels-key
   description: |
     This Policy will enforce a custom match label key in `spec.selector`.

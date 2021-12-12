@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.network-allow-all-ingress-traffic-to-namespace
 spec:
-  enable: true
   name: magalix.policies.network-allow-all-ingress-traffic-to-namespace
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic from a specified namespace. 

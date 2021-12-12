@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.node-kernel-versions
 spec:
-  enable: true
   name: magalix.policies.node-kernel-versions
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version

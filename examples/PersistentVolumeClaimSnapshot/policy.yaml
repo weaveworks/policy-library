@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.persistent-volume-claim-snapshot
 spec:
-  enable: true
   name: magalix.policies.persistent-volume-claim-snapshot
   description: |
     This Policy checks for a PVC Snapshot. 

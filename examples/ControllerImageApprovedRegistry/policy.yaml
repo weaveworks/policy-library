@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.approved-registry
 spec:
-  enable: true
   name: magalix.policies.approved-registry
   description: |
     This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 

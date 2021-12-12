@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-are-missing-a-spec-template-label
 spec:
-  enable: true
   name: magalix.policies.containers-are-missing-a-spec-template-label
   description: |
     This Policy allows setting a custom label in `spec.template.metadata`.

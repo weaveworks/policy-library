@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.namespace-pod-quota
 spec:
-  enable: true
   name: magalix.policies.namespace-pod-quota
   description: |
     When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. 

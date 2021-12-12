@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.affinity-node-selector
 spec:
-  enable: true
   name: magalix.policies.affinity-node-selector
   description: |
     This Policy allows setting a key and value for `nodeSelector` when assigning pods to nodes. 

@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.network-allow-ingress-traffic-from-namespace-to-another
 spec:
-  enable: true
   name: magalix.policies.network-allow-ingress-traffic-from-namespace-to-another
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to allow Ingress traffic from one namespace to another.

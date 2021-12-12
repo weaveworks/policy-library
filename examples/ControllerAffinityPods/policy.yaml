@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.affinity-pod-simple
 spec:
-  enable: true
   name: magalix.policies.affinity-pod-simple
   description: |
     This Policy sets podAffinity keys, regardless of the Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Affinity types:

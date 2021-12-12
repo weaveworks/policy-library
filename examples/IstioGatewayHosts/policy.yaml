@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.istio-gateway-approved-hosts
 spec:
-  enable: true
   name: magalix.policies.istio-gateway-approved-hosts
   description: |
     # Istio Gateway Approved Hosts

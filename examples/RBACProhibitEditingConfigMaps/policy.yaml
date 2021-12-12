@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.rbac-prohibit-updating-configmaps
 spec:
-  enable: true
   name: magalix.policies.rbac-prohibit-updating-configmaps
   description: |
     This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific verbs set for ConfigMaps. For example, if you wanted to deny the patching of a configmap, you would create a Policy with a the `resource_name` of the configmap you want to protect, it's `namespace` and the `verb` you want to block. 

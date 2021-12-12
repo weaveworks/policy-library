@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-are-missing-a-controller-spec-key
 spec:
-  enable: true
   name: magalix.policies.containers-are-missing-a-controller-spec-key
   description: |
     This Policy will allow you to set your own Policies for the Pod spec. 

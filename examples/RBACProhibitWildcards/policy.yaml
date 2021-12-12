@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.rbac-prohibit-resources-wildcards
 spec:
-  enable: true
   name: magalix.policies.rbac-prohibit-resources-wildcards
   description: |
     This Policy prohbits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:

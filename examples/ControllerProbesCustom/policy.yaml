@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.container-custom-probe
 spec:
-  enable: true
   name: magalix.policies.container-custom-probe
   description: |
     This Policy allows defining the various container probes, and ensures consistent probes are configured across all containers. You can set the type of probe `livenessProbe`, `readinessProbe`, `startupProbe` along with a `command`, a `path` and a `port`. 
