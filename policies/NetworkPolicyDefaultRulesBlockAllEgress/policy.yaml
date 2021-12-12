@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.block-all-egress-traffic
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.block-all-egress-traffic
   description: |
     ### Block all traffic

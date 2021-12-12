@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-missing-security-context
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.containers-missing-security-context
   description: |
     This Policy checks if the container is missing securityContext while there is no securityContext defined on the Pod level as well. The security settings that are specified on the Pod level apply to all containers in the Pod.
