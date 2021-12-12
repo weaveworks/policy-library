@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.istio-injected-namespaces
 spec:
-  enable: true
   name: magalix.policies.istio-injected-namespaces
   description: |
     # Istio-Injected Namespaces

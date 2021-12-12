@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.influxdb-enforce-environment-variable
 spec:
-  enable: true
   name: magalix.policies.influxdb-enforce-environment-variable
   description: |
     This Policy ensures specific environment variables are in place when using the official container images from Docker Hub.

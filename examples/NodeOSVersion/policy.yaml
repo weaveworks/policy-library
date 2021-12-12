@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.node-os-version
 spec:
-  enable: true
   name: magalix.policies.node-os-version
   description: |
     This Policy allows enforcement of the type of OS image used for each node. Build consistency throughout your cluster by provisioning the same OS version across all the nodes. 

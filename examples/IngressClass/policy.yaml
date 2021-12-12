@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.enforce-specific-ingress-class
 spec:
-  enable: true
   name: magalix.policies.enforce-specific-ingress-class
   description: |
     This Policy allows for a custom Ingress annotation key and value. When using Kubernetes Ingress, various annotation can be used to define different configurations, even different ingress controllers. Values may vary depending on your use case. 

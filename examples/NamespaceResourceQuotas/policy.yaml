@@ -3,7 +3,6 @@ kind: Policy
 metadata:
   name: magalix.policies.namespace-missing-resource-quota
 spec:
-  enable: true
   name: magalix.policies.namespace-missing-resource-quota
   description: |
     When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
