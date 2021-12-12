@@ -31,7 +31,7 @@ spec:
   controls:
   - magalix.controls.cis-benchmark.5.7.2
   - magalix.controls.nist-800-190.4.4.3
-  - magalix.controls.soc2-type1.1.6.1
+  - magalix.controls.soc2-type-1.1.6.1
   tags: [cis-benchmark, nist800-190, soc2-type1]
   parameters:
   - name: seccomp_annotation

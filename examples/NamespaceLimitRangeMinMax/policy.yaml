@@ -32,7 +32,7 @@ spec:
   category: magalix.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type1.2.1.1
+  - magalix.controls.soc2-type-1.2.1.1
   parameters:
   - name: resource_type
     type: string

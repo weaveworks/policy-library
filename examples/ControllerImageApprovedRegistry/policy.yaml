@@ -22,7 +22,7 @@ spec:
   category: magalix.categories.software-supply-chain
   severity: high
   controls:
-  - magalix.controls.soc2-type1.1.6.8
+  - magalix.controls.soc2-type-1.1.6.8
   parameters:
   - name: registries
     type: array

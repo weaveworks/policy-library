@@ -16,7 +16,7 @@ spec:
   category: magalix.categories.network-security
   severity: medium
   controls:
-  - magalix.controls.soc2-type1.1.6.1
+  - magalix.controls.soc2-type-1.1.6.1
   parameters:
   - name: src_namespace
     type: string

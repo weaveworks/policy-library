@@ -34,7 +34,7 @@ spec:
   - magalix.controls.gdpr.25
   - magalix.controls.gdpr.32
   - magalix.controls.gdpr.24
-  - magalix.controls.soc2-type1.1.6.3
+  - magalix.controls.soc2-type-1.1.6.3
   tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
   parameters:
   - name: automount_token

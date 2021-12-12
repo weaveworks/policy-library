@@ -39,7 +39,7 @@ spec:
   - magalix.controls.gdpr.32
   - magalix.controls.gdpr.24
   - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.soc2-type1.1.6.3
+  - magalix.controls.soc2-type-1.1.6.3
   tags: [pci-dss, cis-benchmark, mitre-attack, gdpr, hipaa, soc2-type1]
   parameters:
   - name: subjects_name
