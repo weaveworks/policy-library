@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.prohibit-creating-namespace-starting-with-prefix
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.prohibit-creating-namespace-starting-with-prefix
   description: |
     Using this Policy, you can prohibit certain namespaces from containing a specified combination of letters and/or numbers. 

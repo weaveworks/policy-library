@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
   description: |
     This Policy checks to see whether or not the persistent volume reclaim policy is set.

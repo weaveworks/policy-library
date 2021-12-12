@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.controller-serviceaccount-tokens-automount
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.controller-serviceaccount-tokens-automount
   description: |
     This Policy allows for the option of enabling or disabling Service Accounts that are created for a Pod. The recommended practice is to set the `automount_token` to `false.  

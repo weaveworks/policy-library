@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.container-prohibit-image-tag
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.container-prohibit-image-tag
   description: |
     Prohibit certain image tags by specifying them in the Policy. The Policy will also violate if the a tag is not set, or is set to `latest`. 

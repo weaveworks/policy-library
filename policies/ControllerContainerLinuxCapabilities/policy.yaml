@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-running-with-unapproved-linux-capabilities
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.containers-running-with-unapproved-linux-capabilities
   description: |
     Linux capabilities provide a finer-grained breakdown of the privileges traditionally associated with the superuser. Not specifying those capabilities gives the container access to all OS capabilities which may result in exploiting the VM at which the container is running. The issue is reported when a container has `SYS_ADMIN`, `NET_RAW`, `NET_ADMIN`, or `ALL` capabilities. For this Policy, you can also exclude a namespace, such as `kube-system`. 

@@ -3,7 +3,7 @@ kind: Policy
 metadata:
   name: magalix.policies.prohibit-naked-pods-from-being-scheduled
 spec:
-  enable: true
+  enabled: true
   name: magalix.policies.prohibit-naked-pods-from-being-scheduled
   description: |
     This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running "naked" pods. 
