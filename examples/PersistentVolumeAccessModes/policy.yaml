@@ -1,0 +1,51 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.persistent-volume-access-modes
+spec:
+  name: magalix.policies.persistent-volume-access-modes
+  description: |
+    A PersistentVolume can be mounted on a host in any way supported by the resource provider. As shown in the table below, providers will have different capabilities and each PV's access modes are set to the specific modes supported by that particular volume. For example, NFS can support multiple read/write clients, but a specific NFS PV might be exported on the server as read-only. Each PV gets its own set of access modes describing that specific PV's capabilities.
+
+    The access modes are:
+
+    * ReadWriteOnce
+    * ReadOnlyMany
+    * ReadWriteMany
+    * ReadWriteOncePod
+  how_to_solve: |
+    Ensure the <name> of your Persistent Volume and <access_mode> set in your Policy match the PV you want to check.
+    ```
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata: 
+      name: <name>
+    spec: 
+      accessModes: 
+        - <access_mode>
+    ```
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type-1.2.1.1
+  parameters:
+  - name: name
+    type: string
+    required: true
+    default:
+  - name: access_mode
+    type: string
+    required: true
+    default:
+  code: "package magalix.advisor.storage.persistentvolume_acccess_mode\n\naccess_mode\
+    \ := input.parameters.access_mode\nname := input.parameters.name\n\nviolation[result]\
+    \ {\n  spec_name := controller_input.metadata.name\n  spec_name == name\n  spec_access_modes\
+    \ := storage_spec.accessModes\n  not array_contains(spec_access_modes, access_mode)\n\
+    \  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Access Modes\
+    \ should contain '%v'; found '%v'\", [access_mode, spec_access_modes]),\n    \"\
+    violating_key\": \"spec.accessModes\"\n  }\n}\n\narray_contains(array, element)\
+    \ {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
+    \n# controller_container acts as an iterator to get containers from the template\n\
+    storage_spec = controller_input.spec {\n  contains_kind(controller_input.kind,\
+    \ {\"PersistentVolume\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
+    }"

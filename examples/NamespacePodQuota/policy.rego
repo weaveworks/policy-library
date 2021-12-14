@@ -1,13 +1,16 @@
 package magalix.advisor.namespace.pod_quotas
 
 pod_quota := input.parameters.pod_quota
+namespace := input.parameters.namespace
 
 violation[result] {
+  rq_namespace := input.review.object.metadata.namespace
+  rq_namespace == namespace
   pods := rq_spec.hard.pods
   not pods <= pod_quota
   result = {
   	"issue detected": true,
-    "msg": "You are missing the number of Pods",
+    "msg": sprintf("The numbers of pods should be '%v' or greater; detected '%v'", [pod_quota, pods]),
     "violating_key": "spec.hard.pods"
   }
 }

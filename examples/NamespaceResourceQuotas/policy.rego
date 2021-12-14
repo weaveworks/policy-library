@@ -1,13 +1,15 @@
 package magalix.advisor.namespace.resource_quotas
 
 resource_type := input.parameters.resource_type
-resource_setting := input.parameters.resource_setting
+namespace := input.parameters.namespace
 
 violation[result] {
-  not rq_spec.hard[resource_setting][resource_type]
+  rq_namespace := input.review.object.metadata.namespace
+  rq_namespace == namespace
+  not rq_spec.hard[resource_type]
   result = {
   	"issue detected": true,
-    "msg": sprintf("You are missing '%v' '%v'", [resource_type, resource_setting]),
+    "msg": sprintf("You are missing '%v'", [resource_type]),
     "violating_key": "spec.hard"
   }
 }
