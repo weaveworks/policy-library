@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.mariadb-prohibit-environment-variable
 spec:
-  name: magalix.policies.mariadb-prohibit-environment-variable
+  id: magalix.policies.mariadb-prohibit-environment-variable
+  name: Mariadb Prohibit Environment Variable
   description: |
     This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 
     ### MARIADB_ALLOW_EMPTY_ROOT_PASSWORD 

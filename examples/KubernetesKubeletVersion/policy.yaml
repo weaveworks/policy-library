@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.kubernetes---minimum-kubelet-version
 spec:
-  name: magalix.policies.kubernetes---minimum-kubelet-version
+  id: magalix.policies.kubernetes---minimum-kubelet-version
+  name: Kubernetes   Minimum Kubelet Version
   description: |
     This Policy checks the minimum kubelet version for your Nodes. Please use this type of versioning (`v1.0.0`) and omit any suffix starting with a hyphen (`-`)
   how_to_solve: |

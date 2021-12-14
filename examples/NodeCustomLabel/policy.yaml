@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.node-custom-label
 spec:
-  name: magalix.policies.node-custom-label
+  id: magalix.policies.node-custom-label
+  name: Node Custom Label
   description: |
     This Policy checks for custom labels on your node. This Policy looks for both a key and value. 
   how_to_solve: |

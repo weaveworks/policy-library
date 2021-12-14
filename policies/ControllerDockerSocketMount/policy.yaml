@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-mounting-docker-socket
 spec:
-  enabled: true
-  name: magalix.policies.containers-mounting-docker-socket
+  id: magalix.policies.containers-mounting-docker-socket
+  name: Containers Mounting Docker Socket
   description: |
     This Policy checks the mounting of the `docker.sock` socket of the node into the container. The docker socket filename can be altered based on your configuration. The full path is unnecessary as the Policy accounts for any path.  
   how_to_solve: |

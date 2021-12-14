@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.container-image-pull-policy
 spec:
-  enabled: true
-  name: magalix.policies.container-image-pull-policy
+  id: magalix.policies.container-image-pull-policy
+  name: Container Image Pull Policy
   description: |
     This Policy is to ensure you are setting a value for your `imagePullPolicy`. 
 

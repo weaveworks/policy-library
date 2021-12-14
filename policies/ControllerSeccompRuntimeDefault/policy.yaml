@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-not-using-runtime-default-seccomp-profile
 spec:
-  enabled: true
-  name: magalix.policies.containers-not-using-runtime-default-seccomp-profile
+  id: magalix.policies.containers-not-using-runtime-default-seccomp-profile
+  name: Containers Not Using Runtime Default Seccomp Profile
   description: |
     This Policy checks for runtime/default seccomp annotation. 
 

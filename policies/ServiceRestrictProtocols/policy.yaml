@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.services-restrict-protocols
 spec:
-  enabled: true
-  name: magalix.policies.services-restrict-protocols
+  id: magalix.policies.services-restrict-protocols
+  name: Services Restrict Protocols
   description: |
     This Policy specifies what protocols should set for your Service. Any protocol not listed in this Policy will be in violation. 
   how_to_solve: |

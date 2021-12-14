@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-sharing-process-namespace
 spec:
-  enabled: true
-  name: magalix.policies.containers-sharing-process-namespace
+  id: magalix.policies.containers-sharing-process-namespace
+  name: Containers Sharing Process Namespace
   description: |
     This Policy allows check if sharing process namespace with other containers in the pod should be allowed or not. Resources that can be shared with the container include:
 

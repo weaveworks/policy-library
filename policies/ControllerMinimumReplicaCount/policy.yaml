@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-minimum-replica-count
 spec:
-  enabled: true
-  name: magalix.policies.containers-minimum-replica-count
+  id: magalix.policies.containers-minimum-replica-count
+  name: Containers Minimum Replica Count
   description: |
     Use this Policy to to check the replica count of your workloads. The value set in the Policy is greater than or equal to the amount desired, so if the replica count is lower than what is specified, the Policy will be in violation. 
   how_to_solve: |

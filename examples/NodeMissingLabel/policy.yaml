@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.node-missing-label
 spec:
-  name: magalix.policies.node-missing-label
+  id: magalix.policies.node-missing-label
+  name: Node Missing Label
   description: |
     This Policy only looks for specific node label keys.
 

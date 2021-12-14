@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-block-ssh-port
 spec:
-  enabled: true
-  name: magalix.policies.containers-block-ssh-port
+  id: magalix.policies.containers-block-ssh-port
+  name: Containers Block Ssh Port
   description: |
     This Policy checks if the container is exposing ssh port.
   how_to_solve: |

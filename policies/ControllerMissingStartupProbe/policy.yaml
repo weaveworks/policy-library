@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-missing-startup-probe
 spec:
-  enabled: true
-  name: magalix.policies.containers-missing-startup-probe
+  id: magalix.policies.containers-missing-startup-probe
+  name: Containers Missing Startup Probe
   description: |
     This Policy detects whether or not a startupProbe has been set for containers. Containers probes are:
 

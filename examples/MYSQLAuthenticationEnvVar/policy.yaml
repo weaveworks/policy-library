@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.mysql-enforce-environment-variable
 spec:
-  name: magalix.policies.mysql-enforce-environment-variable
+  id: magalix.policies.mysql-enforce-environment-variable
+  name: Mysql Enforce Environment Variable
   description: |
     This Policy checks for the following environment variables for your MySQL deployments using the official Docker image. 
     ### MYSQL_USER

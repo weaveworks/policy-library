@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.container-maximum-cpu-limits
 spec:
-  name: magalix.policies.container-maximum-cpu-limits
+  id: magalix.policies.container-maximum-cpu-limits
+  name: Container Maximum CPU Limits
   description: |
     This Policy is to ensure a maximum CPU Limit value is set. The policy will fail if the set CPU limit is higher than the one specified in the policy. You must specify a unit size (m, g, etc).
   how_to_solve: |

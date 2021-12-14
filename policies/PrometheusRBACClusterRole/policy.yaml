@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.prometheus-rbac-prohibit-verbs
 spec:
-  enabled: true
-  name: magalix.policies.prometheus-rbac-prohibit-verbs
+  id: magalix.policies.prometheus-rbac-prohibit-verbs
+  name: Prometheus Rbac Prohibit Verbs
   description: |
     This Policy blocks certain verbs from being set for Prometheus RBAC. This Policy applies to RBAC names containing the word `prometheus`. 
   how_to_solve: |

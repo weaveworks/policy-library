@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.persistent-volume-claim-snapshot
 spec:
-  name: magalix.policies.persistent-volume-claim-snapshot
+  id: magalix.policies.persistent-volume-claim-snapshot
+  name: Persistent Volume Claim Snapshot
   description: |
     This Policy checks for a PVC Snapshot. 
   how_to_solve: |

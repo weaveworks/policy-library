@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.block-workloads-created-without-specifying-namespace
 spec:
-  enabled: true
-  name: magalix.policies.block-workloads-created-without-specifying-namespace
+  id: magalix.policies.block-workloads-created-without-specifying-namespace
+  name: Block Workloads Created Without Specifying Namespace
   description: |
     Using this Policy, you can prohibit workloads from being created in a default namespace due to the lack of a namespace label. 
   how_to_solve: |

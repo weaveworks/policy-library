@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.network-allow-all-egress-traffic-from-namespace-to-cidr-block.
 spec:
-  name: magalix.policies.network-allow-all-egress-traffic-from-namespace-to-cidr-block.
+  id: magalix.policies.network-allow-all-egress-traffic-from-namespace-to-cidr-block.
+  name: Network Allow All Egress Traffic From Namespace To CIDR Block.
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic from a specified namespace to a CIDR block of IP addresses. 
 

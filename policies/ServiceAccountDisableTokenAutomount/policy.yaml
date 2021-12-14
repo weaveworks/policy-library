@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.disable-service-account-token-automount-in-specific-namespace
 spec:
-  enabled: true
-  name: magalix.policies.disable-service-account-token-automount-in-specific-namespace
+  id: magalix.policies.disable-service-account-token-automount-in-specific-namespace
+  name: Disable ServiceAccount Token Automount In Specific Namespace
   description: |
     This Policy allows you to enforce the enabling or disabling the automounting of service account tokens. 
 

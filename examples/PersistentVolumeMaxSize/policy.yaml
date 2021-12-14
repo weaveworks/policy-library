@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.persistent-volume-max-size
 spec:
-  name: magalix.policies.persistent-volume-max-size
+  id: magalix.policies.persistent-volume-max-size
+  name: Persistent Volume Max Size
   description: |
     This Policy sets a max size on your Persistent Volumes. When specifying a size, be sure to include the size and sizing suffix (e.g. 1Gi).
   how_to_solve: |

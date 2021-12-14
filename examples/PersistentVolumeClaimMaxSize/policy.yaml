@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.persistent-volume-claim-max-size
 spec:
-  name: magalix.policies.persistent-volume-claim-max-size
+  id: magalix.policies.persistent-volume-claim-max-size
+  name: Persistent Volume Claim Max Size
   description: |
     This Policy allows you to set a max size on your Persistent Volumes Claims. When specifying a size, be sure to include the size and sizing suffix (e.g. 1Gi).
   how_to_solve: |
