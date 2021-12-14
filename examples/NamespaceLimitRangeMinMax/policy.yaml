@@ -30,8 +30,10 @@ spec:
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/
   category: magalix.categories.capacity-management
   severity: medium
+  targets: {kind: []}
   controls:
-  - magalix.controls.soc2-type-1.2.1.1
+  - magalix.controls.soc2-type1.2.1.1
+  tags: [soc2-type1]
   parameters:
   - name: resource_type
     type: string
@@ -41,10 +43,15 @@ spec:
     type: string
     required: true
     default:
-  code: "package magalix.advisor.namespace.default_resource_values\n\nresource_type\
-    \ := input.parameters.resource_type\nresource_setting := input.parameters.resource_setting\n\
-    \nviolation[result] {\n  values := lr_spec.limits[_]\n  not values[resource_setting][resource_type]\n\
-    \  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"You are missing\
-    \ '%v': '%v'\", [resource_setting, resource_type]),\n    \"violating_key\": \"\
-    spec.limits\"\n\n  }\n}\n\nlr_spec = input.review.object.spec {\n  contains_kind(input.review.object.kind,\
-    \ {\"LimitRange\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"
+  - name: namespace
+    type: string
+    required: true
+    default: magalix
+  code: "package magalix.advisor.namespace.limitrange_min_max\n\nresource_type :=\
+    \ input.parameters.resource_type\nresource_setting := input.parameters.resource_setting\n\
+    namespace := input.parameters.namespace\n\nviolation[result] {\n  values := lr_spec.limits[_]\n\
+    \  not values[resource_setting][resource_type]\n  result = {\n  \t\"issue detected\"\
+    : true,\n    \"msg\": sprintf(\"You are missing '%v': '%v'\", [resource_setting,\
+    \ resource_type]),\n    \"violating_key\": \"spec.limits\"\n\n  }\n}\n\nlr_spec\
+    \ = input.review.object.spec {\n  contains_kind(input.review.object.kind, {\"\
+    LimitRange\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

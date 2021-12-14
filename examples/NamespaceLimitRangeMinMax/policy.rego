@@ -1,7 +1,8 @@
-package magalix.advisor.namespace.default_resource_values
+package magalix.advisor.namespace.limitrange_min_max
 
 resource_type := input.parameters.resource_type
 resource_setting := input.parameters.resource_setting
+namespace := input.parameters.namespace
 
 violation[result] {
   values := lr_spec.limits[_]

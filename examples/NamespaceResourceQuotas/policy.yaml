@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.namespace-missing-resource-quota
+  name: magalix.policies.resource-quota-setting-is-missing
 spec:
-  name: magalix.policies.namespace-missing-resource-quota
+  name: magalix.policies.resource-quota-setting-is-missing
   description: |
     When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
   how_to_solve: |
@@ -19,21 +19,24 @@ spec:
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
   category: magalix.categories.capacity-management
   severity: medium
+  targets: {kind: []}
   controls:
-  - magalix.controls.soc2-type-1.2.1.1
+  - magalix.controls.soc2-type1.2.1.1
+  tags: [soc2-type1]
   parameters:
   - name: resource_type
     type: string
     required: true
     default:
-  - name: resource_setting
+  - name: namespace
     type: string
     required: true
-    default:
+    default: magalix
   code: "package magalix.advisor.namespace.resource_quotas\n\nresource_type := input.parameters.resource_type\n\
-    resource_setting := input.parameters.resource_setting\n\nviolation[result] {\n\
-    \  not rq_spec.hard[resource_setting][resource_type]\n  result = {\n  \t\"issue\
-    \ detected\": true,\n    \"msg\": sprintf(\"You are missing '%v' '%v'\", [resource_type,\
-    \ resource_setting]),\n    \"violating_key\": \"spec.hard\"\n  }\n}\n\nrq_spec\
-    \ = input.review.object.spec{\n  contains_kind(input.review.object.kind, {\"ResourceQuota\"\
-    })\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"
+    namespace := input.parameters.namespace\n\nviolation[result] {\n  rq_namespace\
+    \ := input.review.object.metadata.namespace\n  rq_namespace == namespace\n  not\
+    \ rq_spec.hard[resource_type]\n  result = {\n  \t\"issue detected\": true,\n \
+    \   \"msg\": sprintf(\"You are missing '%v'\", [resource_type]),\n    \"violating_key\"\
+    : \"spec.hard\"\n  }\n}\n\nrq_spec = input.review.object.spec{\n  contains_kind(input.review.object.kind,\
+    \ {\"ResourceQuota\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
+    }\n"
