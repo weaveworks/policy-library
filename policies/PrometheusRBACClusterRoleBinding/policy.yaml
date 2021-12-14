@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.prometheus-clusterrolebinding-has-incorrect-bindings
 spec:
-  enabled: true
-  name: magalix.policies.prometheus-clusterrolebinding-has-incorrect-bindings
+  id: magalix.policies.prometheus-clusterrolebinding-has-incorrect-bindings
+  name: Prometheus Clusterrolebinding Has Incorrect Bindings
   description: |
     This Policy checks to see if the Prometheus Cluster Role Binding is bound to a `ClusterRole`, and is tied to a `ServiceAccount` name containing text of your choosing. The default policy is set for search for the Service Account name containing the word `prometheus`. 
   how_to_solve: |

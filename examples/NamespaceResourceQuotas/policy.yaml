@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.resource-quota-setting-is-missing
 spec:
-  name: magalix.policies.resource-quota-setting-is-missing
+  id: magalix.policies.resource-quota-setting-is-missing
+  name: Resource Quota Setting Is Missing
   description: |
     When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
   how_to_solve: |

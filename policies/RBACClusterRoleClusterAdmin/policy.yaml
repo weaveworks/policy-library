@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.rbac-protect-cluster-admin-clusterrolebindings
 spec:
-  enabled: true
-  name: magalix.policies.rbac-protect-cluster-admin-clusterrolebindings
+  id: magalix.policies.rbac-protect-cluster-admin-clusterrolebindings
+  name: Rbac Protect Cluster Admin Clusterrolebindings
   description: |
     This Policy allows you to select which groups you can set for Cluster-admin. The default policy checks for the 
 

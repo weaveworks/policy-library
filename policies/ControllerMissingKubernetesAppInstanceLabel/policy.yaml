@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.missing-kubernetes-app-instance-label
 spec:
-  enabled: true
-  name: magalix.policies.missing-kubernetes-app-instance-label
+  id: magalix.policies.missing-kubernetes-app-instance-label
+  name: Missing Kubernetes App Instance Label
   description: |
     Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
 

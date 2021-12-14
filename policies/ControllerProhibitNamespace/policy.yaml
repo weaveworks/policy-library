@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-should-not-run-in-namespace
 spec:
-  enabled: true
-  name: magalix.policies.containers-should-not-run-in-namespace
+  id: magalix.policies.containers-should-not-run-in-namespace
+  name: Containers Should Not Run In Namespace
   description: |
     This Policy ensure workloads are not running in a specified namespace. 
   how_to_solve: |

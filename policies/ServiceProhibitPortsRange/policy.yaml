@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.services-prohibit-ports-range
 spec:
-  enabled: true
-  name: magalix.policies.services-prohibit-ports-range
+  id: magalix.policies.services-prohibit-ports-range
+  name: Services Prohibit Ports Range
   description: |
     This Policy checks if ports allocated for your services are using a number that is less than the specified value. 
   how_to_solve: |

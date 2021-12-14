@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-block-specific-image-names
 spec:
-  name: magalix.policies.containers-block-specific-image-names
+  id: magalix.policies.containers-block-specific-image-names
+  name: Containers Block Specific Image Names
   description: |
     This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 
   how_to_solve: |

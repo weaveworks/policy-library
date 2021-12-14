@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-sharing-host-ipc
 spec:
-  enabled: true
-  name: magalix.policies.containers-sharing-host-ipc
+  id: magalix.policies.containers-sharing-host-ipc
+  name: Containers Sharing Host IPC
   description: |
     This Policy allows check if sharing host IPC namespace with the container should be allowed or not. Resources that can be shared with the container include:
 

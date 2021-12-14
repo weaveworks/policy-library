@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-enforce-restart-policy
 spec:
-  enabled: true
-  name: magalix.policies.containers-enforce-restart-policy
+  id: magalix.policies.containers-enforce-restart-policy
+  name: Containers Enforce Restart Policy
   description: |
     This Policy checks if a specific restartPolicy is configured in your workloads.
   how_to_solve: |

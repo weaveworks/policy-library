@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-sharing-host-network
 spec:
-  enabled: true
-  name: magalix.policies.containers-sharing-host-network
+  id: magalix.policies.containers-sharing-host-network
+  name: Containers Sharing Host Network
   description: |
     This Policy allows check if sharing host network namespace with the container should be allowed or not. Resources that can be shared with the container include:
 

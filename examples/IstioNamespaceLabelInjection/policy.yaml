@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.istio-injected-namespaces
 spec:
-  name: magalix.policies.istio-injected-namespaces
+  id: magalix.policies.istio-injected-namespaces
+  name: Istio Injected Namespaces
   description: |
     # Istio-Injected Namespaces
     Specify namespaces you would like to be labeld with `istio-injected: enabled`. Namespaces with this label with automatically deploy a Istio sidecar with each pod. 

@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.container-maximum-memory-requests
 spec:
-  name: magalix.policies.container-maximum-memory-requests
+  id: magalix.policies.container-maximum-memory-requests
+  name: Container Maximum Memory Requests
   description: |
     This Policy is to ensure a maximum Memory Request value is set. The policy will fail if the set Memory request is higher than the one specified in the policy. You must specify a unit size (e.g Mi, Gi, etc).
   how_to_solve: |

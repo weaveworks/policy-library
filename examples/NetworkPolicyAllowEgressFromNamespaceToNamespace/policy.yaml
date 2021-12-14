@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.network-allow-egress-traffic-from-namespace-to-another
 spec:
-  name: magalix.policies.network-allow-egress-traffic-from-namespace-to-another
+  id: magalix.policies.network-allow-egress-traffic-from-namespace-to-another
+  name: Network Allow Egress Traffic From Namespace To Another
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to allow Egress traffic from one namespace to another.
 

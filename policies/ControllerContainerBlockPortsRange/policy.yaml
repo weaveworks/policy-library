@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-blocke-ports-range
 spec:
-  enabled: true
-  name: magalix.policies.containers-blocke-ports-range
+  id: magalix.policies.containers-blocke-ports-range
+  name: Containers Blocke Ports Range
   description: |
     This Policy checks for container ports that are set below the set value. TCP ports under 1024 are reserved so we recommend setting your Policy to 1024 or higher. 
   how_to_solve: |

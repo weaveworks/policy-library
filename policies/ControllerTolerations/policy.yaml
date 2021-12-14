@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
 spec:
-  enabled: true
-  name: magalix.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
+  id: magalix.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
+  name: Containers Should Not Run On Kubernetes Control Plane Nodes
   description: |
     Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. 
   how_to_solve: |

@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.mongo-enforce-environment-variable
 spec:
-  name: magalix.policies.mongo-enforce-environment-variable
+  id: magalix.policies.mongo-enforce-environment-variable
+  name: Mongo Enforce Environment Variable
   description: |
     This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 
     ### MONGO_INITDB_ROOT_USERNAME. 

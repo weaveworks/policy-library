@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.network-allow-egress-dns-to-coredns
 spec:
-  name: magalix.policies.network-allow-egress-dns-to-coredns
+  id: magalix.policies.network-allow-egress-dns-to-coredns
+  name: Network Allow Egress Dns To Coredns
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to allow egress traffic from a specified namespace, to your coredns pods with the label `k8s-app: kube-dns`. The Policy specifically looks for port UDP 53. 
 

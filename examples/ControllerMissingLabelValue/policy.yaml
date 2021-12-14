@@ -3,7 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.metadata-missing-label-and-value
 spec:
-  name: magalix.policies.metadata-missing-label-and-value
+  id: magalix.policies.metadata-missing-label-and-value
+  name: Metadata Missing Label And Value
   description: |
     Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensures a key and value are set in the entity's `metadata.labels` path. The Policy detects the presence of the following: 
 

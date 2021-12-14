@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.missing-kubernetes-app-part-of-label
 spec:
-  enabled: true
-  name: magalix.policies.missing-kubernetes-app-part-of-label
+  id: magalix.policies.missing-kubernetes-app-part-of-label
+  name: Missing Kubernetes App Part Of Label
   description: |
     Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
 

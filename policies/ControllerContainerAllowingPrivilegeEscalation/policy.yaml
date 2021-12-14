@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.containers-running-with-privilege-escalation
 spec:
-  enabled: true
-  name: magalix.policies.containers-running-with-privilege-escalation
+  id: magalix.policies.containers-running-with-privilege-escalation
+  name: Containers Running With Privilege Escalation
   description: |
     Containers are running with PrivilegeEscalation configured. Setting this Policy to `true` allows child processes to gain more privileges than its parent process.  
 

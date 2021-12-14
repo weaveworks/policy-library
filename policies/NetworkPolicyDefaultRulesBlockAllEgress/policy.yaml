@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.block-all-egress-traffic
 spec:
-  enabled: true
-  name: magalix.policies.block-all-egress-traffic
+  id: magalix.policies.block-all-egress-traffic
+  name: Block All Egress Traffic
   description: |
     ### Block all traffic
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress or Egress traffic between namespaces. 

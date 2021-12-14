@@ -3,8 +3,8 @@ kind: Policy
 metadata:
   name: magalix.policies.container-running-as-root
 spec:
-  enabled: true
-  name: magalix.policies.container-running-as-root
+  id: magalix.policies.container-running-as-root
+  name: Container Running As Root
   description: |
     Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to `true`. 
   how_to_solve: |
