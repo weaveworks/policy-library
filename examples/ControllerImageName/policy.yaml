@@ -21,10 +21,9 @@ spec:
   - magalix.controls.cis-benchmark.5.5.1
   - magalix.controls.mitre-attack.1.2
   - magalix.controls.nist-800-190.4.1.5
-  - magalix.controls.mitre-attack.1.2
+  - magalix.controls.gdpr.24
   - magalix.controls.gdpr.25
   - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
   - magalix.controls.soc2-type-1.1.6.8
   parameters:
   - name: restricted_image_names

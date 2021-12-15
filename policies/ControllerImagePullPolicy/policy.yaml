@@ -30,6 +30,8 @@ spec:
     https://kubernetes.io/docs/concepts/configuration/overview/#container-images
   category: magalix.categories.software-supply-chain
   severity: medium
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+    StatefulSet, CronJob]}
   parameters:
   - name: policy
     type: string

@@ -16,6 +16,7 @@ spec:
     https://kubernetes.io/docs/concepts/configuration/overview/#naked-pods-vs-replicasets-deployments-and-jobs
   category: magalix.categories.organizational-standards
   severity: medium
+  targets: {kind: [Pod]}
   controls:
   - magalix.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]

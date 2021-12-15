@@ -14,13 +14,12 @@ spec:
       kubeletVersion: <version>
     ```
   category: magalix.categories.organizational-standards
-  targets: {kind: ["Deployment"]}
   severity: medium
   parameters:
   - name: version
     type: string
     required: true
-    default: "test"
+    default:
   code: "package magalix.advisor.k8s.min_kubelet_version\n\nversion := input.parameters.version\n\
     \nviolation[result] {\n  kubelet_version := node_input.status.nodeInfo.kubeletVersion\n\
     \  semantic_version := split_version(kubelet_version)\n  your_version := split_version(version)\n\
