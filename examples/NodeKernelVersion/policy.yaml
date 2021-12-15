@@ -7,7 +7,7 @@ spec:
   name: Node Kernel Versions
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version
-  how_to_solve:
+  how_to_solve: "How to Solve"
   category: magalix.categories.organizational-standards
   severity: medium
   controls:

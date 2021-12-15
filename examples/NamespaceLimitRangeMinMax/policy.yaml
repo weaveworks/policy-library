@@ -31,9 +31,8 @@ spec:
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/
   category: magalix.categories.capacity-management
   severity: medium
-  targets: {kind: []}
   controls:
-  - magalix.controls.soc2-type1.2.1.1
+  - magalix.controls.soc2-type-1.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: resource_type
