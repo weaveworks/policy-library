@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.network-allow-all-egress-traffic-from-namespace
+  name: magalix.templates.network-allow-all-egress-traffic-from-namespace
 spec:
-  id: magalix.policies.network-allow-all-egress-traffic-from-namespace
+  id: magalix.templates.network-allow-all-egress-traffic-from-namespace
   name: Network Allow All Egress Traffic From Namespace
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic from a specified namespace. 

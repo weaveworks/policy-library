@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.container-minimum-cpu-requests
+  name: magalix.templates.container-minimum-cpu-requests
 spec:
-  id: magalix.policies.container-minimum-cpu-requests
+  id: magalix.templates.container-minimum-cpu-requests
   name: Container Minimum CPU Requests
   description: |
     This Policy is to ensure a minimum CPU Request value is set. The policy will fail if the set CPU request is lower than the one specified in the policy. You must specify a unit size (m, g, etc).

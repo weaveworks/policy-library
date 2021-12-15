@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.approved-registry
+  name: magalix.templates.approved-registry
 spec:
-  id: magalix.policies.approved-registry
+  id: magalix.templates.approved-registry
   name: Approved Registry
   description: |
     This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 

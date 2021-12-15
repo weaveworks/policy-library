@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.network-block-all-ingress-traffic-to-namespace
+  name: magalix.templates.network-block-all-ingress-traffic-to-namespace
 spec:
-  id: magalix.policies.network-block-all-ingress-traffic-to-namespace
+  id: magalix.templates.network-block-all-ingress-traffic-to-namespace
   name: Network Block All Ingress Traffic To Namespace
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic from a specified namespace. 

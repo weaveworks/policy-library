@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.istio-injected-namespaces
+  name: magalix.templates.istio-injected-namespaces
 spec:
-  id: magalix.policies.istio-injected-namespaces
+  id: magalix.templates.istio-injected-namespaces
   name: Istio Injected Namespaces
   description: |
     # Istio-Injected Namespaces

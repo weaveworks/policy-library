@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-are-missing-a-spec-template-label
+  name: magalix.templates.containers-are-missing-a-spec-template-label
 spec:
-  id: magalix.policies.containers-are-missing-a-spec-template-label
+  id: magalix.templates.containers-are-missing-a-spec-template-label
   name: Containers Are Missing A Spec Template Label
   description: |
     This Policy allows setting a custom label in `spec.template.metadata`.

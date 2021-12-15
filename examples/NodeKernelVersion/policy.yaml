@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.node-kernel-versions
+  name: magalix.templates.node-kernel-versions
 spec:
-  id: magalix.policies.node-kernel-versions
+  id: magalix.templates.node-kernel-versions
   name: Node Kernel Versions
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version

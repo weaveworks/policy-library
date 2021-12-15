@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.network-block-all-ingress-traffic-to-namespace-from-cidr-block
+  name: magalix.templates.network-block-all-ingress-traffic-to-namespace-from-cidr-block
 spec:
-  id: magalix.policies.network-block-all-ingress-traffic-to-namespace-from-cidr-block
+  id: magalix.templates.network-block-all-ingress-traffic-to-namespace-from-cidr-block
   name: Network Block All Ingress Traffic To Namespace From CIDR Block
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic from a specified namespace to a CIDR block of IP addresses. 

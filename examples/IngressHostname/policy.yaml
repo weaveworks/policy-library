@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.ingress-approved-hostnames
+  name: magalix.templates.ingress-approved-hostnames
 spec:
-  id: magalix.policies.ingress-approved-hostnames
+  id: magalix.templates.ingress-approved-hostnames
   name: Ingress Approved Hostnames
   description: |
     This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 

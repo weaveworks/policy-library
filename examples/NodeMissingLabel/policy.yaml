@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.node-missing-label
+  name: magalix.templates.node-missing-label
 spec:
-  id: magalix.policies.node-missing-label
+  id: magalix.templates.node-missing-label
   name: Node Missing Label
   description: |
     This Policy only looks for specific node label keys.

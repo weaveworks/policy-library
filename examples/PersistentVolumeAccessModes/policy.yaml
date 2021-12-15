@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.persistent-volume-access-modes
+  name: magalix.templates.persistent-volume-access-modes
 spec:
-  id: magalix.policies.persistent-volume-access-modes
+  id: magalix.templates.persistent-volume-access-modes
   name: Persistent Volume Access Modes
   description: |
     A PersistentVolume can be mounted on a host in any way supported by the resource provider. As shown in the table below, providers will have different capabilities and each PV's access modes are set to the specific modes supported by that particular volume. For example, NFS can support multiple read/write clients, but a specific NFS PV might be exported on the server as read-only. Each PV gets its own set of access modes describing that specific PV's capabilities.
