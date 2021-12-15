@@ -1,10 +1,10 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.kubernetes---minimum-kubelet-version
+  name: magalix.policies.kubernetes-minimum-kubelet-version
 spec:
-  id: magalix.policies.kubernetes---minimum-kubelet-version
-  name: Kubernetes   Minimum Kubelet Version
+  id: magalix.policies.kubernetes-minimum-kubelet-version
+  name: Kubernetes Minimum Kubelet Version
   description: |
     This Policy checks the minimum kubelet version for your Nodes. Please use this type of versioning (`v1.0.0`) and omit any suffix starting with a hyphen (`-`)
   how_to_solve: |
@@ -14,12 +14,13 @@ spec:
       kubeletVersion: <version>
     ```
   category: magalix.categories.organizational-standards
+  targets: {kind: ["Deployment"]}
   severity: medium
   parameters:
   - name: version
     type: string
     required: true
-    default:
+    default: "test"
   code: "package magalix.advisor.k8s.min_kubelet_version\n\nversion := input.parameters.version\n\
     \nviolation[result] {\n  kubelet_version := node_input.status.nodeInfo.kubeletVersion\n\
     \  semantic_version := split_version(kubelet_version)\n  your_version := split_version(version)\n\
