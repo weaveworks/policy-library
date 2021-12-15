@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.namespace-resources-limitrange
+  name: magalix.templates.namespace-resources-limitrange
 spec:
-  id: magalix.policies.namespace-resources-limitrange
+  id: magalix.templates.namespace-resources-limitrange
   name: Namespace Resources Limitrange
   description: |
     When setting up default CPU and Memory values for your namespace, this policy will check if both requests and limits are set. This policy checks for the following:

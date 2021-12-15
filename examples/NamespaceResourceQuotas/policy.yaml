@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.resource-quota-setting-is-missing
+  name: magalix.templates.resource-quota-setting-is-missing
 spec:
-  id: magalix.policies.resource-quota-setting-is-missing
+  id: magalix.templates.resource-quota-setting-is-missing
   name: Resource Quota Setting Is Missing
   description: |
     When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.

@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.affinity-node-simple
+  name: magalix.templates.affinity-node-simple
 spec:
-  id: magalix.policies.affinity-node-simple
+  id: magalix.templates.affinity-node-simple
   name: Affinity Node Simple
   description: |
     This Policy sets NodeAffinity keys, regardless of the Node Affinity selector or scheduling type. List out the keys you want to check to ensure you are using the right keys. This Policy supports the following Node Affinity types:

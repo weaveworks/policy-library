@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-block-specific-image-names
+  name: magalix.templates.containers-block-specific-image-names
 spec:
-  id: magalix.policies.containers-block-specific-image-names
+  id: magalix.templates.containers-block-specific-image-names
   name: Containers Block Specific Image Names
   description: |
     This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 

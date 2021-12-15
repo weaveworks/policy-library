@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.node-custom-label
+  name: magalix.templates.node-custom-label
 spec:
-  id: magalix.policies.node-custom-label
+  id: magalix.templates.node-custom-label
   name: Node Custom Label
   description: |
     This Policy checks for custom labels on your node. This Policy looks for both a key and value. 

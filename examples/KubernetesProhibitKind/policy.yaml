@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.prohibit-specific-kind-from-being-scheduled
+  name: magalix.templates.prohibit-specific-kind-from-being-scheduled
 spec:
-  id: magalix.policies.prohibit-specific-kind-from-being-scheduled
+  id: magalix.templates.prohibit-specific-kind-from-being-scheduled
   name: Prohibit Specific Kind From Being Scheduled
   description: |
     This Policy checks for a `kind` and can prevent it from being schedule to your cluster. A common example is running "naked" pods. 

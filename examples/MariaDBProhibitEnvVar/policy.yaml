@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mariadb-prohibit-environment-variable
+  name: magalix.templates.mariadb-prohibit-environment-variable
 spec:
-  id: magalix.policies.mariadb-prohibit-environment-variable
+  id: magalix.templates.mariadb-prohibit-environment-variable
   name: Mariadb Prohibit Environment Variable
   description: |
     This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 

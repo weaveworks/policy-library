@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.container-maximum-memory-limits
+  name: magalix.templates.container-maximum-memory-limits
 spec:
-  id: magalix.policies.container-maximum-memory-limits
+  id: magalix.templates.container-maximum-memory-limits
   name: Container Maximum Memory Limits
   description: |
     This Policy is to ensure a maximum Memory Limit value is set. The policy will fail if the set Memory limit is higher than the one specified in the policy. You must specify a unit size (e.g Mi, Gi, etc).

@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.affinity-node-selector
+  name: magalix.templates.affinity-node-selector
 spec:
-  id: magalix.policies.affinity-node-selector
+  id: magalix.templates.affinity-node-selector
   name: Affinity Node Selector
   description: |
     This Policy allows setting a key and value for `nodeSelector` when assigning pods to nodes. 

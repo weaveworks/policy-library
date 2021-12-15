@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.missing-matchlabels-key
+  name: magalix.templates.missing-matchlabels-key
 spec:
-  id: magalix.policies.missing-matchlabels-key
+  id: magalix.templates.missing-matchlabels-key
   name: Missing Matchlabels Key
   description: |
     This Policy will enforce a custom match label key in `spec.selector`.

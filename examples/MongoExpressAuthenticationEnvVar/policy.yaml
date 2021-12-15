@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mongo-express-enforce-environment-variable
+  name: magalix.templates.mongo-express-enforce-environment-variable
 spec:
-  id: magalix.policies.mongo-express-enforce-environment-variable
+  id: magalix.templates.mongo-express-enforce-environment-variable
   name: Mongo Express Enforce Environment Variable
   description: |
     This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 

@@ -1,9 +1,9 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mariadb-enforce-environment-variable
+  name: magalix.templates.mariadb-enforce-environment-variable
 spec:
-  id: magalix.policies.mariadb-enforce-environment-variable
+  id: magalix.templates.mariadb-enforce-environment-variable
   name: Mariadb Enforce Environment Variable
   description: |
     This Policy checks for the following environment variables for your MariaDB deployments using the official Docker image. 
