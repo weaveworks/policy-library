@@ -8,7 +8,7 @@ spec:
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version
   how_to_solve:
-  category: 816805bb-8311-4312-afac-ef3ba41d1287
+  category: magalix.categories.organizational-standards
   severity: medium
   controls:
   - magalix.controls.soc2-type-1.1.6.8

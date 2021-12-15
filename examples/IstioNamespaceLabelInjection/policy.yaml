@@ -10,7 +10,7 @@ spec:
     Specify namespaces you would like to be labeld with `istio-injected: enabled`. Namespaces with this label with automatically deploy a Istio sidecar with each pod. 
   how_to_solve: |
     https://istio.io/latest/docs/setup/additional-setup/sidecar-injection/#automatic-sidecar-injection
-  category: 816805bb-8311-4312-afac-ef3ba41d1287
+  category: magalix.categories.network-security
   severity: low
   parameters:
   - name: namespaces
