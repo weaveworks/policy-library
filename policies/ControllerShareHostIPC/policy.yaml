@@ -56,20 +56,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.deny_shared_host_ipc\n\nresource_enabled\
-    \ := input.parameters.resource_enabled\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
-    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  shared_resource := \"hostIPC\"\n  resource := controller_spec[shared_resource]\n\
-    \  not resource == resource_enabled\n  result = {\n    \"issue detected\": true,\n\
-    \    \"msg\": sprintf(\"'%v' should be set to '%v'; found '%v'\", [shared_resource,\
-    \ resource_enabled, resource]),\n    \"violating_key\": sprintf(\"spec.template.spec[%v]\"\
-    , [shared_resource]),\n    \"recommended_value\": resource_enabled\n  }\n}\n\n\
-    # Controller input\ncontroller_input = input.review.object\n\n# controller_container\
-    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
-    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
-    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
-    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
-    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
-    \ kinds[_] = kind\n}"

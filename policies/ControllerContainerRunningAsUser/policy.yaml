@@ -47,37 +47,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.runningAsUser\n\nexclude_namespace :=\
-    \ input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\nuid := input.parameters.uid\n\
-    \n# Check for missing securityContext.runAsUser (missing in both, pod and container)\n\
-    violation[result] {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\
-    \tnot exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \n\tcontroller_spec.securityContext\n\tnot controller_spec.securityContext.runAsUser\n\
-    \n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
-    \tnot containers.securityContext.runAsUser\n\n\tresult = {\n\t\t\"issue detected\"\
-    : true,\n\t\t\"msg\": sprintf(\"Missing spec.template.spec.containers[%v].securityContext.runAsUser\
-    \ and spec.template.spec.securityContext.runAsUser is not defined as well.\",\
-    \ [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext\"\
-    , [i]),\n\t}\n}\n\n# Container security context\n# Check if containers.securityContext.runAsUser\
-    \ exists and <= uid\nviolation[result] {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\
-    \tnot exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
-    \tcontainers.securityContext.runAsUser\n\tcontainers.securityContext.runAsUser\
-    \ <= uid\n\t\n\tresult = {\n\t\t\"issue detected\": true,\n\t\t\"msg\": sprintf(\"\
-    Container is potentially running as root. Please check spec.template.spec.containers[%v].securityContext.runAsUser\
-    \ to see if the UID is correct.\", [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext\"\
-    , [i]),\n\t}\n}\n\n# Pod security context\n# Check if spec.securityContext.runAsUser\
-    \ exist and <= uid\nviolation[result] {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\
-    \tnot exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \n\tcontroller_spec.securityContext\n\tcontroller_spec.securityContext.runAsUser\n\
-    \tcontroller_spec.securityContext.runAsUser <= uid\n\n\tresult = {\n\t\t\"issue\
-    \ detected\": true,\n\t\t\"msg\": \"A container is potentially running as root.\
-    \ Please check spec.template.spec.securityContext.runAsUser to see if the UID\
-    \ is correct.\",\n\t\t\"violating_key\": \"spec.template.spec.securityContext\"\
-    ,\n\t}\n}\n\ncontroller_input = input.review.object\n\ncontroller_spec = controller_input.spec.template.spec\
-    \ {\n\tcontains(controller_input.kind, {\"StatefulSet\", \"DaemonSet\", \"Deployment\"\
-    , \"Job\", \"ReplicaSet\"})\n} else = controller_input.spec {\n\tcontroller_input.kind\
-    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
-    \tcontroller_input.kind == \"CronJob\"\n}\n\ncontains(kind, kinds) {\n\tkinds[_]\
-    \ = kind\n}"

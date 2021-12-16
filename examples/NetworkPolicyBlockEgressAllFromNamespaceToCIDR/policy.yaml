@@ -35,17 +35,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.network.block.egress.from.namespace.to.cidr\n\nnamespace\
-    \ := input.parameters.namespace\nblocked_cidr := input.parameters.blocked_cidr\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == np_input.metadata.labels[exclude_label_key]\n  namespace == np_input.metadata.namespace\n\
-    \  some i, j\n  spec_egress := np_input.spec.egress[i]\n  egress_to := spec_egress.to[j]\n\
-    \  not array_contains(egress_to.ipBlock.except, blocked_cidr)\n  result = {\n\
-    \    \"issue_detected\": true,\n    \"msg\": sprintf(\"CIDR block should contain\
-    \ '%v'; but %v was detected\", [blocked_cidr, egress_to.ipBlock.except]),\n  \
-    \  \"violating_key\": sprintf(\"spec.egress[%v].to[%v].ipBlock.cidr.except\",\
-    \ [i,j]),\n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n\
-    }\n\nnp_input = input.review.object {\n  contains_kind(input.review.object.kind,\
-    \ {\"NetworkPolicy\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }"

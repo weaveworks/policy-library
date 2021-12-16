@@ -33,17 +33,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.nodes.custom_node_label\n\nkey := input.parameters.key\n\
-    value := input.parameters.value\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
-    \ {\n  not exclude_label_value == node_metadata.labels[exclude_label_key]\n  not\
-    \ node_metadata.labels[key]\n  result = {\n \t\"issue_detected\": true,\n    \"\
-    msg\": sprintf(\"Node is missing key '%v'; found %v\", [key, node_metadata.labels]),\n\
-    \    \"violating_key\": \"metadata.labels\"\n  }\n}\n\nviolation[result] {\n \
-    \ not exclude_label_value == node_metadata.labels[exclude_label_key]\n  label_value\
-    \ := node_metadata.labels[key]\n  not value == label_value\n  result = {\n  \t\
-    \"issue_detected\": true,\n    \"msg\": sprintf(\"Node label '%v' should have\
-    \ the value of '%v'; found '%v'\", [key, value, label_value]),\n    \"violating_key\"\
-    : sprintf(\"metadata.labels[%v]\", [key]),\n    \"recommended_value\": value\n\
-    \  }\n}\n\nnode_metadata = input.review.object.metadata {\n\tcontains_kind(input.review.object.kind,\
-    \ {\"Node\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

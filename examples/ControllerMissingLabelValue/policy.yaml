@@ -46,16 +46,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.labels.missing_label_value\n\nlabel := input.parameters.label\n\
-    value := input.parameters.value\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\n\nviolation[result] {\n  not exclude_namespace\
-    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  # Filter the type of entity before moving on since this shouldn't apply to\
-    \ all entities\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\"\
-    , \"Deployment\", \"Job\"})\n  not value == controller_input.metadata.labels[label]\n\
-    \  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"The key:value\
-    \ pair '%v:%v' was not found; detected labels: '%v\", [label, value, controller_input.metadata.labels]),\n\
-    \    \"violating_key\": sprintf(\"metadata.labels.%v\", [label]),\n    \"recommended_value\"\
-    : value\n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

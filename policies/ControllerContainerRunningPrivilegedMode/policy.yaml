@@ -51,23 +51,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.privileged\n\n\nexclude_namespace :=\
-    \ input.parameters.exclude_namespace\nprivilege := input.parameters.privilege\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  some i\n  isExcludedNamespace\
-    \ == false\n  not exclude_namespace == controller_input.metadata.namespace\n \
-    \ not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  container := controller_spec.containers[i]\n  security_context_priv := container.securityContext.privileged\n\
-    \  not security_context_priv == privilege\n  result = {\n    \"issue detected\"\
-    : true,\n    \"msg\": sprintf(\"Container should set privileged to '%v'; detected\
-    \ '%v'\", [privilege, security_context_priv]),\n    \"violating_key\": sprintf(\"\
-    spec.template.spec.containers[%v].securityContext.privileged\", [i]),\n    \"\
-    recommended_value\": privilege\n  }\n}\n\nisExcludedNamespace  = true {\n  input.review.object.metadata.namespace\
-    \ == exclude_namespace\n}else = false {true}\n\n\nis_array_contains(array,str)\
-    \ {\n  array[_] = str\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \n# controller_container acts as an iterator to get containers from the template\n\
-    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
-    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
-    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
-    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
-    \  kinds[_] = kind\n}\n"

@@ -23,10 +23,3 @@ spec:
     type: string
     required: true
     default: kube-
-  code: "package magalix.advisor.namespace.prohibit\n\nnamespace_name := input.parameters.namespace_name\n\
-    \nviolation[result] {\n\tname := namespace_input.metadata.name\n  startswith(name,\
-    \ namespace_name)\n  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"\
-    Namespaces should not start with '%v'; you have specified '%v'\", [namespace_name,\
-    \ name]),\n    \"violating_key\": \"metadata.name\"\n  }\n}\n\nnamespace_input\
-    \ = input.review.object {\n  contains_kind(input.review.object.kind, {\"Namespace\"\
-    })\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

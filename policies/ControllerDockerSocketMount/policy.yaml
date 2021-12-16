@@ -47,20 +47,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.deny_docker_socket_mount\n\ndocker_socket_name\
-    \ := input.parameters.docker_socket\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
-    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  some i, j\n  sock := controller_spec.containers[i]\n  vmounts := sock.volumeMounts[j]\n\
-    \  sock_path := vmounts.hostPath.path \n  contains(sock_path, docker_socket_name)\
-    \ \n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"'%v' is\
-    \ being mounted. The hostPath we found was '%v'\",[docker_socket_name, sock_path]),\n\
-    \    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].volumeMonuts[%v].hostPath.path\"\
-    , [i,j])  \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \n# controller_container acts as an iterator to get containers from the template\n\
-    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
-    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
-    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
-    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
-    \  kinds[_] = kind\n}"

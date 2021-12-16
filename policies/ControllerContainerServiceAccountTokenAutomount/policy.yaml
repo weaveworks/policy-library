@@ -53,25 +53,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.pods.service_account_token_automount\n\nautomount_token\
-    \ := input.parameters.automount_token\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
-    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  automount := controller_spec\n  not has_key(automount, \"automountServiceAccountToken\"\
-    )\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"'automountServiceAccountToken'\
-    \ must be set; found '%v'\",[automount]),\n    \"violating_key\": \"spec.template.spec\"\
-    \n  }\n}\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
-    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  automount := controller_spec.automountServiceAccountToken\n  not automount\
-    \ == automount_token\n  result = {\n    \"issue detected\": true,\n    \"msg\"\
-    : sprintf(\"automountServiceAccountToken must be '%v'; found '%v'\",[automount_token,\
-    \ automount]),\n    \"violating_key\": \"spec.template.spec.automountServiceAccountToken\"\
-    ,\n    \"recommended_value\": automount_token\n  }\n}\n\nhas_key(x, k) {\n  type_name(x[k])\n\
-    }\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
-    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
-    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
-    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
-    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
-    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
-    \ kinds[_] = kind\n}\n"

@@ -34,20 +34,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.network.allow.egress.from_namespace_to_namespace\n\
-    \nsrc_namespace := input.parameters.src_namespace\ndst_namespace := input.parameters.dst_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == np_input.metadata.labels[exclude_label_key]\n  src_namespace == np_input.metadata.namespace\n\
-    \  some i, j\n  egress := np_input.spec.egress[i]\n  to := egress.to[j]\n  not\
-    \ dst_namespace == to.namespaceSelector.matchLabels[\"kubernetes.io/metadata.name\"\
-    ]\n  result = {\n    \"issue_detected\": true,\n    \"msg\": sprintf(\"spec.egress[%v].to[%v].namespaceSelector\
-    \ does not match the namespace %v;\", [i, j, dst_namespace]),\n    \"violating_key\"\
-    : sprintf(\"spec.egress[%v].to[%v].namespaceSelector\", [i, j])\n  }\n}\n\nviolation[result]\
-    \ {\n  not exclude_label_value == np_input.metadata.labels[exclude_label_key]\n\
-    \  src_namespace == np_input.metadata.namespace\n  np_input.spec.egress == [{}]\n\
-    \  result = {\n    \"issue_detected\": true,\n    \"msg\": sprintf(\"spec.egress\
-    \ allows all egress. It should have a specific 'to' role for the namespace %v;\"\
-    , [dst_namespace]),\n    \"violating_key\": \"spec.egress\"\n  }\n}\n\nnp_input\
-    \ = input.review.object {\n  contains_kind(input.review.object.kind, {\"NetworkPolicy\"\
-    })\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"
