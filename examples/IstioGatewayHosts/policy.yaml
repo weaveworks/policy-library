@@ -17,16 +17,3 @@ spec:
     type: array
     required: true
     default:
-  code: "package magalix.advisor.istio.approved_hosts\n\nhostnames := input.parameters.hostnames\n\
-    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
-    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \n\nviolation[result] {\n  not exclude_namespace == input.review.object.metadata.namespace\n\
-    \  not exclude_label_value == input.review.object.metadata.labels[exclude_label_key]\n\
-    \  servers := gateway_spec.servers[_]\n  hosts := servers.hosts[_]\n  not array_contains(hostnames,\
-    \ hosts)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
-    You have specified hosts: '%v'; detected '%v'\", [hostnames, hosts]),\n    \"\
-    violating_key\": \"spec.servers.hosts\"\n  }\n}\n\narray_contains(array, element)\
-    \ {\n  array[_] = element\n}\n\n# controller_container acts as an iterator to\
-    \ get containers from the template\ngateway_spec = input.review.object.spec {\n\
-    \  contains_kind(input.review.object.kind, {\"Gateway\"})\n} \n\ncontains_kind(kind,\
-    \ kinds) {\n  kinds[_] = kind\n}\n"

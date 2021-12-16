@@ -20,13 +20,3 @@ spec:
     type: string
     required: true
     default:
-  code: "package magalix.advisor.k8s.min_kubelet_version\n\nversion := input.parameters.version\n\
-    \nviolation[result] {\n  kubelet_version := node_input.status.nodeInfo.kubeletVersion\n\
-    \  semantic_version := split_version(kubelet_version)\n  your_version := split_version(version)\n\
-    \  verify := semver.compare(semantic_version, your_version)\n  verify < 0\n  result\
-    \ = {\n \t\"issue_detected\": true,\n    \"msg\": sprintf(\"Minimum version must\
-    \ be '%v'; found version 'v%v'\", [version, semantic_version]),\n    \"violating_key\"\
-    : \"status.nodeInfo.kubeletVersion\"\n  }\n}\n\nsplit_version(k_ver) = ver {\n\
-    \  split_vers := split(k_ver, \"-\")\n  ver := trim_left(split_vers[0], \"v\"\
-    )\n}\n\nnode_input = input.review.object {\n\tcontains_kind(input.review.object.kind,\
-    \ {\"Node\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\n"

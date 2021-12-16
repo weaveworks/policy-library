@@ -31,13 +31,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.network.allow.ingress.to.namespace\n\nnamespace :=\
-    \ input.parameters.namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
-    \ {\n  not exclude_label_value == np_input.metadata.labels[exclude_label_key]\n\
-    \  namespace == np_input.metadata.namespace\n  not np_input.spec.ingress == [{}]\n\
-    \  result = {\n    \"issue_detected\": true,\n    \"msg\": sprintf(\"spec.ingress\
-    \ should be '[]'; %v was detected\", [np_input.spec.ingress]),\n    \"violating_key\"\
-    : \"spec.ingress\"\n  }\n}\n\n\nnp_input = input.review.object {\n  contains_kind(input.review.object.kind,\
-    \ {\"NetworkPolicy\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }"

@@ -48,12 +48,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.nodes.label\n\nlabel := input.parameters.node_label\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == node_metadata.labels[exclude_label_key]\n\tnode_labels := node_metadata.labels\n\
-    \tnot node_labels[label]\n  result = {\n    \"issue detected\": true,\n    \"\
-    msg\": sprintf(\"Node is missing label '%v'; found %v\", [label, node_metadata.labels]),\n\
-    \    \"violating_key\": \"metadata.labels\"\n  }\n}\n\nnode_metadata = input.review.object.metadata\
-    \ {\n  contains_kind(input.review.object.kind, {\"Node\"})\n}\n\ncontains_kind(kind,\
-    \ kinds) {\n  kinds[_] = kind\n}"

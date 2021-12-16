@@ -36,15 +36,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.network.allow.egress.from.namespace.to.cidr\n\nnamespace\
-    \ := input.parameters.namespace\ncidr := input.parameters.cidr\nexclude_label_key\
-    \ := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \nviolation[result] {\n  not exclude_label_value == np_input.metadata.labels[exclude_label_key]\n\
-    \  namespace == np_input.metadata.namespace\n  some i, j\n  spec_egress := np_input.spec.egress[i]\n\
-    \  egress_to := spec_egress.to[j]\n  cidr_block := egress_to.ipBlock.cidr\n  not\
-    \ cidr == cidr_block\n  result = {\n    \"issue_detected\": true,\n    \"msg\"\
-    : sprintf(\"CIDR block should be '%v'; but %v was detected\", [cidr, cidr_block]),\n\
-    \    \"violating_key\": sprintf(\"spec.egress[%v].to[%v].ipBlock.cidr\", [i,j])\n\
-    \  }\n}\n\nnp_input = input.review.object {\n  contains_kind(input.review.object.kind,\
-    \ {\"NetworkPolicy\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }"

@@ -64,15 +64,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.labels.missing_kubernetes_app_component_label\n\n\
-    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
-    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
-    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  label := \"app.kubernetes.io/component\"\n  # Filter the type of entity before\
-    \ moving on since this shouldn't apply to all entities\n  contains_kind(controller_input.kind,\
-    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n  not controller_input.metadata.labels[label]\n\
-    \  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Missing '%v'\
-    \ label\", [label]),\n    \"violating_key\": \"metadata.labels\",\n    \"recommended_value\"\
-    : label\n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

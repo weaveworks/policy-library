@@ -36,13 +36,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.pods.not_namespace\n\ncustom_namespace := input.parameters.custom_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == controller_input.metadata.labels[exclude_label_key]\n  namespace := controller_input.metadata.namespace\n\
-    \  namespace == custom_namespace\n  result = {\n    \"issue detected\": true,\n\
-    \    \"msg\": sprintf(\"Workloads must not be running in the namespace '%v'; found\
-    \ '%v'\", [custom_namespace, namespace]),\n    \"violating_key\": \"metadata.namespace\"\
-    \n  }\n}\n\ncontroller_input = input.review.object {\n\tcontains_kind(input.review.object.kind,\
-    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\", \"Pod\", \"CronJob\"\
-    })\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

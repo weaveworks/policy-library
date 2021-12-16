@@ -38,15 +38,3 @@ spec:
     type: string
     required: true
     default:
-  code: "package magalix.advisor.storage.persistentvolume_acccess_mode\n\naccess_mode\
-    \ := input.parameters.access_mode\nname := input.parameters.name\n\nviolation[result]\
-    \ {\n  spec_name := controller_input.metadata.name\n  spec_name == name\n  spec_access_modes\
-    \ := storage_spec.accessModes\n  not array_contains(spec_access_modes, access_mode)\n\
-    \  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Access Modes\
-    \ should contain '%v'; found '%v'\", [access_mode, spec_access_modes]),\n    \"\
-    violating_key\": \"spec.accessModes\"\n  }\n}\n\narray_contains(array, element)\
-    \ {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \n# controller_container acts as an iterator to get containers from the template\n\
-    storage_spec = controller_input.spec {\n  contains_kind(controller_input.kind,\
-    \ {\"PersistentVolume\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }"

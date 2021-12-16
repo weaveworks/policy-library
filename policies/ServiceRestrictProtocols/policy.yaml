@@ -39,16 +39,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.services.block_protocols\n\nservice_protocol := input.parameters.protocols\n\
-    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
-    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
-    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  some i\n  ports := service_spec.ports[i]\n  existing_protocol := ports.protocol\n\
-    \  not service_protocol == existing_protocol\n  result = {\n    \"issue detected\"\
-    : true,\n    \"msg\": sprintf(\"Protocol should be '%v'; found '%v'\", [service_protocol,\
-    \ existing_protocol]),\n    \"violating_key\": sprintf(\"spec.ports[%v].protocol\"\
-    , [i]),\n    \"recommended_value\": service_protocol\n  }\n}\n\n# Controller input\n\
-    controller_input = input.review.object\n\nservice_spec = controller_input.spec\
-    \ {\n  contains_kind(controller_input.kind, {\"Service\"})\n}\n\ncontains_kind(kind,\
-    \ kinds) {\n  kinds[_] = kind\n}"

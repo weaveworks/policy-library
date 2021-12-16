@@ -58,19 +58,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.rbac.enforce_cluster_admin_default_group\n\nsubjects_kind\
-    \ := input.parameters.subjects_kind\nsubjects_name := input.parameters.subjects_name\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == crb_input.metadata.labels[exclude_label_key]\n  crb_input.metadata.name ==\
-    \ \"cluster-admin\"\n  some i\n  subjects := crb_input.subjects[i]\n  not subjects.kind\
-    \ == subjects_kind\n  result = {\n  \t\"issue detected\": true,\n    \"msg\":\
-    \ sprintf(\"expected kind '%v'; found '%v'\",[subjects_kind, subjects.name]),\n\
-    \    \"violating_key\": sprintf(\"subjects[%v]\", [i])\n  }\n}\n\nviolation[result]\
-    \ {  \n  not exclude_label_value == crb_input.metadata.labels[exclude_label_key]\n\
-    \  crb_input.metadata.name == \"cluster-admin\"\n  some i\n  subjects := crb_input.subjects[i]\n\
-    \  not subjects.name == subjects_name\n  result = {\n    \"issue detected\": true,\n\
-    \    \"msg\": sprintf(\"expected name '%v'; found '%v'\",[subjects_name, subjects.name]),\n\
-    \    \"violating_key\": sprintf(\"subjects[%v].name\", [i])\n  }\n}\n\ncrb_input\
-    \ = input.review.object {\n\tcontains_kind(input.review.object.kind, {\"ClusterRoleBinding\"\
-    })\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

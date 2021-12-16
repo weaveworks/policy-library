@@ -28,10 +28,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.namespace.missing_namespace\n\nexclude_label_key\
-    \ := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \nviolation[result] {\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  not controller_input.metadata.namespace\n  result = {\n  \t\"issue detected\"\
-    : true,\n    \"msg\": sprintf(\"Missing namespace. Workloads should be deployed\
-    \ in a non-default namespace;\",[]),\n    \"violating_key\": \"metadata\"\n  }\n\
-    }\n\ncontroller_input = input.review.object\n"

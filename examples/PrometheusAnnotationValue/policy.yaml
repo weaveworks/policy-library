@@ -38,21 +38,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.prometheus.annotation_value\n\nannotation_key :=\
-    \ input.parameters.prometheus_annotation_key\nannotation_value := input.parameters.prometheus_annotation_value\n\
-    exclude_namespace := input.parameters.exclude_namespace\nexclude_label_key :=\
-    \ input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\
-    \nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
-    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  annotation := controller_input.spec.template.metadata.annotations[annotation_key]\n\
-    \  value := annotation\n  not annotation_value == value\n  result = {\n    \"\
-    issue detected\": true,\n    \"msg\": sprintf(\"Annotation '%v' expected value\
-    \ '%v'; found '%v'\",[annotation_key, annotation_value, value ]),\n    \"violating_key\"\
-    : sprintf(\"spec.template.metadata.annotation[%v]\", [annotation_key]),\n    \"\
-    recommended_value\": annotation_value\n  }\n}\n\n# Controller input\ncontroller_input\
-    \ = input.review.object\n\n# controller_container acts as an iterator to get containers\
-    \ from the template\ncontroller_spec = controller_input.spec.template.spec {\n\
-    \  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\"\
-    , \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\
-    \n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind\
-    \ == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

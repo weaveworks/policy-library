@@ -44,18 +44,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.observability.readiness_probe\n\nexclude_namespace\
-    \ := input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
-    \ {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value\
-    \ == controller_input.metadata.labels[exclude_label_key]\n  probe := \"readinessProbe\"\
-    \n  some i\n  containers := controller_spec.containers[i]\n  not containers[probe]\n\
-    \  result = {\n\t\t\"issue detected\": true,\n    \"msg\": sprintf(\"%v has not\
-    \ been set\", [probe]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v]\"\
-    , [i])  \n\t}\n}\n\n# Controller input\ncontroller_input = input.review.object\n\
-    \n# controller_container acts as an iterator to get containers from the template\n\
-    controller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind,\
-    \ {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec\
-    \ {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec\
-    \ {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n\
-    \  kinds[_] = kind\n}\n"

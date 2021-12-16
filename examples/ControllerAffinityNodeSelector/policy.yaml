@@ -44,24 +44,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.affinity.node_selector\n\nkey := input.parameters.key\n\
-    value := input.parameters.value\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
-    \ == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  not controller_spec.nodeSelector[key]\n  result = {\n    \"issue detected\"\
-    : true,\n    \"msg\": sprintf(\"Looking for key '%v'; found '%v'\", [key, controller_spec.nodeSelector]),\n\
-    \    \"violating_key\": \"spec.template.spec.nodeSelector\",\n    \"recommended_value\"\
-    : value  \n  }\n}\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n\
-    \  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  selector_value := controller_spec.nodeSelector[key]\n  not selector_value ==\
-    \ value\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
-    Looking for key value pair '%v:%v'; found '%v'\", [key, value, controller_spec.nodeSelector]),\n\
-    \    \"recommended_value\": value,\n    \"violating_key\": \"spec.template.spec.nodeSelector[key]\"\
-    \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container\
-    \ acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
-    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
-    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
-    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
-    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
-    \ kinds[_] = kind\n}"

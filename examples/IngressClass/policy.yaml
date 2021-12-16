@@ -39,20 +39,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.ingress.ingress_class\n\nannotation  := input.parameters.annotation\n\
-    class := input.parameters.class\nexclude_namespace := input.parameters.exclude_namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace\
-    \ == ingress_input.metadata.namespace\n  not exclude_label_value == ingress_input.metadata.labels[exclude_label_key]\n\
-    \  ingress_annotation := ingress_input.metadata.annotations\n  not has_key(ingress_annotation,\
-    \ annotation)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
-    Ingress is missing the annoation '%v'\", [annotation]),\n    \"violating_key\"\
-    : \"metadata.annotations\"\n  }\n}\n\nviolation[result] {\n  not exclude_namespace\
-    \ == ingress_input.metadata.namespace\n  not exclude_label_value == ingress_input.metadata.labels[exclude_label_key]\n\
-    \  ingress_class:= ingress_input.metadata.annotations[annotation]\n  not ingress_class\
-    \ == class\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
-    Ingress class should '%v'; found '%v' \", [class, ingress_class]),\n    \"violating_key\"\
-    : \"metadata.annotations\",\n    \"recommended_value\": class\n    \n  }\n}\n\n\
-    has_key(x, k) { \n  type_name(x[k])\n}\n\n\ningress_input = input.review.object\
-    \ {\n\tcontains_kind(input.review.object.kind, {\"Ingress\"})\n}\n\ncontains_kind(kind,\
-    \ kinds) {\n  kinds[_] = kind\n}"

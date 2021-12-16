@@ -55,24 +55,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.privilegeEscalation\n\nexclude_namespace\
-    \ := input.parameters.exclude_namespace\nallow_privilege_escalation := input.parameters.allow_privilege_escalation\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  some i\n  isExcludedNamespace\
-    \ == false\n  not exclude_namespace == controller_input.metadata.namespace\n \
-    \ not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \  containers := controller_spec.containers[i]\n  allow_priv := containers.securityContext.allowPrivilegeEscalation\n\
-    \  not allow_priv == allow_privilege_escalation\n  result = {\n    \"issue detected\"\
-    : true,\n    \"msg\": sprintf(\"Container's privilegeEscalation should be set\
-    \ to '%v'; detected '%v'\", [allow_privilege_escalation, allow_priv]),\n    \"\
-    violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext.allowPrivilegeEscalation\"\
-    , [i]),\n    \"recommended_value\": allow_privilege_escalation\n  }\n}\n\nisExcludedNamespace\
-    \  = true {\n  input.review.object.metadata.namespace == exclude_namespace\n}else\
-    \ = false {true}\n\nis_array_contains(array,str) {\n  array[_] = str\n}\n\n# Controller\
-    \ input\ncontroller_input = input.review.object\n\n# controller_container acts\
-    \ as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec\
-    \ {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\",\
-    \ \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind\
-    \ == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n\
-    \  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n \
-    \ kinds[_] = kind\n}\n"

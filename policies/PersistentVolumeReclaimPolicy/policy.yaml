@@ -37,14 +37,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.storage.persistentvolume_reclaim_policy\n\npolicy\
-    \ := input.parameters.pv_policy\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\n\nviolation[result]\
-    \ {\n  pv_policy := storage_spec.persistentVolumeReclaimPolicy\n  not pv_policy\
-    \ == policy\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"\
-    persistentVolumeReclaimPolicy must be '%v'; found '%v'\", [policy, pv_policy]),\n\
-    \    \"violating_key\": \"spec.persistentVolumeReclaimPolicy\",\n    \"recommened_value\"\
-    : policy\n  }\n}\n\n# controller_container acts as an iterator to get containers\
-    \ from the template\nstorage_spec = input.review.object.spec {\n  contains_kind(input.review.object.kind,\
-    \ {\"PersistentVolume\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }\n\n"

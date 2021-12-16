@@ -43,36 +43,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.podSecurity.runningAsRoot\n\nexclude_namespace :=\
-    \ input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\n\
-    exclude_label_value := input.parameters.exclude_label_value\n\n# Check for missing\
-    \ securityContext.runAsNonRoot (missing in both, pod and container)\nviolation[result]\
-    \ {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\tnot exclude_label_value\
-    \ == controller_input.metadata.labels[exclude_label_key]\n\n\tcontroller_spec.securityContext\n\
-    \tnot controller_spec.securityContext.runAsNonRoot\n\tnot controller_spec.securityContext.runAsNonRoot\
-    \ == false\n\n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
-    \tnot containers.securityContext.runAsNonRoot\n\tnot containers.securityContext.runAsNonRoot\
-    \ == false\n\n\tresult = {\n\t\t\"issue detected\": true,\n\t\t\"msg\": sprintf(\"\
-    Container missing spec.template.spec.containers[%v].securityContext.runAsNonRoot\
-    \ while Pod spec.template.spec.securityContext.runAsNonRoot is not defined as\
-    \ well.\", [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext\"\
-    , [i]),\n\t}\n}\n\n# Container security context\n# Check if containers.securityContext.runAsNonRoot\
-    \ exists and = false\nviolation[result] {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\
-    \tnot exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n\
-    \n\tsome i\n\tcontainers := controller_spec.containers[i]\n\tcontainers.securityContext\n\
-    \tcontainers.securityContext.runAsNonRoot == false\n\n\tresult = {\n\t\t\"issue\
-    \ detected\": true,\n\t\t\"msg\": sprintf(\"Container spec.template.spec.containers[%v].securityContext.runAsNonRoot\
-    \ should be set to true \", [i]),\n\t\t\"violating_key\": sprintf(\"spec.template.spec.containers[%v].securityContext.runAsNonRoot\"\
-    , [i]),\n\t\t\"recommended_value\": true,\n\t}\n}\n\n# Pod security context\n\
-    # Check if spec.securityContext.runAsNonRoot exists and = false\nviolation[result]\
-    \ {\n\tnot exclude_namespace == controller_input.metadata.namespace\n\tnot exclude_label_value\
-    \ == controller_input.metadata.labels[exclude_label_key]\n\n\tcontroller_spec.securityContext\n\
-    \tcontroller_spec.securityContext.runAsNonRoot == false\n\n\tresult = {\n\t\t\"\
-    issue detected\": true,\n\t\t\"msg\": \"Pod spec.template.spec.securityContext.runAsNonRoot\
-    \ should be set to true\",\n\t\t\"violating_key\": \"spec.template.spec.securityContext.runAsNonRoot\"\
-    ,\n\t\t\"recommended_value\": true,\n\t}\n}\n\ncontroller_input = input.review.object\n\
-    \ncontroller_spec = controller_input.spec.template.spec {\n\tcontains(controller_input.kind,\
-    \ {\"StatefulSet\", \"DaemonSet\", \"Deployment\", \"Job\", \"ReplicaSet\"})\n\
-    } else = controller_input.spec {\n\tcontroller_input.kind == \"Pod\"\n} else =\
-    \ controller_input.spec.jobTemplate.spec.template.spec {\n\tcontroller_input.kind\
-    \ == \"CronJob\"\n}\n\ncontains(kind, kinds) {\n\tkinds[_] = kind\n}"

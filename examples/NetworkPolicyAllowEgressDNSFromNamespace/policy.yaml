@@ -48,23 +48,3 @@ spec:
     type: string
     required: false
     default:
-  code: "package magalix.advisor.network.allow.egress.to.coredns\n\nnamespace := input.parameters.namespace\n\
-    exclude_label_key := input.parameters.exclude_label_key\nexclude_label_value :=\
-    \ input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value\
-    \ == np_input.metadata.labels[exclude_label_key]\n  namespace == np_input.metadata.namespace\n\
-    \  some i, j, k\n  egress := np_input.spec.egress[i]\n  ports := egress.ports[j]\n\
-    \  ports.protocol == \"UDP\"\n  ports.port = 53\n  to := egress.to[k]\n  to_key\
-    \ := to.podSelector.matchLabels\n  not has_key(to_key, \"k8s-app\")\n  result\
-    \ = {\n    \"issue_detected\": true,\n    \"msg\": sprintf(\"Expecting key 'k8s-app',\
-    \ but '%v' was detected\", [to_key]),\n    \"violating_key\": sprintf(\"spec.egress[%v].to[%v].podSelector.matchLabels\"\
-    , [i,k])\n  }\n}\n\nviolation[result] {\n  not exclude_label_value == np_input.metadata.labels[exclude_label_key]\n\
-    \  namespace == np_input.metadata.namespace\n  some i, j, k\n  egress := np_input.spec.egress[i]\n\
-    \  ports := egress.ports[j]\n  ports.protocol == \"UDP\"\n  ports.port = 53\n\
-    \  to := egress.to[k]\n  to_value := to.podSelector.matchLabels[\"k8s-app\"]\n\
-    \  not \"kube-dns\" == to_value\n  result = {\n    \"issue_detected\": true,\n\
-    \    \"msg\": sprintf(\"Expecting value 'kube-dns', but '%v' was detected\", [to_value]),\n\
-    \    \"violating_key\": sprintf(\"spec.egress[%v].to[%v].podSelector.matchLabels.k8s-app\"\
-    , [i,k]),\n    \"recommended_value\": \"kube-dns\"\n  }\n}\n\nhas_key(x, k) {\
-    \ \n  type_name(x[k])\n}\n\nnp_input = input.review.object {\n  contains_kind(input.review.object.kind,\
-    \ {\"NetworkPolicy\"})\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n\
-    }"
