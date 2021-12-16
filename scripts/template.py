@@ -15,7 +15,7 @@ class FileLoader:
         templates = []
         files = glob.glob(f"{self.path}/**/policy.yaml", recursive=True)
         for yaml_file in files:
-            if yaml_file not in excluded_templates:
+            if os.path.basename(os.path.dirname(yaml_file)) not in excluded_templates:
                 with open(yaml_file) as fd:
                     template = yaml.safe_load(fd)
                     rego_file_path = os.path.join(
