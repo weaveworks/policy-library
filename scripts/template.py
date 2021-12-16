@@ -1,6 +1,7 @@
 import yaml
 import click
 import glob
+import os
 from client import PolicyServiceClient
 from exclude import excluded_templates
 
@@ -13,10 +14,14 @@ class FileLoader:
     def load_templates(self):
         templates = []
         files = glob.glob(f"{self.path}/**/policy.yaml", recursive=True)
-        for file_path in files:
-            if file_path not in excluded_templates:
-                with open(file_path) as fd:
+        for yaml_file in files:
+            if yaml_file not in excluded_templates:
+                with open(yaml_file) as fd:
                     template = yaml.safe_load(fd)
+                    rego_file_path = os.path.join(
+                        os.path.dirname(os.path.abspath(yaml_file)), "policy.rego")
+                    with open(rego_file_path) as rego:
+                        template["spec"]["code"] = rego.read()
                     templates.append(template["spec"])
         return templates
 
@@ -26,17 +31,9 @@ class TemplateSyncer:
         self._file_loader = FileLoader(path=templates_dir) 
 
     def _check_required_fields(self, template: dict):
-        for field in ["id", "name", "description", "how_to_solve", "code", "severity", "category"]:
+        for field in ["id", "name", "description", "how_to_solve", "severity", "category"]:
             if not template.get(field):
                 raise Exception(f"[ERROR] Could not sync template; Missing {field} field.")
-        if (
-            not template.get("targets")
-            or not template["targets"].get("kind")
-            or template["targets"]["kind"] == []
-        ):
-            raise Exception(f"[ERROR] Could not sync {template['name']} template. "\
-                            "Template must have targets kind set to value; "\
-                            "for example 'kind: [Deployment]'")
 
     def _fetch_remote_templates(self):
         response = self._client.query_templates(filters={"magalix": True})
@@ -68,14 +65,15 @@ class TemplateSyncer:
 
         for template in templates:
             self._check_required_fields(template=template)
-            targets_schema = {
-                "kind": [],
-                "cluster": [],
-                "namespace": [],
-                "label": {},
-            }
-            targets_schema.update(template["targets"])
-            template["targets"] = targets_schema
+            if template.get("targets"):
+                targets_schema = {
+                    "kind": [],
+                    "cluster": [],
+                    "namespace": [],
+                    "label": {},
+                }
+                targets_schema.update(template["targets"])
+                template["targets"] = targets_schema
 
             if not template.get("provider"):
                 template["provider"] = DEFAULT_PROVIDER
