@@ -107,7 +107,6 @@ class CategorySyncer:
 
             if not new_only:    # sync updates of old categories
                 self._update_category(category=category, remote_category=remote_category)
-                self._update_category(category=category, remote_category=remote_category)
 
         if sync_deleted:
             self._sync_deleted(categories=categories, remote_categories=remote_categories)
