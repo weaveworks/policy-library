@@ -7,16 +7,12 @@ spec:
   name: Node Kernel Versions
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version
-  how_to_solve: "How to Solve"
+  how_to_solve: |
+    Ensure your Linux kernel is equal to or later than the version specified in your policy. 
   category: magalix.categories.organizational-standards
   severity: medium
   controls:
   - magalix.controls.soc2-type-1.1.6.8
-  parameters:
-  - name:
-    type: array
-    required: true
-    default:
   code: "package magalix.advisor.nodes.outdated_kernel_version\n\n  kernel_latest_versions\
     \ := {\n    \"Amazon Linux 2\": {\n        \"4.14\":\"4.14.193\"\n    },\n  \t\
     \"Container-Optimized OS from Google\": {\n        \"4.14\":\"4.14.174\", \n \
