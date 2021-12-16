@@ -1,6 +1,7 @@
 import yaml
 import click
 import glob
+import os
 from client import PolicyServiceClient
 from exclude import excluded_policies
 
@@ -13,10 +14,14 @@ class FileLoader:
     def load_policies(self):
         policies = []
         files = glob.glob(f"{self.path}/**/policy.yaml", recursive=True)
-        for file_path in files:
-            if file_path not in excluded_policies:
-                with open(file_path) as fd:
+        for yaml_file in files:
+            if yaml_file not in excluded_policies:
+                with open(yaml_file) as fd:
                     policy = yaml.safe_load(fd)
+                    rego_file_path = os.path.join(
+                        os.path.dirname(os.path.abspath(yaml_file)), "policy.rego")
+                    with open(rego_file_path) as rego:
+                        policy["spec"]["code"] = rego.read()
                     policies.append(policy["spec"])
         return policies
 
@@ -26,7 +31,7 @@ class PolicySyncer:
         self._file_loader = FileLoader(path=policies_dir) 
 
     def _check_required_fields(self, policy: dict):
-        for field in ["id", "name", "description", "how_to_solve", "code", "severity", "category"]:
+        for field in ["id", "name", "description", "how_to_solve", "severity", "category"]:
             if not policy.get(field):
                 raise Exception(f"[ERROR] Could not sync policy; Missing {field} field.")
         if (
