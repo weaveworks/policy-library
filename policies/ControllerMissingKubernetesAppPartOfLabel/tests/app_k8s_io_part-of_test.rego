@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_label
+package magalix.advisor.labels.missing_kubernetes_app_part_of_label
 
 test_k8s_part_of_exists {
 	testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_label
+package magalix.advisor.labels.missing_owner_label
 
 test_owner_exists {
 	testcase = {
