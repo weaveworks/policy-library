@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Node
+metadata:
+  annotations:
+    container.googleapis.com/instance_id: "1122999694720815817"
+    node.alpha.kubernetes.io/ttl: "0"
+    node.gke.io/last-applied-node-labels: cloud.google.com/gke-boot-disk=pd-standard,cloud.google.com/gke-netd-ready=true,cloud.google.com/gke-nodepool=nodes,cloud.google.com/gke-os-distribution=ubuntu,cloud.google.com/machine-family=n1,iam.gke.io/gke-metadata-server-enabled=true
+    volumes.kubernetes.io/controller-managed-attach-detach: "true"
+  creationTimestamp: "2021-02-02T15:15:06Z"
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/instance-type: n1-standard-8
+    beta.kubernetes.io/os: linux
+    cloud.google.com/gke-boot-disk: pd-standard
+    cloud.google.com/gke-netd-ready: "true"
+    cloud.google.com/gke-nodepool: nodes
+    cloud.google.com/gke-os-distribution: ubuntu
+    cloud.google.com/machine-family: n1
+    failure-domain.beta.kubernetes.io/region: us-east1
+    failure-domain.beta.kubernetes.io/zone: us-east1-b
+    iam.gke.io/gke-metadata-server-enabled: "true"
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: gke-dev-nodes-9c83de65-9lm5
+    kubernetes.io/os: linux
+    node.kubernetes.io/instance-type: n1-standard-8
+    topology.kubernetes.io/region: us-east1
+    topology.kubernetes.io/zone: us-east1-b
+spec:
+  podCIDR: 10.20.6.0/24
+  podCIDRs:
+  - 10.20.6.0/24
+  providerID: gce://dev-env-203117/us-east1-b/gke-dev-nodes-9c83de65-9lm5
+status:
+  nodeInfo:
+    architecture: amd64
+    bootID: 828d35c4-4c32-4911-bf3d-33462d213af5
+    containerRuntimeVersion: docker://19.3.6
+    kernelVersion: 5.4.0-1032-gke
+    kubeProxyVersion: v1.18.14-gke.1200
+    kubeletVersion: v1.18.14-gke.1200
+    machineID: 16636f7e9448f9deb67599a9db6d899e
+    operatingSystem: linux
+    osImage: Ubuntu 18.04.5 LTS
+    systemUUID: 16636f7e-9448-f9de-b675-99a9db6d899e
+  

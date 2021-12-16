@@ -1,0 +1,55 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.controller-serviceaccount-tokens-automount
+spec:
+  id: magalix.policies.controller-serviceaccount-tokens-automount
+  name: Controller ServiceAccount Tokens Automount
+  description: |
+    This Policy allows for the option of enabling or disabling Service Accounts that are created for a Pod. The recommended practice is to set the `automount_token` to `false.  
+
+    When a pod is created without specifying a service account, it is automatically assigned the default service account in the same namespace. This is a security concern because a compromised container can access the API using automatically mounted service account credentials. The API permissions of the service account depend on the authorization plugin and policy in use, but could possibly create and delete pods. 
+
+    We recommend setting the `automount_token` to `false`. 
+
+    In version 1.6+, you can opt out of automounting API credentials for a particular pod.
+  how_to_solve: |
+    Ensure the setting in the Policy matches the Service Account declaration in the controller. 
+    ```
+    ...
+      spec:
+        automountServiceAccountToken: false
+    ```
+
+    https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  category: magalix.categories.access-control
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.pci-dss.7.2.1
+  - magalix.controls.cis-benchmark.5.1.5
+  - magalix.controls.mitre-attack.1.4
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.soc2-type-1.1.6.3
+  tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
+  parameters:
+  - name: automount_token
+    type: boolean
+    required: true
+    default: false
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

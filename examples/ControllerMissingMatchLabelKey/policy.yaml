@@ -1,0 +1,38 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.missing-matchlabels-key
+spec:
+  id: magalix.templates.missing-matchlabels-key
+  name: Missing Matchlabels Key
+  description: |
+    This Policy will enforce a custom match label key in `spec.selector`.
+  how_to_solve: |
+    Add a custom label to `matchLabels`. 
+    ```
+    ...
+      spec:
+        selector:
+          matchLabels:
+            <label>: value
+    ```
+    https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#resources-that-support-set-based-requirements
+  category: magalix.categories.organizational-standards
+  severity: low
+  parameters:
+  - name: label
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

@@ -1,0 +1,49 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-prohibit-image-tag
+spec:
+  id: magalix.policies.container-prohibit-image-tag
+  name: Container Prohibit Image Tag
+  description: |
+    Prohibit certain image tags by specifying them in the Policy. The Policy will also violate if the a tag is not set, or is set to `latest`. 
+
+    Note: You should avoid using the :latest tag when deploying containers in production as it is harder to track which version of the image is running and more difficult to roll back properly.
+  how_to_solve: |
+    Configure an image tag that is not in the Policy. 
+    ```
+    ...
+      spec:
+        containers:
+        - image: registry/image_name:<tag>
+    ```
+    https://kubernetes.io/docs/concepts/configuration/overview/#container-images
+  category: magalix.categories.software-supply-chain
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.cis-benchmark.5.5.1
+  - magalix.controls.mitre-attack.1.2
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.soc2-type-1.1.6.8
+  tags: [cis-benchmark, mitre-attack, gdpr, soc2-type1, default]
+  parameters:
+  - name: image_tag
+    type: string
+    required: true
+    default: latest
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

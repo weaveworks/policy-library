@@ -1,0 +1,127 @@
+controls:
+- description: "The Security Rule defines access in \xA7 164.304 as \u201Cthe ability\
+    \ or the means necessary to read, write, modify, or communicate data/information\
+    \ or otherwise use any system resource. (This definition applies to \u201Caccess\u201D\
+    \ as used in this subpart, not as used in subpart E of this part [the HIPAA Privacy\
+    \ Rule]).\u201D Access controls provide users with rights and/or privileges to\
+    \ access and perform functions using information systems, applications, programs,\
+    \ or files. Access controls should enable authorized users to access the minimum\
+    \ necessary information needed to perform job functions. Rights and/or privileges\
+    \ should be granted to authorized users based on a set of access rules that the\
+    \ covered entity is required to implement as part of \xA7 164.308(a)(4), the Information\
+    \ Access Management standard under the Administrative Safeguards section of the\
+    \ Rule.\n"
+  id: magalix.controls.hipaa.164.312.a.1
+  name: Access Control
+  order: 164.312.a.1
+- description: 'The Unique User Identification implementation specification states
+    that a covered entity must:  `"Assign a unique name and/or number for identifying
+    and tracking user identity."`
+
+    '
+  id: magalix.controls.hipaa.164.312.a.2.i
+  name: UNIQUE USER IDENTIFICATION
+  order: 164.312.a.2.i
+- description: 'This implementation specification requires a covered entity to: `"Establish
+    (and implement as needed) procedures for obtaining necessary electronic protected
+    health information during an emergency."`
+
+    '
+  id: magalix.controls.hipaa.164.312.a.2.ii
+  name: EMERGENCY ACCESS PROCEDURE
+  order: 164.312.a.2.ii
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement electronic
+    procedures that terminate an electronic session after a predetermined time of
+    inactivity."`
+
+    '
+  id: magalix.controls.hipaa.164.312.a.2.iii
+  name: AUTOMATIC LOGOFF
+  order: 164.312.a.2.iii
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement a mechanism
+    to encrypt and decrypt electronic protected health information."`
+
+    '
+  id: magalix.controls.hipaa.164.312.a.2.iv
+  name: ENCRYTION AND DECRYPTION
+  order: 164.312.a.2.iv
+- description: 'This standard has no implementation specifications. The Audit Controls
+    standard requires a covered entity to: `"Implement hardware, software, and/or
+    procedural mechanisms that record and examine activity in information systems
+    that contain or use electronic protected health information."`
+
+    '
+  id: magalix.controls.hipaa.164.312.b
+  name: Audit Controls
+  order: 164.312.b
+- description: "Integrity is defined in the Security Rule, at \xA7 164.304, as \u201C\
+    the property that data or information have not been altered or destroyed in an\
+    \ unauthorized manner.\u201D Protecting the  integrity of EPHI is a primary goal\
+    \ of the Security Rule. The Integrity standard requires a covered entity to: `\"\
+    Implement policies and procedures to protect electronic protected health information\
+    \ from improper alteration or destruction.\"`\n"
+  id: magalix.controls.hipaa.164.312.c.1
+  name: Integrity
+  order: 164.312.c.1
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement electronic
+    mechanisms to corroborate that electronic protected health information has not
+    been altered or destroyed in an unauthorized manner."`
+
+    '
+  id: magalix.controls.hipaa.164.312.c.2
+  name: MECHANISM TO AUTHENTICATE ELECTRONIC PROTECTED HEALTH INFORMATION
+  order: 164.312.c.2
+- description: 'The Person or Entity Authentication standard has no implementation
+    specifications. This standard requires a covered entity to: `"Implement procedures
+    to verify that a person or entity seeking access to electronic protected health
+    information is the one claimed."`
+
+    '
+  id: magalix.controls.hipaa.164.312.d
+  name: Person or Entity Authentication
+  order: 164.312.d
+- description: 'This standard requires a covered entity to: `"Implement technical
+    security measures to guard against unauthorized access to electronic protected
+    health information that is being transmitted over an electronic communications
+    network."`
+
+    '
+  id: magalix.controls.hipaa.164.312.e.1
+  name: Transmission Security
+  order: 164.312.e.1
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement security
+    measures to ensure that electronically transmitted electronic protected health
+    information is not improperly modified without detection until disposed of."`
+
+    '
+  id: magalix.controls.hipaa.164.312.e.2.i
+  name: INTEGRITY CONTROLS
+  order: 164.312.e.2.i
+- description: 'Where this implementation specification is a reasonable and appropriate
+    safeguard for a covered entity, the covered entity must: `"Implement a mechanism
+    to encrypt electronic protected health information whenever deemed appropriate."`
+
+    '
+  id: magalix.controls.hipaa.164.312.e.2.ii
+  name: ENCRYPTION
+  order: 164.312.e.2.ii
+description: "The Health Insurance Portability and Accountability Act of 1996 (HIPAA)\\\
+  \nis a US federal law that required the creation of national standards to protect\
+  \ sensitive\\\npatient health information from being disclosed without the patient\\\
+  u2019s consent\\\nor knowledge.\n\nThe Security Rule defines technical safeguards\
+  \ in \xA7 164.304 as \"the technology and the policy and procedures for its use\
+  \ that protect electronic protected health information and control access to it.\"\
+  \ As outlined in previous papers in this series, the Security Rule is based on the\
+  \ fundamental concepts of flexibility, scalability and technology neutrality. Therefore,\
+  \ no specific requirements for types of technology to implement are identified.\
+  \ The Rule allows a covered entity to use any security measures that allows it reasonably\
+  \ and appropriately to implement the standards and implementation specifications.\
+  \ A covered entity must determine which security measures and specific technologies\
+  \ are reasonable and appropriate for implementation in its organization.\n\nMagalix\
+  \ supports those Technical Safeguards, where applicable. \n"
+id: magalix.standards.hipaa
+name: HIPAA

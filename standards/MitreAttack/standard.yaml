@@ -1,0 +1,171 @@
+controls:
+- description: 'The initial access tactic consists of techniques that are used for
+    gaining access to the resource. In containerized environments, those techniques
+    enable first access to the cluster. This access can be achieved directly via the
+    cluster management layer or, alternatively, by gaining access to a malicious or
+    vulnerable resource that is deployed on the cluster.
+
+    '
+  id: magalix.controls.mitre-attack.1
+  name: Initial Access
+  order: 1
+- description: 'Running a compromised image in a cluster can compromise the cluster.
+    Attackers who get access to a private registry can plant their own compromised
+    images in the registry. The latter can then be pulled by a user. In addition,
+    users often use untrusted images from public registries (such as Docker Hub) that
+    may be malicious.
+
+
+    Building images based on untrusted base images can also lead to similar results.
+
+    '
+  id: magalix.controls.mitre-attack.1.2
+  name: Compromised images in registry
+  order: 1.2
+- description: Running a public-facing vulnerable application in a cluster can enable
+    initial access to the cluster. A container that runs an application that is vulnerable
+    to remote code execution vulnerability (RCE) may be exploited. If service account
+    is mounted to the container (default behavior in Kubernetes), the attacker will
+    be able to send requests to the API server using this service account credentials.
+  id: magalix.controls.mitre-attack.1.4
+  name: Vulnerable application
+  order: 1.4
+- description: The execution tactic consists of techniques that are used by attackers
+    to run their code inside a cluster.
+  id: magalix.controls.mitre-attack.2
+  name: Execution
+  order: 2
+- description: "Attackers who have permissions, can run malicious commands in containers\
+    \ in the cluster using exec command (\u201Ckubectl exec\u201D). In this method,\
+    \ attackers can use legitimate images, such as an OS image (e.g., Ubuntu) as a\
+    \ backdoor container, and run their malicious code remotely by using \u201Ckubectl\
+    \ exec\u201D."
+  id: magalix.controls.mitre-attack.2.1
+  name: Exec into container
+  order: 2.1
+- description: The persistence tactic consists of techniques that are used by attackers
+    to keep access to the cluster in case their initial foothold is lost.
+  id: magalix.controls.mitre-attack.3
+  name: Persistence
+  order: 3
+- description: hostPath volume mounts a directory or a file from the host to the container.
+    Attackers who have permissions to create a new container in the cluster may create
+    one with a writable hostPath volume and gain persistence on the underlying host.
+    For example, the latter can be achieved by creating a cron job on the host.
+  id: magalix.controls.mitre-attack.3.2
+  name: Writable hostPath mount
+  order: 3.2
+- description: The privilege escalation tactic consists of techniques that are used
+    by attackers to get higher privileges in the environment than those they currently
+    have. In containerized environments, this can include getting access to the node
+    from a container, gaining higher privileges in the cluster, and even getting access
+    to the cloud resources.
+  id: magalix.controls.mitre-attack.4
+  name: Privilege Escalation
+  order: 4
+- description: "A privileged container is a container that has all the capabilities\
+    \ of the host machine, which lifts all the limitations regular containers have.\
+    \ Practically, this means that privileged containers can do almost every action\
+    \ that can be performed directly on the host. Attackers who gain access to a privileged\
+    \ container, or have permissions to create a new privileged container (by using\
+    \ the compromised pod\u2019s service account, for example), can get access to\
+    \ the host\u2019s resources."
+  id: magalix.controls.mitre-attack.4.1
+  name: Privileged Container
+  order: 4.1
+- description: Role-based access control (RBAC) is a key security feature in Kubernetes.
+    RBAC can restrict the allowed actions of the various identities in the cluster.
+    Cluster-admin is a built-in high privileged role in Kubernetes. Attackers who
+    have permissions to create bindings and cluster-bindings in the cluster can create
+    a binding to the cluster-admin ClusterRole or to other high privileges roles.
+  id: magalix.controls.mitre-attack.4.2
+  name: Cluster-admin binding
+  order: 4.2
+- description: hostPath mount can be used by attackers to get access to the underlying
+    host and thus break from the container to the host.
+  id: magalix.controls.mitre-attack.4.3
+  name: hostPath Mount
+  order: 4.3
+- description: The defense evasion tactic consists of techniques that are used by
+    attackers to avoid detection and hide their activity.
+  id: magalix.controls.mitre-attack.5
+  name: Defense Evasion
+  order: 5
+- description: 'The credential access tactic consists of techniques that are used
+    by attackers to steal credentials.
+
+    In containerized environments, this includes credentials of the running application,
+    identities, secrets stored in the cluster, or cloud credentials.'
+  id: magalix.controls.mitre-attack.6
+  name: Credential Access
+  order: 6
+- description: A Kubernetes secret is an object that lets users store and manage sensitive
+    information, such as passwords and connection strings in the cluster. Secrets
+    can be consumed by reference in the pod configuration. Attackers who have permissions
+    to retrieve the secrets from the API server (by using the pod service account,
+    for example) can access sensitive information that might include credentials to
+    various services.
+  id: magalix.controls.mitre-attack.6.1
+  name: List Kubernetes secrets
+  order: 6.1
+- description: Service account (SA) represents an application identity in Kubernetes.
+    By default, an SA is mounted to every created pod in the cluster. Using the SA,
+    containers in the pod can send requests to the Kubernetes API server. Attackers
+    who get access to a pod can access the SA token (located in /var/run/secrets/kubernetes.io/serviceaccount/token)
+    and perform actions in the cluster, according to the SA permissions. If RBAC is
+    not enabled, the SA has unlimited permissions in the cluster. If RBAC is enabled,
+    its permissions are determined by the RoleBindings \ ClusterRoleBindings that
+    are associated with it.
+  id: magalix.controls.mitre-attack.6.3
+  name: Access container service account
+  order: 6.3
+- description: The discovery tactic consists of techniques that are used by attackers
+    to explore the environment to which they gained access. This exploration helps
+    the attackers to perform lateral movement and gain access to additional resources.
+  id: magalix.controls.mitre-attack.7
+  name: Discovery
+  order: 7
+- description: "The lateral movement tactic consists of techniques that are used by\
+    \ attackers to move through the victim\u2019s environment. In containerized environments,\
+    \ this includes gaining access to various resources in the cluster from a given\
+    \ access to one container, gaining access to the underlying node from a container,\
+    \ or gaining access to the cloud environment."
+  id: magalix.controls.mitre-attack.8
+  name: Lateral Movement
+  order: 8
+- description: Attackers who gain access to a container in the cluster may use the
+    mounted service account token for sending requests to the API server, and gaining
+    access to additional resources in the cluster.
+  id: magalix.controls.mitre-attack.8.2
+  name: Container service account
+  order: 8.2
+- description: Kubernetes networking behavior allows traffic between pods in the cluster
+    as a default behavior. Attackers who gain access to a single container may use
+    it for network reachability to another container in the cluster.
+  id: magalix.controls.mitre-attack.8.3
+  name: Cluster Internal Networking
+  order: 8.3
+- description: "CoreDNS is a modular Domain Name System (DNS) server written in Go,\
+    \ hosted by Cloud Native Computing Foundation (CNCF). CoreDNS is the main DNS\
+    \ service that is being used in Kubernetes. The configuration of CoreDNS can be\
+    \ modified by a file named corefile. In Kubernetes, this file is stored in a ConfigMap\
+    \ object, located at the kube-system namespace. If attackers have permissions\
+    \ to modify the ConfigMap, for example by using the container\u2019s service account,\
+    \ they can change the behavior of the cluster\u2019s DNS, poison it, and take\
+    \ the network identity of other services."
+  id: magalix.controls.mitre-attack.8.6
+  name: CoreDNS Poisoning
+  order: 8.6
+- description: In Kubernetes, collection consists of techniques that are used by attackers
+    to collect data from the cluster or through using the cluster.
+  id: magalix.controls.mitre-attack.9
+  name: Collection
+  order: 9
+- description: The Impact tactic consists of techniques that are used by attackers
+    to destroy, abuse, or disrupt the normal behavior of the environment.
+  id: magalix.controls.mitre-attack.10
+  name: Impact
+  order: 10
+description: MITRE ATT&CK FRAMEWORK FOR KUBERNETES
+id: magalix.standards.mitre-attack
+name: MITRE ATTACK

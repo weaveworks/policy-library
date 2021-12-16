@@ -1,0 +1,18 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.container-named-port
+spec:
+  id: magalix.templates.container-named-port
+  name: Container Named Port
+  description: |
+    This Policy checks the named port of your containers to see if they are set in your container probes. 
+  how_to_solve: |
+    https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
+  category: magalix.categories.best-practices
+  severity: high
+  parameters:
+  - name: probe
+    type: string
+    required: true
+    default: livenessProbe

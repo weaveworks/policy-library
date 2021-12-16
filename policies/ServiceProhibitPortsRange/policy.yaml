@@ -1,0 +1,41 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.services-prohibit-ports-range
+spec:
+  id: magalix.policies.services-prohibit-ports-range
+  name: Services Prohibit Ports Range
+  description: |
+    This Policy checks if ports allocated for your services are using a number that is less than the specified value. 
+  how_to_solve: |
+    Use a port that is greater than or equal to what is specified in the Policy. 
+    ```
+    spec:
+      ports:
+        - targetPort: <target_port>
+    ```
+  category: magalix.categories.network-security
+  severity: high
+  targets: {kind: [Service]}
+  controls:
+  - magalix.controls.pci-dss.1.1.6
+  - magalix.controls.pci-dss.1.3.1
+  - magalix.controls.pci-dss.2.2.2
+  tags: [pci-dss]
+  parameters:
+  - name: target_port
+    type: integer
+    required: true
+    default: 1024
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

@@ -1,0 +1,11 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-from-cidr-block
+  namespace: default
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.244.120.72/32

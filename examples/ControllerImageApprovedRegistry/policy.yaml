@@ -1,0 +1,42 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.approved-registry
+spec:
+  id: magalix.templates.approved-registry
+  name: Approved Registry
+  description: |
+    This Policy is violated when container images are not using approved container registries. The Policy allows for you to add multiple registries. 
+  how_to_solve: |
+    Ensure the image registry you are using matches the registries specified in the policy. If you are using multiple containers, be sure to check those as well. 
+
+    Replace the violating registry with one that is approved. 
+    ```
+    ...
+      spec:
+        template:
+          spec:
+            containers:
+            - image:<registries>/container_name:tag
+    ```
+  category: magalix.categories.software-supply-chain
+  severity: high
+  controls:
+  - magalix.controls.soc2-type-1.1.6.8
+  parameters:
+  - name: registries
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

@@ -1,0 +1,52 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.rbac-prohibit-updating-configmaps
+spec:
+  id: magalix.templates.rbac-prohibit-updating-configmaps
+  name: Rbac Prohibit Updating Configmaps
+  description: |
+    This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific verbs set for ConfigMaps. For example, if you wanted to deny the patching of a configmap, you would create a Policy with a the `resource_name` of the configmap you want to protect, it's `namespace` and the `verb` you want to block. 
+  how_to_solve: |
+    When deploying RBAC roles, ensure the `resourceName`, `namespace` and `verb combination` you choose are allowed by the Policy. 
+    ```
+    rules:
+    - resourcesName: <resource_name>
+      verbs: <verb>
+
+    ```
+
+    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.7.1.1
+  - magalix.controls.pci-dss.7.1.2
+  - magalix.controls.mitre-attack.8.6
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.hipaa.164.312.a.1
+  - magalix.controls.soc2-type-1.1.6.8
+  - magalix.controls.soc2-type-1.1.6.3
+  parameters:
+  - name: resource_name
+    type: string
+    required: true
+    default:
+  - name: verb
+    type: string
+    required: true
+    default:
+  - name: namespace
+    type: string
+    required: true
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

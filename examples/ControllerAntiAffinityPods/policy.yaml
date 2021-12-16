@@ -1,0 +1,37 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.antiaffinity-pod-simple
+spec:
+  id: magalix.templates.antiaffinity-pod-simple
+  name: Antiaffinity Pod Simple
+  description: |
+    This Policy sets antiPodAffinity keys, regardless of the Anti Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Anti-Affinity types:
+    - preferredDuringSchedulingIgnoredDuringExecution 
+    - requiredDuringSchedulingIgnoredDuringExecution 
+
+    There is 1 parameter for this Policy:
+    - keys (array) : The policy will check for `key` you are basing the anti-affinty on. 
+  how_to_solve: |
+    When working with Pod Anti-Affinity, this Policy will traverse through the entity and find the proper keys, regardless of pod affinity type. The follwing is an example of where the key is located. 
+    ```
+    ...
+      spec:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: <keys>
+    ```       
+    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+    https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodAffinity
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type-1.2.1.1
+  parameters:
+  - name: keys
+    type: array
+    required: true
+    default:

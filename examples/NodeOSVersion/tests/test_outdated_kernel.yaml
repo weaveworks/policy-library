@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Node
+metadata:
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/instance-type: n1-standard-8
+    beta.kubernetes.io/os: linux
+    cloud.google.com/gke-nodepool: default-pool
+    cloud.google.com/gke-os-distribution: cos
+    cloud.google.com/machine-family: n1
+    failure-domain.beta.kubernetes.io/region: us-central1
+    failure-domain.beta.kubernetes.io/zone: us-central1-a
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: gke-rgn-prod-default-pool-10cc5a4a-gseo
+    kubernetes.io/os: linux
+    node.kubernetes.io/instance-type: n1-standard-8
+    topology.kubernetes.io/region: us-central1
+    topology.kubernetes.io/zone: us-central1-a
+  name: gke-rgn-prod-default-pool-10cc5a4a-gseo
+  resourceVersion: "489770127"
+  selfLink: /api/v1/nodes/gke-rgn-prod-default-pool-10cc5a4a-gseo
+  uid: 99b167c3-68a1-48f3-b7f5-6226f24a7da8
+spec:
+  podCIDR: 10.60.6.0/24
+  podCIDRs:
+  - 10.60.6.0/24
+  providerID: gce://prod-env-203121/us-central1-a/gke-rgn-prod-default-pool-10cc5a4a-gseo
+status:
+  nodeInfo:
+    architecture: amd64
+    bootID: 1e1d1bce-2ea0-4381-bf45-db3f9978698f
+    containerRuntimeVersion: docker://19.3.6
+    kernelVersion: 4.19.112+
+    kubeProxyVersion: v1.17.9-gke.1504
+    kubeletVersion: v1.17.9-gke.1504
+    machineID: c2422ba6ccdc26dea39934e93909df86
+    operatingSystem: linux
+    osImage: Container-Optimized OS from Google
+    systemUUID: c2422ba6-ccdc-26de-a399-34e93909df86
+ 

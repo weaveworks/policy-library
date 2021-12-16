@@ -1,0 +1,12 @@
+kind: Node
+apiVersion: v1
+metadata: 
+  name: 10.240.79.157
+  labels: 
+    name: my-first-k8s-node
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: hostname
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/node:
+    topology.kubernetes.io/region: us-east-1
+    topology.kubernetes.io/zone: us-east-1a

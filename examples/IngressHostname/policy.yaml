@@ -1,0 +1,35 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.ingress-approved-hostnames
+spec:
+  id: magalix.templates.ingress-approved-hostnames
+  name: Ingress Approved Hostnames
+  description: |
+    This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 
+  how_to_solve: |
+    Ensure your domain name is the same as the one you are hosting.
+    ```
+    spec:
+      rules:
+      - host: <hostnames>
+    ```
+  category: magalix.categories.network-security
+  severity: high
+  parameters:
+  - name: hostnames
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

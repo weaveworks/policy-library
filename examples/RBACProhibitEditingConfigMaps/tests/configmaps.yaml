@@ -1,0 +1,14 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prohibit-edit-configmaps-kubedns
+  namespace: kube-system
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: 'true'
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["coredns"]
+  verbs: ["list"]

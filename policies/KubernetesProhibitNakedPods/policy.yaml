@@ -1,0 +1,22 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.prohibit-naked-pods-from-being-scheduled
+spec:
+  id: magalix.policies.prohibit-naked-pods-from-being-scheduled
+  name: Prohibit Naked Pods From Being Scheduled
+  description: |
+    This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running "naked" pods. 
+  how_to_solve: |
+    Ensure you are not using a kind that is specified within the Policy.
+    ```
+    kind: <kind>
+    ```
+
+    https://kubernetes.io/docs/concepts/configuration/overview/#naked-pods-vs-replicasets-deployments-and-jobs
+  category: magalix.categories.organizational-standards
+  severity: medium
+  targets: {kind: [Pod]}
+  controls:
+  - magalix.controls.cis-benchmark.5.1.4
+  tags: [cis-benchmark]

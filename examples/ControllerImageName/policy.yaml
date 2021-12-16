@@ -1,0 +1,44 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.containers-block-specific-image-names
+spec:
+  id: magalix.templates.containers-block-specific-image-names
+  name: Containers Block Specific Image Names
+  description: |
+    This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 
+  how_to_solve: |
+    Use an image that is not set in the Policy. 
+    ```
+    ...
+      spec:
+        containers:
+        - image: registry/<image_names>:tag
+    ```
+  category: magalix.categories.software-supply-chain
+  severity: high
+  controls:
+  - magalix.controls.cis-benchmark.5.5.1
+  - magalix.controls.mitre-attack.1.2
+  - magalix.controls.nist-800-190.4.1.5
+  - magalix.controls.gdpr.24
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.soc2-type-1.1.6.8
+  parameters:
+  - name: restricted_image_names
+    type: array
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

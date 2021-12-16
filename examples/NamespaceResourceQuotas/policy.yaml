@@ -1,0 +1,34 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.resource-quota-setting-is-missing
+spec:
+  id: magalix.templates.resource-quota-setting-is-missing
+  name: Resource Quota Setting Is Missing
+  description: |
+    When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
+  how_to_solve: |
+    Declare values for CPU & Memory requests and limits.  
+    ```
+    spec:
+      hard:
+        requests.cpu: <size>
+        requests.memory: <size>
+        limits.cpu: <size>
+        limits.memory: <size>
+    ```
+    https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
+  category: magalix.categories.capacity-management
+  severity: medium
+  controls:
+  - magalix.controls.soc2-type-1.2.1.1
+  tags: [soc2-type1]
+  parameters:
+  - name: resource_type
+    type: string
+    required: true
+    default:
+  - name: namespace
+    type: string
+    required: true
+    default: magalix

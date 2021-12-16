@@ -1,0 +1,39 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.containers-minimum-replica-count
+spec:
+  id: magalix.policies.containers-minimum-replica-count
+  name: Containers Minimum Replica Count
+  description: |
+    Use this Policy to to check the replica count of your workloads. The value set in the Policy is greater than or equal to the amount desired, so if the replica count is lower than what is specified, the Policy will be in violation. 
+  how_to_solve: |
+    The replica count should be a value equal or greater than what is set in the Policy.
+    ```
+    spec:
+      replicas: <replica_count>
+    ```
+    https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment
+  category: magalix.categories.reliability
+  severity: medium
+  targets: {kind: [Deployment, ReplicationController, ReplicaSet, StatefulSet]}
+  controls:
+  - magalix.controls.soc2-type-1.2.1.1
+  tags: [soc2-type1]
+  parameters:
+  - name: replica_count
+    type: integer
+    required: true
+    default: 2
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

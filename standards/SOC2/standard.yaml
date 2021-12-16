@@ -1,0 +1,113 @@
+controls:
+- description: Security refers to the protection of i. information during its collection
+    or creation, use, processing, transmission, and storage ii. systems that use electronic
+    information to process, transmit or transfer, and store information to enable
+    the entity to meet its objectives. Controls over security prevent or detect the
+    breakdown and circumvention of segregation of duties, system failure, incorrect
+    processing, theft or other unauthorized removal of information or system resources,
+    misuse of software, and improper access to or use of, alteration, destruction,
+    or disclosure of information.
+  id: magalix.controls.soc2-type-1.1
+  name: Security
+  order: 1
+- description: The entity implements logical access security software, infrastructure,
+    and architectures over protected information assets to protect them from security
+    events to meet the entity's objectives.
+  id: magalix.controls.soc2-type-1.1.6.1
+  name: Control Environment CC6_1
+  order: 1.6.1
+- description: "The entity authorizes, modifies, or removes access to data, software,\
+    \ functions, and other protected information assets based on roles, responsibilities,\
+    \ or the system design and changes, giving consideration to the concepts of least\
+    \ privilege and segregation of duties, to meet the entity\u2019s objectives."
+  id: magalix.controls.soc2-type-1.1.6.3
+  name: Control Environment CC6_3
+  order: 1.6.3
+- description: The entity implements logical access security measures to protect against
+    threats from sources outside its system boundaries.
+  id: magalix.controls.soc2-type-1.1.6.6
+  name: Control Environment CC6_6
+  order: 1.6.6
+- description: "The entity restricts the transmission, movement, and removal of information\
+    \ to authorized internal and external users and processes, and protects it during\
+    \ transmission, movement, or removal to meet the entity\u2019s objectives."
+  id: magalix.controls.soc2-type-1.1.6.7
+  name: Control Environment CC6_7
+  order: 1.6.7
+- description: The entity maintains, monitors, and evaluates current processing capacity
+    and use of system components (infrastructure, data, and software) to manage capacity
+    demand and to enable the implementation of additional capacity to help meet its
+    objectives.
+  id: magalix.controls.soc2-type-1.1.6.8
+  name: Control Environment CC6_8
+  order: 1.6.8
+- description: "Availability refers to the accessibility of information used by the\
+    \ entity\u2019s systems as well as the products or services provided to its customers.\
+    \ The availability objective does not, in itself, set a minimum acceptable performance\
+    \ level; it does not address system functionality (the specific functions a system\
+    \ performs) or usability (the ability of users to apply system functions to the\
+    \ performance of specific tasks or problems). However, it does address whether\
+    \ systems include controls to support accessibility for operation, monitoring,\
+    \ and maintenance."
+  id: magalix.controls.soc2-type-1.2
+  name: Availability
+  order: 2
+- description: The entity maintains, monitors, and evaluates current processing capacity
+    and use of system components (infrastructure, data, and software) to manage capacity
+    demand and to enable the implementation of additional capacity to help meet its
+    objectives.
+  id: magalix.controls.soc2-type-1.2.1.1
+  name: Availability A1_1
+  order: 2.1.1
+- description: The entity authorizes, designs, develops or acquires, implements, operates,
+    approves, maintains, and monitors environmental protections, software, data backup
+    processes, and recovery infrastructure to meet its objectives.
+  id: magalix.controls.soc2-type-1.2.1.2
+  name: Availability A1_2
+  order: 2.1.2
+- description: "Processing integrity refers to the completeness, validity, accuracy,\
+    \ timeliness, and authorization of system processing. Processing integrity addresses\
+    \ whether systems achieve the aim or purpose for which they exist and whether\
+    \ they perform their intended functions in an unimpaired manner, free from error,\
+    \ delay, omission, and unauthorized or inadvertent manipulation. Because of the\
+    \ number of systems used by an entity, processing integrity is usually only addressed\
+    \ at the system or functional level of an entity. In a SOC for Supply Chain examination,\
+    \ processing integrity refers to whether processing is complete, valid, accurate,\
+    \ timely, and authorized to produce, manufacture, or distribute goods that meet\
+    \ the products\u2019 specifications."
+  id: magalix.controls.soc2-type-1.3
+  name: Processing integrity
+  order: 3
+- description: "Confidentiality addresses the entity\u2019s ability to protect information\
+    \ designated as confidential from its collection or creation through its final\
+    \ disposition and removal from the entity\u2019s control in accordance with management\u2019\
+    s objectives. Information is confidential if the custodian (for example, an entity\
+    \ that holds or stores information) of the information is required to limit its\
+    \ access, use, and retention and restrict its disclosure to defined parties (including\
+    \ those who may otherwise have authorized access within its system boundaries).\
+    \ Confidentiality requirements may be contained in laws or regulations or in contracts\
+    \ or agreements that contain commitments made to customers or others. The need\
+    \ for information to be confidential may arise for many different reasons. For\
+    \ example, the information may be proprietary, intended only for entity personnel.\
+    \ Confidentiality is distinguished from privacy in that privacy applies only to\
+    \ personal information, whereas confidentiality applies to various types of sensitive\
+    \ information. In addition, the privacy objective addresses requirements regarding\
+    \ collection, use, retention, disclosure, and disposal of personal information.\
+    \ Confidential information may include personal information as well as other information,\
+    \ such as trade secrets and intellectual property."
+  id: magalix.controls.soc2-type-1.4
+  name: Confidentiality
+  order: 4
+- description: "Personal information is collected, used, retained, disclosed, and\
+    \ disposed of to meet the entity\u2019s objectives. Although confidentiality applies\
+    \ to various types of sensitive information, privacy applies only to personal\
+    \ information."
+  id: magalix.controls.soc2-type-1.5
+  name: Privacy
+  order: 5
+description: "SOC 2 stands for System and Organization Control 2. It\u2019s a voluntary\
+  \ compliance standard for organizations that use cloud computing infrastructure\
+  \ and services. The SOC 2 details five Trust Services Criteria (TSC) that are used\
+  \ to protect their customers and data."
+name: SOC2 Type 1
+id: magalix.standards.soc2-type-1

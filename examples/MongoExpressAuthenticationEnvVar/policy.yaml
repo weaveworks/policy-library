@@ -1,0 +1,55 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.mongo-express-enforce-environment-variable
+spec:
+  id: magalix.templates.mongo-express-enforce-environment-variable
+  name: Mongo Express Enforce Environment Variable
+  description: |
+    This Policy checks for specific environment variables when you are using the official container image from Docker Hub. 
+    ### ME_CONFIG_MONGODB_ADMINUSERNAME. 
+    The ME_CONFIG_MONGODB_ADMINUSERNAME environment variable sets the MongoDB admin username.
+    ### ME_CONFIG_MONGODB_ADMINPASSWORD
+    The ME_CONFIG_MONGODB_ADMINPASSWORD environment variable sets the MongoDB admin password.
+    ### ME_CONFIG_BASICAUTH_USERNAME     
+    The ME_CONFIG_BASICAUTH_USERNAME environment variable sets the mongo-express web username.
+    ### ME_CONFIG_BASICAUTH_PASSWORD
+    The ME_CONFIG_BASICAUTH_PASSWORD environment variable sets the mongo-express web password.
+    ### ME_CONFIG_MONGODB_ENABLE_ADMIN
+    The ME_CONFIG_MONGODB_ENABLE_ADMIN environment variable enables admin access to all databases. Send strings: `"true"` or `"false"`
+  how_to_solve: |
+    If you are encountered a violation, ensure one of the following environment variables is set. 
+    - ME_CONFIG_MONGODB_ADMINUSERNAME
+    - ME_CONFIG_MONGODB_ADMINPASSWORD
+    - ME_CONFIG_BASICAUTH_USERNAME 
+    - ME_CONFIG_BASICAUTH_PASSWORD
+    - ME_CONFIG_MONGODB_ENABLE_ADMIN
+
+    For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.2.1
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.hipaa.164.312.a.1
+  parameters:
+  - name: envvar_name
+    type: string
+    required: true
+    default:
+  - name: app_name
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

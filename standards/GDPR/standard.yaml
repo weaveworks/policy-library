@@ -1,0 +1,74 @@
+controls:
+- description: 'Taking into account the nature, scope, context and purposes of processing
+    as well as the risks of varying likelihood and severity for the rights and freedoms
+    of natural persons, the controller shall implement appropriate technical and organisational
+    measures to ensure and to be able to demonstrate that processing is performed
+    in accordance with this Regulation Those measures shall be reviewed and updated
+    where necessary.
+
+    '
+  id: magalix.controls.gdpr.24
+  name: Article 24 - Responsibility of the controller
+  order: 24
+- description: 'Taking into account the state of the art, the cost of implementation
+    and the nature, scope, context and purposes of processing as well as the risks
+    of varying likelihood and severity for rights and freedoms of natural persons
+    posed by the processing, the controller shall, both at the time of the determination
+    of the means for processing and at the time of the processing itself, implement
+    appropriate technical and organisational measures, such as pseudonymisation, which
+    are designed to implement data-protection principles, such as data minimisation,
+    in an effective manner and to integrate the necessary safeguards into the processing
+    in order to meet the requirements of this Regulation and protect the rights of
+    data subjects.
+
+    '
+  id: magalix.controls.gdpr.25
+  name: Article 25 - Data Protection by design and by default
+  order: 25
+- description: 'Where processing is to be carried out on behalf of a controller, the
+    controller shall use only processors providing sufficient guarantees to implement
+    appropriate technical and organisational measures in such a manner that processing
+    will meet the requirements of this Regulation and ensure the protection of the
+    rights of the data subject.
+
+    '
+  id: magalix.controls.gdpr.28
+  name: Article 28 - Processor
+  order: 28
+- description: 'The processor and any person acting under the authority of the controller
+    or of the processor, who has access to personal data, shall not process those
+    data except on instructions from the controller, unless required to do so by Union
+    or Member State law.
+
+    '
+  id: magalix.controls.gdpr.29
+  name: Article 29 - Processing under the authority of the controller or processor
+  order: 29
+- description: "Taking into account the state of the art, the costs of implementation\
+    \ and the nature, scope, context and purposes of processing as well as the risk\
+    \ of varying likelihood and severity for the rights and freedoms of natural persons,\
+    \ the controller and the processor shall implement appropriate technical and organisational\
+    \ measures to ensure a level of security appropriate to the risk, including inter\
+    \ alia as appropriate:\n- the pseudonymisation and encryption of personal data;\n\
+    - the ability to ensure the ongoing confidentiality, integrity, availability and\
+    \ resilience of processing systems and services;\n- the ability to restore the\
+    \ availability and access to personal data in a timely manner in the event of\
+    \ a physical or technical incident;\n- a process for regularly testing, assessing\
+    \ and evaluating the effectiveness of technical and organisational measures for\
+    \ ensuring the security of the processing    \n"
+  id: magalix.controls.gdpr.32
+  name: Article 35 - Security for processing
+  order: 32
+description: 'The General Data Protection Regulation is a European Union law that
+  was implemented May 25, 2018, and requires organizations to safeguard personal data
+  and uphold the privacy rights of anyone in EU territory. The regulation includes
+  seven principles of data protection that must be implemented and eight privacy rights
+  that must be facilitated. It also empowers member state-level data protection authorities
+  to enforce the GDPR with sanctions and fines. The GDPR replaced the 1995 Data Protection
+  Directive, which created a country-by-country patchwork of data protection laws.
+  The GDPR, passed in European Parliament by overwhelming majority, unifies the EU
+  under a single data protection regime.
+
+  '
+name: GDPR
+id: magalix.standards.gdpr

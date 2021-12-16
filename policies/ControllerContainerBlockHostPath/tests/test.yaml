@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: helloworldanilhostpath
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: helloworldanilhostpath
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: aks-nodepool1-39499429-1
+      containers:
+      - name: helloworldv1
+        image: abc/123
+        ports:
+        - containerPort: 9123
+        volumeMounts:
+         - name: task-pv-storage
+           mountPath: /mnt/sample
