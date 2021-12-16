@@ -4,7 +4,7 @@ import click
 import os
 
 MAGALIX_ACCOUNT = "816805bb-8311-4312-afac-ef3ba41d1287"
-POLICIES_SVC_URL = "http://localhost:8080/api/v1"
+POLICIES_SVC_URL = "http://policies-service.cluster-advisor.svc/api/v1"
 
 def _handle_api_error(response):
     if response.status_code >= 400 and response.status_code < 500:
