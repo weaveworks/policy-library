@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Test Policies
           command: |
-            cd test_policies
+            cd scripts/test_policies
             go build
             ./test_policies --root-dir ./../policies
             ./test_policies --root-dir ./../examples
