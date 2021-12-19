@@ -21,16 +21,6 @@ class StandardSyncer:
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
         self._file_loader = FileLoader(path=standards_dir)
 
-    def _check_standard_required_fields(self, standard: dict):
-        for field in ["id", "name", "description"]:
-            if not standard.get(field):
-                raise Exception(f"[ERROR] Could not sync standard; Missing {field} field.")
-    
-    def _check_control_required_fields(self, control: dict):
-        for field in ["id", "name", "description", "order"]:
-            if not control.get(field):
-                raise Exception(f"[ERROR] Could not sync control; Missing {field} field.")
-
     def _fetch_remote_standards(self):
         response = self._client.query_standards(filters={"magalix": True})
         remote_standards = {std["id"]: std for std in response.json()["data"]}
@@ -108,7 +98,6 @@ class StandardSyncer:
         remote_standards = self._fetch_remote_standards()
 
         for standard in standards:
-            self._check_standard_required_fields(standard=standard)
             remote_standard = remote_standards.get(standard["id"])
             if not remote_standard:
                 self._create_new_standard(standard=standard)
@@ -118,7 +107,6 @@ class StandardSyncer:
                 self._update_standard(standard=standard, remote_standard=remote_standard)
 
                 for control in standard.get("controls", []):
-                    self._check_control_required_fields(control=control)
                     remote_control = remote_standard["controls"].get(control["id"])
                     if not remote_control:
                         self._create_new_control(standard_id=standard["id"], control=control)

@@ -61,11 +61,6 @@ class CategorySyncer:
     def __init__(self, policies_service: str, magalix_account: str):
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
 
-    def _check_required_fields(self, category: dict):
-        for field in ["id", "name"]:
-            if not category.get(field):
-                raise Exception(f"[ERROR] Could not sync category; Missing {field} field.")
-
     def _fetch_remote_categories(self):
         response = self._client.query_categories(filters={"magalix": True})
         remote_categories = {cat["id"]: cat for cat in response.json()["data"]}
@@ -99,7 +94,6 @@ class CategorySyncer:
     def sync(self, new_only: bool = False, sync_deleted: bool = False):
         remote_categories = self._fetch_remote_categories()
         for category in categories:
-            self._check_required_fields(category=category)
             remote_category = remote_categories.get(category["id"])
             if not remote_category:
                 self._create_new_category(category=category)

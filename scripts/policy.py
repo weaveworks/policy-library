@@ -30,19 +30,6 @@ class PolicySyncer:
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
         self._file_loader = FileLoader(path=policies_dir) 
 
-    def _check_required_fields(self, policy: dict):
-        for field in ["id", "name", "description", "how_to_solve", "severity", "category"]:
-            if not policy.get(field):
-                raise Exception(f"[ERROR] Could not sync policy; Missing {field} field.")
-        if (
-            not policy.get("targets")
-            or not policy["targets"].get("kind")
-            or policy["targets"]["kind"] == []
-        ):
-            raise Exception(f"[ERROR] Could not sync {policy['name']} policy. "\
-                            "Policy must have targets kind set to value; "\
-                            "for example 'kind: [Deployment]'")
-
     def _fetch_remote_policies(self):
         response = self._client.query_policies(filters={"magalix": True})
         remote_policies = {pol["id"]: pol for pol in response.json()["data"]}
@@ -72,7 +59,6 @@ class PolicySyncer:
         remote_policies = self._fetch_remote_policies()
 
         for policy in policies:
-            self._check_required_fields(policy=policy)
             targets_schema = {
                 "kind": [],
                 "cluster": [],

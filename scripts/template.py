@@ -28,12 +28,7 @@ class FileLoader:
 class TemplateSyncer:
     def __init__(self, policies_service: str, magalix_account: str, templates_dir: str):
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
-        self._file_loader = FileLoader(path=templates_dir) 
-
-    def _check_required_fields(self, template: dict):
-        for field in ["id", "name", "description", "how_to_solve", "severity", "category"]:
-            if not template.get(field):
-                raise Exception(f"[ERROR] Could not sync template; Missing {field} field.")
+        self._file_loader = FileLoader(path=templates_dir)
 
     def _fetch_remote_templates(self):
         response = self._client.query_templates(filters={"magalix": True})
@@ -64,7 +59,6 @@ class TemplateSyncer:
         remote_templates = self._fetch_remote_templates()
 
         for template in templates:
-            self._check_required_fields(template=template)
             if template.get("targets"):
                 targets_schema = {
                     "kind": [],
