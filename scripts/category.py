@@ -26,7 +26,7 @@ class CategorySyncer:
 
     def _create_new_category(self, category: dict):
         click.secho(f"Creating category {category['name']}", fg="green")
-        _ = self._client.create_category(
+        self._client.create_category(
             id=category["id"],
             name=category["name"],
         )

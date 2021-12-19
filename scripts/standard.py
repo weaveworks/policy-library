@@ -33,7 +33,7 @@ class StandardSyncer:
 
     def _create_new_standard(self, standard: dict):
         click.secho(f"Creating standard {standard['name']}", fg="green")
-        _ = self._client.create_standard(
+        self._client.create_standard(
             id=standard["id"],
             name=standard["name"],
             description=standard["description"]
@@ -43,7 +43,7 @@ class StandardSyncer:
 
     def _create_new_control(self, standard_id: str, control: dict):
         click.secho(f"Creating control {control['name']} in standard {standard_id}", fg="green")
-        _ = self._client.create_control(
+        self._client.create_control(
             id=control["id"],
             name=control["name"],
             description=control["description"],
