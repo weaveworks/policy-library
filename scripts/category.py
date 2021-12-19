@@ -11,7 +11,7 @@ class FileLoader:
 
     def load_categories(self):
         categories = []
-        with open(os.path.join((self.path, "categories.yaml"))) as fd:
+        with open(os.path.join(self.path, "categories.yaml")) as fd:
             categories = yaml.safe_load(fd)
         return categories["categories"]
 
