@@ -30,14 +30,14 @@ This is the Magalix Policy library v1.0.
 ```
 
 ## Policy Structure
-- Policy Directory Name: This is the name of the Policy. Try to look at the other directories and follow the naming pattern if applicable.
-- `policy.rego`: REGO code for the policy.
-- `policy.yaml`: Policy CRD object that contains the spec of the policy.
-- `tests`: This directory has:
+- <b>Policy Directory Name:</b> This is the name of the Policy. Try to look at the other directories and follow the naming pattern if applicable.
+- <b>policy.rego:</b> REGO code for the policy.
+- <b>policy.yaml:</b> Policy CRD object that contains the spec of the policy.
+- <b>tests:</b> This directory has:
     - Example `yaml` files that you can use to test the policies with `scripts/test_policies` binary.
     - REGO files to test the policies using OPA Testing Framework.
 
-## Standards Files Format
+## Standards File Format
 ```
 id: magalix.standards.<id> # mglx standard id
 name: <standard name>
@@ -50,9 +50,9 @@ controls:
 ```
 
 ## Testing Policies
-### OPA Testing Framework
+#### OPA Testing Framework
 Run `opa test examples/ policies/ -v --ignore '*.yml','*.yaml'"`
-### Testing Binary
+#### Testing Binary
 [TBD after modifying testing bin to reflect new changes]
 
 ## Syncing Policies
