@@ -1,65 +1,23 @@
 
 import click
+import yaml
 from client import PolicyServiceClient
 
-categories = [
-    {
-        'id': 'magalix.categories.organizational-standards',
-        'name': 'Organizational Standards'
-    },
-    {
-        'id': 'magalix.categories.software-supply-chain',
-        'name': 'Software Supply Chain'
-    },
-    {
-        'id': 'magalix.categories.observability',
-        'name': 'Observability'
-    },
-    {
-        'id': 'magalix.categories.data-protection',
-        'name': 'Data Protection'
-    },
-    {
-        'id': 'magalix.categories.pod-security',
-        'name': 'Pod Security'
-    },
-    {
-        'id': 'magalix.categories.network-security',
-        'name': 'Network Security'
-    },
-    {
-        'id': 'magalix.categories.access-control',
-        'name': 'Access Control'
-    },
-    {
-        'id': 'magalix.categories.reliability',
-        'name': 'Reliability'
-    },
-    {
-        'id': 'magalix.categories.capacity-management',
-        'name': 'Capacity Management'
-    },
-    {
-        'id': 'magalix.categories.best-practices',
-        'name': 'Best Practices'
-    },
-    {
-        'id': 'magalix.categories.cost-saving',
-        'name': 'Cost Saving'
-    },
-    {
-        'id': 'magalix.categories.security',
-        'name': 'Security'
-    },
-    {
-        'id': 'magalix.categories.performance',
-        'name': 'Performance'
-    }
-]
+
+class FileLoader:
+    def __init__(self, path: str):
+        self.path = path
+
+    def load_categories(self):
+        categories = []
+        with open(self.path) as fd:
+            categories = yaml.safe_load(fd)
+        return categories["categories"]
 
 class CategorySyncer:
-    def __init__(self, policies_service: str, magalix_account: str):
+    def __init__(self, policies_service: str, magalix_account: str, categories_file: str):
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
+        self._file_loader = FileLoader(path=categories_file) 
 
     def _fetch_remote_categories(self):
         response = self._client.query_categories(filters={"magalix": True})
@@ -92,7 +50,9 @@ class CategorySyncer:
                 self._client.delete_category(category_id)
 
     def sync(self, new_only: bool = False, sync_deleted: bool = False):
+        categories = self._file_loader.load_categories()
         remote_categories = self._fetch_remote_categories()
+
         for category in categories:
             remote_category = remote_categories.get(category["id"])
             if not remote_category:

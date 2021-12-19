@@ -9,6 +9,7 @@ from client import MAGALIX_ACCOUNT, POLICIES_SVC_URL
 POLICIES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "policies")
 TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "examples")
 STANDARDS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "standards")
+CATEGORIES_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "categories.yaml")
 
 @click.group()
 def sync():
@@ -49,13 +50,14 @@ def standards(standards_dir, magalix_account, policies_service, new_only, sync_d
     syncer.sync(new_only=new_only, sync_deleted=sync_deleted)
 
 @sync.command()
+@click.option("--categories-file", "-f", required=True, default=CATEGORIES_FILE, help="Categories file")
 @click.option("--magalix-account", "-a", required=True, default=MAGALIX_ACCOUNT, help="Magalix account ID")
 @click.option("--policies-service", "-s", required=True, default=POLICIES_SVC_URL, help="Policies Service url")
 @click.option("--new-only", is_flag=True, default=False, help="Sync only new categories")
 @click.option("--sync-deleted", is_flag=True, default=False, help="Sync deleted categories")
-def categories(magalix_account, policies_service, new_only, sync_deleted):
+def categories(magalix_account, policies_service, new_only, sync_deleted, categories_file):
     """Sync categories"""
-    syncer = CategorySyncer(policies_service=policies_service, magalix_account=magalix_account)
+    syncer = CategorySyncer(policies_service=policies_service, magalix_account=magalix_account, categories_file=categories_file)
     syncer.sync(new_only=new_only, sync_deleted=sync_deleted)
 
 if __name__ == '__main__':
