@@ -37,7 +37,7 @@ class TemplateSyncer:
 
     def _create_new_template(self, template: dict):
         click.secho(f"Creating template {template['name']}", fg="green")
-        template_id = self._client.create_template(template=template)
+        _ = self._client.create_template(template=template)
 
     def _update_template(self, template: dict, remote_template: dict):
         for field in template.keys():

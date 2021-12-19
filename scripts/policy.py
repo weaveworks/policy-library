@@ -37,7 +37,7 @@ class PolicySyncer:
 
     def _create_new_policy(self, policy: dict):
         click.secho(f"Creating policy {policy['name']}", fg="green")
-        policy_id = self._client.create_policy(policy=policy)
+        _ = self._client.create_policy(policy=policy)
 
     def _update_policy(self, policy: dict, remote_policy: dict):
         for field in policy.keys():
