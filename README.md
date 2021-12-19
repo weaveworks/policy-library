@@ -11,7 +11,7 @@ This is the Magalix Policy library v1.0.
 │   |   ├── tests
 │   |   │   ├── xxx_test.yaml
 ├── examples
-|   ├── Policy Name
+|   ├── Template Name
 │   |   ├── policy.yaml
 │   |   ├── policy.rego
 │   |   ├── tests
@@ -29,19 +29,15 @@ This is the Magalix Policy library v1.0.
 ├── .githooks
 ```
 
-### Policy Structure
-#### Policy Directory Name
-This is the name of the Policy. Try to look at the other directories and follow the naming pattern if applicable.
-#### policy.rego
-REGO code for the policy.
-#### policy.yaml
-Policy CRD object that contains the spec of the policy.
-#### tests
-This directory has:
-- Example `yaml` files that you can use to test the policies with `scripts/test_policies` binary.
-- REGO files to test the policies using `opa test` framework.
+## Policy Structure
+- Policy Directory Name: This is the name of the Policy. Try to look at the other directories and follow the naming pattern if applicable.
+- `policy.rego`: REGO code for the policy.
+- `policy.yaml`: Policy CRD object that contains the spec of the policy.
+- `tests`: This directory has:
+    - Example `yaml` files that you can use to test the policies with `scripts/test_policies` binary.
+    - REGO files to test the policies using OPA Testing Framework.
 
-### Standards Files Format
+## Standards Files Format
 ```
 id: magalix.standards.<id> # mglx standard id
 name: <standard name>
@@ -53,13 +49,13 @@ controls:
   order: <order>
 ```
 
-### Testing Policies
-#### OPA Testing Framework
+## Testing Policies
+### OPA Testing Framework
 Run `opa test examples/ policies/ -v --ignore '*.yml','*.yaml'"`
-#### Testing Binary
+### Testing Binary
 [TBD after modifying testing bin to reflect new changes]
 
-### Syncing Policies
+## Syncing Policies
 Using `scripts/sync.py` script
 ```bash
 Usage: sync.py [OPTIONS] COMMAND [ARGS]...
@@ -102,10 +98,10 @@ python3 scripts/sync.py standards --sync-deleted
 python3 scripts/sync.py templates --new-only --sync-deleted
 ```
 
-Sync Notes:
+<b>Sync Notes:</b>
 - All commands (policies/templates/categories/standards) have same options
 - `-d, -a, -s` options have default values. You can just use these options to override the default ones. Otherwise, you don't need to set them.
 
-### Setup repo githooks
+## Setup repo githooks
 This command sets the path for the repo hooks to .githooks directory so that it can be version-controlled and used by everyone using this repo.
 `git config --local core.hooksPath .githooks/`
