@@ -1,6 +1,7 @@
 
 import click
 import yaml
+import os
 from client import PolicyServiceClient
 
 
@@ -10,14 +11,14 @@ class FileLoader:
 
     def load_categories(self):
         categories = []
-        with open(self.path) as fd:
+        with open(os.path.join((self.path, "categories.yaml"))) as fd:
             categories = yaml.safe_load(fd)
         return categories["categories"]
 
 class CategorySyncer:
-    def __init__(self, policies_service: str, magalix_account: str, categories_file: str):
+    def __init__(self, policies_service: str, magalix_account: str, categories_dir: str):
         self._client = PolicyServiceClient(url=policies_service, magalix_account=magalix_account)
-        self._file_loader = FileLoader(path=categories_file) 
+        self._file_loader = FileLoader(path=categories_dir) 
 
     def _fetch_remote_categories(self):
         response = self._client.query_categories(filters={"magalix": True})

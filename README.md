@@ -19,11 +19,12 @@ This is the Magalix Policy library v1.0.
 ├── standards
 │   ├── Standard Name
 │   │   ├── standard.yaml
+├── categories
+│   ├── categories.yaml
 ├── scripts
 │   ├── sync.py
 │   ├── test_policies
 │   |   ├── test_policies binary
-├── categories.yaml
 ├── crd.yaml
 ├── .githooks
 ```
@@ -99,14 +100,11 @@ python3 scripts/sync.py standards --sync-deleted
 
 # sync new and deleted templates
 python3 scripts/sync.py templates --new-only --sync-deleted
-
-# sync categories from a custom file
-python3 scripts/sync.py categories -f <categories.yaml path>
 ```
 
 Sync Notes:
+- All commands (policies/templates/categories/standards) have same options
 - `-d, -a, -s` options have default values. You can just use these options to override the default ones. Otherwise, you don't need to set them.
-- All commands have `-d` option to specify a custom dir. In categories sync command, it's `-f` to specify a categories yaml file.
 
 ### Setup repo githooks
 This command sets the path for the repo hooks to .githooks directory so that it can be version-controlled and used by everyone using this repo.
