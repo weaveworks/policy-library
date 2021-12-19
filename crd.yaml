@@ -1,0 +1,66 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: policies.magalix.com
+spec:
+  group: magalix.com
+  scope: Cluster
+  names:
+    plural: policies
+    singular: policy
+    kind: Policy  
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                enable:
+                  type: boolean
+                name:
+                  type: string
+                id:
+                  type: string
+                description:
+                  type: string
+                how_to_solve:
+                  type: string
+                category:
+                  type: string
+                severity:
+                  type: string
+                targets:
+                  type: object
+                  properties:
+                    kind:
+                      type: array
+                      items:
+                        type: string
+                controls:
+                  type: array
+                  items:
+                    type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                parameters:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      type:
+                        type: string
+                      required:
+                        type: boolean
+                      default:
+                        x-kubernetes-int-or-string: true                                                    
+                code:
+                  type: string
