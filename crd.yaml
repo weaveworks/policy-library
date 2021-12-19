@@ -41,6 +41,8 @@ spec:
                       type: array
                       items:
                         type: string
+                  required:
+                  - kind
                 controls:
                   type: array
                   items:
@@ -64,3 +66,11 @@ spec:
                         x-kubernetes-int-or-string: true                                                    
                 code:
                   type: string
+              required:
+              - id
+              - name
+              - description
+              - how_to_solve
+              - category
+              - severity
+              - code
