@@ -43,10 +43,10 @@ jobs:
             kubectl port-forward -n cluster-advisor service/policies-service 8080:80 &
             while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
 
-            python3 scripts/sync.py policies --policies_service http://localhost:8080/api/v1
-            python3 scripts/sync.py templates --policies_service http://localhost:8080/api/v1
-            python3 scripts/sync.py standards --policies_service http://localhost:8080/api/v1
-            python3 scripts/sync.py categories --policies_service http://localhost:8080/api/v1
+            python3 scripts/sync.py categories --policies-service http://localhost:8080/api/v1
+            python3 scripts/sync.py standards --policies-service http://localhost:8080/api/v1
+            python3 scripts/sync.py templates --policies-service http://localhost:8080/api/v1
+            python3 scripts/sync.py policies --policies-service http://localhost:8080/api/v1
       - slack/notify:
           event: fail
           template: basic_fail_1
