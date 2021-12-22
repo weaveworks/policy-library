@@ -24,7 +24,6 @@ This is the Magalix Policy library v1.0.
 ├── scripts
 │   ├── sync.py
 │   ├── test_policies
-│   |   ├── test_policies binary
 ├── crd.yaml
 ├── .githooks
 ```
