@@ -22,7 +22,7 @@ spec:
   targets: {kind: [PersistentVolume]}
   controls:
   - magalix.controls.pci-dss.3.1
-  - magalix.controls.soc2-type-1.2.1.2
+  - magalix.controls.soc2-type-i.2.1.2
   tags: [pci-dss, soc2-type1]
   parameters:
   - name: pv_policy

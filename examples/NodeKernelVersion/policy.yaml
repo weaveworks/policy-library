@@ -12,4 +12,4 @@ spec:
   category: magalix.categories.organizational-standards
   severity: medium
   controls:
-  - magalix.controls.soc2-type-1.1.6.8
+  - magalix.controls.soc2-type-i.1.6.8

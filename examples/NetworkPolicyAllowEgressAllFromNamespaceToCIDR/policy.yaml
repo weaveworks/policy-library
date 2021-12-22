@@ -18,7 +18,7 @@ spec:
   controls:
   - magalix.controls.pci-dss.1.2.1
   - magalix.controls.mitre-attack.8.3
-  - magalix.controls.soc2-type-1.1.6.1
+  - magalix.controls.soc2-type-i.1.6.1
   parameters:
   - name: namespace
     type: string

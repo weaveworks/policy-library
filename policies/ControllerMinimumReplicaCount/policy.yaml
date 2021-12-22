@@ -18,7 +18,7 @@ spec:
   severity: medium
   targets: {kind: [Deployment, ReplicationController, ReplicaSet, StatefulSet]}
   controls:
-  - magalix.controls.soc2-type-1.2.1.1
+  - magalix.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: replica_count
