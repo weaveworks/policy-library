@@ -50,9 +50,24 @@ controls:
 
 ## Testing Policies
 #### OPA Testing Framework
-Run `opa test examples/ policies/ -v --ignore '*.yml','*.yaml'"`
+```bash
+# test all policies and examples
+opa test examples/ policies/ -v --ignore '*.yml','*.yaml'
+
+# test single policy
+opa test policies/ControllerContainerRunningAsRoot -v --ignore '*.yml','*.yaml'
+```
 #### Testing Binary
-[TBD after modifying testing bin to reflect new changes]
+```bash
+cd scripts/test_policies/
+go build
+
+# test all policies
+./test_policies --root-dir ../../policies
+
+# test single policy
+./test_policies --policy-path ../../policies/ControllerContainerRunningAsRoot
+```
 
 ## Syncing Policies
 Using `scripts/sync.py` script
@@ -99,7 +114,7 @@ python3 scripts/sync.py templates --new-only --sync-deleted
 
 <b>Sync Notes:</b>
 - All commands (policies/templates/categories/standards) have same options
-- `-d, -a, -s` options have default values. You can just use these options to override the default ones. Otherwise, you don't need to set them.
+- `-d`, `-a` and `-s` options have default values. You can use these options to override the default ones. Otherwise, you don't need to set them.
 
 ## Setup repo githooks
 This command sets the path for the repo hooks to .githooks directory so that it can be version-controlled and used by everyone using this repo.
