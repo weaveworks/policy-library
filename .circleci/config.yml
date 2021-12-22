@@ -11,12 +11,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test Policies
+          name: Test Policies and Examples
           command: |
             cd scripts/test_policies
             go build
-            ./test_policies --root-dir ./../policies
-            ./test_policies --root-dir ./../examples
+            ./test_policies --root-dir ../../policies
+            ./test_policies --root-dir ../../examples
       - slack/notify:
           event: fail
           template: basic_fail_1

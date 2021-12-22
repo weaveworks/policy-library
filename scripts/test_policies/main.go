@@ -14,15 +14,17 @@ import (
 
 var (
 	RootDir      string
-	TemplatePath string
+	PolicyPath   string
 )
 
 const PolicyQuery = "violation"
 
-type Constraint struct {
-	Sync       bool                   `yaml:"sync"`
-	Name       string                 `yaml:"name"`
-	Parameters map[string]interface{} `yaml:"parameters"`
+type PolicyMetadata struct {
+	Spec struct {
+		ID         string 				    `yaml:"id"`
+		Name       string 				    `yaml:"name"`
+		Parameters []map[string]interface{} `yaml:"parameters"`
+	} `yaml:"spec"`
 }
 
 func pathExists(path string) bool {
@@ -42,19 +44,19 @@ func parseYamlFile(path string, obj interface{}) error {
 	return nil
 }
 
-func getPolicyTemplate(path string) (*opa.Policy, error) {
-	codePath := fmt.Sprintf("%s/template/template.rego", path)
-	if !pathExists(codePath) {
-		return nil, fmt.Errorf("failed to find template code file")
+func getRegoPolicy(path string) (*opa.Policy, error) {
+	regoPath := fmt.Sprintf("%s/policy.rego", path)
+	if !pathExists(regoPath) {
+		return nil, fmt.Errorf("Failed to find rego code file.")
 	}
-	code, err := ioutil.ReadFile(fmt.Sprintf("%s/template/template.rego", path))
+	code, err := ioutil.ReadFile(regoPath)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read rego code. %w", err)
+		return nil, fmt.Errorf("Failed to read rego code: %w", err)
 	}
 
 	policy, err := opa.Parse(string(code), PolicyQuery)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse template code. %w", err)
+		return nil, fmt.Errorf("Failed to parse policy rego code: %w", err)
 	}
 	return &policy, nil
 }
@@ -62,7 +64,7 @@ func getPolicyTemplate(path string) (*opa.Policy, error) {
 func getTestCases(testsDir string) ([]map[string]interface{}, error) {
 	testFiles, err := ioutil.ReadDir(testsDir)
 	if err != nil {
-		return nil, fmt.Errorf("failed to list tests in path: %s. %w", testsDir, err)
+		return nil, fmt.Errorf("Failed to list tests in %s: %w", testsDir, err)
 	}
 	var testCases []map[string]interface{}
 
@@ -71,24 +73,22 @@ func getTestCases(testsDir string) ([]map[string]interface{}, error) {
 		err = parseYamlFile(fmt.Sprintf("%s/%s", testsDir, f.Name()), &testCase)
 
 		if err != nil {
-			return nil, fmt.Errorf("failed to load test case yaml. %w", err)
+			return nil, fmt.Errorf("Failed to load test case %s/%s: %w", testsDir, f.Name(), err)
 		}
 		testCases = append(testCases, testCase)
-
 	}
 	return testCases, nil
 }
 
-func TestTemplate(path string) error {
-	templateName := filepath.Base(path)
+func TestPolicy(path string) error {
+	policyName := filepath.Base(path)
 	testsDir := fmt.Sprintf("%s/tests", path)
-	constraintsDir := fmt.Sprintf("%s/constraints", path)
-	if !pathExists(testsDir) || !pathExists(constraintsDir) {
+	if !pathExists(testsDir) {
 		return nil
 	}
-	log.Printf("Testing template %s", templateName)
+	log.Printf("Testing %s policy", policyName)
 
-	policyTemplate, err := getPolicyTemplate(path)
+	regoPolicy, err := getRegoPolicy(path)
 	if err != nil {
 		return err
 	}
@@ -98,51 +98,46 @@ func TestTemplate(path string) error {
 		return nil
 	}
 
-	constrainFiles, err := ioutil.ReadDir(constraintsDir)
+	var policyMetadata PolicyMetadata
+	err = parseYamlFile(fmt.Sprintf("%s/policy.yaml", path), &policyMetadata)
 	if err != nil {
-		return fmt.Errorf("failed to list constraints in path: %s. %w", path, err)
+		return fmt.Errorf("Failed to load %s policy yaml: %w", path, err)
 	}
 
-	for _, f := range constrainFiles {
-		if filepath.Ext(f.Name()) == ".yaml" {
-			var constraint Constraint
-			err = parseYamlFile(fmt.Sprintf("%s/%s", constraintsDir, f.Name()), &constraint)
-			if err != nil {
-				return fmt.Errorf("failed to load constraint yaml. %w", err)
-			}
-			if constraint.Sync {
-				for i := range testCases {
-					testCase := testCases[i]
-					err = policyTemplate.EvalGateKeeperCompliant(testCase, constraint.Parameters, PolicyQuery)
-					if err != nil {
-						return fmt.Errorf("testing template: %s, constraint: %s failed. %w", templateName, constraint.Name, err)
-					}
-				}
-			}
-		}
+	params := make(map[string]interface{})
+	for _, param := range policyMetadata.Spec.Parameters{
+		params[param["name"].(string)] = param["default"] 
+    }
 
+	for i := range testCases {
+		testCase := testCases[i]
+		err = regoPolicy.EvalGateKeeperCompliant(testCase, params, PolicyQuery)
+		if err != nil {
+			return fmt.Errorf("Testing %s policy failed: %w", policyName, err)
+		}
 	}
 	return nil
-
 }
 
-func TestTemplates(rootDir string) error {
-	templateDirs, err := ioutil.ReadDir(rootDir)
+func TestPolicies(rootDir string) error {
+	policyDirs, err := ioutil.ReadDir(rootDir)
 	if err != nil {
-		return fmt.Errorf("failed to list templates in path: %s. %w", rootDir, err)
+		return fmt.Errorf("Failed to list policies in %s: %w", rootDir, err)
 	}
+
 	hasError := false
-	for _, templateDir := range templateDirs {
-		if templateDir.IsDir() {
-			err := TestTemplate(fmt.Sprintf("%s/%s", rootDir, templateDir.Name()))
+	for _, policyDir := range policyDirs {
+		if policyDir.IsDir() {
+			err := TestPolicy(fmt.Sprintf("%s/%s", rootDir, policyDir.Name()))
 			if err != nil {
 				log.Println(err)
 				hasError = true
 			}
 		}
 	}
+
 	if hasError {
-		return fmt.Errorf("testing constraints failed")
+		return fmt.Errorf("Testing policies failed")
 	}
 	return nil
 }
@@ -151,41 +146,41 @@ func main() {
 	app := cli.NewApp()
 	app.Version = "0.0.1"
 	app.Name = "policies test"
-	app.Usage = "Test policy template code"
+	app.Usage = "Test policy code"
 	app.Flags = []cli.Flag{
 		&cli.StringFlag{
 			Name:        "root-dir",
-			Usage:       "Root directory containing all template directories",
+			Usage:       "Root directory containing all policies directories",
 			Destination: &RootDir,
 			Value:       "",
 		},
 		&cli.StringFlag{
-			Name:        "template-path",
-			Usage:       "path to template dir",
-			Destination: &TemplatePath,
+			Name:        "policy-path",
+			Usage:       "Path to policy dir",
+			Destination: &PolicyPath,
 			Value:       "",
 		},
 	}
 	app.Before = func(context *cli.Context) error {
-		if RootDir != "" && TemplatePath != "" {
-			return fmt.Errorf("Please set only one of `root-dir` and `template-path`")
+		if RootDir != "" && PolicyPath != "" {
+			return fmt.Errorf("Please set only one of `root-dir` and `policy-path`")
 		}
-		for _, path := range []string{RootDir, TemplatePath} {
+		for _, path := range []string{RootDir, PolicyPath} {
 			if path != "" && !pathExists(path) {
-				return fmt.Errorf("path: %s, does not exist", path)
+				return fmt.Errorf("Path: %s, does not exist", path)
 			}
 		}
 		return nil
 	}
 	app.Action = func(ctx *cli.Context) error {
-		if TemplatePath != "" {
-			err := TestTemplate(TemplatePath)
+		if PolicyPath != "" {
+			err := TestPolicy(PolicyPath)
 			if err != nil {
 				return err
 			}
 		}
 		if RootDir != "" {
-			err := TestTemplates((RootDir))
+			err := TestPolicies((RootDir))
 			if err != nil {
 				return err
 			}
