@@ -1,0 +1,40 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.mongo-express-enforce-enable-admin-env-var
+spec:
+  id: magalix.policies.mongo-express-enforce-enable-admin-env-var
+  name: Mongo-Express Enforce Environment Variable - ME_CONFIG_MONGODB_ENABLE_ADMIN
+  description: |
+    This Policy ensures ME_CONFIG_MONGODB_ENABLE_ADMIN environment variable are in place when using the official container images from Docker Hub.
+    ME_CONFIG_MONGODB_ENABLE_ADMIN: The ME_CONFIG_MONGODB_ENABLE_ADMIN environment variable enables admin access to all databases. Send strings: `"true"` or `"false"`
+  how_to_solve: |
+    If you encounter a violation, ensure the ME_CONFIG_MONGODB_ENABLE_ADMIN environment variables is set.
+    For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.2.1
+  - magalix.controls.hipaa.164.312.a.1
+  - magalix.controls.hipaa.164.312.a.2.i
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+    StatefulSet, CronJob]}
+  tags: [
+    "pci-dss",
+    "mitre-attack",
+    "hipaa",
+  ]
+  parameters:
+  - default: 
+    name: exclude_namespace
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_key
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_value
+    required: false
+    type: string
+
