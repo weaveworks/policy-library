@@ -8,7 +8,7 @@ spec:
   description: |
     This Policy checks prohibits a specific environment variable. 
   how_to_solve: |
-    If you are encountered a violation, ensure one the environment variable is not set. 
+    If you are encountered a violation, ensure the environment variable is not set. 
   category: magalix.categories.access-control
   severity: high
   controls:

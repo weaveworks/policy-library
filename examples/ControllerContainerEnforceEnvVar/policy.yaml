@@ -8,7 +8,7 @@ spec:
   description: |
     This Policy checks whether an environment variable is missing or not. 
   how_to_solve: |
-    If you encounter a violation, ensure one of this environment variables is set. 
+    If you encounter a violation, ensure the environment variable is set. 
   category: magalix.categories.access-control
   severity: high
   controls:
