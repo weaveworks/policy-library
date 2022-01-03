@@ -1,0 +1,41 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.container-enforce-environment-variable
+spec:
+  id: magalix.templates.container-enforce-environment-variable
+  name: Container Enforce Environment Variable
+  description: |
+    This Policy checks whether an environment variable is missing or not. 
+  how_to_solve: |
+    If you encounter a violation, ensure one of this environment variables is set. 
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.2.1
+  - magalix.controls.hipaa.164.312.a.2.i
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  - magalix.controls.gdpr.24
+  - magalix.controls.hipaa.164.312.a.1
+  parameters:
+  - name: envvar_name
+    type: string
+    required: true
+    default:
+  - name: app_name
+    type: string
+    required: true
+    default:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

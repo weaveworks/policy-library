@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    magalix/mw-cron: 0 */3 * * *
+    magalix/mw-offset: 5m
+  labels:
+    app: postgres
+    mgx-app: coredb
+  name: postgres
+  namespace: magalix-coredb
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: postgres
+      mgx-app: coredb
+  template:
+    metadata:
+      creationTimestamp: nullAC
+      labels:
+        app: postgres
+        mgx-app: coredb
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: postfadsfasfsdagres
+        - name: POSTGRES_USER
+          value: postgres
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres
+        image: docker.io/debezium/postgres:9.6
+        imagePullPolicy: IfNotPresent
+        name: postgresAC
+        ports:
+        - containerPort: 5432
+          name: postgres
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 501Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  

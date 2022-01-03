@@ -1,0 +1,37 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.mongo-express-enforce-ssl-key-path-env-var
+spec:
+  id: magalix.policies.mongo-express-enforce-ssl-key-path-env-var
+  name: Mongo-Express Enforce Environment Variable - ME_CONFIG_SITE_SSL_KEY_PATH
+  description: |
+    This Policy ensures ME_CONFIG_SITE_SSL_KEY_PATH environment variable are in place when using the official container images from Docker Hub.
+    ME_CONFIG_SITE_SSL_KEY_PATH: The ME_CONFIG_SITE_SSL_KEY_PATH environment variable sets the SSL Key file path. 
+  how_to_solve: |
+    If you encounter a violation, ensure the ME_CONFIG_SITE_SSL_KEY_PATH environment variables is set.
+    For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+  category: magalix.categories.network-security
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.1.1.6
+  - magalix.controls.pci-dss.2.2.2
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+    StatefulSet, CronJob]}
+  tags: [
+    "pci-dss",
+  ]
+  parameters:
+  - default: 
+    name: exclude_namespace
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_key
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_value
+    required: false
+    type: string
+

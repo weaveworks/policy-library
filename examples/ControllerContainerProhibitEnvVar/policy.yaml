@@ -1,0 +1,37 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.templates.container-prohibit-environment-variable
+spec:
+  id: magalix.templates.container-prohibit-environment-variable
+  name: Container Prohibit Environment Variable
+  description: |
+    This Policy checks prohibits a specific environment variable. 
+  how_to_solve: |
+    If you are encountered a violation, ensure one the environment variable is not set. 
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.2.1
+  - magalix.controls.hipaa.164.312.a.2.i
+  parameters:
+  - name: envvar_name
+    type: string
+    required: true
+    default:
+  - name: app_name
+    type: string
+    required: true
+    default:
+  - name: exlude_namespace
+    type: string
+    required: false
+    default:
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:

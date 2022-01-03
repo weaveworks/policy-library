@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express-deployment
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+          - containerPort: 8081
+        env:
+          - name: ME_CONFIG_MONGODB_SERVER
+            value: mongodb-service
+          - name: ME_CONFIG_SITE_BASEURL
+            value: test
+          - name: ME_CONFIG_SITE_COOKIESECRET
+            value: fdasfsad
+          - name: ME_CONFIG_MONGODB_PORT
+            value: 1234
+          - name: ME_CONFIG_SITE_SESSIONSECRET
+            value: fdasdasfdsa
+          - name: ME_CONFIG_SITE_SSL_ENABLED
+            value: true
+          - name: ME_CONFIG_SITE_SSL_KEY_PATH
+            value: /root/ssl
+          - name: ME_CONFIG_SITE_SSL_CRT_PATH
+            value: /root/crt
