@@ -28,8 +28,8 @@ spec:
   parameters:
   - name: policy_type
     type: string
-    required: true
-    default:
+    required: false
+    default: 
   - name: exclude_namespace
     type: string
     required: false
