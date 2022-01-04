@@ -26,3 +26,5 @@ categories:
     name: Security
   - id: magalix.categories.performance
     name: Performance
+  - id: magalix.categories.none
+    name: None
