@@ -1,6 +1,7 @@
 import yaml
 import click
 import glob
+from utils import is_equal
 from client import PolicyServiceClient
 
 class FileLoader:
@@ -53,7 +54,7 @@ class StandardSyncer:
 
     def _update_standard(self, standard: dict, remote_standard: dict):
         for field in ["id", "name", "description"]:
-            if str(standard.get(field)).strip() != str(remote_standard.get(field)).strip():
+            if not is_equal(standard.get(field), remote_standard.get(field)):
                 click.secho(f"Updating standard {standard['id']}", fg="yellow")
                 self._client.update_standard(
                     id=standard["id"],

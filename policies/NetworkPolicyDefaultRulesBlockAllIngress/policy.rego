@@ -1,6 +1,6 @@
 package magalix.advisor.network.block_traffic
 
-policy_type := "Egress"
+policy_type := "Ingress"
 exclude_namespace := input.parameters.exclude_namespace
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value

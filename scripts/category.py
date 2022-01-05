@@ -2,6 +2,7 @@
 import click
 import yaml
 import os
+from utils import is_equal
 from client import PolicyServiceClient
 
 
@@ -34,7 +35,7 @@ class CategorySyncer:
     
     def _update_category(self, category: dict, remote_category: dict):
         for field in ["id", "name"]:
-            if str(category[field]).strip() != str(remote_category[field]).strip():
+            if not is_equal(category.get(field), remote_category.get(field)):
                 click.secho(f"Updating category {category['id']}", fg="yellow")
                 self._client.update_category(
                     id=category['id'],

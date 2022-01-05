@@ -2,10 +2,16 @@ import yaml
 import click
 import glob
 import os
+from utils import is_equal
 from client import PolicyServiceClient
 from exclude import excluded_templates
 
 DEFAULT_PROVIDER = "kubernetes"
+REMOTE_FIELDS_MAP = {
+    "category": "category_id",
+    "standards": "standards_ids",
+    "controls": "controls_ids",
+}
 
 class FileLoader:
     def __init__(self, path: str):
@@ -41,7 +47,8 @@ class TemplateSyncer:
 
     def _update_template(self, template: dict, remote_template: dict):
         for field in template.keys():
-            if str(template.get(field)).strip() != str(remote_template.get(field)).strip():
+            remote_field = REMOTE_FIELDS_MAP.get(field, field)
+            if not is_equal(template.get(field), remote_template.get(remote_field)):
                 click.secho(f"Updating template {template['id']}", fg="yellow")
                 self._client.update_template(template=template)
                 break
@@ -62,6 +69,7 @@ class TemplateSyncer:
             if template.get("targets"):
                 targets_schema = {
                     "kind": [],
+                    "name": [],
                     "cluster": [],
                     "namespace": [],
                     "label": {},

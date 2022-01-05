@@ -2,10 +2,16 @@ import yaml
 import click
 import glob
 import os
+from utils import is_equal
 from client import PolicyServiceClient
 from exclude import excluded_policies
 
 DEFAULT_PROVIDER = "kubernetes"
+REMOTE_FIELDS_MAP = {
+    "category": "category_id",
+    "standards": "standards_ids",
+    "controls": "controls_ids",
+}
 
 class FileLoader:
     def __init__(self, path: str):
@@ -41,7 +47,8 @@ class PolicySyncer:
 
     def _update_policy(self, policy: dict, remote_policy: dict):
         for field in policy.keys():
-            if str(policy.get(field)).strip() != str(remote_policy.get(field)).strip():
+            remote_field = REMOTE_FIELDS_MAP.get(field, field)
+            if not is_equal(policy.get(field), remote_policy.get(remote_field)):
                 click.secho(f"Updating policy {policy['id']}", fg="yellow")
                 self._client.update_policy(policy=policy)
                 break
@@ -61,6 +68,7 @@ class PolicySyncer:
         for policy in policies:
             targets_schema = {
                 "kind": [],
+                "name": [],
                 "cluster": [],
                 "namespace": [],
                 "label": {},
