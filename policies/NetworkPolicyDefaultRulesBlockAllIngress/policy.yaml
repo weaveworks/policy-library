@@ -1,13 +1,13 @@
 apiVersion: magalix.com/v1
 kind: Policy
 metadata:
-  name: magalix.policies.block-all-egress-traffic
+  name: magalix.policies.block-all-ingress-traffic
 spec:
-  id: magalix.policies.block-all-egress-traffic
-  name: Block All Egress Traffic
+  id: magalix.policies.block-all-ingress-traffic
+  name: Block All Ingress Traffic
   description: |
     ### Block all traffic
-    If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic between namespaces. 
+    If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic between namespaces. 
 
     By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
   how_to_solve: |
