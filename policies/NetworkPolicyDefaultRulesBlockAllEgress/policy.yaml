@@ -7,7 +7,7 @@ spec:
   name: Block All Egress Traffic
   description: |
     ### Block all traffic
-    If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress or Egress traffic between namespaces. 
+    If you are using a CNI that allows for Network Policies, you can use this Policy to block all Egress traffic between namespaces. 
 
     By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
   how_to_solve: |
@@ -23,13 +23,9 @@ spec:
   - magalix.controls.gdpr.25
   - magalix.controls.gdpr.32
   - magalix.controls.gdpr.24
-  - magalix.controls.soc2-type-1.1.6.1
+  - magalix.controls.soc2-type-i.1.6.1
   tags: [pci-dss, mitre-attack, nist800-190, gdpr, soc2-type1]
   parameters:
-  - name: policy_type
-    type: string
-    required: true
-    default:
   - name: exclude_namespace
     type: string
     required: false

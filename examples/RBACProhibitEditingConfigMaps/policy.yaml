@@ -27,8 +27,8 @@ spec:
   - magalix.controls.gdpr.32
   - magalix.controls.gdpr.24
   - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.soc2-type-1.1.6.8
-  - magalix.controls.soc2-type-1.1.6.3
+  - magalix.controls.soc2-type-i.1.6.8
+  - magalix.controls.soc2-type-i.1.6.3
   parameters:
   - name: resource_name
     type: string

@@ -22,7 +22,7 @@ spec:
   targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   controls:
-  - magalix.controls.soc2-type-1.2.1.1
+  - magalix.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: toleration_key

@@ -1,0 +1,31 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.mysql-enforce-skip-tzinfo-env-var
+spec:
+  id: magalix.policies.mysql-enforce-skip-tzinfo-env-var
+  name: MYSQL Enforce Environment Variable - MYSQL_INITDB_SKIP_TZINFO
+  description: |
+    This Policy ensures MYSQL_INITDB_SKIP_TZINFO environment variable are in place when using the official container images from Docker Hub.
+    MYSQL_INITDB_SKIP_TZINFO: The MYSQL_INITDB_SKIP_TZINFO environment variable allows the skipping of timezone checking when initializing the DB.
+  how_to_solve: |
+    If you encounter a violation, ensure the MYSQL_INITDB_SKIP_TZINFO environment variables is set.
+    For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
+  category: magalix.categories.organizational-standards
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+    StatefulSet, CronJob]}
+  parameters:
+  - default: 
+    name: exclude_namespace
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_key
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_value
+    required: false
+    type: string
+

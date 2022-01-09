@@ -1,0 +1,30 @@
+
+categories:
+  - id: magalix.categories.organizational-standards
+    name: Organizational Standards
+  - id: magalix.categories.software-supply-chain
+    name: Software Supply Chain
+  - id: magalix.categories.observability
+    name: Observability
+  - id: magalix.categories.data-protection
+    name: Data Protection
+  - id: magalix.categories.pod-security
+    name: Pod Security
+  - id: magalix.categories.network-security
+    name: Network Security
+  - id: magalix.categories.access-control
+    name: Access Control
+  - id: magalix.categories.reliability
+    name: Reliability
+  - id: magalix.categories.capacity-management
+    name: Capacity Management
+  - id: magalix.categories.best-practices
+    name: Best Practices
+  - id: magalix.categories.cost-saving
+    name: Cost Saving
+  - id: magalix.categories.security
+    name: Security
+  - id: magalix.categories.performance
+    name: Performance
+  - id: magalix.categories.none
+    name: None

@@ -24,7 +24,7 @@ spec:
   - magalix.controls.gdpr.24
   - magalix.controls.gdpr.25
   - magalix.controls.gdpr.32
-  - magalix.controls.soc2-type-1.1.6.8
+  - magalix.controls.soc2-type-i.1.6.8
   parameters:
   - name: restricted_image_names
     type: array

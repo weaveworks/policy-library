@@ -1,0 +1,36 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.mongo-express-enforce-request-size-env-var
+spec:
+  id: magalix.policies.mongo-express-enforce-request-size-env-var
+  name: Mongo-Express Enforce Environment Variable - ME_CONFIG_REQUEST_SIZE
+  description: |
+    This Policy ensures ME_CONFIG_REQUEST_SIZE environment variable are in place when using the official container images from Docker Hub.
+    ME_CONFIG_REQUEST_SIZE: The ME_CONFIG_REQUEST_SIZE environment variable sets the maximum payload size. CRUD operations above this size will fail in [body-parser](https://www.npmjs.com/package/body-parser).
+  how_to_solve: |
+    If you encounter a violation, ensure the ME_CONFIG_REQUEST_SIZE environment variables is set.
+    For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+  category: magalix.categories.access-control
+  severity: high
+  controls:
+  - magalix.controls.pci-dss.8.7
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+    StatefulSet, CronJob]}
+  tags: [
+    "pci-dss",
+  ]
+  parameters:
+  - default: 
+    name: exclude_namespace
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_key
+    required: false
+    type: string
+  - default: 
+    name: exclude_label_value
+    required: false
+    type: string
+
