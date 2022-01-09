@@ -31,8 +31,8 @@ spec:
           value: postgres
         - name: POSTGRES_USER
           value: postgres
-        - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_INITDB_ARGS
+          value: test_args
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:

@@ -49,7 +49,7 @@ spec:
   - name: subjects_kind
     type: string
     required: true
-    default: system:masters
+    default: Group
   - name: exclude_label_key
     type: string
     required: false

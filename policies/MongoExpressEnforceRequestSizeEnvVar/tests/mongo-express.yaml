@@ -30,5 +30,5 @@ spec:
             value: mongodb-service
           - name: ME_CONFIG_BASICAUTH_PASSWORD
             value: mongodb-service
-          - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
-            value: mongodb-service
+          - name: ME_CONFIG_REQUEST_SIZE
+            value: 10000

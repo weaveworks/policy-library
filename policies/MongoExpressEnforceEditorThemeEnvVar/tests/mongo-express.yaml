@@ -30,5 +30,5 @@ spec:
             value: mongodb-service
           - name: ME_CONFIG_BASICAUTH_PASSWORD
             value: mongodb-service
-          - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
+          - name: ME_CONFIG_OPTIONS_EDITORTHEME
             value: mongodb-service

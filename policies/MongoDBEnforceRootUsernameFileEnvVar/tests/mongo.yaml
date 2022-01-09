@@ -31,8 +31,8 @@ spec:
         - mongod
         env:
           # Use secret in real usage
-        - name: MONGO_INITDB_ROOT_USERNAME
-          value: username
+        - name: MONGO_INITDB_ROOT_USERNAME_FILE
+          value: username_file
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: password
         image: mongo:3.6
