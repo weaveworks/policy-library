@@ -1,4 +1,4 @@
-package magalix.advisor.network.block_traffic
+package magalix.advisor.network.block_egress_traffic
 
 policy_type := "Egress"
 exclude_namespace := input.parameters.exclude_namespace

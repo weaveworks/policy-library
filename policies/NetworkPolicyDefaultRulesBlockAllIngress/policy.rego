@@ -1,4 +1,4 @@
-package magalix.advisor.network.block_traffic
+package magalix.advisor.network.block_ingress_traffic
 
 policy_type := "Ingress"
 exclude_namespace := input.parameters.exclude_namespace
