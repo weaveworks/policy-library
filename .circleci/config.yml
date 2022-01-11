@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test Policies and Examples
+          name: Test Policies
           command: |
             cd scripts/test_policies
             go build
@@ -35,7 +35,7 @@ jobs:
           command: |
             /bin/auth_to_cluster
       - run:
-          name: Build binary
+          name: Sync
           command: |
             apk add --no-cache python3 py3-pip
             pip3 install pyyaml click requests
