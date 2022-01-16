@@ -1,0 +1,129 @@
+
+name: Magalix Policy Library
+
+on:
+  push:
+    branches: [ master, dev ]
+  pull_request:
+    branches: [ master, dev ]
+
+jobs:
+  automated_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Go tests
+      run: |
+        docker run -v ${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}/policies:/policies \
+               mgxinternal/mglxctl:v0.0.1 /scripts/test_policies/test_policies --root-dir /policies
+    - name: OPA tests
+      run: |
+        docker run -v ${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}/policies:/policies \
+               openpolicyagent/opa test /policies -v --ignore '*.yml','*.yaml','.md','.csv'
+  
+  automated_policies_doc:
+    runs-on: ubuntu-latest
+    needs: [automated_tests]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Auto-generate Policies doc 
+      run: |
+        export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+
+        docker run --rm -v ${REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/generate_policies_doc.py -d /policies -p /policies
+
+        if [[ `git status --porcelain` ]]
+        then
+          echo "Pushing auto-generated policies doc"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git add ${REPO_PATH}/policies/policies.md
+          git commit -m "add auto-generated policies doc"
+          git push origin ${{ github.event.pull_request.head.ref }}
+        else
+          echo "No changes in auto-generated policies doc"
+        fi
+
+  automated_datastudio_csv:
+    runs-on: ubuntu-latest
+    needs: [automated_policies_doc]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Export Datastudio CSV
+      run: |
+        export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+
+        docker run --rm -v ${REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/generate_datastudio_csv.py -d /policies -p /policies
+
+        if [[ `git status --porcelain` ]]
+        then
+          echo "Pushing auto-generated datastudio csv"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git add ${REPO_PATH}/policies/datastudio.csv
+          git commit -m "add auto-generated datastudio csv"
+          git push origin ${{ github.event.pull_request.head.ref }}
+        else
+          echo "No changes in auto-generated datastudio csv"
+        fi
+
+  sync:
+    if: github.event_name == 'push'
+    needs: [automated_datastudio_csv]
+    runs-on: ubuntu-latest
+    container:
+      image: mgxinternal/mgx-circle-deployer:1
+      options: --name mglx-deployer
+      ports:
+      - 8080
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Auth to cluster
+      run: /bin/auth_to_cluster
+    - name: Sync
+      run: |
+        apk add --no-cache docker-cli python3 py3-pip
+        pip3 install pyyaml click requests
+
+        kubectl port-forward -n cluster-advisor service/policies-service 8080:80 &
+        while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
+
+        export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+
+        # categories
+        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/sync/sync.py categories -d /categories --policies-service http://mglx-deployer:8080/api/v1
+        
+        # standards and controls
+        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/standards:/standards mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/sync/sync.py standards -d /standards --policies-service http://mglx-deployer:8080/api/v1
+        
+        # templates
+        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/examples:/examples mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/sync/sync.py templates -d /examples --policies-service http://mglx-deployer:8080/api/v1
+        
+        # policies
+        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.1 \
+               python3 /scripts/sync/sync.py policies -d /policies --policies-service http://mglx-deployer:8080/api/v1
