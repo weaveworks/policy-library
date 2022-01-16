@@ -91,6 +91,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mgxinternal/mgx-circle-deployer:1
+      credentials:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
       options: --name mglx-deployer
       ports:
       - 8080
