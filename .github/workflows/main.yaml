@@ -124,8 +124,6 @@ jobs:
 
         export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
 
-        docker inspect network ${{ job.container.network }}
-
         # categories
         docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.1 \
                python3 /scripts/sync/sync.py categories -d /categories --policies-service http://mglx-deployer:8080/api/v1
