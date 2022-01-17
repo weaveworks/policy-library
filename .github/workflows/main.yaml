@@ -97,6 +97,15 @@ jobs:
       options: --name mglx-deployer
       ports:
       - 8080
+    env:
+      GCLOUD_SERVICE_KEY_DEV: ${{ secrets.GCLOUD_SERVICE_KEY_DEV }}
+      GCLOUD_SERVICE_KEY_PROD: ${{ secrets.GCLOUD_SERVICE_KEY_PROD }}
+      GOOGLE_CLUSTER_NAME_DEV: ${{ secrets.GOOGLE_CLUSTER_NAME_DEV }}
+      GOOGLE_CLUSTER_NAME_PROD: ${{ secrets.GOOGLE_CLUSTER_NAME_PROD }}
+      GOOGLE_COMPUTE_ZONE_DEV: ${{ secrets.GOOGLE_COMPUTE_ZONE_DEV }}
+      GOOGLE_COMPUTE_ZONE_PROD: ${{ secrets.GOOGLE_COMPUTE_ZONE_PROD }}
+      GOOGLE_PROJECT_ID_DEV: ${{ secrets.GOOGLE_PROJECT_ID_DEV }}
+      GOOGLE_PROJECT_ID_PROD: ${{ secrets.GOOGLE_PROJECT_ID_PROD }}
     steps:
     - uses: actions/checkout@v2
     - uses: docker/login-action@v1
