@@ -125,17 +125,17 @@ jobs:
         export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
 
         # categories
-        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.1 \
+        docker run --rm --network host -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.1 \
                python3 /scripts/sync/sync.py categories -d /categories --policies-service http://localhost:8080/api/v1
         
         # standards and controls
-        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/standards:/standards mgxinternal/mglxctl:v0.0.1 \
+        docker run --rm --network host -v ${HOST_REPO_PATH}/standards:/standards mgxinternal/mglxctl:v0.0.1 \
                python3 /scripts/sync/sync.py standards -d /standards --policies-service http://localhost:8080/api/v1
         
         # templates
-        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/examples:/examples mgxinternal/mglxctl:v0.0.1 \
+        docker run --rm --network host -v ${HOST_REPO_PATH}/examples:/examples mgxinternal/mglxctl:v0.0.1 \
                python3 /scripts/sync/sync.py templates -d /examples --policies-service http://localhost:8080/api/v1
         
         # policies
-        docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.1 \
+        docker run --rm --network host -v ${HOST_REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.1 \
                python3 /scripts/sync/sync.py policies -d /policies --policies-service http://localhost:8080/api/v1
