@@ -96,7 +96,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
       options: --name mglx-deployer --network-alias mglx-deployer
       ports:
-      - 8080
+      - 8080:8080
     env:
       GCLOUD_SERVICE_KEY_DEV: ${{ secrets.GCLOUD_SERVICE_KEY_DEV }}
       GCLOUD_SERVICE_KEY_PROD: ${{ secrets.GCLOUD_SERVICE_KEY_PROD }}
@@ -123,6 +123,8 @@ jobs:
         while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
 
         export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+
+        hostname
 
         # categories
         docker run --rm --network ${{ job.container.network }} -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.1 \
