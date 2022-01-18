@@ -3,4 +3,3 @@
 __pycache__/
 *.pyc
 telepresence.log
-scripts/test_policies/test_policies

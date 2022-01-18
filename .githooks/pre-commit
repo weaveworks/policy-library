@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Run opa tests on all policies - ignore these files/dirs
-#OPA_TEST_COMMAND="opa test examples/ policies/ -v --ignore '*.yml','*.yaml'"
+#OPA_TEST_COMMAND="opa test examples/ policies/ -v --ignore '*.yml','*.yaml','.md','.csv'"
 # Run opa test using Docker
-OPA_TEST_COMMAND="docker run -v ${PWD}/policies:/policies -v ${PWD}/examples:/examples  --rm openpolicyagent/opa test /examples/ /policies/ -v --ignore '*.yml','*.yaml'"
+OPA_TEST_COMMAND="docker run -v ${PWD}/policies:/policies -v ${PWD}/examples:/examples  --rm openpolicyagent/opa test /examples/ /policies/ -v --ignore '*.yml','*.yaml','.md','.csv'"
 
 if TEST_RESULTS=$(eval "$OPA_TEST_COMMAND") ; then
     echo -e "\e[1;32m$TEST_RESULTS\e[0m" # Print test results in green
