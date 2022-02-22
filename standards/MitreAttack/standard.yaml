@@ -168,4 +168,4 @@ controls:
   order: 10
 description: MITRE ATT&CK FRAMEWORK FOR KUBERNETES
 id: magalix.standards.mitre-attack
-name: MITRE ATTACK
+name: MITRE ATT&CK
