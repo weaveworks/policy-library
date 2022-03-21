@@ -260,6 +260,46 @@ high
 
 ---
 
+## Container Block Sysctls
+
+### ID
+magalix.policies.container-block-sysctl
+
+### Description
+Setting sysctls can allow containers unauthorized escalated privileges to a Kubernetes node. 
+
+
+### How to solve?
+You should not set  `securityContext.sysctls` 
+```
+...
+  spec:
+    securityContext:
+      sysctls
+```
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+
+### Category
+magalix.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kind': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Standards and Controls
+['magalix.controls.pci-dss.2.2.4', 'magalix.controls.pci-dss.2.2.5', 'magalix.controls.cis-benchmark.5.2.6', 'magalix.controls.mitre-attack.4.1', 'magalix.controls.nist-800-190.3.3.1', 'magalix.controls.gdpr.24', 'magalix.controls.gdpr.25', 'magalix.controls.gdpr.32']
+
+### Tags
+['pci-dss', 'cis-benchmark', 'mitre-attack', 'nist800-190', 'gdpr', 'default']
+
+### Parameters
+[{'name': 'exclude_namespace', 'type': 'string', 'required': False, 'default': 'kube-system'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'default': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'default': None}]
+
+---
+
 ## InfluxDB Enforce Environment Variable - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
 
 ### ID
@@ -3986,6 +4026,50 @@ high
 
 ### Parameters
 [{'default': None, 'name': 'exclude_namespace', 'required': False, 'type': 'string'}, {'default': None, 'name': 'exclude_label_key', 'required': False, 'type': 'string'}, {'default': None, 'name': 'exclude_label_value', 'required': False, 'type': 'string'}]
+
+---
+
+## Container Block Sysctls CVE-2022-0811
+
+### ID
+magalix.policies.container-block-sysctl.cve-2022-0811
+
+### Description
+Setting sysctls can allow containers unauthorized escalated privileges to a Kubernetes node. 
+
+
+### How to solve?
+You should not set `securityContext.sysctls.value` to include `+` or `=` characters. 
+```
+...
+  spec:
+    securityContext:
+      sysctls: 
+        - name: name
+          value "1+2=3"
+```
+```
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+https://www.crowdstrike.com/blog/cr8escape-new-vulnerability-discovered-in-cri-o-container-engine-cve-2022-0811/
+
+
+### Category
+magalix.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kind': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Standards and Controls
+['magalix.controls.pci-dss.2.2.4', 'magalix.controls.pci-dss.2.2.5', 'magalix.controls.cis-benchmark.5.2.6', 'magalix.controls.mitre-attack.4.1', 'magalix.controls.nist-800-190.3.3.1', 'magalix.controls.gdpr.24', 'magalix.controls.gdpr.25', 'magalix.controls.gdpr.32']
+
+### Tags
+['pci-dss', 'cis-benchmark', 'mitre-attack', 'nist800-190', 'gdpr', 'default']
+
+### Parameters
+[{'name': 'exclude_namespace', 'type': 'string', 'required': False, 'default': 'kube-system'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'default': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'default': None}]
 
 ---
 

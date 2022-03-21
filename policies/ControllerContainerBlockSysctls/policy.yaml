@@ -1,0 +1,45 @@
+apiVersion: magalix.com/v1
+kind: Policy
+metadata:
+  name: magalix.policies.container-block-sysctl
+spec:
+  id: magalix.policies.container-block-sysctl
+  name: Container Block Sysctls
+  description: |
+    Setting sysctls can allow containers unauthorized escalated privileges to a Kubernetes node. 
+  how_to_solve: |
+    You should not set  `securityContext.sysctls` 
+    ```
+    ...
+      spec:
+        securityContext:
+          sysctls
+    ```
+    https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  category: magalix.categories.pod-security
+  severity: high
+  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+      StatefulSet, CronJob]}
+  controls:
+  - magalix.controls.pci-dss.2.2.4
+  - magalix.controls.pci-dss.2.2.5
+  - magalix.controls.cis-benchmark.5.2.6
+  - magalix.controls.mitre-attack.4.1
+  - magalix.controls.nist-800-190.3.3.1
+  - magalix.controls.gdpr.24
+  - magalix.controls.gdpr.25
+  - magalix.controls.gdpr.32
+  tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, default]
+  parameters:
+  - name: exclude_namespace
+    type: string
+    required: false
+    default: kube-system
+  - name: exclude_label_key
+    type: string
+    required: false
+    default:
+  - name: exclude_label_value
+    type: string
+    required: false
+    default:
