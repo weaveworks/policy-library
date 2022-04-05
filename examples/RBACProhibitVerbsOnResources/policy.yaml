@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.rbac-prohibit-verbs-on-resources
+  name: weave.templates.rbac-prohibit-verbs-on-resources
 spec:
-  id: magalix.templates.rbac-prohibit-verbs-on-resources
+  id: weave.templates.rbac-prohibit-verbs-on-resources
   name: Rbac Prohibit Verbs On Resources
   description: |
     This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific Resource and Verb combination. For example, if you wanted to deny deployments, you would create a Policy with a resource of `deployments` and the verb `create`. 
@@ -16,33 +16,33 @@ spec:
     ```
 
     https://kubernetes.io/docs/reference/access-authn-authz/rbac/
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
   controls:
-  - magalix.controls.pci-dss.7.1.1
-  - magalix.controls.pci-dss.7.1.2
-  - magalix.controls.mitre-attack.2.1
-  - magalix.controls.mitre-attack.6.1
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
-  - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.soc2-type-i.1.6.8
-  - magalix.controls.soc2-type-i.1.6.3
+  - weave.controls.pci-dss.7.1.1
+  - weave.controls.pci-dss.7.1.2
+  - weave.controls.mitre-attack.2.1
+  - weave.controls.mitre-attack.6.1
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  - weave.controls.gdpr.24
+  - weave.controls.hipaa.164.312.a.1
+  - weave.controls.soc2-type-i.1.6.8
+  - weave.controls.soc2-type-i.1.6.3
   parameters:
   - name: resource
     type: string
     required: true
-    default:
+    value:
   - name: verb
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

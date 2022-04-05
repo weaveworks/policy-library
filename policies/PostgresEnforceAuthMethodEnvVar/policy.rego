@@ -1,4 +1,4 @@
-package magalix.advisor.postgres.enforce_auth_method_env_var
+package weave.advisor.postgres.enforce_auth_method_env_var
 
 env_name = "POSTGRES_HOST_AUTH_METHOD"
 app_name = "postgres"

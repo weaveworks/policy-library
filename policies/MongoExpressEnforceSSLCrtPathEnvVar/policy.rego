@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_ssl_crt_path_env_var
+package weave.advisor.mongo_express.enforce_ssl_crt_path_env_var
 
 env_name = "ME_CONFIG_SITE_SSL_CRT_PATH"
 app_name = "mongo-express"

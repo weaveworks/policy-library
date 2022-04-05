@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.enforce_cluster_admin_default_group
+package weave.advisor.rbac.enforce_cluster_admin_default_group
 
 subjects_kind := input.parameters.subjects_kind
 subjects_name := input.parameters.subjects_name

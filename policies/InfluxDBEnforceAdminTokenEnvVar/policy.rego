@@ -1,4 +1,4 @@
-package magalix.advisor.influxdb.enforce_admin_token_env_var
+package weave.advisor.influxdb.enforce_admin_token_env_var
 
 env_name = "DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"
 app_name = "influxdb"

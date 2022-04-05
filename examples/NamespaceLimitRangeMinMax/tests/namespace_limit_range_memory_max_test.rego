@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.limitrange_min_max
+package weave.advisor.namespace.limitrange_min_max
 
 test_memory_max {
 	testcase = {

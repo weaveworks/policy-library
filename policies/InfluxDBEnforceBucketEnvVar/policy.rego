@@ -1,4 +1,4 @@
-package magalix.advisor.influxdb.enforce_init_bucket_env_var
+package weave.advisor.influxdb.enforce_init_bucket_env_var
 
 env_name = "DOCKER_INFLUXDB_INIT_BUCKET"
 app_name = "influxdb"

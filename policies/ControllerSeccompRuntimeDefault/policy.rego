@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.seccomp_runtime_default
+package weave.advisor.podSecurity.seccomp_runtime_default
 
 seccomp_annotation := input.parameters.seccomp_annotation
 seccomp_type := input.parameters.seccomp_type

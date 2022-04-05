@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_spec_template_label
+package weave.advisor.labels.missing_spec_template_label
 
 label := input.parameters.label
 exclude_namespace := input.parameters.exclude_namespace

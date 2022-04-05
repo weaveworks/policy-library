@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.deny_shared_process_namespace
+package weave.advisor.podSecurity.deny_shared_process_namespace
 
 resource_enabled := input.parameters.resource_enabled
 exclude_namespace := input.parameters.exclude_namespace

@@ -1,4 +1,4 @@
-package magalix.advisor.network.allow.ingress.from_namespace_to_namespace
+package weave.advisor.network.allow.ingress.from_namespace_to_namespace
 
 src_namespace := input.parameters.src_namespace
 dst_namespace := input.parameters.dst_namespace

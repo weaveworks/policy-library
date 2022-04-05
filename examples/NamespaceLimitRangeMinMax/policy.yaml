@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.namespace-resources-limitrange
+  name: weave.templates.namespace-resources-limitrange
 spec:
-  id: magalix.templates.namespace-resources-limitrange
+  id: weave.templates.namespace-resources-limitrange
   name: Namespace Resources Limitrange
   description: |
     When setting up default CPU and Memory values for your namespace, this policy will check if both requests and limits are set. This policy checks for the following:
@@ -29,21 +29,21 @@ spec:
 
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: resource_type
     type: string
     required: true
-    default:
+    value:
   - name: resource_setting
     type: string
     required: true
-    default:
+    value:
   - name: namespace
     type: string
     required: true
-    default: magalix
+    value: magalix

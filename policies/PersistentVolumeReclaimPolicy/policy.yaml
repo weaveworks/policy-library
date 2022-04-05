@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
+  name: weave.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
 spec:
-  id: magalix.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
+  id: weave.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
   name: Persistent Volume Reclaim Policy Should Be Set To Retain
   description: |
     This Policy checks to see whether or not the persistent volume reclaim policy is set.
@@ -17,23 +17,23 @@ spec:
     ```
 
     https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/#why-change-reclaim-policy-of-a-persistentvolume
-  category: magalix.categories.data-protection
+  category: weave.categories.data-protection
   severity: medium
-  targets: {kind: [PersistentVolume]}
+  targets: {kinds: [PersistentVolume]}
   controls:
-  - magalix.controls.pci-dss.3.1
-  - magalix.controls.soc2-type-i.2.1.2
+  - weave.controls.pci-dss.3.1
+  - weave.controls.soc2-type-i.2.1.2
   tags: [pci-dss, soc2-type1]
   parameters:
   - name: pv_policy
     type: string
     required: true
-    default: Retain
+    value: Retain
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

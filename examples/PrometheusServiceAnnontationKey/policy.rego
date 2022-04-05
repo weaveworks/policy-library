@@ -1,4 +1,4 @@
-package magalix.advisor.annotations.prometheus_service
+package weave.advisor.annotations.prometheus_service
 
 annotation := input.parameters.prometheus_service_annotation
 exclude_namespace := input.parameters.exclude_namespace

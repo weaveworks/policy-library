@@ -1,4 +1,4 @@
-package magalix.advisor.postgres.enforce_initdb_waldir_env_var
+package weave.advisor.postgres.enforce_initdb_waldir_env_var
 
 env_name = "POSTGRES_INITDB_WALDIR"
 app_name = "postgres"

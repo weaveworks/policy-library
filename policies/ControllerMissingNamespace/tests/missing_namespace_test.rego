@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.missing_namespace
+package weave.advisor.namespace.missing_namespace
 
 test_missing_namespace {
   testcase = {

@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.network-block-all-ingress-traffic-to-namespace
+  name: weave.templates.network-block-all-ingress-traffic-to-namespace
 spec:
-  id: magalix.templates.network-block-all-ingress-traffic-to-namespace
+  id: weave.templates.network-block-all-ingress-traffic-to-namespace
   name: Network Block All Ingress Traffic To Namespace
   description: |
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic from a specified namespace. 
@@ -13,21 +13,21 @@ spec:
     Validate your use case and check network policies for traffic blocking. 
 
     https://kubernetes.io/docs/concepts/services-networking/network-policies/
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: medium
   controls:
-  - magalix.controls.pci-dss.1.2.1
-  - magalix.controls.soc2-type-i.1.6.1
+  - weave.controls.pci-dss.1.2.1
+  - weave.controls.soc2-type-i.1.6.1
   parameters:
   - name: namespace
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

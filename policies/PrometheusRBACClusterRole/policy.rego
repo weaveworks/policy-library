@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.prometheus_server_clusterrole
+package weave.advisor.rbac.prometheus_server_clusterrole
 
 verb := input.parameters.prometheus_verb
 exclude_label_key := input.parameters.exclude_label_key

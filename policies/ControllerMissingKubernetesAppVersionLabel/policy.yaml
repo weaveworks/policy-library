@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.missing-kubernetes-app-version-label
+  name: weave.policies.missing-kubernetes-app-version-label
 spec:
-  id: magalix.policies.missing-kubernetes-app-version-label
+  id: weave.policies.missing-kubernetes-app-version-label
   name: Missing Kubernetes App Version Label
   description: |
     Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
@@ -46,21 +46,21 @@ spec:
     ```  
     For additional information, please check
     * https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: low
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   tags: []
   parameters:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

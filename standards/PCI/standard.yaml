@@ -34,7 +34,7 @@ controls:
     of Requirement 1.
 
     '
-  id: magalix.controls.pci-dss.1
+  id: weave.controls.pci-dss.1
   name: Install and maintain a firewall configuration to protect cardholder data
   order: 1
 - description: 'c) Observe network configurations to verify that a firewall is in
@@ -45,7 +45,7 @@ controls:
     network zone, per the documented configuration standards and network diagrams.
 
     '
-  id: magalix.controls.pci-dss.1.1.4
+  id: weave.controls.pci-dss.1.1.4
   name: Reqs for a fw at each Internet connection and between any DMZ and the internal
     network zone
   order: 1.1.4
@@ -54,28 +54,28 @@ controls:
     security features are implemented for each insecure service, protocol, and port.
 
     '
-  id: magalix.controls.pci-dss.1.1.6
+  id: weave.controls.pci-dss.1.1.6
   name: Business justification and approval for use of all service protocols and ports
     allowed
   order: 1.1.6
 - description: Examine firewall and router configurations and perform the following
     to verify that connections are restricted between untrusted networks and system
     components in the cardholder data environment.
-  id: magalix.controls.pci-dss.1.2
+  id: weave.controls.pci-dss.1.2
   name: Build fw and router configs that restrict connections between untrusted networks
     in the CDE
   order: 1.2
 - description: "c) Examine firewall and router configurations to verify that all other\
     \ inbound and outbound traffic is specifically denied, for example by using an\
     \ explicit \u201Cdeny all\u201D or an implicit deny after allow statement."
-  id: magalix.controls.pci-dss.1.2.1
+  id: weave.controls.pci-dss.1.2.1
   name: Restrict ingress and egress traffic to that which is necessary for the cardholder
     data environment
   order: 1.2.1
 - description: Examine firewall and router configurations to verify that a DMZ is
     implemented to limit inbound traffic to only system components that provide authorized
     publicly accessible services, protocols, and ports.
-  id: magalix.controls.pci-dss.1.3.1
+  id: weave.controls.pci-dss.1.3.1
   name: Implement a DMZ to limit ingress traffic to only components that provide authorized
     services
   order: 1.3.1
@@ -83,14 +83,14 @@ controls:
     vendor default passwords and other vendor default settings to compromise systems.
     These passwords and settings are well known by hacker communities and are easily
     determined via public information.
-  id: magalix.controls.pci-dss.2
+  id: weave.controls.pci-dss.2
   name: Do not use vendor-supplied defaults for system passwords and other security
     parameters
   order: 2
 - description: b) For the sample of system components, verify that all unnecessary
     default accounts (including accounts used by operating systems, security software,
     applications, systems, POS terminals, SNMP, etc.) are removed or disabled.
-  id: magalix.controls.pci-dss.2.1
+  id: weave.controls.pci-dss.2.1
   name: Always change vendor-supplied defaults and remove or disable unnecessary default
     accounts
   order: 2.1
@@ -100,20 +100,20 @@ controls:
 
     b) Identify any enabled insecure services, daemons, or protocols and interview
     personnel to verify they are justified per documented configuration standards.'
-  id: magalix.controls.pci-dss.2.2.2
+  id: weave.controls.pci-dss.2.2.2
   name: Enable only necessary services protocols daemons etc as required for the function
     of the system
   order: 2.2.2
 - description: c) Select a sample of system components and inspect the common security
     parameters to verify that they are set appropriately and in accordance with the
     configuration standards.
-  id: magalix.controls.pci-dss.2.2.4
+  id: weave.controls.pci-dss.2.2.4
   name: Configure system security parameters to prevent misuse
   order: 2.2.4
 - description: a) Select a sample of system components and inspect the configurations
     to verify that all unnecessary functionality (for example, scripts, drivers, features,
     subsystems, file systems, etc.) is removed.
-  id: magalix.controls.pci-dss.2.2.5
+  id: weave.controls.pci-dss.2.2.5
   name: Remove all unnecessary functionality
   order: 2.2.5
 - description: Protection methods such as encryption, truncation, masking, and hashing
@@ -125,14 +125,14 @@ controls:
     not storing cardholder data unless absolutely necessary, truncating cardholder
     data if full PAN is not needed, and not sending unprotected PANs using end-user
     messaging technologies, such as e-mail and instant messaging.
-  id: magalix.controls.pci-dss.3
+  id: weave.controls.pci-dss.3
   name: Protect stored cardholder data
   order: 3
 - description: "c) For a sample of system components that store cardholder data \u2022\
     \ Examine files and system records to verify that the data stored does not exceed\
     \ the requirements defined in the data retention policy \u2022 Observe the deletion\
     \ mechanism to verify data is deleted  securely."
-  id: magalix.controls.pci-dss.3.1
+  id: weave.controls.pci-dss.3.1
   name: Keep cardholder data storage to a minimum by implementing data retention and
     disposal policies
   order: 3.1
@@ -141,7 +141,7 @@ controls:
     and vulnerabilities in legacy encryption and authentication protocols continue
     to be targets of malicious individuals who exploit these vulnerabilities to gain
     privileged access to cardholder data environments.
-  id: magalix.controls.pci-dss.4
+  id: weave.controls.pci-dss.4
   name: Encrypt transmission of cardholder data across open and public networks
   order: 4
 - description: "Malicious software, commonly referred to as \u201Cmalware\u201D-including\
@@ -153,7 +153,7 @@ controls:
     \ anti-malware solutions may be considered as a supplement to the anti-virus software;\
     \ however, such additional solutions do not replace the need for anti-virus software\
     \ to be in place."
-  id: magalix.controls.pci-dss.5
+  id: weave.controls.pci-dss.5
   name: Protect all systems against malware and regularly update anti-virus software
     or programs
   order: 5
@@ -162,7 +162,7 @@ controls:
     patches, which must be installed by the entities that manage the systems. All
     systems must have all appropriate software patches to protect against the exploitation
     and compromise of cardholder data by malicious individuals and malicious software.
-  id: magalix.controls.pci-dss.6
+  id: weave.controls.pci-dss.6
   name: Develop and maintain secure systems and applications
   order: 6
 - description: "To ensure critical data can only be accessed by authorized personnel,\
@@ -170,31 +170,31 @@ controls:
     \ and according to job responsibilities. \u201CNeed to know\u201D is when access\
     \ rights are granted to only the least amount of data and privileges needed to\
     \ perform a job."
-  id: magalix.controls.pci-dss.7
+  id: weave.controls.pci-dss.7
   name: Restrict access to cardholder data by business need to know
   order: 7
 - description: "Select a sample of roles and verify access needs for each role are\
     \ defined and include \u2022 System components and data resources that each role\
     \ needs to access for their job function \u2022 Identification of privilege necessary\
     \ for each role to perform their job function."
-  id: magalix.controls.pci-dss.7.1.1
+  id: weave.controls.pci-dss.7.1.1
   name: Define access needs for each role including system components and data resources
   order: 7.1.1
 - description: "b) Select a sample of user IDs with privileged access and interview\
     \ responsible management personnel to verify that privileges assigned are \u2022\
     \ Necessary for that individual\u2019s job function \u2022 Restricted to least\
     \ privileges necessary to perform job responsibilities."
-  id: magalix.controls.pci-dss.7.1.2
+  id: weave.controls.pci-dss.7.1.2
   name: Restrict access to privileged userIDs to least privileges necessary to perform
     responsibilities
   order: 7.1.2
 - description: Confirm that access control systems are in place on all system components.
-  id: magalix.controls.pci-dss.7.2.1
+  id: weave.controls.pci-dss.7.2.1
   name: Coverage of all system components
   order: 7.2.1
 - description: "Confirm that the access control systems have a default \u201Cdeny-all\u201D\
     \ setting."
-  id: magalix.controls.pci-dss.7.2.3
+  id: weave.controls.pci-dss.7.2.3
   name: Default deny-all setting
   order: 7.2.3
 - description: Assigning a unique identification (ID) to each person with access ensures
@@ -205,13 +205,13 @@ controls:
     system-particularly, how frequently password attempts can be made by an attacker,
     and the security methods to protect user passwords at the point of entry, during
     transmission, and while in storage.
-  id: magalix.controls.pci-dss.8
+  id: weave.controls.pci-dss.8
   name: Identify and authenticate access to system components
   order: 8
 - description: d) Examine database access control settings, database application configuration
     settings, and the related application IDs to verify that application IDs can only
     be used by the applications (and not by individual users or other processes).
-  id: magalix.controls.pci-dss.8.7
+  id: weave.controls.pci-dss.8.7
   name: All access to any database containing cardholder data is restricted
   order: 8.7
 - description: "Any physical access to data or systems that house cardholder data\
@@ -223,7 +223,7 @@ controls:
     \ guest of any onsite personnel, service workers, or anyone who needs to enter\
     \ the facility for a short duration, usually not more than one day. \u201CMedia\u201D\
     \ refers to all paper and electronic media containing cardholder data."
-  id: magalix.controls.pci-dss.9
+  id: weave.controls.pci-dss.9
   name: Restrict physical access to cardholder data
   order: 9
 - description: Logging mechanisms and the ability to track user activities are critical
@@ -231,14 +231,14 @@ controls:
     of logs in all environments allows thorough tracking, alerting, and analysis when
     something does go wrong. Determining the cause of a compromise is very difficult,
     if not impossible, without system activity logs.
-  id: magalix.controls.pci-dss.10
+  id: weave.controls.pci-dss.10
   name: Track and monitor all access to network resources and cardholder data
   order: 10
 - description: Vulnerabilities are being discovered continually by malicious individuals
     and researchers, and being introduced by new software. System components, processes,
     and custom software should be tested frequently to ensure security controls continue
     to reflect a changing environment.
-  id: magalix.controls.pci-dss.11
+  id: weave.controls.pci-dss.11
   name: Regularly test security systems and processes
   order: 11
 - description: "A strong security policy sets the security tone for the whole entity\
@@ -248,11 +248,11 @@ controls:
     \ part-time employees, temporary employees, contractors and consultants who are\
     \ \u201Cresident\u201D on the entity's site or otherwise have access to the cardholder\
     \ data environment."
-  id: magalix.controls.pci-dss.12
+  id: weave.controls.pci-dss.12
   name: Maintain a policy that addresses information security for all personnel
   order: 12
 description: PCI DSS is the global data security standard adopted by the payment card
   brands for all entities that process, store or transmit cardholder data and/or sensitive
   authentication data. It consists of steps that mirror security best practices.
-id: magalix.standards.pci-dss
+id: weave.standards.pci-dss
 name: PCI-DSS

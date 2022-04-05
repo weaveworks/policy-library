@@ -1,4 +1,4 @@
-package magalix.advisor.storage.persistentvolume_acccess_mode
+package weave.advisor.storage.persistentvolume_acccess_mode
 
 test_key_value_exists {
 	testcase = {

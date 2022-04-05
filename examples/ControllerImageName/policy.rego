@@ -1,4 +1,4 @@
-package magalix.advisor.images.image_name_enforce
+package weave.advisor.images.image_name_enforce
 
 restricted_image_names := input.parameters.restricted_image_names
 exclude_namespace := input.parameters.exclude_namespace

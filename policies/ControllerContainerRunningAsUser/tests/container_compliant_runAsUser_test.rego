@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.runningAsUser
+package weave.advisor.podSecurity.runningAsUser
 
 test_container_compliant_runAsUser {
   testcase = {

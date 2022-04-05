@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.deny_docker_socket_mount
+package weave.advisor.podSecurity.deny_docker_socket_mount
 
 docker_socket_name := input.parameters.docker_socket
 exclude_namespace := input.parameters.exclude_namespace

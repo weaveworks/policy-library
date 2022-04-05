@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.resource_quotas
+package weave.advisor.namespace.resource_quotas
 
 resource_type := input.parameters.resource_type
 namespace := input.parameters.namespace

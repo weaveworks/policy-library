@@ -1,4 +1,4 @@
-package magalix.advisor.storage.persistentvolume_acccess_mode
+package weave.advisor.storage.persistentvolume_acccess_mode
 
 access_mode := input.parameters.access_mode
 name := input.parameters.name

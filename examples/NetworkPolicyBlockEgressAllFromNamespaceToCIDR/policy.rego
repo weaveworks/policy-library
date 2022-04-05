@@ -1,4 +1,4 @@
-package magalix.advisor.network.block.egress.from.namespace.to.cidr
+package weave.advisor.network.block.egress.from.namespace.to.cidr
 
 namespace := input.parameters.namespace
 blocked_cidr := input.parameters.blocked_cidr

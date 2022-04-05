@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_kubernetes_app_part_of_label
+package weave.advisor.labels.missing_kubernetes_app_part_of_label
 
 exclude_namespace := input.parameters.exclude_namespace
 exclude_label_key := input.parameters.exclude_label_key

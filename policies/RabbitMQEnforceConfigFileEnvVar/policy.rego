@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_config_file_env_var
+package weave.advisor.rabbitmq.enforce_config_file_env_var
 
 env_name = "RABBITMQ_CONFIG_FILE"
 app_name = "rabbitmq"

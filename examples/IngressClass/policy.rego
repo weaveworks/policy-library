@@ -1,4 +1,4 @@
-package magalix.advisor.ingress.ingress_class
+package weave.advisor.ingress.ingress_class
 
 annotation  := input.parameters.annotation
 class := input.parameters.class

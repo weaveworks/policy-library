@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.missing_security_context
+package weave.advisor.podSecurity.missing_security_context
 
 violation[result] {
 	not controller_spec.securityContext	# Pod securityContext missing

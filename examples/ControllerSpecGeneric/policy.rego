@@ -1,4 +1,4 @@
-package magalix.advisor.pods.controller_spec_generic
+package weave.advisor.pods.controller_spec_generic
 
 key := input.parameters.controller_spec_key
 exclude_namespace := input.parameters.exclude_namespace

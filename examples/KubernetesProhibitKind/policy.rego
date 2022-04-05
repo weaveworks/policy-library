@@ -1,4 +1,4 @@
-package magalix.advisor.k8s.prohibit_kind
+package weave.advisor.k8s.prohibit_kind
 
 kind := input.parameters.kind
 

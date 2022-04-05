@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.ingress-approved-hostnames
+  name: weave.templates.ingress-approved-hostnames
 spec:
-  id: magalix.templates.ingress-approved-hostnames
+  id: weave.templates.ingress-approved-hostnames
   name: Ingress Approved Hostnames
   description: |
     This Policy ensures only hostnames that are approved are set. Specify a list of approved hostnames since you may be hosting more than one domain name. 
@@ -14,22 +14,22 @@ spec:
       rules:
       - host: <hostnames>
     ```
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: high
   parameters:
   - name: hostnames
     type: array
     required: true
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.resource_quotas
+package weave.advisor.namespace.resource_quotas
 
 test_limits_cpu {
 	testcase = {

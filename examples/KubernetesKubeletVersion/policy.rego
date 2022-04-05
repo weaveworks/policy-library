@@ -1,4 +1,4 @@
-package magalix.advisor.k8s.min_kubelet_version
+package weave.advisor.k8s.min_kubelet_version
 
 version := input.parameters.version
 

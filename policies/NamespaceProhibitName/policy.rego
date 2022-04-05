@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.prohibit
+package weave.advisor.namespace.prohibit
 
 namespace_name := input.parameters.namespace_name
 

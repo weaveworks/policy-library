@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.missing_security_context
+package weave.advisor.podSecurity.missing_security_context
 
 test_missing_security_context {
   testcase = {

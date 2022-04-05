@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.persistent-volume-claim-max-size
+  name: weave.templates.persistent-volume-claim-max-size
 spec:
-  id: magalix.templates.persistent-volume-claim-max-size
+  id: weave.templates.persistent-volume-claim-max-size
   name: Persistent Volume Claim Max Size
   description: |
     This Policy allows you to set a max size on your Persistent Volumes Claims. When specifying a size, be sure to include the size and sizing suffix (e.g. 1Gi).
@@ -15,20 +15,20 @@ spec:
         requests:
           storage: <size>
     ```
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: size
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

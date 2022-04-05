@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.deny_hostport
+package weave.advisor.podSecurity.deny_hostport
 
 host_port := input.parameters.host_port
 exclude_namespace := input.parameters.exclude_namespace

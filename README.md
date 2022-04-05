@@ -1,6 +1,6 @@
-# Magalix Policy Library
+# Weave Policy Library
 
-This is the Magalix Policy library v1.0.0.
+This is the Weave Policy library v1.0.0.
 
 ## Directory Structure
 ```
@@ -38,11 +38,11 @@ This is the Magalix Policy library v1.0.0.
 
 ## Standards File Format
 ```
-id: magalix.standards.<id> # mglx standard id
+id: weave.standards.<id> # weave standard id
 name: <standard name>
 description: <description text>
 controls:
-- id: magalix.controls.<id> # mglx control id
+- id: weave.controls.<id> # weave control id
   description: <description text>
   name: <control name>
   order: <order>

@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-using-hostport
+  name: weave.policies.containers-using-hostport
 spec:
-  id: magalix.policies.containers-using-hostport
+  id: weave.policies.containers-using-hostport
   name: Containers Using Hostport
   description: |
     This Policy checks if `hostPort` is set. When `hostPort` is set, a Pod is bound to a hostPort and limits the number of places the Pod can be scheduled. That's because each <hostIP, hostPort, protocol> combination must be unique. If you don't specify the hostIP and protocol explicitly, Kubernetes will use 0.0.0.0 as the default hostIP and TCP as the default protocol.
@@ -19,28 +19,28 @@ spec:
           - hostPort: 8080
     ```
     https://kubernetes.io/docs/concepts/configuration/overview/#services
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: high
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   controls:
-  - magalix.controls.pci-dss.2.2.2
-  - magalix.controls.nist-800-190.4.4.2
+  - weave.controls.pci-dss.2.2.2
+  - weave.controls.nist-800-190.4.4.2
   tags: [pci-dss, nist800-190]
   parameters:
   - name: host_port
     type: string
     required: true
-    default: hostPort
+    value: hostPort
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

@@ -1,4 +1,4 @@
-package magalix.advisor.network.allow.egress.from.namespace.to.cidr
+package weave.advisor.network.allow.egress.from.namespace.to.cidr
 
 namespace := input.parameters.namespace
 cidr := input.parameters.cidr

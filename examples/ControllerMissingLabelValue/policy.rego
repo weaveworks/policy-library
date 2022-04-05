@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_label_value
+package weave.advisor.labels.missing_label_value
 
 label := input.parameters.label
 value := input.parameters.value

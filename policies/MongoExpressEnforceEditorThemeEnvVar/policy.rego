@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_editor_theme_env_var
+package weave.advisor.mongo_express.enforce_editor_theme_env_var
 
 env_name = "ME_CONFIG_OPTIONS_EDITORTHEME"
 app_name = "mongo-express"

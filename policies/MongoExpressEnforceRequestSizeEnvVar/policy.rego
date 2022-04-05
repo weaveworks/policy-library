@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_request_size_env_var
+package weave.advisor.mongo_express.enforce_request_size_env_var
 
 env_name = "ME_CONFIG_REQUEST_SIZE"
 app_name = "mongo-express"

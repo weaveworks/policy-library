@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_ssl_cert_file_env_var
+package weave.advisor.rabbitmq.enforce_ssl_cert_file_env_var
 
 env_name = "RABBITMQ_SSL_CERTFILE"
 app_name = "rabbitmq"

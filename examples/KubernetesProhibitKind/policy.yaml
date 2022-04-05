@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.prohibit-specific-kind-from-being-scheduled
+  name: weave.templates.prohibit-specific-kind-from-being-scheduled
 spec:
-  id: magalix.templates.prohibit-specific-kind-from-being-scheduled
+  id: weave.templates.prohibit-specific-kind-from-being-scheduled
   name: Prohibit Specific Kind From Being Scheduled
   description: |
     This Policy checks for a `kind` and can prevent it from being schedule to your cluster. A common example is running "naked" pods. 
@@ -14,14 +14,14 @@ spec:
     ```
 
     https://kubernetes.io/docs/concepts/configuration/overview/#naked-pods-vs-replicasets-deployments-and-jobs
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: medium
-  targets: {kind: [Pods]}
+  targets: {kinds: [Pods]}
   controls:
-  - magalix.controls.cis-benchmark.5.1.4
+  - weave.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]
   parameters:
-  - default: Pods
+  - value: Pods
     name: kind
     required: true
     type: string

@@ -1,4 +1,4 @@
-package magalix.advisor.services.block_servicetype
+package weave.advisor.services.block_servicetype
 
 type := input.parameters.type
 exclude_namespace := input.parameters.exclude_namespace

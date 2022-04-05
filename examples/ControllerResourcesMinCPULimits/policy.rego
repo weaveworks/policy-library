@@ -1,4 +1,4 @@
-package magalix.advisor.controller.min_cpu_limits
+package weave.advisor.controller.min_cpu_limits
 
 min_size := input.parameters.size
 exclude_namespace := input.parameters.exclude_namespace

@@ -1,4 +1,4 @@
-package magalix.advisor.images.image_pull_enforce
+package weave.advisor.images.image_pull_enforce
 
 policy := input.parameters.policy
 exclude_namespace := input.parameters.exclude_namespace

@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.container-maximum-memory-limits
+  name: weave.templates.container-maximum-memory-limits
 spec:
-  id: magalix.templates.container-maximum-memory-limits
+  id: weave.templates.container-maximum-memory-limits
   name: Container Maximum Memory Limits
   description: |
     This Policy is to ensure a maximum Memory Limit value is set. The policy will fail if the set Memory limit is higher than the one specified in the policy. You must specify a unit size (e.g Mi, Gi, etc).
@@ -18,24 +18,24 @@ spec:
     ```
 
     https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: size
     type: string
     required: true
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

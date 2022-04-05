@@ -1,4 +1,4 @@
-package magalix.advisor.mongodb.enforce_database_env_var
+package weave.advisor.mongodb.enforce_database_env_var
 
 env_name = "MONGO_INITDB_DATABASE"
 app_name = "mongo"

@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_additional_erl_args_env_var
+package weave.advisor.rabbitmq.enforce_additional_erl_args_env_var
 
 env_name = "RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS"
 app_name = "rabbitmq"

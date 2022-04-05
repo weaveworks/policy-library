@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.node-custom-label
+  name: weave.templates.node-custom-label
 spec:
-  id: magalix.templates.node-custom-label
+  id: weave.templates.node-custom-label
   name: Node Custom Label
   description: |
     This Policy checks for custom labels on your node. This Policy looks for both a key and value. 
@@ -14,22 +14,22 @@ spec:
       labels: 
           <key>: <value>
     ```
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: low
   parameters:
   - name: key
     type: string
     required: true
-    default:
+    value:
   - name: value
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

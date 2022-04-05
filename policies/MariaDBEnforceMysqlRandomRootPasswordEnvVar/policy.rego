@@ -1,4 +1,4 @@
-package magalix.advisor.mariadb.enforce_mysql_random_root_password_env_var
+package weave.advisor.mariadb.enforce_mysql_random_root_password_env_var
 
 env_name = "MYSQL_RANDOM_ROOT_PASSWORD"
 app_name = "mariadb"

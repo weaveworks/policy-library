@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.limitrange_min_max
+package weave.advisor.namespace.limitrange_min_max
 
 resource_type := input.parameters.resource_type
 resource_setting := input.parameters.resource_setting

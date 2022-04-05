@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.persistent-volume-claim-snapshot
+  name: weave.templates.persistent-volume-claim-snapshot
 spec:
-  id: magalix.templates.persistent-volume-claim-snapshot
+  id: weave.templates.persistent-volume-claim-snapshot
   name: Persistent Volume Claim Snapshot
   description: |
     This Policy checks for a PVC Snapshot. 
@@ -15,24 +15,24 @@ spec:
       source:
         persistentVolumeClaimName: <pvc_name>
     ```
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.2
+  - weave.controls.soc2-type-i.2.1.2
   parameters:
   - name: snapshot_class
     type: string
     required: true
-    default:
+    value:
   - name: pvc_name
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

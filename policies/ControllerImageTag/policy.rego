@@ -1,4 +1,4 @@
-package magalix.advisor.images.image_tag_enforce
+package weave.advisor.images.image_tag_enforce
 
 image_tag := input.parameters.image_tag
 exclude_namespace := input.parameters.exclude_namespace

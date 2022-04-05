@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.enforce_ro_fs
+package weave.advisor.podSecurity.enforce_ro_fs
 
 read_only = input.parameters.read_only
 exclude_namespace := input.parameters.exclude_namespace

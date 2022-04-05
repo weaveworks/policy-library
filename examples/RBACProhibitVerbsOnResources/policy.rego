@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.generic_prohibit_resource_verb
+package weave.advisor.rbac.generic_prohibit_resource_verb
 
 resource := input.parameters.resource
 verb := input.parameters.verb

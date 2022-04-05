@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.runningAsUser
+package weave.advisor.podSecurity.runningAsUser
 
 test_exclude_namespace {
   testcase = {

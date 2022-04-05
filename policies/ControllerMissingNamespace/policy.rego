@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.missing_namespace
+package weave.advisor.namespace.missing_namespace
 
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value

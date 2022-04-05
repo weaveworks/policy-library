@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.namespace-pod-quota
+  name: weave.templates.namespace-pod-quota
 spec:
-  id: magalix.templates.namespace-pod-quota
+  id: weave.templates.namespace-pod-quota
   name: Namespace Pod Quota
   description: |
     When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. 
@@ -11,16 +11,16 @@ spec:
     Specify a value for the maximum number of pods you'd like in a namespace. 
 
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-pod-namespace/
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: low
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: pod_quota
     type: string
     required: true
-    default: 2
+    value: 2
   - name: namespace
     type: string
     required: true
-    default: magalix
+    value: magalix

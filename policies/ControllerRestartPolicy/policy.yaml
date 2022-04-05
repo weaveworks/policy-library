@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-enforce-restart-policy
+  name: weave.policies.containers-enforce-restart-policy
 spec:
-  id: magalix.policies.containers-enforce-restart-policy
+  id: weave.policies.containers-enforce-restart-policy
   name: Containers Enforce Restart Policy
   description: |
     This Policy checks if a specific restartPolicy is configured in your workloads.
@@ -14,25 +14,25 @@ spec:
       spec:
         restartPolicy: <policy>
     ```
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: medium
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   tags: []
   parameters:
   - name: restart_policy
     type: string
     required: true
-    default: Always
+    value: Always
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

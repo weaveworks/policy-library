@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_fail_if_no_peer_cert_env_var
+package weave.advisor.rabbitmq.enforce_fail_if_no_peer_cert_env_var
 
 env_name = "RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT"
 app_name = "rabbitmq"

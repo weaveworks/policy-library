@@ -1,4 +1,4 @@
-package magalix.advisor.pods.service_account_token_automount
+package weave.advisor.pods.service_account_token_automount
 
 automount_token := input.parameters.automount_token
 exclude_namespace := input.parameters.exclude_namespace

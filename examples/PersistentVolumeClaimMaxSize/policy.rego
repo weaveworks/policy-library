@@ -1,4 +1,4 @@
-package magalix.advisor.storage.persistentvolumeclaim_max_size
+package weave.advisor.storage.persistentvolumeclaim_max_size
 
 max_size := input.parameters.size
 exclude_label_key := input.parameters.exclude_label_key

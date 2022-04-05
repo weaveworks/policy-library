@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.enforce-specific-ingress-class
+  name: weave.templates.enforce-specific-ingress-class
 spec:
-  id: magalix.templates.enforce-specific-ingress-class
+  id: weave.templates.enforce-specific-ingress-class
   name: Enforce Specific Ingress Class
   description: |
     This Policy allows for a custom Ingress annotation key and value. When using Kubernetes Ingress, various annotation can be used to define different configurations, even different ingress controllers. Values may vary depending on your use case. 
@@ -14,28 +14,28 @@ spec:
         kubernetes.io/ingress.class: <class>
     ```
     https://kubernetes.io/docs/concepts/services-networking/ingress/
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: medium
   controls:
-  - magalix.controls.pci-dss.1.1.4
+  - weave.controls.pci-dss.1.1.4
   parameters:
   - name: class
     type: string
     required: true
-    default:
+    value:
   - name: annotation
     type: string
     required: true
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

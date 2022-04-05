@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_cookie_secret_env_var
+package weave.advisor.mongo_express.enforce_cookie_secret_env_var
 
 env_name = "ME_CONFIG_SITE_COOKIESECRET"
 app_name = "mongo-express"

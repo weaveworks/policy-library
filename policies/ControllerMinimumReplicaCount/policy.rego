@@ -1,4 +1,4 @@
-package magalix.advisor.pods.replica_count
+package weave.advisor.pods.replica_count
 
 replica_count := input.parameters.replica_count
 exclude_namespace := input.parameters.exclude_namespace

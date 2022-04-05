@@ -1,4 +1,4 @@
-package magalix.advisor.pods.not_namespace
+package weave.advisor.pods.not_namespace
 
 custom_namespace := input.parameters.custom_namespace
 exclude_label_key := input.parameters.exclude_label_key

@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.pod_quotas
+package weave.advisor.namespace.pod_quotas
 
 test_key_value_exists {
 	testcase = {

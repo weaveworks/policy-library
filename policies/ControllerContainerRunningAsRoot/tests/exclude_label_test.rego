@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.runningAsRoot
+package weave.advisor.podSecurity.runningAsRoot
 
 test_exclude_label {
   testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_default_vhost_env_var
+package weave.advisor.rabbitmq.enforce_default_vhost_env_var
 
 env_name = "RABBITMQ_DEFAULT_VHOST"
 app_name = "rabbitmq"

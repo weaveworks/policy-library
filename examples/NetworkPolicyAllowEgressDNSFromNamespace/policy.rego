@@ -1,4 +1,4 @@
-package magalix.advisor.network.allow.egress.to.coredns
+package weave.advisor.network.allow.egress.to.coredns
 
 namespace := input.parameters.namespace
 exclude_label_key := input.parameters.exclude_label_key

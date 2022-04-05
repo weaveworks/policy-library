@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mongodb-enforce-database-env-var
+  name: weave.policies.mongodb-enforce-database-env-var
 spec:
-  id: magalix.policies.mongodb-enforce-database-env-var
+  id: weave.policies.mongodb-enforce-database-env-var
   name: MongoDB Enforce Environment Variable - MONGO_INITDB_DATABASE
   description: |
     This Policy ensures MONGO_INITDB_DATABASE environment variable are in place when using the official container images from Docker Hub.
@@ -11,20 +11,20 @@ spec:
   how_to_solve: |
     If you encounter a violation, ensure the MONGO_INITDB_DATABASE environment variables is set.
     For futher information about the MongoDB Docker container, check here: https://hub.docker.com/_/mariadb
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
     StatefulSet, CronJob]}
   parameters:
-  - default: 
+  - value: 
     name: exclude_namespace
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_key
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_value
     required: false
     type: string

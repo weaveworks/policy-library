@@ -1,15 +1,15 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.node-kernel-versions
+  name: weave.templates.node-kernel-versions
 spec:
-  id: magalix.templates.node-kernel-versions
+  id: weave.templates.node-kernel-versions
   name: Node Kernel Versions
   description: |
     This Policy allows you to select the type of OS image you have, the minimum kernel version
   how_to_solve: |
     Ensure your Linux kernel is equal to or later than the version specified in your policy. 
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.1.6.8
+  - weave.controls.soc2-type-i.1.6.8

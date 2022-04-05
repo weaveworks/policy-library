@@ -1,4 +1,4 @@
-package magalix.advisor.mysql.enforce_onetime_password_env_var
+package weave.advisor.mysql.enforce_onetime_password_env_var
 
 env_name = "MYSQL_ONETIME_PASSWORD"
 app_name = "mysql"

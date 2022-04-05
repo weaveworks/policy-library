@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.privilegeEscalation
+package weave.advisor.podSecurity.privilegeEscalation
 
 exclude_namespace := input.parameters.exclude_namespace
 allow_privilege_escalation := input.parameters.allow_privilege_escalation

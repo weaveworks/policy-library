@@ -1,4 +1,4 @@
-package magalix.advisor.images.image_name_enforce
+package weave.advisor.images.image_name_enforce
 
 test_allowed_image {
 	testcase = {

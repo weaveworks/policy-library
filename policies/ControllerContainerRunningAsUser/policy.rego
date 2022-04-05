@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.runningAsUser
+package weave.advisor.podSecurity.runningAsUser
 
 exclude_namespace := input.parameters.exclude_namespace
 exclude_label_key := input.parameters.exclude_label_key

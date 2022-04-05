@@ -1,4 +1,4 @@
-package magalix.advisor.mariadb.enforce_database_env_var
+package weave.advisor.mariadb.enforce_database_env_var
 
 env_name = "MARIADB_DATABASE"
 app_name = "mariadb"

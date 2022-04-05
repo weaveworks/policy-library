@@ -1,4 +1,4 @@
-package magalix.advisor.istio.approved_hosts
+package weave.advisor.istio.approved_hosts
 
 hostnames := input.parameters.hostnames
 exclude_namespace := input.parameters.exclude_namespace

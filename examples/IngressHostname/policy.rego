@@ -1,4 +1,4 @@
-package magalix.advisor.ingress.approved_hostnames
+package weave.advisor.ingress.approved_hostnames
 
 hostnames := input.parameters.hostnames
 exclude_namespace := input.parameters.exclude_namespace

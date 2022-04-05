@@ -1,4 +1,4 @@
-package magalix.advisor.namespace.pod_quotas
+package weave.advisor.namespace.pod_quotas
 
 pod_quota := input.parameters.pod_quota
 namespace := input.parameters.namespace

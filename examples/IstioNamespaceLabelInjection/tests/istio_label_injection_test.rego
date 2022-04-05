@@ -1,4 +1,4 @@
-package magalix.advisor.istio.namespace_label
+package weave.advisor.istio.namespace_label
 
 test_key_value_exists {
 	testcase = {

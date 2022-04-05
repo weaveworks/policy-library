@@ -1,4 +1,4 @@
-package magalix.advisor.nodes.os_version
+package weave.advisor.nodes.os_version
 
 desired_os := input.parameters.os
 exclude_label_key := input.parameters.exclude_label_key

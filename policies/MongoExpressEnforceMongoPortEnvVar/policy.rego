@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_mongdb_port_env_var
+package weave.advisor.mongo_express.enforce_mongdb_port_env_var
 
 env_name = "ME_CONFIG_MONGODB_PORT"
 app_name = "mongo-express"

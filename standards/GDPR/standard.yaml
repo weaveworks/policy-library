@@ -7,7 +7,7 @@ controls:
     where necessary.
 
     '
-  id: magalix.controls.gdpr.24
+  id: weave.controls.gdpr.24
   name: Article 24 - Responsibility of the controller
   order: 24
 - description: 'Taking into account the state of the art, the cost of implementation
@@ -22,7 +22,7 @@ controls:
     data subjects.
 
     '
-  id: magalix.controls.gdpr.25
+  id: weave.controls.gdpr.25
   name: Article 25 - Data Protection by design and by default
   order: 25
 - description: 'Where processing is to be carried out on behalf of a controller, the
@@ -32,7 +32,7 @@ controls:
     rights of the data subject.
 
     '
-  id: magalix.controls.gdpr.28
+  id: weave.controls.gdpr.28
   name: Article 28 - Processor
   order: 28
 - description: 'The processor and any person acting under the authority of the controller
@@ -41,7 +41,7 @@ controls:
     or Member State law.
 
     '
-  id: magalix.controls.gdpr.29
+  id: weave.controls.gdpr.29
   name: Article 29 - Processing under the authority of the controller or processor
   order: 29
 - description: "Taking into account the state of the art, the costs of implementation\
@@ -56,7 +56,7 @@ controls:
     \ a physical or technical incident;\n- a process for regularly testing, assessing\
     \ and evaluating the effectiveness of technical and organisational measures for\
     \ ensuring the security of the processing    \n"
-  id: magalix.controls.gdpr.32
+  id: weave.controls.gdpr.32
   name: Article 35 - Security for processing
   order: 32
 description: 'The General Data Protection Regulation is a European Union law that
@@ -71,4 +71,4 @@ description: 'The General Data Protection Regulation is a European Union law tha
 
   '
 name: GDPR
-id: magalix.standards.gdpr
+id: weave.standards.gdpr

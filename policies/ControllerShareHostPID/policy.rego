@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.deny_shared_host_pid
+package weave.advisor.podSecurity.deny_shared_host_pid
 
 resource_enabled := input.parameters.resource_enabled
 exclude_namespace := input.parameters.exclude_namespace

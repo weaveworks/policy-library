@@ -1,4 +1,4 @@
-package magalix.advisor.postgres.enforce_user_env_var
+package weave.advisor.postgres.enforce_user_env_var
 
 env_name = "POSTGRES_USER"
 app_name = "postgres"

@@ -1,4 +1,4 @@
-package magalix.advisor.affinity.pod.no_schedule_toleration
+package weave.advisor.affinity.pod.no_schedule_toleration
 
 toleration_key := input.parameters.toleration_key
 exclude_namespace := input.parameters.exclude_namespace

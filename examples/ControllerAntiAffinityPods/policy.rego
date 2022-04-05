@@ -1,4 +1,4 @@
-package magalix.advisor.antiaffinity.pods
+package weave.advisor.antiaffinity.pods
 
 keys := input.parameters.keys
 exclude_namespace := input.parameters.exclude_namespace

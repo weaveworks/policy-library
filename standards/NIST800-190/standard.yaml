@@ -2,12 +2,12 @@ controls:
 - description: An image should only include the executables and libraries required
     by the app itself; all other OS functionality is provided by the OS kernel within
     the underlying host OS.
-  id: magalix.controls.nist-800-190.2.3.1
+  id: weave.controls.nist-800-190.2.3.1
   name: Image Creation - Testing - Accreditation
   order: 2.3.1
 - description: Images are typically stored in central locations to make it easy to
     control, share, find, and reuse them across hosts.
-  id: magalix.controls.nist-800-190.2.3.2
+  id: weave.controls.nist-800-190.2.3.2
   name: Image Storage and Retrieval
   order: 2.3.2
 - description: Tools known as orchestrators enable DevOps personas or automation working
@@ -17,7 +17,7 @@ controls:
     an image is deployed into a container, the image itself is not changed, but instead
     a copy of it is placed within the container and transitioned from being a dormant
     set of app code to a running instance of the app.
-  id: magalix.controls.nist-800-190.2.3.3
+  id: weave.controls.nist-800-190.2.3.3
   name: Container Deployment and Management
   order: 2.3.3
 - description: Because images are effectively static archive files that include all
@@ -26,7 +26,7 @@ controls:
     up-to-date components may be free of known vulnerabilities for days or weeks after
     its creation, but at some time vulnerabilities will be discovered in one or more
     image components, and thus the image will no longer be up-to-date.
-  id: magalix.controls.nist-800-190.3.1.1
+  id: weave.controls.nist-800-190.3.1.1
   name: Image vulnerabilities
   order: 3.1.1
 - description: "In addition to software defects, images may also have configuration\
@@ -37,7 +37,7 @@ controls:
     \ configuration can still expose a fully up-to-date system to attack, so too can\
     \ a poorly configured image increase risk even if all the included components\
     \ are up-to-date."
-  id: magalix.controls.nist-800-190.3.1.2
+  id: weave.controls.nist-800-190.3.1.2
   name: Image configuration defects
   order: 3.1.2
 - description: Because images are just collections of files packaged together, malicious
@@ -46,7 +46,7 @@ controls:
     could be used to attack other containers or hosts within the environment. A possible
     source of embedded malware is the use of base layers and other images provided
     by third parties of which the full provenance is not known.
-  id: magalix.controls.nist-800-190.3.1.3
+  id: weave.controls.nist-800-190.3.1.3
   name: Embedded malware
   order: 3.1.3
 - description: Many apps require secrets to enable secure communication between components.
@@ -56,7 +56,7 @@ controls:
     can be embedded directly into the image file system. However, this practice creates
     a security risk because anyone with access to the image can easily parse it to
     learn these secrets.
-  id: magalix.controls.nist-800-190.3.1.4
+  id: weave.controls.nist-800-190.3.1.4
   name: Embedded clear text secrets
   order: 3.1.4
 - description: One of the most common high-risk scenarios in any environment is the
@@ -67,7 +67,7 @@ controls:
     provided by a third party. Using this externally provided image results in the
     same types of risks that external software traditionally has, such as introducing
     malware, leaking data, or including components with vulnerabilities.
-  id: magalix.controls.nist-800-190.3.1.5
+  id: weave.controls.nist-800-190.3.1.5
   name: Use of untrusted images
   order: 3.1.5
 - description: "Images often contain sensitive components like an organization\u2019\
@@ -78,7 +78,7 @@ controls:
     \ network traffic intended for registries and steal developer or administrator\
     \ credentials within that traffic, provide fraudulent or outdated images to orchestrators,\
     \ etc."
-  id: magalix.controls.nist-800-190.3.2.1
+  id: weave.controls.nist-800-190.3.2.1
   name: Insecure connections to registries
   order: 3.2.1
 - description: Because registries are typically the source location for all the images
@@ -86,7 +86,7 @@ controls:
     vulnerable, out-of-date versions. While these vulnerable images do not directly
     pose a threat simply by being stored in the registry, they increase the likelihood
     of accidental deployment of a known-vulnerable version.
-  id: magalix.controls.nist-800-190.3.2.2
+  id: weave.controls.nist-800-190.3.2.2
   name: Stale images in registries
   order: 3.2.2
 - description: Because registries may contain images used to run sensitive or proprietary
@@ -95,7 +95,7 @@ controls:
     details about an app to an attacker. Even more critically, because registries
     are typically trusted as a source of valid, approved software, compromise of a
     registry can potentially lead to compromise of downstream containers and hosts.
-  id: magalix.controls.nist-800-190.3.2.3
+  id: weave.controls.nist-800-190.3.2.3
   name: Insufficient authentication and authorization restrictions
   order: 3.2.3
 - description: Historically, many orchestrators were designed with the assumption
@@ -105,14 +105,14 @@ controls:
     sensitivity levels. If the access provided to users and groups is not scoped to
     their specific needs, a malicious or careless user could affect or subvert the
     operation of other containers managed by the orchestrator.
-  id: magalix.controls.nist-800-190.3.3.1
+  id: weave.controls.nist-800-190.3.3.1
   name: Unbounded administrative access
   order: 3.3.1
 - description: Because a container may run on any given node within a cluster, the
     data required by the app within the container must be available to the container
     regardless of which host it is running on. At the same time, many organizations
     manage data that must be encrypted at rest to prevent unauthorized access.
-  id: magalix.controls.nist-800-190.3.3.2
+  id: weave.controls.nist-800-190.3.3.2
   name: Unauthorized access
   order: 3.3.2
 - description: "In most containerized environments, traffic between individual nodes\
@@ -125,7 +125,7 @@ controls:
     \ sent. Although an encrypted overlay network provides many operational and security\
     \ benefits, it can also create a security \u2018blindness\u2019 scenario in which\
     \ organizations are unable to effectively monitor traffic within their own networks."
-  id: magalix.controls.nist-800-190.3.3.3
+  id: weave.controls.nist-800-190.3.3.3
   name: Poorly separated inter-container network traffic
   order: 3.3.3
 - description: Orchestrators are typically focused primarily on driving the scale
@@ -136,7 +136,7 @@ controls:
     happens to have the most available resources at the time of deployment. In the
     case of a critical vulnerability in the web server, this can put the container
     processing sensitive financial data at significantly greater risk of compromise.
-  id: magalix.controls.nist-800-190.3.3.4
+  id: weave.controls.nist-800-190.3.3.4
   name: Mixing of workload sensitivity levels
   order: 3.3.4
 - description: "Maintenance of trust between the nodes in the environment requires\
@@ -148,7 +148,7 @@ controls:
     \ the same key pairs used for authentication are shared across all nodes\n* Communications\
     \ between the orchestrator and DevOps personnel, administrators, and hosts being\
     \ unencrypted and unauthenticated\n"
-  id: magalix.controls.nist-800-190.3.3.5
+  id: weave.controls.nist-800-190.3.3.5
   name: Orchestrator node trust
   order: 3.3.5
 - description: "While relatively uncommon, vulnerabilities within the runtime software\
@@ -157,7 +157,7 @@ controls:
     \ host OS itself. An attacker may also be able to exploit vulnerabilities to compromise\
     \ the runtime software itself, and then alter that software so it allows the attacker\
     \ to access other containers, monitor container-to-container communications, etc."
-  id: magalix.controls.nist-800-190.3.4.1
+  id: weave.controls.nist-800-190.3.4.1
   name: Vulnerabilities within the runtime software
   order: 3.4.1
 - description: "By default in most container runtimes, individual containers are able\
@@ -175,7 +175,7 @@ controls:
     \ source, destination, or payload. Tools and operational processes that are not\
     \ container aware are not able to inspect this traffic or determine whether it\
     \ represents a threat.\n"
-  id: magalix.controls.nist-800-190.3.4.2
+  id: weave.controls.nist-800-190.3.4.2
   name: Unbounded network access from containers
   order: 3.4.2
 - description: 'Container runtimes typically expose many configurable options to administrators.
@@ -197,7 +197,7 @@ controls:
     and attack the host itself as well as other containers running on the host.
 
     '
-  id: magalix.controls.nist-800-190.3.4.3
+  id: weave.controls.nist-800-190.3.4.3
   name: Insecure container runtime configurations
   order: 3.4.3
 - description: Even when organizations are taking the precautions recommended in this
@@ -209,7 +209,7 @@ controls:
     When a container is compromised, it can be misused in many ways, such as granting
     unauthorized access to sensitive information or enabling attacks against other
     containers or the host OS.
-  id: magalix.controls.nist-800-190.3.4.4
+  id: weave.controls.nist-800-190.3.4.4
   name: App vulnerabilities
   order: 3.4.4
 - description: Rogue containers are unplanned or unsanctioned containers in an environment.
@@ -219,7 +219,7 @@ controls:
     configuration, they may be more susceptible to exploits. Rogue containers therefore
     pose additional risk to the organization, especially when they persist in the
     environment without the awareness of development teams and security administrators.
-  id: magalix.controls.nist-800-190.3.4.5
+  id: weave.controls.nist-800-190.3.4.5
   name: Rogue containers
   order: 3.4.5
 - description: "Every host OS has an attack surface, which is the collection of all\
@@ -229,7 +229,7 @@ controls:
     \ the better the odds are that an attacker can find and access a vulnerability,\
     \ leading to a compromise of the host OS and the containers running on top of\
     \ it."
-  id: magalix.controls.nist-800-190.3.5.1
+  id: weave.controls.nist-800-190.3.5.1
   name: Large attack surface
   order: 3.5.1
 - description: Container-specific OSs have a much smaller attack surface than that
@@ -240,7 +240,7 @@ controls:
     attack surface than seen with hypervisors, even for container-specific OSs. In
     other words, the level of isolation provided by container runtimes is not as high
     as that provided by hypervisors.
-  id: magalix.controls.nist-800-190.3.5.2
+  id: weave.controls.nist-800-190.3.5.2
   name: Shared kernel
   order: 3.5.2
 - description: "All host OSs, even container-specific ones, provide foundational system\
@@ -249,7 +249,7 @@ controls:
     \ and management. Like any other software, these components can have vulnerabilities\
     \ and, because they exist low in the container technology architecture, they can\
     \ impact all the containers and apps that run on these hosts."
-  id: magalix.controls.nist-800-190.3.5.3
+  id: weave.controls.nist-800-190.3.5.3
   name: Host OS component vulnerabilities
   order: 3.5.3
 - description: "Container-specific OSs are typically not optimized to support multiuser\
@@ -259,7 +259,7 @@ controls:
     \ changes to the system and all containers on it, and can potentially enable a\
     \ user that only needs to manage a specific app\u2019s containers to impact many\
     \ others."
-  id: magalix.controls.nist-800-190.3.5.4
+  id: weave.controls.nist-800-190.3.5.4
   name: Improper user access rights
   order: 3.5.4
 - description: Insecure container configurations can expose host volumes to greater
@@ -267,7 +267,7 @@ controls:
     directories on the host OS, that container can then change files in those directories.
     These changes could impact the stability and security of the host and all other
     containers running on it.
-  id: magalix.controls.nist-800-190.3.5.5
+  id: weave.controls.nist-800-190.3.5.5
   name: Host OS file system tampering
   order: 3.5.5
 - description: "Organizations should use tools that take the pipeline-based build\
@@ -287,7 +287,7 @@ controls:
     \ build process to prevent the progression of images that include vulnerabilities\
     \ with Common Vulnerability Scoring System (CVSS) [18] ratings above a selected\
     \ threshold.\n"
-  id: magalix.controls.nist-800-190.4.1.1
+  id: weave.controls.nist-800-190.4.1.1
   name: Image vulnerabilities
   order: 4.1.1
 - description: Organizations should adopt tools and processes to validate and enforce
@@ -296,14 +296,14 @@ controls:
     to provide remote shells to hosts should never be enabled within containers. Containers
     should be run in an immutable manner to derive the greatest security benefit from
     their use.
-  id: magalix.controls.nist-800-190.4.1.2
+  id: weave.controls.nist-800-190.4.1.2
   name: Image configuration defects
   order: 4.1.2
 - description: "Organizations should continuously monitor all images for embedded\
     \ malware. The monitoring processes should include the use of malware signature\
     \ sets and behavioral detection heuristics based largely on actual \u201Cin the\
     \ wild\u201D attacks."
-  id: magalix.controls.nist-800-190.4.1.3
+  id: weave.controls.nist-800-190.4.1.3
   name: Embedded malware
   order: 4.1.3
 - description: Regardless of the tool chosen, organizations should ensure that secrets
@@ -311,13 +311,13 @@ controls:
     and administrator-controlled setting, and that secrets are always encrypted at
     rest and in transit using Federal Information Processing Standard (FIPS) 140 approved
     cryptographic algorithms5 contained in validated cryptographic modules.
-  id: magalix.controls.nist-800-190.4.1.4
+  id: weave.controls.nist-800-190.4.1.4
   name: Embedded clear text secrets
   order: 4.1.4
 - description: Organizations should maintain a set of trusted images and registries
     and ensure that only images from this set are allowed to run in their environment,
     thus mitigating the risk of untrusted or malicious components being deployed.
-  id: magalix.controls.nist-800-190.4.1.5
+  id: weave.controls.nist-800-190.4.1.5
   name: Use of untrusted images
   order: 4.1.5
 - description: Organizations should configure their development tools, orchestrators,
@@ -325,7 +325,7 @@ controls:
     The specific steps vary between tools, but the key goal is to ensure that all
     data pushed to and pulled from a registry occurs between trusted endpoints and
     is encrypted in transit.
-  id: magalix.controls.nist-800-190.4.2.1
+  id: weave.controls.nist-800-190.4.2.1
   name: Insecure connections to registries
   order: 4.2.1
 - description: "The risk of using stale images can be mitigated through two primary\
@@ -338,12 +338,12 @@ controls:
     \ in place to ensure that either the automation is using the most recent unique\
     \ name or the images tagged \u201Clatest\u201D actually do represent the most\
     \ up-to-date versions.\n"
-  id: magalix.controls.nist-800-190.4.2.2
+  id: weave.controls.nist-800-190.4.2.2
   name: Stale images in registries
   order: 4.2.2
 - description: All access to registries that contain proprietary or sensitive images
     should require authentication.
-  id: magalix.controls.nist-800-190.4.2.3
+  id: weave.controls.nist-800-190.4.2.3
   name: Insufficient authentication and authorization restrictions
   order: 4.2.3
 - description: Especially because of their wide-ranging span of control, orchestrators
@@ -353,7 +353,7 @@ controls:
     be given access to the images used in testing and the hosts used for running them,
     and should only be able to manipulate the containers they created. Test team members
     should have limited or no access to containers used in production.
-  id: magalix.controls.nist-800-190.4.3.1
+  id: weave.controls.nist-800-190.4.3.1
   name: Unbounded administrative access
   order: 4.3.1
 - description: Traditional approaches for data at rest encryption often involve the
@@ -363,7 +363,7 @@ controls:
     running on. Such encryption tools should provide the same barriers to unauthorized
     access and tampering, using the same cryptographic approaches as those defined
     in NIST SP 800-111 [19].
-  id: magalix.controls.nist-800-190.4.3.2
+  id: weave.controls.nist-800-190.4.3.2
   name: Unauthorized access
   order: 4.3.2
 - description: Orchestrators should be configured to separate network traffic into
@@ -373,7 +373,7 @@ controls:
     degree of complexity. For example, public-facing apps can share a virtual network,
     internal apps can use another, and communication between the two should occur
     through a small number of well-defined interfaces.
-  id: magalix.controls.nist-800-190.4.3.3
+  id: weave.controls.nist-800-190.4.3.3
   name: Poorly separated inter-container network traffic
   order: 4.3.3
 - description: "Orchestrators should be configured to isolate deployments to specific\
@@ -384,7 +384,7 @@ controls:
     \ through the use of host \u2018pinning\u2019 within the orchestrator or even\
     \ simply by having separate, individually managed clusters for each sensitivity\
     \ level."
-  id: magalix.controls.nist-800-190.4.3.4
+  id: weave.controls.nist-800-190.4.3.4
   name: Mixing of workload sensitivity levels
   order: 4.3.4
 - description: Orchestration platforms should be configured to provide features that
@@ -401,7 +401,7 @@ controls:
     the portability of containers, many deployments may occur across networks organizations
     do not directly control, so a secure-by-default posture is particularly important
     for this scenario.
-  id: magalix.controls.nist-800-190.4.3.5
+  id: weave.controls.nist-800-190.4.3.5
   name: Orchestrator node trust
   order: 4.3.5
 - description: The container runtime must be carefully monitored for vulnerabilities,
@@ -411,7 +411,7 @@ controls:
     and Exposures (CVEs) vulnerabilities in the runtimes deployed, to upgrade any
     instances at risk, and to ensure that orchestrators only allow deployments to
     properly maintained runtimes.
-  id: magalix.controls.nist-800-190.4.4.1
+  id: weave.controls.nist-800-190.4.4.1
   name: Vulnerabilities within the runtime software
   order: 4.4.1
 - description: Organizations should control the egress network traffic sent by containers.
@@ -419,7 +419,7 @@ controls:
     are not able to send traffic across networks of differing sensitivity levels,
     such as from an environment hosting secure data to the internet, similar to the
     patterns used for traditional architectures.
-  id: magalix.controls.nist-800-190.4.4.2
+  id: weave.controls.nist-800-190.4.4.2
   name: Unbounded network access from containers
   order: 4.4.2
 - description: "Organizations should automate compliance with container runtime configuration\
@@ -440,7 +440,7 @@ controls:
     \ their capabilities. At a minimum, organizations should ensure that containers\
     \ are run with the default profiles provided by their runtime and should consider\
     \ using additional profiles for high-risk apps.\n"
-  id: magalix.controls.nist-800-190.4.4.3
+  id: weave.controls.nist-800-190.4.4.3
   name: Insecure container runtime configurations
   order: 4.4.3
 - description: Containers should be run with their root filesystems in read-only mode.
@@ -449,7 +449,7 @@ controls:
     filesystems makes the containers more resilient to compromise since any tampering
     is isolated to these specific locations and can be easily separated from the rest
     of the app.
-  id: magalix.controls.nist-800-190.4.4.4
+  id: weave.controls.nist-800-190.4.4.4
   name: App vulnerabilities
   order: 4.4.4
 - description: Organizations should institute separate environments for development,
@@ -459,7 +459,7 @@ controls:
     logged to provide a clear audit trail of activity. Further, organizations are
     encouraged to use security tools that can enforce baseline requirements for vulnerability
     management and compliance prior to allowing an image to be run.
-  id: magalix.controls.nist-800-190.4.4.5
+  id: weave.controls.nist-800-190.4.4.5
   name: Rogue containers
   order: 4.4.5
 - description: For organizations using container-specific OSs, the threats are typically
@@ -470,7 +470,7 @@ controls:
     organizations should use these minimalistic OSs to reduce their attack surfaces
     and mitigate the typical risks and hardening activities associated with general-purpose
     OSs.
-  id: magalix.controls.nist-800-190.4.5.1
+  id: weave.controls.nist-800-190.4.5.1
   name: Large attack surface
   order: 4.5.1
 - description: In addition to grouping container workloads onto hosts by sensitivity
@@ -480,7 +480,7 @@ controls:
     component directly within the host OS. Keeping containerized workloads isolated
     to container-specific hosts makes it simpler and safer to apply countermeasures
     and defenses that are optimized for protecting containers.
-  id: magalix.controls.nist-800-190.4.5.2
+  id: weave.controls.nist-800-190.4.5.2
   name: Shared kernel
   order: 4.5.2
 - description: Host OSs should be operated in an immutable manner with no data or
@@ -489,7 +489,7 @@ controls:
     and deployed in containers. This enables the host to be operated in a nearly stateless
     manner with a greatly reduced attack surface. Additionally, it provides a more
     trustworthy way to identify anomalies and configuration drift.
-  id: magalix.controls.nist-800-190.4.5.3
+  id: weave.controls.nist-800-190.4.5.3
   name: Host OS component vulnerabilities
   order: 4.5.3
 - description: Though most container deployments rely on orchestrators to distribute
@@ -498,7 +498,7 @@ controls:
     privileged operations is logged. This makes it possible to identify anomalous
     access patterns such as an individual logging on to a host directly and running
     privileged commands to manipulate containers.
-  id: magalix.controls.nist-800-190.4.5.4
+  id: weave.controls.nist-800-190.4.5.4
   name: Improper user access rights
   order: 4.5.4
 - description: "Ensure that containers are run with the minimal set of file system\
@@ -510,9 +510,9 @@ controls:
     \ system. Organizations should use tools that can monitor what directories are\
     \ being mounted by containers and prevent the deployment of containers that violate\
     \ these policies."
-  id: magalix.controls.nist-800-190.4.5.5
+  id: weave.controls.nist-800-190.4.5.5
   name: Host file system tampering
   order: 4.5.5
 description: Application Container Security Guide SP 800-190 https://csrc.nist.gov/publications/detail/sp/800-190/final
-id: magalix.standards.nist-800-190
+id: weave.standards.nist-800-190
 name: NIST 800-190

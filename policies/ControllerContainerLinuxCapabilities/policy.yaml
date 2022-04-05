@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-running-with-unapproved-linux-capabilities
+  name: weave.policies.containers-running-with-unapproved-linux-capabilities
 spec:
-  id: magalix.policies.containers-running-with-unapproved-linux-capabilities
+  id: weave.policies.containers-running-with-unapproved-linux-capabilities
   name: Containers Running With Unapproved Linux Capabilities
   description: |
     Linux capabilities provide a finer-grained breakdown of the privileges traditionally associated with the superuser. Not specifying those capabilities gives the container access to all OS capabilities which may result in exploiting the VM at which the container is running. The issue is reported when a container has `SYS_ADMIN`, `NET_RAW`, `NET_ADMIN`, or `ALL` capabilities. For this Policy, you can also exclude a namespace, such as `kube-system`. 
@@ -20,25 +20,25 @@ spec:
               add: ["SYS_ADMIN, "ALL", "NET_ADMIN"]
     ```
     https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-  category: magalix.categories.pod-security
+  category: weave.categories.pod-security
   severity: high
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   controls:
-  - magalix.controls.pci-dss.2.2.4
-  - magalix.controls.pci-dss.2.2.5
-  - magalix.controls.cis-benchmark.5.2.7
-  - magalix.controls.cis-benchmark.5.2.8
-  - magalix.controls.cis-benchmark.5.2.9
-  - magalix.controls.mitre-attack.4.1
-  - magalix.controls.nist-800-190.3.3.1
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
-  - magalix.controls.soc2-type-i.1.6.1
+  - weave.controls.pci-dss.2.2.4
+  - weave.controls.pci-dss.2.2.5
+  - weave.controls.cis-benchmark.5.2.7
+  - weave.controls.cis-benchmark.5.2.8
+  - weave.controls.cis-benchmark.5.2.9
+  - weave.controls.mitre-attack.4.1
+  - weave.controls.nist-800-190.3.3.1
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  - weave.controls.gdpr.24
+  - weave.controls.soc2-type-i.1.6.1
   tags: [pci-dss, cis-benchmark, mitre-attack, nist800-190, gdpr, soc2-type1, default]
   parameters:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:

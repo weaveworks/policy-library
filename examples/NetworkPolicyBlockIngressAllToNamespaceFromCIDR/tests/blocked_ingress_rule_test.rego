@@ -1,4 +1,4 @@
-package magalix.advisor.network.block.ingress.to.namespace.from.cidr
+package weave.advisor.network.block.ingress.to.namespace.from.cidr
 
 test_blocked_ingress_rule {
 	testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.mysql.enforce_random_root_password_env_var
+package weave.advisor.mysql.enforce_random_root_password_env_var
 
 env_name = "MYSQL_RANDOM_ROOT_PASSWORD"
 app_name = "mysql"

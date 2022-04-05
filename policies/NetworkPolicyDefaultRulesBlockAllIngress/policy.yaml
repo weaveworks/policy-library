@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.block-all-ingress-traffic
+  name: weave.policies.block-all-ingress-traffic
 spec:
-  id: magalix.policies.block-all-ingress-traffic
+  id: weave.policies.block-all-ingress-traffic
   name: Block All Ingress Traffic
   description: |
     ### Block all traffic
@@ -14,27 +14,27 @@ spec:
     Validate your use case and check network policies for traffic blocking. 
 
     https://kubernetes.io/docs/concepts/services-networking/network-policies/
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: medium
-  targets: {kind: [NetworkPolicy]}
+  targets: {kinds: [NetworkPolicy]}
   controls:
-  - magalix.controls.pci-dss.1.2.1
-  - magalix.controls.nist-800-190.3.3.4
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
-  - magalix.controls.soc2-type-i.1.6.1
+  - weave.controls.pci-dss.1.2.1
+  - weave.controls.nist-800-190.3.3.4
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  - weave.controls.gdpr.24
+  - weave.controls.soc2-type-i.1.6.1
   tags: [pci-dss, mitre-attack, nist800-190, gdpr, soc2-type1]
   parameters:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

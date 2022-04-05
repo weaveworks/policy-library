@@ -1,4 +1,4 @@
-package magalix.template.persistentvolumeclaim_snapshot
+package weave.advisor.storage.persistentvolumeclaim_snapshot
 
 snapshot_class := input.parameters.snapshot_class
 pvc_name := input.parameters.pvc_name

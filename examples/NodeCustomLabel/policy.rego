@@ -1,4 +1,4 @@
-package magalix.advisor.nodes.custom_node_label
+package weave.advisor.nodes.custom_node_label
 
 key := input.parameters.key
 value := input.parameters.value

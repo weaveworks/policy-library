@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.services-restrict-protocols
+  name: weave.policies.services-restrict-protocols
 spec:
-  id: magalix.policies.services-restrict-protocols
+  id: weave.policies.services-restrict-protocols
   name: Services Restrict Protocols
   description: |
     This Policy specifies what protocols should set for your Service. Any protocol not listed in this Policy will be in violation. 
@@ -14,28 +14,28 @@ spec:
       ports:
         - protocol: <protocols>
     ```
-  category: magalix.categories.network-security
+  category: weave.categories.network-security
   severity: high
-  targets: {kind: [Service]}
+  targets: {kinds: [Service]}
   controls:
-  - magalix.controls.pci-dss.1.1.6
-  - magalix.controls.pci-dss.1.3.1
-  - magalix.controls.soc2-type-i.1.6.7
+  - weave.controls.pci-dss.1.1.6
+  - weave.controls.pci-dss.1.3.1
+  - weave.controls.soc2-type-i.1.6.7
   tags: [pci-dss, soc2-type1]
   parameters:
   - name: protocols
     type: string
     required: true
-    default: HTTPS
+    value: HTTPS
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

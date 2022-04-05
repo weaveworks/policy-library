@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.resource-quota-setting-is-missing
+  name: weave.templates.resource-quota-setting-is-missing
 spec:
-  id: magalix.templates.resource-quota-setting-is-missing
+  id: weave.templates.resource-quota-setting-is-missing
   name: Resource Quota Setting Is Missing
   description: |
     When creating resource quotas per namespace, ensure CPU and Memory requests and limits are set.
@@ -18,17 +18,17 @@ spec:
         limits.memory: <size>
     ```
     https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: resource_type
     type: string
     required: true
-    default:
+    value:
   - name: namespace
     type: string
     required: true
-    default: magalix
+    value: magalix

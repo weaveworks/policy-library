@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.kubernetes-minimum-kubelet-version
+  name: weave.templates.kubernetes-minimum-kubelet-version
 spec:
-  id: magalix.templates.kubernetes-minimum-kubelet-version
+  id: weave.templates.kubernetes-minimum-kubelet-version
   name: Kubernetes Minimum Kubelet Version
   description: |
     This Policy checks the minimum kubelet version for your Nodes. Please use this type of versioning (`v1.0.0`) and omit any suffix starting with a hyphen (`-`)
@@ -13,10 +13,10 @@ spec:
     nodeInfo:
       kubeletVersion: <version>
     ```
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: medium
   parameters:
   - name: version
     type: string
     required: true
-    default:
+    value:

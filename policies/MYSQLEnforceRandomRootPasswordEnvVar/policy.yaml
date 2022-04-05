@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mysql-enforce-random-root-password-env-var
+  name: weave.policies.mysql-enforce-random-root-password-env-var
 spec:
-  id: magalix.policies.mysql-enforce-random-root-password-env-var
+  id: weave.policies.mysql-enforce-random-root-password-env-var
   name: MYSQL Enforce Environment Variable - MYSQL_RANDOM_ROOT_PASSWORD
   description: |
     This Policy ensures MYSQL_RANDOM_ROOT_PASSWORD environment variable are in place when using the official container images from Docker Hub.
@@ -11,16 +11,16 @@ spec:
   how_to_solve: |
     If you encounter a violation, ensure the MYSQL_RANDOM_ROOT_PASSWORD environment variables is set.
     For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
   controls:
-  - magalix.controls.pci-dss.2.1
-  - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.hipaa.164.312.a.2.i
-  - magalix.controls.gdpr.24
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  - weave.controls.pci-dss.2.1
+  - weave.controls.hipaa.164.312.a.1
+  - weave.controls.hipaa.164.312.a.2.i
+  - weave.controls.gdpr.24
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
     StatefulSet, CronJob]}
   tags: [
     "pci-dss",
@@ -29,15 +29,15 @@ spec:
     "gdpr",
   ]
   parameters:
-  - default: 
+  - value: 
     name: exclude_namespace
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_key
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_value
     required: false
     type: string

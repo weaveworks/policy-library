@@ -1,4 +1,4 @@
-package magalix.advisor.storage.persistentvolume_reclaim_policy
+package weave.advisor.storage.persistentvolume_reclaim_policy
 
 policy := input.parameters.pv_policy
 exclude_label_key := input.parameters.exclude_label_key

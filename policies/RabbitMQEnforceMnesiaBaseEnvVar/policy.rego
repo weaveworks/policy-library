@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_mnesia_base_env_var
+package weave.advisor.rabbitmq.enforce_mnesia_base_env_var
 
 env_name = "RABBITMQ_MNESIA_BASE"
 app_name = "rabbitmq"

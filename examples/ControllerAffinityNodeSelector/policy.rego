@@ -1,4 +1,4 @@
-package magalix.advisor.affinity.node_selector
+package weave.advisor.affinity.node_selector
 
 key := input.parameters.key
 value := input.parameters.value

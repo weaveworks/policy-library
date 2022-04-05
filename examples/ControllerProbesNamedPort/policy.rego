@@ -1,4 +1,4 @@
-package magalix.advisor.observability.named_port
+package weave.advisor.observability.named_port
 
 healthcheck_name := "healthcheck"
 

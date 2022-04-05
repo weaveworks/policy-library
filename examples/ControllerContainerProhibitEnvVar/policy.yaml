@@ -1,37 +1,37 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.container-prohibit-environment-variable
+  name: weave.templates.container-prohibit-environment-variable
 spec:
-  id: magalix.templates.container-prohibit-environment-variable
+  id: weave.templates.container-prohibit-environment-variable
   name: Container Prohibit Environment Variable
   description: |
     This Policy checks prohibits a specific environment variable. 
   how_to_solve: |
     If you are encountered a violation, ensure the environment variable is not set. 
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
   controls:
-  - magalix.controls.pci-dss.2.1
-  - magalix.controls.hipaa.164.312.a.2.i
+  - weave.controls.pci-dss.2.1
+  - weave.controls.hipaa.164.312.a.2.i
   parameters:
   - name: envvar_name
     type: string
     required: true
-    default:
+    value:
   - name: app_name
     type: string
     required: true
-    default:
+    value:
   - name: exlude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

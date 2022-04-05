@@ -1,4 +1,4 @@
-package magalix.advisor.mariadb.prohibit_mysql_empty_password_env_var
+package weave.advisor.mariadb.prohibit_mysql_empty_password_env_var
 
 env_name = "MYSQL_ALLOW_EMPTY_PASSWORD"
 app_name = "mariadb"

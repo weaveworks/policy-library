@@ -1,4 +1,4 @@
-package magalix.advisor.pods.block_ports
+package weave.advisor.pods.block_ports
 
 target_port := input.parameters.target_port
 exclude_namespace := input.parameters.exclude_namespace

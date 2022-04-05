@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.disable-service-account-token-automount-in-specific-namespace
+  name: weave.policies.disable-service-account-token-automount-in-specific-namespace
 spec:
-  id: magalix.policies.disable-service-account-token-automount-in-specific-namespace
+  id: weave.policies.disable-service-account-token-automount-in-specific-namespace
   name: Disable ServiceAccount Token Automount In Specific Namespace
   description: |
     This Policy allows you to enforce the enabling or disabling the automounting of service account tokens. 
@@ -21,34 +21,34 @@ spec:
     ```
 
     https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
-  targets: {kind: [ServiceAccount]}
+  targets: {kinds: [ServiceAccount]}
   controls:
-  - magalix.controls.pci-dss.7.1.1
-  - magalix.controls.cis-benchmark.5.1.6
-  - magalix.controls.mitre-attack.6.3
-  - magalix.controls.hipaa.164.312.a.2.i
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
-  - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.soc2-type-i.1.6.3
+  - weave.controls.pci-dss.7.1.1
+  - weave.controls.cis-benchmark.5.1.6
+  - weave.controls.mitre-attack.6.3
+  - weave.controls.hipaa.164.312.a.2.i
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  - weave.controls.gdpr.24
+  - weave.controls.hipaa.164.312.a.1
+  - weave.controls.soc2-type-i.1.6.3
   tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
   parameters:
   - name: automount
     type: boolean
     required: true
-    default: false
+    value: false
   - name: namespace
     type: string
     required: true
-    default: default
+    value: default
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

@@ -7,38 +7,38 @@ controls:
     processing, theft or other unauthorized removal of information or system resources,
     misuse of software, and improper access to or use of, alteration, destruction,
     or disclosure of information.
-  id: magalix.controls.soc2-type-i.1
+  id: weave.controls.soc2-type-i.1
   name: Security
   order: 1
 - description: The entity implements logical access security software, infrastructure,
     and architectures over protected information assets to protect them from security
     events to meet the entity's objectives.
-  id: magalix.controls.soc2-type-i.1.6.1
+  id: weave.controls.soc2-type-i.1.6.1
   name: Control Environment CC6_1
   order: 1.6.1
 - description: "The entity authorizes, modifies, or removes access to data, software,\
     \ functions, and other protected information assets based on roles, responsibilities,\
     \ or the system design and changes, giving consideration to the concepts of least\
     \ privilege and segregation of duties, to meet the entity\u2019s objectives."
-  id: magalix.controls.soc2-type-i.1.6.3
+  id: weave.controls.soc2-type-i.1.6.3
   name: Control Environment CC6_3
   order: 1.6.3
 - description: The entity implements logical access security measures to protect against
     threats from sources outside its system boundaries.
-  id: magalix.controls.soc2-type-i.1.6.6
+  id: weave.controls.soc2-type-i.1.6.6
   name: Control Environment CC6_6
   order: 1.6.6
 - description: "The entity restricts the transmission, movement, and removal of information\
     \ to authorized internal and external users and processes, and protects it during\
     \ transmission, movement, or removal to meet the entity\u2019s objectives."
-  id: magalix.controls.soc2-type-i.1.6.7
+  id: weave.controls.soc2-type-i.1.6.7
   name: Control Environment CC6_7
   order: 1.6.7
 - description: The entity maintains, monitors, and evaluates current processing capacity
     and use of system components (infrastructure, data, and software) to manage capacity
     demand and to enable the implementation of additional capacity to help meet its
     objectives.
-  id: magalix.controls.soc2-type-i.1.6.8
+  id: weave.controls.soc2-type-i.1.6.8
   name: Control Environment CC6_8
   order: 1.6.8
 - description: "Availability refers to the accessibility of information used by the\
@@ -49,20 +49,20 @@ controls:
     \ performance of specific tasks or problems). However, it does address whether\
     \ systems include controls to support accessibility for operation, monitoring,\
     \ and maintenance."
-  id: magalix.controls.soc2-type-i.2
+  id: weave.controls.soc2-type-i.2
   name: Availability
   order: 2
 - description: The entity maintains, monitors, and evaluates current processing capacity
     and use of system components (infrastructure, data, and software) to manage capacity
     demand and to enable the implementation of additional capacity to help meet its
     objectives.
-  id: magalix.controls.soc2-type-i.2.1.1
+  id: weave.controls.soc2-type-i.2.1.1
   name: Availability A1_1
   order: 2.1.1
 - description: The entity authorizes, designs, develops or acquires, implements, operates,
     approves, maintains, and monitors environmental protections, software, data backup
     processes, and recovery infrastructure to meet its objectives.
-  id: magalix.controls.soc2-type-i.2.1.2
+  id: weave.controls.soc2-type-i.2.1.2
   name: Availability A1_2
   order: 2.1.2
 - description: "Processing integrity refers to the completeness, validity, accuracy,\
@@ -75,7 +75,7 @@ controls:
     \ processing integrity refers to whether processing is complete, valid, accurate,\
     \ timely, and authorized to produce, manufacture, or distribute goods that meet\
     \ the products\u2019 specifications."
-  id: magalix.controls.soc2-type-i.3
+  id: weave.controls.soc2-type-i.3
   name: Processing integrity
   order: 3
 - description: "Confidentiality addresses the entity\u2019s ability to protect information\
@@ -95,14 +95,14 @@ controls:
     \ collection, use, retention, disclosure, and disposal of personal information.\
     \ Confidential information may include personal information as well as other information,\
     \ such as trade secrets and intellectual property."
-  id: magalix.controls.soc2-type-i.4
+  id: weave.controls.soc2-type-i.4
   name: Confidentiality
   order: 4
 - description: "Personal information is collected, used, retained, disclosed, and\
     \ disposed of to meet the entity\u2019s objectives. Although confidentiality applies\
     \ to various types of sensitive information, privacy applies only to personal\
     \ information."
-  id: magalix.controls.soc2-type-i.5
+  id: weave.controls.soc2-type-i.5
   name: Privacy
   order: 5
 description: "SOC 2 stands for System and Organization Control 2. It\u2019s a voluntary\
@@ -110,4 +110,4 @@ description: "SOC 2 stands for System and Organization Control 2. It\u2019s a vo
   \ and services. The SOC 2 details five Trust Services Criteria (TSC) that are used\
   \ to protect their customers and data."
 name: SOC2 Type 1
-id: magalix.standards.soc2-type-i
+id: weave.standards.soc2-type-i

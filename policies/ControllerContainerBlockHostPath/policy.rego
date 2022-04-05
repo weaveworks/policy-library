@@ -1,4 +1,4 @@
-package magalix.advisor.pods.hostpath
+package weave.advisor.pods.hostpath
 
 hostpath_key := input.parameters.hostpath_key
 exclude_namespace = input.parameters.exclude_namespace

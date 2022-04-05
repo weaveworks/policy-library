@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_default_user_env_var
+package weave.advisor.rabbitmq.enforce_default_user_env_var
 
 env_name = "RABBITMQ_DEFAULT_USER"
 app_name = "rabbitmq"

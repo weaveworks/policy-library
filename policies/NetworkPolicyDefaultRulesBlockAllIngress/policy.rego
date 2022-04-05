@@ -1,4 +1,4 @@
-package magalix.advisor.network.block_ingress_traffic
+package weave.advisor.network.block_ingress_traffic
 
 policy_type := "Ingress"
 exclude_namespace := input.parameters.exclude_namespace

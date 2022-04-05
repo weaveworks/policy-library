@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.antiaffinity-pod-simple
+  name: weave.templates.antiaffinity-pod-simple
 spec:
-  id: magalix.templates.antiaffinity-pod-simple
+  id: weave.templates.antiaffinity-pod-simple
   name: Antiaffinity Pod Simple
   description: |
     This Policy sets antiPodAffinity keys, regardless of the Anti Pod Affinity scheduling type. List out the keys you want to check for. This Policy supports the following Pod Anti-Affinity types:
@@ -26,12 +26,12 @@ spec:
     ```       
     https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
     https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodAffinity
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: keys
     type: array
     required: true
-    default:
+    value:

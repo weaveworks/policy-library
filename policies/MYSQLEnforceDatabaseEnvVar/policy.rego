@@ -1,4 +1,4 @@
-package magalix.advisor.mysql.enforce_database_env_var
+package weave.advisor.mysql.enforce_database_env_var
 
 env_name = "MYSQL_DATABASE"
 app_name = "mysql"

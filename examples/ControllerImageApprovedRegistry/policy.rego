@@ -1,4 +1,4 @@
-package magalix.advisor.images.approved_registry
+package weave.advisor.images.approved_registry
 
 my_registries := input.parameters.registries
 exclude_namespace := input.parameters.exclude_namespace

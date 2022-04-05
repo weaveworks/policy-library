@@ -1,4 +1,4 @@
-package magalix.advisor.annotations.prometheus_annotation_key
+package weave.advisor.annotations.prometheus_annotation_key
 
 annotation := input.parameters.prometheus_annotation_key
 exclude_namespace := input.parameters.exclude_namespace

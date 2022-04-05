@@ -1,4 +1,4 @@
-package magalix.advisor.nodes.label
+package weave.advisor.nodes.label
 
 label := input.parameters.node_label
 exclude_label_key := input.parameters.exclude_label_key

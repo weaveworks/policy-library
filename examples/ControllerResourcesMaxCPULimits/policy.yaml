@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.container-maximum-cpu-limits
+  name: weave.templates.container-maximum-cpu-limits
 spec:
-  id: magalix.templates.container-maximum-cpu-limits
+  id: weave.templates.container-maximum-cpu-limits
   name: Container Maximum CPU Limits
   description: |
     This Policy is to ensure a maximum CPU Limit value is set. The policy will fail if the set CPU limit is higher than the one specified in the policy. You must specify a unit size (m, g, etc).
@@ -17,24 +17,24 @@ spec:
               cpu: <size>
     ```
     https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-  category: magalix.categories.capacity-management
+  category: weave.categories.capacity-management
   severity: medium
   controls:
-  - magalix.controls.soc2-type-i.2.1.1
+  - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: size
     type: string
     required: true
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

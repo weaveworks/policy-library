@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.containers-missing-startup-probe
+  name: weave.policies.containers-missing-startup-probe
 spec:
-  id: magalix.policies.containers-missing-startup-probe
+  id: weave.policies.containers-missing-startup-probe
   name: Containers Missing Startup Probe
   description: |
     This Policy detects whether or not a startupProbe has been set for containers. Containers probes are:
@@ -26,21 +26,21 @@ spec:
           ...
     ```
     https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  category: magalix.categories.reliability
+  category: weave.categories.reliability
   severity: medium
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
   tags: []
   parameters:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

@@ -1,4 +1,4 @@
-package magalix.advisor.affinity.node_selector
+package weave.advisor.affinity.node_selector
 
 test_key_value_exists {
 	testcase = {

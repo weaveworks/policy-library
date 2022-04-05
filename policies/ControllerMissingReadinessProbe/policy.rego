@@ -1,4 +1,4 @@
-package magalix.advisor.observability.readiness_probe
+package weave.advisor.observability.readiness_probe
 
 exclude_namespace := input.parameters.exclude_namespace
 exclude_label_key := input.parameters.exclude_label_key

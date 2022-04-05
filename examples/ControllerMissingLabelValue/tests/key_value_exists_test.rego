@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_label_value
+package weave.advisor.labels.missing_label_value
 
 test_key_value_exists {
 	testcase = {

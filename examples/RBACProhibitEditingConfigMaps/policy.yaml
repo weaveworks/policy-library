@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.rbac-prohibit-updating-configmaps
+  name: weave.templates.rbac-prohibit-updating-configmaps
 spec:
-  id: magalix.templates.rbac-prohibit-updating-configmaps
+  id: weave.templates.rbac-prohibit-updating-configmaps
   name: Rbac Prohibit Updating Configmaps
   description: |
     This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific verbs set for ConfigMaps. For example, if you wanted to deny the patching of a configmap, you would create a Policy with a the `resource_name` of the configmap you want to protect, it's `namespace` and the `verb` you want to block. 
@@ -17,36 +17,36 @@ spec:
     ```
 
     https://kubernetes.io/docs/reference/access-authn-authz/rbac/
-  category: magalix.categories.access-control
+  category: weave.categories.access-control
   severity: high
   controls:
-  - magalix.controls.pci-dss.7.1.1
-  - magalix.controls.pci-dss.7.1.2
-  - magalix.controls.mitre-attack.8.6
-  - magalix.controls.gdpr.25
-  - magalix.controls.gdpr.32
-  - magalix.controls.gdpr.24
-  - magalix.controls.hipaa.164.312.a.1
-  - magalix.controls.soc2-type-i.1.6.8
-  - magalix.controls.soc2-type-i.1.6.3
+  - weave.controls.pci-dss.7.1.1
+  - weave.controls.pci-dss.7.1.2
+  - weave.controls.mitre-attack.8.6
+  - weave.controls.gdpr.25
+  - weave.controls.gdpr.32
+  - weave.controls.gdpr.24
+  - weave.controls.hipaa.164.312.a.1
+  - weave.controls.soc2-type-i.1.6.8
+  - weave.controls.soc2-type-i.1.6.3
   parameters:
   - name: resource_name
     type: string
     required: true
-    default:
+    value:
   - name: verb
     type: string
     required: true
-    default:
+    value:
   - name: namespace
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

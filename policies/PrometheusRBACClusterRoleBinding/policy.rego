@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.prometheus_server_clusterrolebrinding
+package weave.advisor.rbac.prometheus_server_clusterrolebrinding
 
 subject_name := input.parameters.prometheus_subject_name
 exclude_label_key := input.parameters.exclude_label_key

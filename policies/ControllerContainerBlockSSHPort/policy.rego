@@ -1,4 +1,4 @@
-package magalix.advisor.containers.block_port
+package weave.advisor.containers.block_port
 
 container_port := input.parameters.container_port
 exclude_namespace := input.parameters.exclude_namespace

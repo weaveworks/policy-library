@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.container-custom-probe
+  name: weave.templates.container-custom-probe
 spec:
-  id: magalix.templates.container-custom-probe
+  id: weave.templates.container-custom-probe
   name: Container Custom Probe
   description: |
     This Policy allows defining the various container probes, and ensures consistent probes are configured across all containers. You can set the type of probe `livenessProbe`, `readinessProbe`, `startupProbe` along with a `command`, a `path` and a `port`. 
@@ -24,34 +24,34 @@ spec:
               port: <port>
     ```
     https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe
-  category: magalix.categories.reliability
+  category: weave.categories.reliability
   severity: high
   parameters:
   - name: probe_type
     type: string
     required: true
-    default:
+    value:
   - name: command
     type: array
     required: false
-    default:
+    value:
   - name: path
     type: string
     required: false
-    default:
+    value:
   - name: port
     type: integer
     required: false
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

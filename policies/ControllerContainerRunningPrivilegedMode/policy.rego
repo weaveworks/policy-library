@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.privileged
+package weave.advisor.podSecurity.privileged
 
 
 exclude_namespace := input.parameters.exclude_namespace

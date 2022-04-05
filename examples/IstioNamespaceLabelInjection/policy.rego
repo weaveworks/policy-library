@@ -1,4 +1,4 @@
-package magalix.advisor.istio.namespace_label
+package weave.advisor.istio.namespace_label
 
 namespaces := input.parameters.namespaces
 

@@ -1,4 +1,4 @@
-package magalix.advisor.mariadb.enforce_initdb_skip_tzinfo_env_var
+package weave.advisor.mariadb.enforce_initdb_skip_tzinfo_env_var
 
 env_name = "MARIADB_INITDB_SKIP_TZINFO"
 app_name = "mariadb"

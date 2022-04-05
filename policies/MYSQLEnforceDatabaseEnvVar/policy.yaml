@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.policies.mysql-enforce-database-env-var
+  name: weave.policies.mysql-enforce-database-env-var
 spec:
-  id: magalix.policies.mysql-enforce-database-env-var
+  id: weave.policies.mysql-enforce-database-env-var
   name: MYSQL Enforce Environment Variable - MYSQL_DATABASE
   description: |
     This Policy ensures MYSQL_DATABASE environment variable are in place when using the official container images from Docker Hub.
@@ -11,20 +11,20 @@ spec:
   how_to_solve: |
     If you encounter a violation, ensure the MYSQL_DATABASE environment variables is set.
     For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: high
-  targets: {kind: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
     StatefulSet, CronJob]}
   parameters:
-  - default: 
+  - value: 
     name: exclude_namespace
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_key
     required: false
     type: string
-  - default: 
+  - value: 
     name: exclude_label_value
     required: false
     type: string

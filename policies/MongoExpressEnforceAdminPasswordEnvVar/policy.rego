@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_admin_password_env_var
+package weave.advisor.mongo_express.enforce_admin_password_env_var
 
 env_name = "ME_CONFIG_MONGODB_ADMINPASSWORD"
 app_name = "mongo-express"

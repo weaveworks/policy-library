@@ -1,4 +1,4 @@
-package magalix.advisor.mongo_express.enforce_auth_username_env_var
+package weave.advisor.mongo_express.enforce_auth_username_env_var
 
 env_name = "ME_CONFIG_BASICAUTH_USERNAME"
 app_name = "mongo-express"

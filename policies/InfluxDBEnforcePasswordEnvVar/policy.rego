@@ -1,4 +1,4 @@
-package magalix.advisor.influxdb.enforce_password_env_var
+package weave.advisor.influxdb.enforce_password_env_var
 
 env_name = "DOCKER_INFLUXDB_INIT_PASSWORD"
 app_name = "influxdb"

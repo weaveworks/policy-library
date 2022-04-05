@@ -1,4 +1,4 @@
-package magalix.advisor.nodes.outdated_kernel_version
+package weave.advisor.nodes.outdated_kernel_version
 
 kernel_latest_versions := {
   "Amazon Linux 2": {

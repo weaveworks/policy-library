@@ -1,4 +1,4 @@
-package magalix.advisor.k8s.prohibit_naked_pods
+package weave.advisor.k8s.prohibit_naked_pods
 
 violation[result] {
   kind := "Pod"

@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.containers-are-missing-a-spec-template-label
+  name: weave.templates.containers-are-missing-a-spec-template-label
 spec:
-  id: magalix.templates.containers-are-missing-a-spec-template-label
+  id: weave.templates.containers-are-missing-a-spec-template-label
   name: Containers Are Missing A Spec Template Label
   description: |
     This Policy allows setting a custom label in `spec.template.metadata`.
@@ -18,22 +18,22 @@ spec:
               <label>
     ```
     https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: low
   parameters:
   - name: label
     type: string
     required: true
-    default:
+    value:
   - name: exclude_namespace
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

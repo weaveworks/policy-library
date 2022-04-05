@@ -1,4 +1,4 @@
-package magalix.advisor.containers.block_port
+package weave.advisor.containers.block_port
 
 test_allowed_port {
 	testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.network.allow.ingress.from_namespace_to_namespace
+package weave.advisor.network.allow.ingress.from_namespace_to_namespace
 
 test_violation_different_ns {
   testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.sa.disable_default_service_account_token_automount
+package weave.advisor.sa.disable_default_service_account_token_automount
 
 automount_value = input.parameters.automount
 namespace = input.parameters.namespace

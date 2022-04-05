@@ -1,4 +1,4 @@
-package magalix.advisor.labels.missing_kubernetes_app_component_label
+package weave.advisor.labels.missing_kubernetes_app_component_label
 
 test_k8s_component_exists {
 	testcase = {

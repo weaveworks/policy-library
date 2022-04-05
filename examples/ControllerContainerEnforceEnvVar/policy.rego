@@ -1,4 +1,4 @@
-package magalix.advisor.container.enforce_env_var
+package weave.advisor.container.enforce_env_var
 
 env_name = input.parameters.envvar_name
 app_name = input.parameters.app_name

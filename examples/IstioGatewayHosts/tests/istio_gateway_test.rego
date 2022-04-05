@@ -1,4 +1,4 @@
-package magalix.advisor.istio.approved_hosts
+package weave.advisor.istio.approved_hosts
 
 test_key_value_exists {
 	testcase = {

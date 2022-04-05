@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.prohibit_editing_configmaps
+package weave.advisor.rbac.prohibit_editing_configmaps
 
 resource_name := input.parameters.resource_name
 verb := input.parameters.verb

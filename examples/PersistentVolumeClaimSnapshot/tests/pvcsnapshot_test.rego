@@ -1,4 +1,4 @@
-package magalix.template.persistentvolumeclaim_snapshot
+package weave.advisor.storage.persistentvolumeclaim_snapshot
 
 test_key_value_exists {
 	testcase = {

@@ -1,4 +1,4 @@
-package magalix.advisor.pods.restart_policy
+package weave.advisor.pods.restart_policy
 
 restart_policy := input.parameters.restart_policy
 exclude_namespace := input.parameters.exclude_namespace

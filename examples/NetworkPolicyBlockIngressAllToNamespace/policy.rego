@@ -1,4 +1,4 @@
-package magalix.advisor.network.block.ingress.to.namespace
+package weave.advisor.network.block.ingress.to.namespace
 
 namespace := input.parameters.namespace
 exclude_label_key := input.parameters.exclude_label_key

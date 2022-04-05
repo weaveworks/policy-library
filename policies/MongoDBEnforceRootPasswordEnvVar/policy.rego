@@ -1,4 +1,4 @@
-package magalix.advisor.mongodb.enforce_root_password_env_var
+package weave.advisor.mongodb.enforce_root_password_env_var
 
 env_name = "MONGO_INITDB_ROOT_PASSWORD"
 app_name = "mongo"

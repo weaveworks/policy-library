@@ -1,4 +1,4 @@
-package magalix.advisor.services.block_protocols
+package weave.advisor.services.block_protocols
 
 service_protocol := input.parameters.protocols
 exclude_namespace := input.parameters.exclude_namespace

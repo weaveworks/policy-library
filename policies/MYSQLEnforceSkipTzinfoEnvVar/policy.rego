@@ -1,4 +1,4 @@
-package magalix.advisor.mysql.enforce_skip_tzinfo_env_var
+package weave.advisor.mysql.enforce_skip_tzinfo_env_var
 
 env_name = "MYSQL_INITDB_SKIP_TZINFO"
 app_name = "mysql"

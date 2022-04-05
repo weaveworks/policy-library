@@ -1,4 +1,4 @@
-package magalix.advisor.observability.custom_probes
+package weave.advisor.observability.custom_probes
 
 probe_type := input.parameters.probe_type
 command := input.parameters.command

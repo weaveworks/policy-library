@@ -1,4 +1,4 @@
-package magalix.advisor.rbac.prohibit_wildcards
+package weave.advisor.rbac.prohibit_wildcards
 
 attributes := input.parameters.attributes
 exclude_role_name := input.parameters.exclude_role_name

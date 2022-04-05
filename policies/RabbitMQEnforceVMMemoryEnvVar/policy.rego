@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_vm_memory_env_var
+package weave.advisor.rabbitmq.enforce_vm_memory_env_var
 
 env_name = "RABBITMQ_VM_MEMORY_HIGH_WATERMARK"
 app_name = "rabbitmq"

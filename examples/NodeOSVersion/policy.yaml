@@ -1,9 +1,9 @@
-apiVersion: magalix.com/v1
+apiVersion: pac.weave.works/v1
 kind: Policy
 metadata:
-  name: magalix.templates.node-os-version
+  name: weave.templates.node-os-version
 spec:
-  id: magalix.templates.node-os-version
+  id: weave.templates.node-os-version
   name: Node OS Version
   description: |
     This Policy allows enforcement of the type of OS image used for each node. Build consistency throughout your cluster by provisioning the same OS version across all the nodes. 
@@ -14,18 +14,18 @@ spec:
       nodeInfo:
         osImage: <os>
     ```
-  category: magalix.categories.organizational-standards
+  category: weave.categories.organizational-standards
   severity: medium
   parameters:
   - name: os
     type: string
     required: true
-    default:
+    value:
   - name: exclude_label_key
     type: string
     required: false
-    default:
+    value:
   - name: exclude_label_value
     type: string
     required: false
-    default:
+    value:

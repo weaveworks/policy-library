@@ -1,4 +1,4 @@
-package magalix.advisor.rabbitmq.enforce_ssl_depth_env_var
+package weave.advisor.rabbitmq.enforce_ssl_depth_env_var
 
 env_name = "RABBITMQ_SSL_DEPTH"
 app_name = "rabbitmq"

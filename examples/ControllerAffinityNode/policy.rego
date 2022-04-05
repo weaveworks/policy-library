@@ -1,4 +1,4 @@
-package magalix.advisor.affinity.nodes
+package weave.advisor.affinity.nodes
 
 keys := input.parameters.keys
 exclude_namespace := input.parameters.exclude_namespace
