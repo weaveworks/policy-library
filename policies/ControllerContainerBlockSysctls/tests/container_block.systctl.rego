@@ -1,4 +1,4 @@
-package magalix.advisor.podSecurity.block_sysctls
+package weave.advisor.podSecurity.block_sysctls
 
 test_container_sysctls {
   testcase = {
