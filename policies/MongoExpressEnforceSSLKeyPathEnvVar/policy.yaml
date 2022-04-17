@@ -35,3 +35,4 @@ spec:
     required: false
     type: string
 
+  enabled: false

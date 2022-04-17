@@ -52,3 +52,4 @@ spec:
     type: string
     required: false
     value:
+  enabled: true
