@@ -111,3 +111,4 @@ description: "SOC 2 stands for System and Organization Control 2. It\u2019s a vo
   \ to protect their customers and data."
 name: SOC2 Type 1
 id: weave.standards.soc2-type-i
+enabled: false

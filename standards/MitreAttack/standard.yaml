@@ -169,3 +169,4 @@ controls:
 description: MITRE ATT&CK FRAMEWORK FOR KUBERNETES
 id: weave.standards.mitre-attack
 name: MITRE ATT&CK
+enabled: false

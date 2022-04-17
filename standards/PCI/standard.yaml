@@ -256,3 +256,4 @@ description: PCI DSS is the global data security standard adopted by the payment
   authentication data. It consists of steps that mirror security best practices.
 id: weave.standards.pci-dss
 name: PCI-DSS
+enabled: false

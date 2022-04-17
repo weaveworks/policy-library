@@ -2,29 +2,43 @@
 categories:
   - id: weave.categories.organizational-standards
     name: Organizational Standards
+    enabled: true
   - id: weave.categories.software-supply-chain
     name: Software Supply Chain
+    enabled: true
   - id: weave.categories.observability
     name: Observability
+    enabled: false
   - id: weave.categories.data-protection
     name: Data Protection
+    enabled: false
   - id: weave.categories.pod-security
     name: Pod Security
+    enabled: true
   - id: weave.categories.network-security
     name: Network Security
+    enabled: false
   - id: weave.categories.access-control
     name: Access Control
+    enabled: true
   - id: weave.categories.reliability
     name: Reliability
+    enabled: false
   - id: weave.categories.capacity-management
     name: Capacity Management
+    enabled: false
   - id: weave.categories.best-practices
     name: Best Practices
+    enabled: false
   - id: weave.categories.cost-saving
     name: Cost Saving
+    enabled: false
   - id: weave.categories.security
     name: Security
+    enabled: false
   - id: weave.categories.performance
     name: Performance
+    enabled: false
   - id: weave.categories.none
     name: None
+    enabled: false

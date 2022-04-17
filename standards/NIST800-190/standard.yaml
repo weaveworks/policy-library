@@ -516,3 +516,4 @@ controls:
 description: Application Container Security Guide SP 800-190 https://csrc.nist.gov/publications/detail/sp/800-190/final
 id: weave.standards.nist-800-190
 name: NIST 800-190
+enabled: false
