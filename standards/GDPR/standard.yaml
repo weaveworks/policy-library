@@ -72,3 +72,4 @@ description: 'The General Data Protection Regulation is a European Union law tha
   '
 name: GDPR
 id: weave.standards.gdpr
+enabled: false

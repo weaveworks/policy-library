@@ -20,3 +20,4 @@ spec:
   controls:
   - weave.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]
+  enabled: true

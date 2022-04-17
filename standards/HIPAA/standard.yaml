@@ -125,3 +125,4 @@ description: "The Health Insurance Portability and Accountability Act of 1996 (H
   \ supports those Technical Safeguards, where applicable. \n"
 id: weave.standards.hipaa
 name: HIPAA
+enabled: false

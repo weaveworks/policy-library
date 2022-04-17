@@ -130,3 +130,4 @@ description: An objective, consensus-driven security guideline for the Kubernete
   Server Software.
 name: CIS Benchmark
 id: weave.standards.cis-benchmark
+enabled: true
