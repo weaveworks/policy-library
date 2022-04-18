@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.rabbitmq-enforce-default-vhost-env-var
   name: RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_VHOST
+  enabled: false
   description: |
     This Policy ensures RABBITMQ_DEFAULT_VHOST environment variable are in place when using the official container images from Docker Hub.
     RABBITMQ_DEFAULT_VHOST: RABBITMQ_DEFAULT_VHOST sets a Virtual host to create from scratch.
@@ -14,19 +15,17 @@ spec:
   category: weave.categories.network-security
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-    StatefulSet, CronJob]}
+      StatefulSet, CronJob]}
   parameters:
-  - value: 
-    name: exclude_namespace
-    required: false
+  - name: exclude_namespace
     type: string
-  - value: 
-    name: exclude_label_key
     required: false
+    value:
+  - name: exclude_label_key
     type: string
-  - value: 
-    name: exclude_label_value
     required: false
+    value:
+  - name: exclude_label_value
     type: string
-
-  enabled: false
+    required: false
+    value:

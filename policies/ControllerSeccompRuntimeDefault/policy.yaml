@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-not-using-runtime-default-seccomp-profile
   name: Containers Not Using Runtime Default Seccomp Profile
+  enabled: true
   description: |
     This Policy checks for runtime/default seccomp annotation. 
 
@@ -28,10 +29,16 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.cis-benchmark.5.7.2
-  - weave.controls.nist-800-190.4.4.3
-  - weave.controls.soc2-type-i.1.6.1
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.7.2
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.4.3
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.1
   tags: [cis-benchmark, nist800-190, soc2-type1]
   parameters:
   - name: seccomp_annotation
@@ -54,4 +61,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: true

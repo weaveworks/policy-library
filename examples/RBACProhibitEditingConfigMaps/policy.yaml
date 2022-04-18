@@ -19,16 +19,26 @@ spec:
     https://kubernetes.io/docs/reference/access-authn-authz/rbac/
   category: weave.categories.access-control
   severity: high
-  controls:
-  - weave.controls.pci-dss.7.1.1
-  - weave.controls.pci-dss.7.1.2
-  - weave.controls.mitre-attack.8.6
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
-  - weave.controls.hipaa.164.312.a.1
-  - weave.controls.soc2-type-i.1.6.8
-  - weave.controls.soc2-type-i.1.6.3
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.7.1.1
+    - weave.controls.pci-dss.7.1.2
+  - id: weave.standards.mitre-attack
+    controls:
+    - weave.controls.mitre-attack.8.6
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
+  - id: weave.standards.hipaa
+    controls:
+    - weave.controls.hipaa.164.312.a.1
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.8
+    - weave.controls.soc2-type-i.1.6.3
   parameters:
   - name: resource_name
     type: string

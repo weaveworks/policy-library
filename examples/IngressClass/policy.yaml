@@ -16,8 +16,10 @@ spec:
     https://kubernetes.io/docs/concepts/services-networking/ingress/
   category: weave.categories.network-security
   severity: medium
-  controls:
-  - weave.controls.pci-dss.1.1.4
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.1.4
   parameters:
   - name: class
     type: string

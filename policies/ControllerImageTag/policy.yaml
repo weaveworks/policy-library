@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.container-prohibit-image-tag
   name: Container Prohibit Image Tag
+  enabled: true
   description: |
     Prohibit certain image tags by specifying them in the Policy. The Policy will also violate if the a tag is not set, or is set to `latest`. 
 
@@ -22,13 +23,21 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.cis-benchmark.5.5.1
-  - weave.controls.mitre-attack.1.2
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
-  - weave.controls.soc2-type-i.1.6.8
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.5.1
+  - id: weave.standards.mitre-attack
+    controls:
+    - weave.controls.mitre-attack.1.2
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.8
   tags: [cis-benchmark, mitre-attack, gdpr, soc2-type1, default]
   parameters:
   - name: image_tag
@@ -47,4 +56,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: true

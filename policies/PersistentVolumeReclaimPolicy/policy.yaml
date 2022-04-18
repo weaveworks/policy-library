@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
   name: Persistent Volume Reclaim Policy Should Be Set To Retain
+  enabled: false
   description: |
     This Policy checks to see whether or not the persistent volume reclaim policy is set.
 
@@ -20,9 +21,13 @@ spec:
   category: weave.categories.data-protection
   severity: medium
   targets: {kinds: [PersistentVolume]}
-  controls:
-  - weave.controls.pci-dss.3.1
-  - weave.controls.soc2-type-i.2.1.2
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.3.1
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.2.1.2
   tags: [pci-dss, soc2-type1]
   parameters:
   - name: pv_policy
@@ -37,4 +42,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

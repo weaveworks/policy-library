@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.prohibit-creating-namespace-starting-with-prefix
   name: Prohibit Creating Namespace Starting With Prefix
+  enabled: false
   description: |
     Using this Policy, you can prohibit certain namespaces from containing a specified combination of letters and/or numbers. 
   how_to_solve: |
@@ -23,4 +24,3 @@ spec:
     type: string
     required: true
     value: kube-
-  enabled: false

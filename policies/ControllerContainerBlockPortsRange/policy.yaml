@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-block-ports-range
   name: Containers Block Ports Range
+  enabled: false
   description: |
     This Policy checks for container ports that are set below the set value. TCP ports under 1024 are reserved so we recommend setting your Policy to 1024 or higher. 
   how_to_solve: |
@@ -21,10 +22,14 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.pci-dss.1.1.6
-  - weave.controls.pci-dss.2.2.2
-  - weave.controls.nist-800-190.4.4.2
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.1.6
+    - weave.controls.pci-dss.2.2.2
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.4.2
   tags: [pci-dss, nist800-190]
   parameters:
   - name: target_port
@@ -43,4 +48,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

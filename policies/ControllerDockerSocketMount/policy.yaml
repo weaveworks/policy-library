@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-mounting-docker-socket
   name: Containers Mounting Docker Socket
+  enabled: false
   description: |
     This Policy checks the mounting of the `docker.sock` socket of the node into the container. The docker socket filename can be altered based on your configuration. The full path is unnecessary as the Policy accounts for any path.  
   how_to_solve: |
@@ -24,11 +25,15 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.nist-800-190.4.4.3
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
+  standards:
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.4.3
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
   tags: [nist800-190, gdpr, default]
   parameters:
   - name: docker_sock
@@ -47,4 +52,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

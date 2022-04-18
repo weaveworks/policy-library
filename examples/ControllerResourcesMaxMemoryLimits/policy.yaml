@@ -20,8 +20,10 @@ spec:
     https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   category: weave.categories.capacity-management
   severity: medium
-  controls:
-  - weave.controls.soc2-type-i.2.1.1
+  standards:
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.2.1.1
   parameters:
   - name: size
     type: string

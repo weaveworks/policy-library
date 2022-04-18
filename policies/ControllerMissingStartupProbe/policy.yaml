@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-missing-startup-probe
   name: Containers Missing Startup Probe
+  enabled: false
   description: |
     This Policy detects whether or not a startupProbe has been set for containers. Containers probes are:
 
@@ -44,4 +45,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

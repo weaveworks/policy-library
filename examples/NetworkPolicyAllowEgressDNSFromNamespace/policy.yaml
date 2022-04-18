@@ -32,9 +32,13 @@ spec:
     https://kubernetes.io/docs/concepts/services-networking/network-policies/#targeting-a-namespace-by-its-name
   category: weave.categories.network-security
   severity: medium
-  controls:
-  - weave.controls.pci-dss.1.2.1
-  - weave.controls.soc2-type-i.1.6.1
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.2.1
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.1
   parameters:
   - name: namespace
     type: string

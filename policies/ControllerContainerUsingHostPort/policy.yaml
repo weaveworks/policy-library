@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-using-hostport
   name: Containers Using Hostport
+  enabled: false
   description: |
     This Policy checks if `hostPort` is set. When `hostPort` is set, a Pod is bound to a hostPort and limits the number of places the Pod can be scheduled. That's because each <hostIP, hostPort, protocol> combination must be unique. If you don't specify the hostIP and protocol explicitly, Kubernetes will use 0.0.0.0 as the default hostIP and TCP as the default protocol.
 
@@ -23,9 +24,13 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.pci-dss.2.2.2
-  - weave.controls.nist-800-190.4.4.2
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.2.2.2
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.4.2
   tags: [pci-dss, nist800-190]
   parameters:
   - name: host_port
@@ -44,4 +49,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

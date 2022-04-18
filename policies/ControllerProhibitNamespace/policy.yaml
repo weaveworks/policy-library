@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-should-not-run-in-namespace
   name: Containers Should Not Run In Namespace
+  enabled: true
   description: |
     This Policy ensure workloads are not running in a specified namespace. 
   how_to_solve: |
@@ -19,9 +20,13 @@ spec:
   severity: low
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.cis-benchmark.5.7.4
-  - weave.controls.soc2-type-i.2.1.1
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.7.4
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.2.1.1
   tags: [cis-benchmark, soc2-type1]
   parameters:
   - name: custom_namespace
@@ -36,4 +41,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: true

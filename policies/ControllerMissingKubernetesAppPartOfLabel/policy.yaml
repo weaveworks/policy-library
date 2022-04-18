@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.missing-kubernetes-app-part-of-label
   name: Missing Kubernetes App Part Of Label
+  enabled: false
   description: |
     Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
 
@@ -64,4 +65,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

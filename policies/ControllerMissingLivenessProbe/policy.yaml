@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-missing-liveness-probe
   name: Containers Missing Liveness Probe
+  enabled: false
   description: |
     This Policy detects whether or not a livenessProbe has been set for containers. Containers probes are:
 
@@ -44,4 +45,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

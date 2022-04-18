@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.services-prohibit-type
   name: Services Prohibit Type
+  enabled: false
   description: |
     This Policy checks your Kubernetes Service kind to see what Service type is set. If a specified service type is found, this Policy will be in violation. Security practices suggest using types `ServiceType` of `ClusterIP` or `LoadBalancer` and not `NodePort`. 
   how_to_solve: |
@@ -18,10 +19,12 @@ spec:
   category: weave.categories.network-security
   severity: high
   targets: {kinds: [Service]}
-  controls:
-  - weave.controls.pci-dss.1.1.6
-  - weave.controls.pci-dss.1.3.1
-  - weave.controls.pci-dss.2.2.2
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.1.6
+    - weave.controls.pci-dss.1.3.1
+    - weave.controls.pci-dss.2.2.2
   tags: [pci-dss]
   parameters:
   - name: type
@@ -40,4 +43,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-enforce-restart-policy
   name: Containers Enforce Restart Policy
+  enabled: false
   description: |
     This Policy checks if a specific restartPolicy is configured in your workloads.
   how_to_solve: |
@@ -36,4 +37,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

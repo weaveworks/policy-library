@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.rabbitmq-enforce-config-file-env-var
   name: RabbitMQ Enforce Environment Variable - RABBITMQ_CONFIG_FILE
+  enabled: false
   description: |
     This Policy ensures RABBITMQ_CONFIG_FILE environment variable are in place when using the official container images from Docker Hub.
     RABBITMQ_CONFIG_FILE: The path to the configuration file, without the .config extension. If the configuration file is present it is used by the server to configure RabbitMQ components. See Configuration guide for more information.
@@ -14,19 +15,17 @@ spec:
   category: weave.categories.organizational-standards
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-    StatefulSet, CronJob]}
+      StatefulSet, CronJob]}
   parameters:
-  - value: 
-    name: exclude_namespace
-    required: false
+  - name: exclude_namespace
     type: string
-  - value: 
-    name: exclude_label_key
     required: false
+    value:
+  - name: exclude_label_key
     type: string
-  - value: 
-    name: exclude_label_value
     required: false
+    value:
+  - name: exclude_label_value
     type: string
-
-  enabled: false
+    required: false
+    value:

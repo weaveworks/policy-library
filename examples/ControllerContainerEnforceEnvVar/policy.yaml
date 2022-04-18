@@ -11,13 +11,19 @@ spec:
     If you encounter a violation, ensure the environment variable is set. 
   category: weave.categories.access-control
   severity: high
-  controls:
-  - weave.controls.pci-dss.2.1
-  - weave.controls.hipaa.164.312.a.2.i
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
-  - weave.controls.hipaa.164.312.a.1
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.2.1
+  - id: weave.standards.hipaa
+    controls:
+    - weave.controls.hipaa.164.312.a.2.i
+    - weave.controls.hipaa.164.312.a.1
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
   parameters:
   - name: envvar_name
     type: string

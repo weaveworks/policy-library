@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-minimum-replica-count
   name: Containers Minimum Replica Count
+  enabled: false
   description: |
     Use this Policy to to check the replica count of your workloads. The value set in the Policy is greater than or equal to the amount desired, so if the replica count is lower than what is specified, the Policy will be in violation. 
   how_to_solve: |
@@ -17,8 +18,10 @@ spec:
   category: weave.categories.reliability
   severity: medium
   targets: {kinds: [Deployment, ReplicationController, ReplicaSet, StatefulSet]}
-  controls:
-  - weave.controls.soc2-type-i.2.1.1
+  standards:
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: replica_count
@@ -37,4 +40,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

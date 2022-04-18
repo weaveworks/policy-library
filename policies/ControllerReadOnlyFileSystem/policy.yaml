@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-read-only-root-filesystem
   name: Containers Read Only Root Filesystem
+  enabled: false
   description: |
     This Policy will cause a violation if the root file system is not mounted as specified. As a security practice, the root file system should be read-only or expose risk to your nodes if compromised. 
 
@@ -24,9 +25,13 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.mitre-attack.3.2
-  - weave.controls.nist-800-190.4.4.4
+  standards:
+  - id: weave.standards.mitre-attack
+    controls:
+    - weave.controls.mitre-attack.3.2
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.4.4
   tags: [mitre-attack, nist800-190]
   parameters:
   - name: read_only
@@ -45,4 +50,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

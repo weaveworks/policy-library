@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.container-image-pull-policy
   name: Container Image Pull Policy
+  enabled: false
   description: |
     This Policy is to ensure you are setting a value for your `imagePullPolicy`. 
 
@@ -49,4 +50,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

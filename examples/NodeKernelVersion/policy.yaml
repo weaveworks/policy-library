@@ -11,5 +11,7 @@ spec:
     Ensure your Linux kernel is equal to or later than the version specified in your policy. 
   category: weave.categories.organizational-standards
   severity: medium
-  controls:
-  - weave.controls.soc2-type-i.1.6.8
+  standards:
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.8

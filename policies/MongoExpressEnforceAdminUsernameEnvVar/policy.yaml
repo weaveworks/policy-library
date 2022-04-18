@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.mongo-express-enforce-admin-username-env-var
   name: Mongo-Express Enforce Environment Variable - ME_CONFIG_MONGODB_ADMINUSERNAME
+  enabled: false
   description: |
     This Policy ensures ME_CONFIG_MONGODB_ADMINUSERNAME environment variable are in place when using the official container images from Docker Hub.
     ME_CONFIG_MONGODB_ADMINUSERNAME: The ME_CONFIG_MONGODB_ADMINUSERNAME environment variable sets the MongoDB admin username.
@@ -13,29 +14,27 @@ spec:
     For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
   category: weave.categories.access-control
   severity: high
-  controls:
-  - weave.controls.pci-dss.2.1
-  - weave.controls.hipaa.164.312.a.1
-  - weave.controls.hipaa.164.312.a.2.i
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-    StatefulSet, CronJob]}
-  tags: [
-    "pci-dss",
-    "mitre-attack",
-    "hipaa",
-  ]
+      StatefulSet, CronJob]}
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.2.1
+  - id: weave.standards.hipaa
+    controls:
+    - weave.controls.hipaa.164.312.a.1
+    - weave.controls.hipaa.164.312.a.2.i
+  tags: [pci-dss, mitre-attack, hipaa]
   parameters:
-  - value: 
-    name: exclude_namespace
-    required: false
+  - name: exclude_namespace
     type: string
-  - value: 
-    name: exclude_label_key
     required: false
+    value:
+  - name: exclude_label_key
     type: string
-  - value: 
-    name: exclude_label_value
     required: false
+    value:
+  - name: exclude_label_value
     type: string
-
-  enabled: false
+    required: false
+    value:

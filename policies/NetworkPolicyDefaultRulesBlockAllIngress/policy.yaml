@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.block-all-ingress-traffic
   name: Block All Ingress Traffic
+  enabled: false
   description: |
     ### Block all traffic
     If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic between namespaces. 
@@ -17,13 +18,21 @@ spec:
   category: weave.categories.network-security
   severity: medium
   targets: {kinds: [NetworkPolicy]}
-  controls:
-  - weave.controls.pci-dss.1.2.1
-  - weave.controls.nist-800-190.3.3.4
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
-  - weave.controls.soc2-type-i.1.6.1
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.2.1
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.3.3.4
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.1.6.1
   tags: [pci-dss, mitre-attack, nist800-190, gdpr, soc2-type1]
   parameters:
   - name: exclude_namespace
@@ -38,4 +47,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

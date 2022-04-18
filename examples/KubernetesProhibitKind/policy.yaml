@@ -17,11 +17,13 @@ spec:
   category: weave.categories.organizational-standards
   severity: medium
   targets: {kinds: [Pods]}
-  controls:
-  - weave.controls.cis-benchmark.5.1.4
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]
   parameters:
-  - value: Pods
-    name: kind
-    required: true
+  - name: kind
     type: string
+    required: true
+    value: Pods

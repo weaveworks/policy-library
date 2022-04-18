@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
   name: Containers Should Not Run On Kubernetes Control Plane Nodes
+  enabled: false
   description: |
     Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. 
   how_to_solve: |
@@ -21,8 +22,10 @@ spec:
   severity: medium
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.soc2-type-i.2.1.1
+  standards:
+  - id: weave.standards.soc2-type-i
+    controls:
+    - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
   - name: toleration_key
@@ -41,4 +44,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: false

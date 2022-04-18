@@ -33,8 +33,10 @@ spec:
     https://kubernetes.io/docs/reference/labels-annotations-taints/
   category: weave.categories.organizational-standards
   severity: low
-  controls:
-  - weave.controls.nist-800-190.4.5.1
+  standards:
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.5.1
   parameters:
   - name: node_label
     type: string

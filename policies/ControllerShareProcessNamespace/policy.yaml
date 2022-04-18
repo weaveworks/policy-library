@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.containers-sharing-process-namespace
   name: Containers Sharing Process Namespace
+  enabled: true
   description: |
     This Policy allows check if sharing process namespace with other containers in the pod should be allowed or not. Resources that can be shared with the container include:
 
@@ -31,13 +32,19 @@ spec:
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
       StatefulSet, CronJob]}
-  controls:
-  - weave.controls.cis-benchmark.5.2.4
-  - weave.controls.cis-benchmark.5.2.3
-  - weave.controls.nist-800-190.4.5.2
-  - weave.controls.gdpr.25
-  - weave.controls.gdpr.32
-  - weave.controls.gdpr.24
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.2.4
+    - weave.controls.cis-benchmark.5.2.3
+  - id: weave.standards.nist-800-190
+    controls:
+    - weave.controls.nist-800-190.4.5.2
+  - id: weave.standards.gdpr
+    controls:
+    - weave.controls.gdpr.25
+    - weave.controls.gdpr.32
+    - weave.controls.gdpr.24
   tags: [nist800-190, gdpr, default]
   parameters:
   - name: resource_enabled
@@ -56,4 +63,3 @@ spec:
     type: string
     required: false
     value:
-  enabled: true

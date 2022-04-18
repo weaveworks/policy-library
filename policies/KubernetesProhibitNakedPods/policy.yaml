@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.prohibit-naked-pods-from-being-scheduled
   name: Prohibit Naked Pods From Being Scheduled
+  enabled: true
   description: |
     This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running "naked" pods. 
   how_to_solve: |
@@ -17,7 +18,8 @@ spec:
   category: weave.categories.organizational-standards
   severity: medium
   targets: {kinds: [Pod]}
-  controls:
-  - weave.controls.cis-benchmark.5.1.4
+  standards:
+  - id: weave.standards.cis-benchmark
+    controls:
+    - weave.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]
-  enabled: true

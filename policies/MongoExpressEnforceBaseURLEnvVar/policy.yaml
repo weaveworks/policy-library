@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.mongo-express-enforce-base-url-env-var
   name: Mongo-Express Enforce Environment Variable - ME_CONFIG_SITE_BASEURL
+  enabled: false
   description: |
     This Policy ensures ME_CONFIG_SITE_BASEURL environment variable are in place when using the official container images from Docker Hub.
     ME_CONFIG_SITE_BASEURL: The ME_CONFIG_SITE_BASEURL environment variable sets the baseUrl to ease mounting at a subdirectory. Remember to include a leading and trailing slash.
@@ -13,26 +14,24 @@ spec:
     For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
   category: weave.categories.network-security
   severity: high
-  controls:
-  - weave.controls.pci-dss.1.1.6
-  - weave.controls.pci-dss.2.2.2
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-    StatefulSet, CronJob]}
-  tags: [
-    "pci-dss",
-  ]
+      StatefulSet, CronJob]}
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.1.1.6
+    - weave.controls.pci-dss.2.2.2
+  tags: [pci-dss]
   parameters:
-  - value: 
-    name: exclude_namespace
-    required: false
+  - name: exclude_namespace
     type: string
-  - value: 
-    name: exclude_label_key
     required: false
+    value:
+  - name: exclude_label_key
     type: string
-  - value: 
-    name: exclude_label_value
     required: false
+    value:
+  - name: exclude_label_value
     type: string
-
-  enabled: false
+    required: false
+    value:

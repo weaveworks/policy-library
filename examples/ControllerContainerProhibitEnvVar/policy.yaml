@@ -11,9 +11,13 @@ spec:
     If you are encountered a violation, ensure the environment variable is not set. 
   category: weave.categories.access-control
   severity: high
-  controls:
-  - weave.controls.pci-dss.2.1
-  - weave.controls.hipaa.164.312.a.2.i
+  standards:
+  - id: weave.standards.pci-dss
+    controls:
+    - weave.controls.pci-dss.2.1
+  - id: weave.standards.hipaa
+    controls:
+    - weave.controls.hipaa.164.312.a.2.i
   parameters:
   - name: envvar_name
     type: string

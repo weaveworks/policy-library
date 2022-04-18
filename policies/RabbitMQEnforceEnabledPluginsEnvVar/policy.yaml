@@ -5,6 +5,7 @@ metadata:
 spec:
   id: weave.policies.rabbitmq-enforce-enabled-plugins-env-var
   name: RabbitMQ Enforce Environment Variable - RABBITMQ_ENABLED_PLUGINS_FILE
+  enabled: false
   description: |
     This Policy ensures RABBITMQ_ENABLED_PLUGINS_FILE environment variable are in place when using the official container images from Docker Hub.
     RABBITMQ_ENABLED_PLUGINS_FILE: This file records explicitly enabled plugins. When a plugin is enabled or disabled, this file will be recreated. It is important that effective RabbitMQ user has sufficient permissions to read, write and create this file at any time.
@@ -14,19 +15,17 @@ spec:
   category: weave.categories.organizational-standards
   severity: high
   targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-    StatefulSet, CronJob]}
+      StatefulSet, CronJob]}
   parameters:
-  - value: 
-    name: exclude_namespace
-    required: false
+  - name: exclude_namespace
     type: string
-  - value: 
-    name: exclude_label_key
     required: false
+    value:
+  - name: exclude_label_key
     type: string
-  - value: 
-    name: exclude_label_value
     required: false
+    value:
+  - name: exclude_label_value
     type: string
-
-  enabled: false
+    required: false
+    value:
