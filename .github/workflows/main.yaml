@@ -90,7 +90,7 @@ jobs:
     needs: [automated_datastudio_csv]
     runs-on: ubuntu-latest
     container:
-      image: mgxinternal/mgx-circle-deployer:1
+      image: mgxinternal/mgx-circle-deployer:aws
       credentials:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -98,14 +98,14 @@ jobs:
       ports:
       - 8080:8080
     env:
-      GCLOUD_SERVICE_KEY_DEV: ${{ secrets.GCLOUD_SERVICE_KEY_DEV }}
-      GCLOUD_SERVICE_KEY_PROD: ${{ secrets.GCLOUD_SERVICE_KEY_PROD }}
-      GOOGLE_CLUSTER_NAME_DEV: ${{ secrets.GOOGLE_CLUSTER_NAME_DEV }}
-      GOOGLE_CLUSTER_NAME_PROD: ${{ secrets.GOOGLE_CLUSTER_NAME_PROD }}
-      GOOGLE_COMPUTE_ZONE_DEV: ${{ secrets.GOOGLE_COMPUTE_ZONE_DEV }}
-      GOOGLE_COMPUTE_ZONE_PROD: ${{ secrets.GOOGLE_COMPUTE_ZONE_PROD }}
-      GOOGLE_PROJECT_ID_DEV: ${{ secrets.GOOGLE_PROJECT_ID_DEV }}
-      GOOGLE_PROJECT_ID_PROD: ${{ secrets.GOOGLE_PROJECT_ID_PROD }}
+      AWS_ACCESS_KEY_ID_DEV: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+      AWS_SECRET_ACCESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+      AWS_DEFAULT_REGION_DEV: ${{ secrets.AWS_DEFAULT_REGION_DEV }}
+      AWS_CLUSTER_NAME_DEV: ${{ secrets.AWS_CLUSTER_NAME_DEV }}
+      # AWS_ACCESS_KEY_ID_PROD: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+      # AWS_SECRET_ACCESS_KEY_PROD: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+      # AWS_DEFAULT_REGION_PROD: ${{ secrets.AWS_DEFAULT_REGION_PROD }}
+      # AWS_CLUSTER_NAME_PROD: ${{ secrets.AWS_CLUSTER_NAME_PROD }}
     steps:
     - uses: actions/checkout@v2
     - uses: docker/login-action@v1
@@ -113,10 +113,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Auth to cluster
-      run: /bin/auth_to_cluster
+      run: |
+        export CI_BRANCH=${GITHUB_REF##*/}
+        /bin/auth_to_cluster
     - name: Sync
       run: |
-        apk add --no-cache docker-cli python3 py3-pip
+        apk add --no-cache python3 py3-pip
         pip3 install pyyaml click requests
 
         kubectl port-forward --address 0.0.0.0 -n cluster-advisor service/policies-service 8080:80 &
