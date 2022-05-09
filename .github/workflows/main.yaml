@@ -114,7 +114,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Auth to cluster
       run: |
-        export CI_BRANCH=${GITHUB_REF##*/}
+        export CIRCLE_BRANCH=${GITHUB_REF##*/}
         /bin/auth_to_cluster
     - name: Sync
       run: |
