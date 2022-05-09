@@ -114,7 +114,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Auth to cluster
       run: |
-        export CIRCLE_BRANCH=${GITHUB_REF##*/}
+        if [[ "$CIRCLE_BRANCH" == "aws-dev" ]]
+        then
+          export CI_BRANCH="dev"
+        else
+          export CIRCLE_BRANCH=${GITHUB_REF##*/}
+        fi
         /bin/auth_to_cluster
     - name: Sync
       run: |
