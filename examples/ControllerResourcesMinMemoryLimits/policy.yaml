@@ -1,4 +1,4 @@
-apiVersion: pac.weave.works/v1
+apiVersion: pac.weave.works/v2beta1
 kind: Policy
 metadata:
   name: weave.templates.container-minimum-memory-limits
