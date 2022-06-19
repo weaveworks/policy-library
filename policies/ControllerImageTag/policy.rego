@@ -15,7 +15,7 @@ violation[result] {
   not contains(image, ":")
   result = {
     "issue detected": true,
-    "msg": "Image is not tagged",
+    "msg": sprintf("Container %s image is not tagged", containers[i].name),
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
   }
 }
@@ -30,7 +30,7 @@ violation[result] {
   tag == image_tag
   result = {
     "issue detected": true,
-    "msg": sprintf("Image contains unapproved tag '%v'", [image_tag]),
+    "msg": sprintf("Container %s image contains unapproved tag '%v'", [containers[i].name, image_tag]),
     "image": image,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
   }
@@ -46,7 +46,7 @@ violation[result] {
   tag == image_tag
   result = {
     "issue detected": true,
-    "msg": sprintf("Image contains unapproved tag:'%v'", [image_tag]),
+    "msg": sprintf("Container %s image contains unapproved tag:'%v'", [containers[i].name, image_tag]),
     "image": image,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
   }
