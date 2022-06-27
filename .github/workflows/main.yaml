@@ -3,9 +3,9 @@ name: Weave Policy Library
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ main ]
   pull_request:
-    branches: [ master, dev ]
+    branches: [ main ]
 
 jobs:
   automated_tests:
@@ -48,6 +48,7 @@ jobs:
           git config user.email github-actions@github.com
           git fetch
           git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
           git add ${REPO_PATH}/policies/policies.md
           git commit -m "add auto-generated policies doc"
           git push origin ${{ github.event.pull_request.head.ref }}
@@ -78,11 +79,40 @@ jobs:
           git config user.email github-actions@github.com
           git fetch
           git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
           git add ${REPO_PATH}/policies/datastudio.csv
           git commit -m "add auto-generated datastudio csv"
           git push origin ${{ github.event.pull_request.head.ref }}
         else
           echo "No changes in auto-generated datastudio csv"
+        fi
+
+  update_crds_with_rego_code:
+    runs-on: ubuntu-latest
+    needs: [automated_datastudio_csv]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update Policies CRDs REGO code
+      run: |
+        # Loop on policies CRDs and update the REGO code field
+        export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+        for dir in ${REPO_PATH}/policies/*/; do
+          export POLICY_DIR=$dir
+          yq -i '.spec.code |= strload(env(POLICY_DIR)+"/policy.rego")' $POLICY_DIR/policy.yaml
+        done
+        if [[ `git status --porcelain` ]]
+        then
+          echo "Updating Policies CRDs REGO code"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git pull
+          git add ${REPO_PATH}/policies
+          git commit -m "Update Policies CRDs REGO code"
+          git push origin ${{ github.event.pull_request.head.ref }}
+        else
+          echo "No changes in policies."
         fi
 
   sync:
