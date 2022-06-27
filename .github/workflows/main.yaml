@@ -117,7 +117,7 @@ jobs:
 
   sync:
     if: github.event_name == 'push'
-    needs: [automated_datastudio_csv]
+    needs: [update_crds_with_rego_code]
     runs-on: ubuntu-latest
     container:
       image: mgxinternal/mgx-circle-deployer:aws
