@@ -6,62 +6,50 @@ spec:
   id: weave.policies.missing-kubernetes-app-label
   name: Missing Kubernetes App Label
   enabled: false
-  description: |
-    Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
-
-    ### owner
-    A label key of `owner` will help identify who the owner of this entity is. 
-
-    ### app.kubernetes.io/name
-    The name of the application	
-
-    ### app.kubernetes.io/instance
-    A unique name identifying the instance of an application	  
-
-    ### app.kubernetes.io/version
-    The current version of the application (e.g., a semantic version, revision hash, etc.)
-
-    ### app.kubernetes.io/part-of
-    The name of a higher level application this one is part of	
-
-    ### app.kubernetes.io/managed-by
-    The tool being used to manage the operation of an application	
-
-    ### app.kubernetes.io/created-by
-    The controller/user who created this resource
-  how_to_solve: |
-    Add these custom labels to `metadata`.
-    * owner
-    * app.kubernetes.io/name
-    * app.kubernetes.io/instance
-    * app.kubernetes.io/version
-    * app.kubernetes.io/name
-    * app.kubernetes.io/part-of
-    * app.kubernetes.io/managed-by
-    * app.kubernetes.io/created-by
-
-    ```
-    metadata:
-      labels:
-        <label>: value
-    ```  
-    For additional information, please check
-    * https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
+  description: "Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: \n\n### owner\nA label key of `owner` will help identify who the owner of this entity is. \n\n### app.kubernetes.io/name\nThe name of the application\t\n\n### app.kubernetes.io/instance\nA unique name identifying the instance of an application\t  \n\n### app.kubernetes.io/version\nThe current version of the application (e.g., a semantic version, revision hash, etc.)\n\n### app.kubernetes.io/part-of\nThe name of a higher level application this one is part of\t\n\n### app.kubernetes.io/managed-by\nThe tool being used to manage the operation of an application\t\n\n### app.kubernetes.io/created-by\nThe controller/user who created this resource\n"
+  how_to_solve: "Add these custom labels to `metadata`.\n* owner\n* app.kubernetes.io/name\n* app.kubernetes.io/instance\n* app.kubernetes.io/version\n* app.kubernetes.io/name\n* app.kubernetes.io/part-of\n* app.kubernetes.io/managed-by\n* app.kubernetes.io/created-by\n\n```\nmetadata:\n  labels:\n    <label>: value\n```  \nFor additional information, please check\n* https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels \n"
   category: weave.categories.organizational-standards
   severity: low
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   tags: []
   parameters:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |-
+    package weave.advisor.labels.missing_kubernetes_app_label
+
+    exclude_namespace := input.parameters.exclude_namespace
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      label := "app.kubernetes.io/name"
+      # Filter the type of entity before moving on since this shouldn't apply to all entities
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+      not controller_input.metadata.labels[label]
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Missing '%v' label", [label]),
+        "violating_key": "metadata.labels",
+        "recommended_value": label
+      }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }

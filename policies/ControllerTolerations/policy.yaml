@@ -6,41 +6,68 @@ spec:
   id: weave.policies.containers-should-not-run-on-kubernetes-control-plane-nodes
   name: Containers Should Not Run On Kubernetes Control Plane Nodes
   enabled: false
-  description: |
-    Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. 
-  how_to_solve: |
-    Check your tolerations against the Policy. 
-    ```
-    ...
-      spec:
-        tolerations:
-        - key: <toleration_key>
-    ```
-
-    https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  description: "Tolerations specified in the Policies for this template should not have any workloads scheduled on them. A common use case is the Kubernetes master. \n"
+  how_to_solve: "Check your tolerations against the Policy. \n```\n...\n  spec:\n    tolerations:\n    - key: <toleration_key>\n```\n\nhttps://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/\n"
   category: weave.categories.capacity-management
   severity: medium
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   standards:
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.2.1.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.2.1.1
   tags: [soc2-type1]
   parameters:
-  - name: toleration_key
-    type: string
-    required: true
-    value: node-role.kubernetes.io/master
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: toleration_key
+      type: string
+      required: true
+      value: node-role.kubernetes.io/master
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |+
+    package weave.advisor.affinity.pod.no_schedule_toleration
+
+    toleration_key := input.parameters.toleration_key
+    exclude_namespace := input.parameters.exclude_namespace
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      some i
+      tolerations := controller_spec.tolerations[i]
+      key := tolerations.key
+      key == toleration_key
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Toleration key must not contain '%v'; found '%v'", [toleration_key, key]),
+        "violating_key": sprintf("spec.template.spec.tolerations[%v].key", [i]),
+      }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec.template.spec {
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+    } else = controller_input.spec {
+      controller_input.kind == "Pod"
+    } else = controller_input.spec.jobTemplate.spec.template.spec {
+      controller_input.kind == "CronJob"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+

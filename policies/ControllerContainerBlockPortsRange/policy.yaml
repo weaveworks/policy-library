@@ -6,45 +6,35 @@ spec:
   id: weave.policies.containers-block-ports-range
   name: Containers Block Ports Range
   enabled: false
-  description: |
-    This Policy checks for container ports that are set below the set value. TCP ports under 1024 are reserved so we recommend setting your Policy to 1024 or higher. 
-  how_to_solve: |
-    Choose ports over the value that is specified in the Policy. 
-    ```
-    ...
-      spec:
-        containers:
-          - ports:
-            - containerPort: <target_port>
-    ```
-    https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.txt
+  description: "This Policy checks for container ports that are set below the set value. TCP ports under 1024 are reserved so we recommend setting your Policy to 1024 or higher. \n"
+  how_to_solve: "Choose ports over the value that is specified in the Policy. \n```\n...\n  spec:\n    containers:\n      - ports:\n        - containerPort: <target_port>\n```\nhttps://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.txt\n"
   category: weave.categories.network-security
   severity: high
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   standards:
-  - id: weave.standards.pci-dss
-    controls:
-    - weave.controls.pci-dss.1.1.6
-    - weave.controls.pci-dss.2.2.2
-  - id: weave.standards.nist-800-190
-    controls:
-    - weave.controls.nist-800-190.4.4.2
+    - id: weave.standards.pci-dss
+      controls:
+        - weave.controls.pci-dss.1.1.6
+        - weave.controls.pci-dss.2.2.2
+    - id: weave.standards.nist-800-190
+      controls:
+        - weave.controls.nist-800-190.4.4.2
   tags: [pci-dss, nist800-190]
   parameters:
-  - name: target_port
-    type: integer
-    required: true
-    value: 1024
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: target_port
+      type: integer
+      required: true
+      value: 1024
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.pods.block_ports\n\ntarget_port := input.parameters.target_port\nexclude_namespace := input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i,j\n  containers := controller_spec.containers[i]\n  container_ports := containers.ports[j]\n  port := container_ports.containerPort\n  not port >= target_port\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"containerPort is not greater than '%v'; found %v\", [target_port, port]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].ports[%v].containerPort\", [i,j]) \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

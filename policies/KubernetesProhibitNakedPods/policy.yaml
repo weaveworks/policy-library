@@ -6,8 +6,7 @@ spec:
   id: weave.policies.prohibit-naked-pods-from-being-scheduled
   name: Prohibit Naked Pods From Being Scheduled
   enabled: true
-  description: |
-    This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running "naked" pods. 
+  description: "This Policy checks for a `kind` and can prohibit it from being schedule to your cluster. A common example is running \"naked\" pods. \n"
   how_to_solve: |
     Ensure you are not using a kind that is specified within the Policy.
     ```
@@ -19,7 +18,22 @@ spec:
   severity: medium
   targets: {kinds: [Pod]}
   standards:
-  - id: weave.standards.cis-benchmark
-    controls:
-    - weave.controls.cis-benchmark.5.1.4
+    - id: weave.standards.cis-benchmark
+      controls:
+        - weave.controls.cis-benchmark.5.1.4
   tags: [cis-benchmark]
+  code: |
+    package weave.advisor.k8s.prohibit_naked_pods
+
+    violation[result] {
+      kind := "Pod"
+    	lower_kind := lower(kind)
+    	specified_kind := input.review.object.kind
+    	lower_specified_kind := lower(specified_kind)
+      lower_kind == lower_specified_kind
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Naked Pods are prohibited",[]),
+        "violating_key": "kind"
+      }
+    }

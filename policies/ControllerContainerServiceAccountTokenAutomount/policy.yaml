@@ -6,63 +6,99 @@ spec:
   id: weave.policies.controller-serviceaccount-tokens-automount
   name: Controller ServiceAccount Tokens Automount
   enabled: true
-  description: |
-    This Policy allows for the option of enabling or disabling Service Accounts that are created for a Pod. The recommended practice is to set the `automount_token` to `false.  
-
-    When a pod is created without specifying a service account, it is automatically assigned the default service account in the same namespace. This is a security concern because a compromised container can access the API using automatically mounted service account credentials. The API permissions of the service account depend on the authorization plugin and policy in use, but could possibly create and delete pods. 
-
-    We recommend setting the `automount_token` to `false`. 
-
-    In version 1.6+, you can opt out of automounting API credentials for a particular pod.
-  how_to_solve: |
-    Ensure the setting in the Policy matches the Service Account declaration in the controller. 
-    ```
-    ...
-      spec:
-        automountServiceAccountToken: false
-    ```
-
-    https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  description: "This Policy allows for the option of enabling or disabling Service Accounts that are created for a Pod. The recommended practice is to set the `automount_token` to `false.  \n\nWhen a pod is created without specifying a service account, it is automatically assigned the default service account in the same namespace. This is a security concern because a compromised container can access the API using automatically mounted service account credentials. The API permissions of the service account depend on the authorization plugin and policy in use, but could possibly create and delete pods. \n\nWe recommend setting the `automount_token` to `false`. \n\nIn version 1.6+, you can opt out of automounting API credentials for a particular pod.\n"
+  how_to_solve: "Ensure the setting in the Policy matches the Service Account declaration in the controller. \n```\n...\n  spec:\n    automountServiceAccountToken: false\n```\n\nhttps://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server\n"
   category: weave.categories.access-control
   severity: high
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   standards:
-  - id: weave.standards.pci-dss
-    controls:
-    - weave.controls.pci-dss.7.2.1
-  - id: weave.standards.cis-benchmark
-    controls:
-    - weave.controls.cis-benchmark.5.1.5
-  - id: weave.standards.mitre-attack
-    controls:
-    - weave.controls.mitre-attack.1.4
-  - id: weave.standards.hipaa
-    controls:
-    - weave.controls.hipaa.164.312.a.2.i
-  - id: weave.standards.gdpr
-    controls:
-    - weave.controls.gdpr.25
-    - weave.controls.gdpr.32
-    - weave.controls.gdpr.24
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.1.6.3
+    - id: weave.standards.pci-dss
+      controls:
+        - weave.controls.pci-dss.7.2.1
+    - id: weave.standards.cis-benchmark
+      controls:
+        - weave.controls.cis-benchmark.5.1.5
+    - id: weave.standards.mitre-attack
+      controls:
+        - weave.controls.mitre-attack.1.4
+    - id: weave.standards.hipaa
+      controls:
+        - weave.controls.hipaa.164.312.a.2.i
+    - id: weave.standards.gdpr
+      controls:
+        - weave.controls.gdpr.25
+        - weave.controls.gdpr.32
+        - weave.controls.gdpr.24
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.1.6.3
   tags: [pci-dss, cis-benchmark, mitre-attack, hipaa, gdpr, default, soc2-type1]
   parameters:
-  - name: automount_token
-    type: boolean
-    required: true
-    value: false
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: automount_token
+      type: boolean
+      required: true
+      value: false
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.pods.service_account_token_automount
+
+    automount_token := input.parameters.automount_token
+    exclude_namespace := input.parameters.exclude_namespace
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      automount := controller_spec
+      not has_key(automount, "automountServiceAccountToken")
+      result = {
+        "issue detected": true,
+        "msg": sprintf("'automountServiceAccountToken' must be set; found '%v'",[automount]),
+        "violating_key": "spec.template.spec"
+      }
+    }
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      automount := controller_spec.automountServiceAccountToken
+      not automount == automount_token
+      result = {
+        "issue detected": true,
+        "msg": sprintf("automountServiceAccountToken must be '%v'; found '%v'",[automount_token, automount]),
+        "violating_key": "spec.template.spec.automountServiceAccountToken",
+        "recommended_value": automount_token
+      }
+    }
+
+    has_key(x, k) {
+      type_name(x[k])
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec.template.spec {
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+    } else = controller_input.spec {
+      controller_input.kind == "Pod"
+    } else = controller_input.spec.jobTemplate.spec.template.spec {
+      controller_input.kind == "CronJob"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }

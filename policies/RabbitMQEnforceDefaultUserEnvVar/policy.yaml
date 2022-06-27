@@ -14,32 +14,89 @@ spec:
     For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
   category: weave.categories.access-control
   severity: high
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   standards:
-  - id: weave.standards.pci-dss
-    controls:
-    - weave.controls.pci-dss.2.1
-  - id: weave.standards.hipaa
-    controls:
-    - weave.controls.hipaa.164.312.a.1
-    - weave.controls.hipaa.164.312.a.2.i
-  - id: weave.standards.gdpr
-    controls:
-    - weave.controls.gdpr.24
-    - weave.controls.gdpr.25
-    - weave.controls.gdpr.32
+    - id: weave.standards.pci-dss
+      controls:
+        - weave.controls.pci-dss.2.1
+    - id: weave.standards.hipaa
+      controls:
+        - weave.controls.hipaa.164.312.a.1
+        - weave.controls.hipaa.164.312.a.2.i
+    - id: weave.standards.gdpr
+      controls:
+        - weave.controls.gdpr.24
+        - weave.controls.gdpr.25
+        - weave.controls.gdpr.32
   tags: [pci-dss, hipaa, gdpr]
   parameters:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |-
+    package weave.advisor.rabbitmq.enforce_default_user_env_var
+
+    env_name = "RABBITMQ_DEFAULT_USER"
+    app_name = "rabbitmq"
+    exclude_namespace = input.parameters.exclude_namespace
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      some i
+      containers := controller_spec.containers[i]
+      contains(containers.image, app_name)
+      not containers.env
+      result = {
+        "issue detected": true,
+        "msg": "environment variables needs to be set",
+        "violating_key": sprintf("spec.template.spec.containers[%v]", [i]),  }
+    }
+
+    violation[result] {
+      not exclude_namespace == controller_input.metadata.namespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      some i
+      containers := controller_spec.containers[i]
+      contains(containers.image, app_name)
+      envs := containers.env
+      not array_contains(envs, env_name)
+      result = {
+        "issue detected": true,
+        "msg": sprintf("'%v' is missing'; detected '%v'", [env_name, envs]),
+        "violating_key": sprintf("spec.template.spec.containers[%v].env.name", [i])
+      }
+    }
+
+
+    array_contains(array, element) {
+      array[_].name = element
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec.template.spec {
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+    } else = controller_input.spec {
+      controller_input.kind == "Pod"
+    } else = controller_input.spec.jobTemplate.spec.template.spec {
+      controller_input.kind == "CronJob"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }

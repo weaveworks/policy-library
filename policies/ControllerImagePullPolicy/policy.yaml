@@ -6,47 +6,26 @@ spec:
   id: weave.policies.container-image-pull-policy
   name: Container Image Pull Policy
   enabled: false
-  description: |
-    This Policy is to ensure you are setting a value for your `imagePullPolicy`. 
-
-    The `imagePullPolicy` and the tag of the image affect when the kubelet attempts to pull the specified image.
-
-    `imagePullPolicy`: IfNotPresent: the image is pulled only if it is not already present locally.
-
-    `imagePullPolicy`: Always: every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest. If the kubelet has a container image with that exact digest cached locally, the kubelet uses its cached image; otherwise, the kubelet downloads (pulls) the image with the resolved digest, and uses that image to launch the container.
-
-    `imagePullPolicy` is omitted and either the image tag is :latest or it is omitted: `imagePullPolicy` is automatically set to Always. Note that this will not be updated to IfNotPresent if the tag changes value.
-
-    `imagePullPolicy` is omitted and the image tag is present but not :latest: `imagePullPolicy` is automatically set to IfNotPresent. Note that this will not be updated to Always if the tag is later removed or changed to :latest.
-
-    `imagePullPolicy`: Never: the image is assumed to exist locally. No attempt is made to pull the image.
-  how_to_solve: |
-    Ensure you have an imagePullPolicy set that matches your policy. 
-    ```
-    ...
-      spec:
-        containers:
-        - imagePullPolicy: <policy>
-    ```
-    https://kubernetes.io/docs/concepts/configuration/overview/#container-images
+  description: "This Policy is to ensure you are setting a value for your `imagePullPolicy`. \n\nThe `imagePullPolicy` and the tag of the image affect when the kubelet attempts to pull the specified image.\n\n`imagePullPolicy`: IfNotPresent: the image is pulled only if it is not already present locally.\n\n`imagePullPolicy`: Always: every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest. If the kubelet has a container image with that exact digest cached locally, the kubelet uses its cached image; otherwise, the kubelet downloads (pulls) the image with the resolved digest, and uses that image to launch the container.\n\n`imagePullPolicy` is omitted and either the image tag is :latest or it is omitted: `imagePullPolicy` is automatically set to Always. Note that this will not be updated to IfNotPresent if the tag changes value.\n\n`imagePullPolicy` is omitted and the image tag is present but not :latest: `imagePullPolicy` is automatically set to IfNotPresent. Note that this will not be updated to Always if the tag is later removed or changed to :latest.\n\n`imagePullPolicy`: Never: the image is assumed to exist locally. No attempt is made to pull the image.\n"
+  how_to_solve: "Ensure you have an imagePullPolicy set that matches your policy. \n```\n...\n  spec:\n    containers:\n    - imagePullPolicy: <policy>\n```\nhttps://kubernetes.io/docs/concepts/configuration/overview/#container-images\n"
   category: weave.categories.software-supply-chain
   severity: medium
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet,
-      StatefulSet, CronJob]}
+  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   parameters:
-  - name: policy
-    type: string
-    required: true
-    value: Always
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: policy
+      type: string
+      required: true
+      value: Always
+    - name: exclude_namespace
+      type: string
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.images.image_pull_enforce\n\npolicy := input.parameters.policy\nexclude_namespace := input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers := controller_spec.containers[i]\n  image_policy := containers.imagePullPolicy\n\tnot containers.imagePullPolicy == policy\n    result = {\n    \t\"issue detected\": true,\n      \"msg\": sprintf(\"imagePolicyPolicy must be '%v'; found '%v'\",[policy, image_policy]),\n      \"violating_key\": sprintf(\"spec.template.spec.containers[%v].imagePullPolicy\", [i]),\n      \"recommended_value\": policy  \n    }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

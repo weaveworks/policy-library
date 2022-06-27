@@ -6,68 +6,49 @@ spec:
   id: weave.policies.rbac-protect-cluster-admin-clusterrolebindings
   name: Rbac Protect Cluster Admin Clusterrolebindings
   enabled: true
-  description: |
-    This Policy allows you to select which groups you can set for Cluster-admin. The default policy checks for the 
-
-    ```
-    subjects:
-    - kind: Group
-      name: system:masters
-    ```
-
-    `cluster-admin` allows super-user access to perform any action on any resource. When used in a ClusterRoleBinding, it gives full control over every resource in the cluster and in all namespaces. When used in a RoleBinding, it gives full control over every resource in the role binding's namespace, including the namespace itself. Be selective when adding additional subjects. 
-  how_to_solve: |
-    Remove any kinds and names that are not consistent with the constraint. 
-    ```
-    kind: ClusterRoleBinding
-    metadata:
-      name: cluster-admin
-    ...
-    subjects:
-    - kind: Group
-      name: system:masters
-    ```  
-    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  description: "This Policy allows you to select which groups you can set for Cluster-admin. The default policy checks for the \n\n```\nsubjects:\n- kind: Group\n  name: system:masters\n```\n\n`cluster-admin` allows super-user access to perform any action on any resource. When used in a ClusterRoleBinding, it gives full control over every resource in the cluster and in all namespaces. When used in a RoleBinding, it gives full control over every resource in the role binding's namespace, including the namespace itself. Be selective when adding additional subjects. \n"
+  how_to_solve: "Remove any kinds and names that are not consistent with the constraint. \n```\nkind: ClusterRoleBinding\nmetadata:\n  name: cluster-admin\n...\nsubjects:\n- kind: Group\n  name: system:masters\n```  \nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
   severity: high
   targets: {kinds: [ClusterRoleBinding]}
   standards:
-  - id: weave.standards.pci-dss
-    controls:
-    - weave.controls.pci-dss.7.1.1
-    - weave.controls.pci-dss.7.1.2
-  - id: weave.standards.cis-benchmark
-    controls:
-    - weave.controls.cis-benchmark.5.1.1
-  - id: weave.standards.mitre-attack
-    controls:
-    - weave.controls.mitre-attack.4.2
-  - id: weave.standards.gdpr
-    controls:
-    - weave.controls.gdpr.25
-    - weave.controls.gdpr.32
-    - weave.controls.gdpr.24
-  - id: weave.standards.hipaa
-    controls:
-    - weave.controls.hipaa.164.312.a.1
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.1.6.3
+    - id: weave.standards.pci-dss
+      controls:
+        - weave.controls.pci-dss.7.1.1
+        - weave.controls.pci-dss.7.1.2
+    - id: weave.standards.cis-benchmark
+      controls:
+        - weave.controls.cis-benchmark.5.1.1
+    - id: weave.standards.mitre-attack
+      controls:
+        - weave.controls.mitre-attack.4.2
+    - id: weave.standards.gdpr
+      controls:
+        - weave.controls.gdpr.25
+        - weave.controls.gdpr.32
+        - weave.controls.gdpr.24
+    - id: weave.standards.hipaa
+      controls:
+        - weave.controls.hipaa.164.312.a.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.1.6.3
   tags: [pci-dss, cis-benchmark, mitre-attack, gdpr, hipaa, soc2-type1]
   parameters:
-  - name: subjects_name
-    type: string
-    required: true
-    value: system:masters
-  - name: subjects_kind
-    type: string
-    required: true
-    value: Group
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: subjects_name
+      type: string
+      required: true
+      value: system:masters
+    - name: subjects_kind
+      type: string
+      required: true
+      value: Group
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.rbac.enforce_cluster_admin_default_group\n\nsubjects_kind := input.parameters.subjects_kind\nsubjects_name := input.parameters.subjects_name\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value == crb_input.metadata.labels[exclude_label_key]\n  crb_input.metadata.name == \"cluster-admin\"\n  some i\n  subjects := crb_input.subjects[i]\n  not subjects.kind == subjects_kind\n  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"expected kind '%v'; found '%v'\",[subjects_kind, subjects.name]),\n    \"violating_key\": sprintf(\"subjects[%v]\", [i])\n  }\n}\n\nviolation[result] {  \n  not exclude_label_value == crb_input.metadata.labels[exclude_label_key]\n  crb_input.metadata.name == \"cluster-admin\"\n  some i\n  subjects := crb_input.subjects[i]\n  not subjects.name == subjects_name\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"expected name '%v'; found '%v'\",[subjects_name, subjects.name]),\n    \"violating_key\": sprintf(\"subjects[%v].name\", [i])\n  }\n}\n\ncrb_input = input.review.object {\n\tcontains_kind(input.review.object.kind, {\"ClusterRoleBinding\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"
