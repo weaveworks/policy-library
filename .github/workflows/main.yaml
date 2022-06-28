@@ -115,64 +115,64 @@ jobs:
           echo "No changes in policies."
         fi
 
-  sync:
-    if: github.event_name == 'push'
-    needs: [update_crds_with_rego_code]
-    runs-on: ubuntu-latest
-    container:
-      image: mgxinternal/mgx-circle-deployer:aws
-      credentials:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-      options: --name mglx-deployer --network-alias mglx-deployer
-      ports:
-      - 8080:8080
-    env:
-      AWS_ACCESS_KEY_ID_DEV: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-      AWS_SECRET_ACCESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-      AWS_DEFAULT_REGION_DEV: ${{ secrets.AWS_DEFAULT_REGION_DEV }}
-      AWS_CLUSTER_NAME_DEV: ${{ secrets.AWS_CLUSTER_NAME_DEV }}
-      # AWS_ACCESS_KEY_ID_PROD: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-      # AWS_SECRET_ACCESS_KEY_PROD: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-      # AWS_DEFAULT_REGION_PROD: ${{ secrets.AWS_DEFAULT_REGION_PROD }}
-      # AWS_CLUSTER_NAME_PROD: ${{ secrets.AWS_CLUSTER_NAME_PROD }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Auth to cluster
-      run: |
-        if [[ "${GITHUB_REF##*/}" == "aws-dev" ]]
-        then
-          export CIRCLE_BRANCH="dev"
-        else
-          export CIRCLE_BRANCH=${GITHUB_REF##*/}
-        fi
-        /bin/auth_to_cluster
-    - name: Sync
-      run: |
-        apk add --no-cache python3 py3-pip
-        pip3 install pyyaml click requests
+  # sync:
+  #   if: github.event_name == 'push'
+  #   needs: [update_crds_with_rego_code]
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: mgxinternal/mgx-circle-deployer:aws
+  #     credentials:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     options: --name mglx-deployer --network-alias mglx-deployer
+  #     ports:
+  #     - 8080:8080
+  #   env:
+  #     AWS_ACCESS_KEY_ID_DEV: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+  #     AWS_SECRET_ACCESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+  #     AWS_DEFAULT_REGION_DEV: ${{ secrets.AWS_DEFAULT_REGION_DEV }}
+  #     AWS_CLUSTER_NAME_DEV: ${{ secrets.AWS_CLUSTER_NAME_DEV }}
+  #     # AWS_ACCESS_KEY_ID_PROD: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+  #     # AWS_SECRET_ACCESS_KEY_PROD: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+  #     # AWS_DEFAULT_REGION_PROD: ${{ secrets.AWS_DEFAULT_REGION_PROD }}
+  #     # AWS_CLUSTER_NAME_PROD: ${{ secrets.AWS_CLUSTER_NAME_PROD }}
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: docker/login-action@v1
+  #     with:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #   - name: Auth to cluster
+  #     run: |
+  #       if [[ "${GITHUB_REF##*/}" == "aws-dev" ]]
+  #       then
+  #         export CIRCLE_BRANCH="dev"
+  #       else
+  #         export CIRCLE_BRANCH=${GITHUB_REF##*/}
+  #       fi
+  #       /bin/auth_to_cluster
+  #   - name: Sync
+  #     run: |
+  #       apk add --no-cache python3 py3-pip
+  #       pip3 install pyyaml click requests
 
-        kubectl port-forward --address 0.0.0.0 -n cluster-advisor service/policies-service 8080:80 &
-        while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
+  #       kubectl port-forward --address 0.0.0.0 -n cluster-advisor service/policies-service 8080:80 &
+  #       while ! netstat -tna | grep 'LISTEN\>' | grep 8080; do sleep 3 ; done
 
-        export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+  #       export HOST_REPO_PATH=/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}
 
-        # categories
-        docker run --rm --network host -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.3 \
-               python3 /scripts/sync/sync.py categories -d /categories --policies-service http://localhost:8080/api/v1
+  #       # categories
+  #       docker run --rm --network host -v ${HOST_REPO_PATH}/categories:/categories mgxinternal/mglxctl:v0.0.3 \
+  #              python3 /scripts/sync/sync.py categories -d /categories --policies-service http://localhost:8080/api/v1
         
-        # standards and controls
-        docker run --rm --network host -v ${HOST_REPO_PATH}/standards:/standards mgxinternal/mglxctl:v0.0.3 \
-               python3 /scripts/sync/sync.py standards -d /standards --policies-service http://localhost:8080/api/v1
+  #       # standards and controls
+  #       docker run --rm --network host -v ${HOST_REPO_PATH}/standards:/standards mgxinternal/mglxctl:v0.0.3 \
+  #              python3 /scripts/sync/sync.py standards -d /standards --policies-service http://localhost:8080/api/v1
 
-        # templates
-        docker run --rm --network host -v ${HOST_REPO_PATH}/examples:/examples mgxinternal/mglxctl:v0.0.3 \
-               python3 /scripts/sync/sync.py templates -d /examples --policies-service http://localhost:8080/api/v1
+  #       # templates
+  #       docker run --rm --network host -v ${HOST_REPO_PATH}/examples:/examples mgxinternal/mglxctl:v0.0.3 \
+  #              python3 /scripts/sync/sync.py templates -d /examples --policies-service http://localhost:8080/api/v1
         
-        # policies
-        docker run --rm --network host -v ${HOST_REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.3 \
-               python3 /scripts/sync/sync.py policies -d /policies --policies-service http://localhost:8080/api/v1
+  #       # policies
+  #       docker run --rm --network host -v ${HOST_REPO_PATH}/policies:/policies mgxinternal/mglxctl:v0.0.3 \
+  #              python3 /scripts/sync/sync.py policies -d /policies --policies-service http://localhost:8080/api/v1
