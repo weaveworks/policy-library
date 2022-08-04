@@ -46,6 +46,7 @@ spec:
       value:
   code: |-
     package weave.advisor.images.image_tag_enforce
+    import future.keywords
 
     image_tag := input.parameters.image_tag
     exclude_namespace := input.parameters.exclude_namespace
@@ -55,45 +56,42 @@ spec:
     violation[result] {
       not exclude_namespace == controller_input.metadata.namespace
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-      some i
-      containers = controller_spec.containers[i]
-      splittedUrl = split(containers.image, "/")
+      some i,container in controller_spec.containers
+      splittedUrl = split(container.image, "/")
       image = splittedUrl[count(splittedUrl)-1]
       not contains(image, ":")
       result = {
         "issue detected": true,
-        "msg": sprintf("Container %s image is not tagged", containers[i].name),
+        "msg": sprintf("Container %s image is not tagged", container.name),
         "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
       }
     }
 
     violation[result] {
-      some i
-      containers = controller_spec.containers[i]
-      splittedUrl = split(containers.image, "/")
+      some i,container in controller_spec.containers
+      splittedUrl = split(container.image, "/")
       image = splittedUrl[count(splittedUrl)-1]
       count(split(image, ":")) == 2
       [image_name, tag] = split(image, ":")
       tag == image_tag
       result = {
         "issue detected": true,
-        "msg": sprintf("Container %s image contains unapproved tag '%v'", [containers[i].name, image_tag]),
+        "msg": sprintf("Container %s image contains unapproved tag '%v'", [container.name, image_tag]),
         "image": image,
         "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
       }
     }
 
     violation[result] {
-      some i
-      containers = controller_spec.containers[i]
-      splittedUrl = split(containers.image, "/")
+      some i,container in controller_spec.containers
+      splittedUrl = split(container.image, "/")
       image = splittedUrl[count(splittedUrl)-1]
       count(split(image, ":")) == 3
       [image_name, port, tag] = split(image, ":")
       tag == image_tag
       result = {
         "issue detected": true,
-        "msg": sprintf("Container %s image contains unapproved tag:'%v'", [containers[i].name, image_tag]),
+        "msg": sprintf("Container %s image contains unapproved tag:'%v'", [container.name, image_tag]),
         "image": image,
         "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
       }
