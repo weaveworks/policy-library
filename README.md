@@ -58,7 +58,7 @@ opa test policies/ControllerContainerRunningAsRoot -v --ignore '*.yml','*.yaml',
 ```
 
 ## Policy Management scripts
-We use [mglxctl](https://github.com/MagalixTechnologies/mglxctl) management scripts to manage (test, automate and sync) policies, standards, etc...
+We use [polctl](https://github.com/weaveworks/polctl) management scripts to manage (test, automate and sync) policies, standards, etc...
 
 ## Setup repo githooks
 
