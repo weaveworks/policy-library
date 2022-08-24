@@ -1,13 +1,15 @@
 package weave.advisor.services.block_protocols
 
+import future.keywords.in
+
 service_protocol := input.parameters.protocols
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   ports := service_spec.ports[i]

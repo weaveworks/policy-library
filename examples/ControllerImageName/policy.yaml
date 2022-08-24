@@ -5,50 +5,43 @@ metadata:
 spec:
   id: weave.templates.containers-block-specific-image-names
   name: Containers Block Specific Image Names
-  description: |
-    This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. 
-  how_to_solve: |
-    Use an image that is not set in the Policy. 
-    ```
-    ...
-      spec:
-        containers:
-        - image: registry/<image_names>:tag
-    ```
+  description: "This Policy prohibits images with certain image names from being deployed by specifying a list of unapproved names. \n"
+  how_to_solve: "Use an image that is not set in the Policy. \n```\n...\n  spec:\n    containers:\n    - image: registry/<image_names>:tag\n```\n"
   category: weave.categories.software-supply-chain
   severity: high
   standards:
-  - id: weave.standards.cis-benchmark
-    controls:
-    - weave.controls.cis-benchmark.5.5.1
-  - id: weave.standards.mitre-attack
-    controls:
-    - weave.controls.mitre-attack.1.2
-  - id: weave.standards.nist-800-190
-    controls:
-    - weave.controls.nist-800-190.4.1.5
-  - id: weave.standards.gdpr
-    controls:
-    - weave.controls.gdpr.24
-    - weave.controls.gdpr.25
-    - weave.controls.gdpr.32
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.1.6.8
+    - id: weave.standards.cis-benchmark
+      controls:
+        - weave.controls.cis-benchmark.5.5.1
+    - id: weave.standards.mitre-attack
+      controls:
+        - weave.controls.mitre-attack.1.2
+    - id: weave.standards.nist-800-190
+      controls:
+        - weave.controls.nist-800-190.4.1.5
+    - id: weave.standards.gdpr
+      controls:
+        - weave.controls.gdpr.24
+        - weave.controls.gdpr.25
+        - weave.controls.gdpr.32
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.1.6.8
   parameters:
-  - name: restricted_image_names
-    type: array
-    required: true
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: restricted_image_names
+      type: array
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.images.image_name_enforce\n\nimport future.keywords.in\n\nrestricted_image_names := input.parameters.restricted_image_names\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not controller_input.metadata.namespace in exclude_namespaces\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers = controller_spec.containers[i]\n  splittedUrl = split(containers.image, \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n  not contains(image, \":\")\n  array_contains(restricted_image_names, image)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"These images should be blocked: '%v'; found '%v'\", [restricted_image_names, image]),\n    \"image\": image,\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\", [i])  \n  }\n}\n\nviolation[result] {\n  not controller_input.metadata.namespace in exclude_namespaces\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers = controller_spec.containers[i]\n  splittedUrl = split(containers.image, \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n  count(split(image, \":\")) == 2\n  [image_name, tag] = split(image, \":\")\n  array_contains(restricted_image_names, image_name)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"These images should be blocked: '%v'; found '%v'\", [restricted_image_names, image]),\n    \"image\": image_name,\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\", [i])  \n  }\n}\n\nviolation[result] {\n  not controller_input.metadata.namespace in exclude_namespaces\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers = controller_spec.containers[i]\n  splittedUrl = split(containers.image, \"/\")\n  image = splittedUrl[count(splittedUrl)-1]\n  count(split(image, \":\")) == 3\n  [image_name, tag] = split(image, \":\")\n  array_contains(restricted_image_names, image_name)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"These images should be blocked: '%v'; found '%v'\", [restricted_image_names, image]),\n    \"image\": image_name,\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].image\", [i])  \n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input = input.review.object\n\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

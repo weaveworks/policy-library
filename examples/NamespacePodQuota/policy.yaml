@@ -5,24 +5,21 @@ metadata:
 spec:
   id: weave.templates.namespace-pod-quota
   name: Namespace Pod Quota
-  description: |
-    When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. 
-  how_to_solve: |
-    Specify a value for the maximum number of pods you'd like in a namespace. 
-
-    https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-pod-namespace/
+  description: "When using a pod quota ensure setting the proper value for the quantity of pods you wish to have in your namespace. \n"
+  how_to_solve: "Specify a value for the maximum number of pods you'd like in a namespace. \n\nhttps://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-pod-namespace/\n"
   category: weave.categories.capacity-management
   severity: low
   standards:
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.2.1.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.2.1.1
   parameters:
-  - name: pod_quota
-    type: string
-    required: true
-    value: 2
-  - name: namespace
-    type: string
-    required: true
-    value: magalix
+    - name: pod_quota
+      type: string
+      required: true
+      value: 2
+    - name: namespace
+      type: string
+      required: true
+      value: magalix
+  code: "package weave.advisor.namespace.pod_quotas\n\npod_quota := input.parameters.pod_quota\nnamespace := input.parameters.namespace\n\nviolation[result] {\n  rq_namespace := input.review.object.metadata.namespace\n  rq_namespace == namespace\n  pods := rq_spec.hard.pods\n  not pods <= pod_quota\n  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"The numbers of pods should be '%v' or greater; detected '%v'\", [pod_quota, pods]),\n    \"violating_key\": \"spec.hard.pods\"\n  }\n}\n\nrq_spec = input.review.object.spec{\n  contains_kind(input.review.object.kind, {\"ResourceQuota\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

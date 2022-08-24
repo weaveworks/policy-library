@@ -5,15 +5,26 @@ metadata:
 spec:
   id: weave.templates.istio-gateway-approved-hosts
   name: Istio Gateway Approved Hosts
-  description: |
-    ### Istio Gateway Approved Hosts
-    This ensures you are only serving traffic for approved hostnames. 
+  description: "### Istio Gateway Approved Hosts\nThis ensures you are only serving traffic for approved hostnames. \n"
   how_to_solve: |
     Ensure your domain name is the same as the one you are hosting.
   category: weave.categories.network-security
   severity: high
   parameters:
-  - name: hostnames
-    type: array
-    required: true
-    value:
+    - name: hostnames
+      type: array
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.istio.approved_hosts\n\nimport future.keywords.in\n\nhostnames := input.parameters.hostnames\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not controller_input.metadata.namespace in exclude_namespaces\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  servers := gateway_spec.servers[_]\n  hosts := servers.hosts[_]\n  not array_contains(hostnames, hosts)\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"You have specified hosts: '%v'; detected '%v'\", [hostnames, hosts]),\n    \"violating_key\": \"spec.servers.hosts\"\n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ngateway_spec = controller_input.spec {\n  contains_kind(controller_input.kind, {\"Gateway\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

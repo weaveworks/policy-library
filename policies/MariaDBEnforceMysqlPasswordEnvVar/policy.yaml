@@ -30,8 +30,8 @@ spec:
         - weave.controls.gdpr.32
   tags: [pci-dss, mitre-attack, hipaa, gdpr]
   parameters:
-    - name: exclude_namespace
-      type: string
+    - name: exclude_namespaces
+      type: array
       required: false
       value:
     - name: exclude_label_key
@@ -45,15 +45,17 @@ spec:
   code: |-
     package weave.advisor.mariadb.enforce_mysql_password_env_var
 
+    import future.keywords.in
+
     env_name = "MYSQL_PASSWORD"
     app_name = "mariadb"
-    exclude_namespace = input.parameters.exclude_namespace
+    exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
 
 
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      not controller_input.metadata.namespace in exclude_namespaces
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]
@@ -66,7 +68,7 @@ spec:
     }
 
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      not controller_input.metadata.namespace in exclude_namespaces
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]

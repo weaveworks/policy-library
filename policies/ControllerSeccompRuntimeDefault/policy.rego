@@ -1,13 +1,15 @@
 package weave.advisor.podSecurity.seccomp_runtime_default
 
+import future.keywords.in
+
 seccomp_annotation := input.parameters.seccomp_annotation
 seccomp_type := input.parameters.seccomp_type
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   annotation := input.review.object.metadata.annotations["seccomp.security.alpha.kubernetes.io/pod"]
   not annotation == seccomp_annotation
@@ -20,7 +22,7 @@ violation[result] {
 
 # Pods
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_spec.securityContext.seccompProfile.type
   not type == seccomp_type
@@ -33,7 +35,7 @@ violation[result] {
 
 # Non Pods - "StatefulSet" , "DaemonSet", "Deployment", "Job"
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type
@@ -46,7 +48,7 @@ violation[result] {
 
 # CronJobs
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_input.spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type

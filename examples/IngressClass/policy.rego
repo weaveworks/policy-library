@@ -1,15 +1,17 @@
 package weave.advisor.ingress.ingress_class
 
+import future.keywords.in
+
 annotation  := input.parameters.annotation
 class := input.parameters.class
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == ingress_input.metadata.namespace
-  not exclude_label_value == ingress_input.metadata.labels[exclude_label_key]
-  ingress_annotation := ingress_input.metadata.annotations
+  not controller_input.metadata.namespace in exclude_namespaces
+  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+  ingress_annotation := controller_input.metadata.annotations
   not has_key(ingress_annotation, annotation)
   result = {
     "issue detected": true,
@@ -19,9 +21,9 @@ violation[result] {
 }
 
 violation[result] {
-  not exclude_namespace == ingress_input.metadata.namespace
-  not exclude_label_value == ingress_input.metadata.labels[exclude_label_key]
-  ingress_class:= ingress_input.metadata.annotations[annotation]
+  not controller_input.metadata.namespace in exclude_namespaces
+  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+  ingress_class:= controller_input.metadata.annotations[annotation]
   not ingress_class == class
   result = {
     "issue detected": true,
@@ -37,7 +39,7 @@ has_key(x, k) {
 }
 
 
-ingress_input = input.review.object {
+controller_input = input.review.object {
 	contains_kind(input.review.object.kind, {"Ingress"})
 }
 

@@ -1,14 +1,16 @@
 package weave.advisor.container.prohibit_env_var
 
+import future.keywords.in
+
 env_name = input.parameters.envvar_name
 app_name = input.parameters.app_name
-exclude_namespace = input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i, j
   containers := controller_spec.containers[i]

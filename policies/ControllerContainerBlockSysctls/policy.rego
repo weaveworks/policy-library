@@ -1,15 +1,15 @@
 package weave.advisor.podSecurity.block_sysctls
 
-exclude_namespace := input.parameters.exclude_namespace
+import future.keywords.in
+
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	not controller_input.metadata.namespace in exclude_namespaces
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-
     controller_spec.securityContext.sysctls
-	
 	result = {
 		"issue detected": true,
 		"msg": "Adding sysctls could lead to unauthorized escalated privileges to the underlying node",

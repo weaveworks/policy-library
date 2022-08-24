@@ -5,15 +5,14 @@ metadata:
 spec:
   id: weave.templates.istio-injected-namespaces
   name: Istio Injected Namespaces
-  description: |
-    # Istio-Injected Namespaces
-    Specify namespaces you would like to be labeld with `istio-injected: enabled`. Namespaces with this label with automatically deploy a Istio sidecar with each pod. 
+  description: "# Istio-Injected Namespaces\nSpecify namespaces you would like to be labeld with `istio-injected: enabled`. Namespaces with this label with automatically deploy a Istio sidecar with each pod. \n"
   how_to_solve: |
     https://istio.io/latest/docs/setup/additional-setup/sidecar-injection/#automatic-sidecar-injection
   category: weave.categories.network-security
   severity: low
   parameters:
-  - name: namespaces
-    type: array
-    required: true
-    value:
+    - name: namespaces
+      type: array
+      required: true
+      value:
+  code: "package weave.advisor.istio.namespace_label\n\nnamespaces := input.parameters.namespaces\n\nviolation[result] {\n  namespace_name := namespace_input.metadata.name\n  array_contains(namespaces, namespace_name)\n  not namespace_input.metadata.labels[\"istio-injection\"]\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"The namespace '%v' is missing the label 'istio-injection'\", [namespaces[_]]),\n    \"violating_key\": \"metadata.name\"\n  }\n}\n\nviolation[result] {\n  namespace_name := namespace_input.metadata.name\n  array_contains(namespaces, namespace_name)\n  label := namespace_input.metadata.labels[\"istio-injection\"]\n  not label == \"enabled\"\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"The 'istio-injection' lable should be 'enabled'; found '%v'\", [label]),\n    \"violating_key\": \"metadata.name.labels\"\n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\n# controller_container acts as an iterator to get containers from the template\nnamespace_input = input.review.object {\n  contains_kind(input.review.object.kind, {\"Namespace\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\n"

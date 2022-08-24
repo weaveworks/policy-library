@@ -1,13 +1,15 @@
 package weave.advisor.prometheus.annotation_value
 
+import future.keywords.in
+
 annotation_key := input.parameters.prometheus_annotation_key
 annotation_value := input.parameters.prometheus_annotation_value
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  not controller_input.metadata.namespace in exclude_namespaces
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   annotation := controller_input.spec.template.metadata.annotations[annotation_key]
   value := annotation

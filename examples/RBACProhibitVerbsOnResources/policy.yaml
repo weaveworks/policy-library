@@ -5,54 +5,46 @@ metadata:
 spec:
   id: weave.templates.rbac-prohibit-verbs-on-resources
   name: Rbac Prohibit Verbs On Resources
-  description: |
-    This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific Resource and Verb combination. For example, if you wanted to deny deployments, you would create a Policy with a resource of `deployments` and the verb `create`. 
-  how_to_solve: |
-    When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. 
-    ```
-    rules:
-    - resources: <resources>
-      verbs: <verb>
-    ```
-
-    https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  description: "This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific Resource and Verb combination. For example, if you wanted to deny deployments, you would create a Policy with a resource of `deployments` and the verb `create`. \n"
+  how_to_solve: "When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. \n```\nrules:\n- resources: <resources>\n  verbs: <verb>\n```\n\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
   severity: high
   standards:
-  - id: weave.standards.pci-dss
-    controls:
-    - weave.controls.pci-dss.7.1.1
-    - weave.controls.pci-dss.7.1.2
-  - id: weave.standards.mitre-attack
-    controls:
-    - weave.controls.mitre-attack.2.1
-    - weave.controls.mitre-attack.6.1
-  - id: weave.standards.gdpr
-    controls:
-    - weave.controls.gdpr.25
-    - weave.controls.gdpr.32
-    - weave.controls.gdpr.24
-  - id: weave.standards.hipaa
-    controls:
-    - weave.controls.hipaa.164.312.a.1
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.1.6.8
-    - weave.controls.soc2-type-i.1.6.3
+    - id: weave.standards.pci-dss
+      controls:
+        - weave.controls.pci-dss.7.1.1
+        - weave.controls.pci-dss.7.1.2
+    - id: weave.standards.mitre-attack
+      controls:
+        - weave.controls.mitre-attack.2.1
+        - weave.controls.mitre-attack.6.1
+    - id: weave.standards.gdpr
+      controls:
+        - weave.controls.gdpr.25
+        - weave.controls.gdpr.32
+        - weave.controls.gdpr.24
+    - id: weave.standards.hipaa
+      controls:
+        - weave.controls.hipaa.164.312.a.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.1.6.8
+        - weave.controls.soc2-type-i.1.6.3
   parameters:
-  - name: resource
-    type: string
-    required: true
-    value:
-  - name: verb
-    type: string
-    required: true
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: resource
+      type: string
+      required: true
+      value:
+    - name: verb
+      type: string
+      required: true
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.rbac.generic_prohibit_resource_verb\n\nresource := input.parameters.resource\nverb := input.parameters.verb\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value == cr_input.metadata.labels[exclude_label_key]\n  some i\n  rules := cr_input.rules[i]\n  set_resources := rules.resources\n  array_contains(set_resources, resource)\n  set_verbs := rules.verbs\n  array_contains(set_verbs, verb)\n  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"Resource '%v' must not contain the verb '%v'; found resource '%v' with verbs '%v'\",[resource, verb, set_resources, set_verbs]),\n    \"violating_key\": sprintf(\"rules[%v].verbs\", [i])\n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\ncr_input = input.review.object {\n\tcontains(input.review.object.kind, \"Role\")\n} \n"

@@ -1,12 +1,14 @@
 package weave.advisor.podSecurity.runningAsRoot
 
-exclude_namespace := input.parameters.exclude_namespace
+import future.keywords.in
+
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 # Check for missing securityContext.runAsNonRoot (missing in both, pod and container)
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	not controller_input.metadata.namespace in exclude_namespaces
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
@@ -29,7 +31,7 @@ violation[result] {
 # Container security context
 # Check if containers.securityContext.runAsNonRoot exists and = false
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	not controller_input.metadata.namespace in exclude_namespaces
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	some i
@@ -48,7 +50,7 @@ violation[result] {
 # Pod security context
 # Check if spec.securityContext.runAsNonRoot exists and = false
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	not controller_input.metadata.namespace in exclude_namespaces
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
