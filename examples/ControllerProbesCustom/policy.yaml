@@ -5,53 +5,37 @@ metadata:
 spec:
   id: weave.templates.container-custom-probe
   name: Container Custom Probe
-  description: |
-    This Policy allows defining the various container probes, and ensures consistent probes are configured across all containers. You can set the type of probe `livenessProbe`, `readinessProbe`, `startupProbe` along with a `command`, a `path` and a `port`. 
-  how_to_solve: |
-    ```
-    ...
-      spec:
-        containers:
-        - container1
-          <probe_type>:
-            exec:
-              command: 
-              - <command>
-        - container2
-          <probe_type>:
-            httpGet:
-              path: <path>
-              port: <port>
-    ```
-    https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe
+  description: "This Policy allows defining the various container probes, and ensures consistent probes are configured across all containers. You can set the type of probe `livenessProbe`, `readinessProbe`, `startupProbe` along with a `command`, a `path` and a `port`. \n"
+  how_to_solve: "```\n...\n  spec:\n    containers:\n    - container1\n      <probe_type>:\n        exec:\n          command: \n          - <command>\n    - container2\n      <probe_type>:\n        httpGet:\n          path: <path>\n          port: <port>\n```\nhttps://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-tcp-liveness-probe\n"
   category: weave.categories.reliability
   severity: high
   parameters:
-  - name: probe_type
-    type: string
-    required: true
-    value:
-  - name: command
-    type: array
-    required: false
-    value:
-  - name: path
-    type: string
-    required: false
-    value:
-  - name: port
-    type: integer
-    required: false
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: probe_type
+      type: string
+      required: true
+      value:
+    - name: command
+      type: array
+      required: false
+      value:
+    - name: path
+      type: string
+      required: false
+      value:
+    - name: port
+      type: integer
+      required: false
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.observability.custom_probes\n\nimport future.keywords.in\n\nprobe_type := input.parameters.probe_type\ncommand := input.parameters.command\npath := input.parameters.path\nport := input.parameters.port \nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\n# Use this if you are using exec\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers := controller_spec.containers[i]\n  probe_command := containers[probe_type].exec.command\n  not (probe_command == command)\n  result = {\n\t\"issue_detected\": true,\n    \"msg\": sprintf(\"Expecting commands '%v'; found '%v'\", [command, probe_command]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v][probe_type].exec.command\", [i]),\n    \"recommended_value\": command\n\t}\n}\n\n# Use this if you are using httpGet\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers := controller_spec.containers[i]\n  probe_path := containers[probe_type].httpGet.path\n  not path == probe_path\n  result = {\n\t\"issue_detected\": true,\n    \"msg\": sprintf(\"Expecting httpGet path '%v'; found '%v'\", [path, probe_path]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v][probe_type].httpGet.path\", [i]),\n     \"recommended_value\": path\n\t}\n}\n\n# Use this if you are using tcpSocket without a named port\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i\n  containers := controller_spec.containers[i]\n  probe_port := containers[probe_type].tcpSocket.port\n  not port ==  probe_port\n  result = {\n\t\"issue_detected\": true,\n    \"msg\": sprintf(\"Expecting port '%v'; found '%v'\", [port, probe_port]),   \n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v][probe_type].tcpSocket.port\", [i]),\n     \"recommended_value\": port\n\t}\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\nisExcludedNamespace = true {\n\tcontroller_input.metadata.namespace\n\tcontroller_input.metadata.namespace in exclude_namespaces\n} else = false\n"

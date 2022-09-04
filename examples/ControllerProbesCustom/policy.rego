@@ -1,16 +1,18 @@
 package weave.advisor.observability.custom_probes
 
+import future.keywords.in
+
 probe_type := input.parameters.probe_type
 command := input.parameters.command
 path := input.parameters.path
 port := input.parameters.port 
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 # Use this if you are using exec
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -26,7 +28,7 @@ violation[result] {
 
 # Use this if you are using httpGet
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -42,6 +44,8 @@ violation[result] {
 
 # Use this if you are using tcpSocket without a named port
 violation[result] {
+  isExcludedNamespace == false
+  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
   probe_port := containers[probe_type].tcpSocket.port
@@ -69,3 +73,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

@@ -1,11 +1,13 @@
 package weave.advisor.labels.missing_kubernetes_app_label
 
-exclude_namespace := input.parameters.exclude_namespace
+import future.keywords.in
+
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   label := "app.kubernetes.io/name"
   # Filter the type of entity before moving on since this shouldn't apply to all entities
@@ -25,3 +27,8 @@ controller_input = input.review.object
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

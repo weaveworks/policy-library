@@ -22,8 +22,8 @@ spec:
         - weave.controls.pci-dss.2.2.2
   tags: [pci-dss]
   parameters:
-    - name: exclude_namespace
-      type: string
+    - name: exclude_namespaces
+      type: array
       required: false
       value:
     - name: exclude_label_key
@@ -34,18 +34,19 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.mongo_express.enforce_session_secret_env_var
+
+    import future.keywords.in
 
     env_name = "ME_CONFIG_SITE_SESSIONSECRET"
     app_name = "mongo-express"
-    exclude_namespace = input.parameters.exclude_namespace
+    exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
 
-
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]
@@ -58,7 +59,7 @@ spec:
     }
 
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]
@@ -92,3 +93,8 @@ spec:
     contains_kind(kind, kinds) {
       kinds[_] = kind
     }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

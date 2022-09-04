@@ -25,8 +25,8 @@ spec:
       type: integer
       required: true
       value: 1024
-    - name: exclude_namespace
-      type: string
+    - name: exclude_namespaces
+      type: array
       required: false
       value:
     - name: exclude_label_key
@@ -37,4 +37,4 @@ spec:
       type: string
       required: false
       value:
-  code: "package weave.advisor.pods.block_ports\n\ntarget_port := input.parameters.target_port\nexclude_namespace := input.parameters.exclude_namespace\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_namespace == controller_input.metadata.namespace\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i,j\n  containers := controller_spec.containers[i]\n  container_ports := containers.ports[j]\n  port := container_ports.containerPort\n  not port >= target_port\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"containerPort is not greater than '%v'; found %v\", [target_port, port]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].ports[%v].containerPort\", [i,j]) \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"
+  code: "package weave.advisor.pods.block_ports\n\nimport future.keywords.in\n\ntarget_port := input.parameters.target_port\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  some i,j\n  containers := controller_spec.containers[i]\n  container_ports := containers.ports[j]\n  port := container_ports.containerPort\n  not port >= target_port\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"containerPort is not greater than '%v'; found %v\", [target_port, port]),\n    \"violating_key\": sprintf(\"spec.template.spec.containers[%v].ports[%v].containerPort\", [i,j]) \n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\nisExcludedNamespace = true {\n\tcontroller_input.metadata.namespace\n\tcontroller_input.metadata.namespace in exclude_namespaces\n} else = false\n"

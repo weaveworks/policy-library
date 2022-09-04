@@ -1,12 +1,14 @@
 package weave.advisor.containers.block_port
 
+import future.keywords.in
+
 container_port := input.parameters.container_port
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 	some i, j
 	container := controller_spec.containers[i]
@@ -32,3 +34,8 @@ controller_spec = controller_input.spec.template.spec {
 contains(kind, kinds) {
 	kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

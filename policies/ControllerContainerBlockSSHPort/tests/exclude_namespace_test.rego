@@ -4,7 +4,7 @@ test_exclude_namespace {
 	testcase = {
 		"parameters": {
 			"container_port": 22,
-			"exclude_namespace": "allow-ssh",
+			"exclude_namespaces": ["allow-ssh"],
 			"exclude_label_key": "",
 			"exclude_label_value": "",
 		},

@@ -1,12 +1,14 @@
 package weave.advisor.pods.hostpath
 
+import future.keywords.in
+
 hostpath_key := input.parameters.hostpath_key
-exclude_namespace = input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   volumes := controller_spec.volumes[i]
@@ -37,3 +39,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

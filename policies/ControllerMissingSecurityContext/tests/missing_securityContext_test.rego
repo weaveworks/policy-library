@@ -2,6 +2,12 @@ package weave.advisor.podSecurity.missing_security_context
 
 test_missing_security_context {
   testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "uid": 0,
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
     "review": {
       "object": {
         "apiVersion": "v1",

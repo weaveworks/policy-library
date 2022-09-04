@@ -5,31 +5,61 @@ metadata:
 spec:
   id: weave.templates.node-custom-label
   name: Node Custom Label
-  description: |
-    This Policy checks for custom labels on your node. This Policy looks for both a key and value. 
-  how_to_solve: |
-    Add the custom label specified in the policy to all nodes. 
-    ```
-    metadata: 
-      labels: 
-          <key>: <value>
-    ```
+  description: "This Policy checks for custom labels on your node. This Policy looks for both a key and value. \n"
+  how_to_solve: "Add the custom label specified in the policy to all nodes. \n```\nmetadata: \n  labels: \n      <key>: <value>\n```\n"
   category: weave.categories.organizational-standards
   severity: low
   parameters:
-  - name: key
-    type: string
-    required: true
-    value:
-  - name: value
-    type: string
-    required: true
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: key
+      type: string
+      required: true
+      value:
+    - name: value
+      type: string
+      required: true
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.nodes.custom_node_label
+
+    key := input.parameters.key
+    value := input.parameters.value
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not exclude_label_value == node_metadata.labels[exclude_label_key]
+      not node_metadata.labels[key]
+      result = {
+     	"issue_detected": true,
+        "msg": sprintf("Node is missing key '%v'; found %v", [key, node_metadata.labels]),
+        "violating_key": "metadata.labels"
+      }
+    }
+
+    violation[result] {
+      not exclude_label_value == node_metadata.labels[exclude_label_key]
+      label_value := node_metadata.labels[key]
+      not value == label_value
+      result = {
+      	"issue_detected": true,
+        "msg": sprintf("Node label '%v' should have the value of '%v'; found '%v'", [key, value, label_value]),
+        "violating_key": sprintf("metadata.labels[%v]", [key]),
+        "recommended_value": value
+      }
+    }
+
+    node_metadata = input.review.object.metadata {
+    	contains_kind(input.review.object.kind, {"Node"})
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }

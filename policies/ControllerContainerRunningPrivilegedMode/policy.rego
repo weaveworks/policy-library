@@ -1,16 +1,16 @@
 package weave.advisor.podSecurity.privileged
 
+import future.keywords.in
 
-exclude_namespace := input.parameters.exclude_namespace
 privilege := input.parameters.privilege
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  some i
   isExcludedNamespace == false
-  not exclude_namespace == controller_input.metadata.namespace
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+  some i
   container := controller_spec.containers[i]
   security_context_priv := container.securityContext.privileged
   not security_context_priv == privilege
@@ -21,11 +21,6 @@ violation[result] {
     "recommended_value": privilege
   }
 }
-
-isExcludedNamespace  = true {
-  input.review.object.metadata.namespace == exclude_namespace
-}else = false {true}
-
 
 is_array_contains(array,str) {
   array[_] = str
@@ -46,3 +41,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

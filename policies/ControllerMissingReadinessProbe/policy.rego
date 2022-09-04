@@ -1,11 +1,13 @@
 package weave.advisor.observability.readiness_probe
 
-exclude_namespace := input.parameters.exclude_namespace
+import future.keywords.in
+
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   probe := "readinessProbe"
   some i
@@ -33,3 +35,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

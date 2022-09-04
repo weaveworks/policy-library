@@ -25,8 +25,8 @@ spec:
         - weave.controls.gdpr.32
   tags: [pci-dss, mitre-attack, hipaa, gdpr]
   parameters:
-    - name: exclude_namespace
-      type: string
+    - name: exclude_namespaces
+      type: array
       required: false
       value:
     - name: exclude_label_key
@@ -37,18 +37,19 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.postgres.enforce_auth_method_env_var
+
+    import future.keywords.in
 
     env_name = "POSTGRES_HOST_AUTH_METHOD"
     app_name = "postgres"
-    exclude_namespace = input.parameters.exclude_namespace
+    exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
 
-
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]
@@ -61,7 +62,7 @@ spec:
     }
 
     violation[result] {
-      not exclude_namespace == controller_input.metadata.namespace
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       some i
       containers := controller_spec.containers[i]
@@ -95,3 +96,8 @@ spec:
     contains_kind(kind, kinds) {
       kinds[_] = kind
     }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

@@ -7,30 +7,54 @@ spec:
   name: Persistent Volume Claim Max Size
   description: |
     This Policy allows you to set a max size on your Persistent Volumes Claims. When specifying a size, be sure to include the size and sizing suffix (e.g. 1Gi).
-  how_to_solve: |
-    Ensure the max size (e.g. 5Gi) on your persistent volume claim is no larger than what is specified in the Policy. 
-    ```
-    spec:
-      resources:
-        requests:
-          storage: <size>
-    ```
+  how_to_solve: "Ensure the max size (e.g. 5Gi) on your persistent volume claim is no larger than what is specified in the Policy. \n```\nspec:\n  resources:\n    requests:\n      storage: <size>\n```\n"
   category: weave.categories.capacity-management
   severity: medium
   standards:
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.2.1.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.2.1.1
   parameters:
-  - name: size
-    type: string
-    required: true
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: size
+      type: string
+      required: true
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.storage.persistentvolumeclaim_max_size
+
+    max_size := input.parameters.size
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      storage_value := storage_spec.resources.requests.storage
+      unit_type_value := units.parse_bytes(storage_value)
+      unit_max_value := units.parse_bytes(max_size)
+      unit_max_value < unit_type_value
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Storage must be a maximum of '%v'; found '%v'", [max_size, storage_value]),
+        "violating_key": "spec.spec.resources.requests.storage"
+      }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    storage_spec = controller_input.spec {
+      contains_kind(controller_input.kind, {"PersistentVolumeClaim"})
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
