@@ -5,8 +5,7 @@ metadata:
 spec:
   id: weave.templates.enforce-prometheus-service-annotation-key
   name: Enforce Prometheus Service Annotation Key
-  description: |
-    This Policy checks to see if Services have the specified Prometheus annotations like  `prometheus.io/scrape` and `filter.by.port.name`. These annotations are used to send metric data to your Prometheus instance. 
+  description: "This Policy checks to see if Services have the specified Prometheus annotations like  `prometheus.io/scrape` and `filter.by.port.name`. These annotations are used to send metric data to your Prometheus instance. \n"
   how_to_solve: |
     ```
     kind: Service
@@ -19,19 +18,20 @@ spec:
   category: weave.categories.observability
   severity: medium
   parameters:
-  - name: prometheus_service_annotation
-    type: string
-    required: true
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: prometheus_service_annotation
+      type: string
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.annotations.prometheus_service\n\nimport future.keywords.in\n\nannotation := input.parameters.prometheus_service_annotation\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not service_input.metadata.namespace in excluded_namespaces\n  not exclude_label_value == service_input.metadata.labels[exclude_label_key]\n  not service_input.metadata.annotations[annotation]\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Annotation must contain '%v'; found '%v'\", [annotation, service_input.metadata.annotations]),\n    \"violating_key\": \"metadata.annotations\"\n  }\n}\n\nservice_input = input.review.object {\n\tcontains_kind(input.review.object.kind, {\"Service\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}"

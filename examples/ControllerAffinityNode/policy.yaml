@@ -9,41 +9,74 @@ spec:
     This Policy sets NodeAffinity keys, regardless of the Node Affinity selector or scheduling type. List out the keys you want to check to ensure you are using the right keys. This Policy supports the following Node Affinity types:
     - preferredDuringSchedulingIgnoredDuringExecution
     - requiredDuringSchedulingIgnoredDuringExecution
-  how_to_solve: |
-    When working with Node Affinity, this policy will traverse through the entity and find the proper keys, regardless of affinity type. The follwing is an example of where the key is located. 
-
-    ```
-    ...
-      spec:
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: <keys>
-    ```
-
-    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  how_to_solve: "When working with Node Affinity, this policy will traverse through the entity and find the proper keys, regardless of affinity type. The follwing is an example of where the key is located. \n\n```\n...\n  spec:\n    affinity:\n      nodeAffinity:\n        requiredDuringSchedulingIgnoredDuringExecution:\n          nodeSelectorTerms:\n          - matchExpressions:\n            - key: <keys>\n```\n\nhttps://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/\n"
   category: weave.categories.capacity-management
   severity: medium
   standards:
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.2.1.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.2.1.1
   parameters:
-  - name: keys
-    type: array
-    required: true
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: keys
+      type: array
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.affinity.nodes
+
+    import future.keywords.in
+
+    keys := input.parameters.keys
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      isExcludedNamespace == false
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      walk(controller_spec, [path, value])
+      key := path[count(path) - 1]
+      key == "key"
+      not array_contains(keys, value)
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Expecting key '%v'; detected '%v'", [keys, value]),
+        "violating_key": "spec.template.spec.affinity.nodeAffinity"
+      }
+    }
+
+    array_contains(array, element) {
+      array[_] = element
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec.template.spec.affinity.nodeAffinity {
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+    } else = controller_input.spec.affinity.nodeAffinity {
+      controller_input.kind == "Pod"
+    } else = controller_input.spec.jobTemplate.spec.template.spec {
+      controller_input.kind == "CronJob"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

@@ -5,31 +5,65 @@ metadata:
 spec:
   id: weave.templates.containers-are-missing-a-controller-spec-key
   name: Containers Are Missing A Controller Spec Key
-  description: |
-    This Policy will allow you to set your own Policies for the Pod spec. 
-  how_to_solve: |
-    Ensure the key you have specified in your constraint exists in your workloads. 
-    ```
-    ...
-      spec:
-        <controller_spec_key>
-    ```
+  description: "This Policy will allow you to set your own Policies for the Pod spec. \n"
+  how_to_solve: "Ensure the key you have specified in your constraint exists in your workloads. \n```\n...\n  spec:\n    <controller_spec_key>\n```\n"
   category: weave.categories.organizational-standards
   severity: medium
   parameters:
-  - name: controller_spec_key
-    type: string
-    required: true
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: controller_spec_key
+      type: string
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.pods.controller_spec_generic
+
+    import future.keywords.in
+
+    key := input.parameters.controller_spec_key
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      isExcludedNamespace == false
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      not controller_spec[key]
+      result = {
+        "issue detected": true,
+        "msg": sprintf("Missing spec '%v'", [key]),
+        "violating_key": "spec.template.spec"
+      }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec.template.spec {
+      contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
+    } else = controller_input.spec {
+      controller_input.kind == "Pod"
+    } else = controller_input.spec.jobTemplate.spec.template.spec {
+      controller_input.kind == "CronJob"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

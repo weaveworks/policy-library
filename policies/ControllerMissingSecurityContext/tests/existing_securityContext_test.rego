@@ -2,6 +2,12 @@ package weave.advisor.podSecurity.missing_security_context
 
 test_existing_security_context {
   testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "uid": 0,
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
     "review": {
       "object": {
         "apiVersion": "v1",
@@ -13,7 +19,7 @@ test_existing_security_context {
           "containers": [
             {
               "name": "sec-ctx",
-			  "securityContext" : {
+			        "securityContext" : {
                 "runAsNonRoot": true,
                 "runAsUser": 1000,
               },
@@ -26,7 +32,7 @@ test_existing_security_context {
             },
             {
               "name": "sec-ctx2",
-			  "securityContext" : {
+			        "securityContext" : {
                 "runAsNonRoot": true,
                 "runAsUser": 1000,
               },

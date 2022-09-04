@@ -3,7 +3,7 @@ package weave.advisor.podSecurity.runningAsRoot
 test_missing_runAsNonRoot {
   testcase = {
     "parameters": {
-      "exclude_namespace": "",
+      "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
     },

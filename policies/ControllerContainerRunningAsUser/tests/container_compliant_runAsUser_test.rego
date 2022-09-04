@@ -3,7 +3,7 @@ package weave.advisor.podSecurity.runningAsUser
 test_container_compliant_runAsUser {
   testcase = {
     "parameters": {
-      "exclude_namespace": "",
+      "exclude_namespaces": [],
       "uid": 0,
       "exclude_label_key": "",
       "exclude_label_value": "",

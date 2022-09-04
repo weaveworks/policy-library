@@ -1,13 +1,15 @@
 package weave.advisor.podSecurity.runningAsUser
 
-exclude_namespace := input.parameters.exclude_namespace
+import future.keywords.in
+
+uid := input.parameters.uid
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-uid := input.parameters.uid
 
 # Check for missing securityContext.runAsUser (missing in both, pod and container)
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
@@ -28,7 +30,7 @@ violation[result] {
 # Container security context
 # Check if containers.securityContext.runAsUser exists and <= uid
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	some i
@@ -47,7 +49,7 @@ violation[result] {
 # Pod security context
 # Check if spec.securityContext.runAsUser exist and <= uid
 violation[result] {
-	not exclude_namespace == controller_input.metadata.namespace
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
@@ -74,3 +76,8 @@ controller_spec = controller_input.spec.template.spec {
 contains(kind, kinds) {
 	kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

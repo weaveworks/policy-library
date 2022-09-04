@@ -1,14 +1,15 @@
 package weave.advisor.rabbitmq.enforce_plugins_dir_env_var
 
+import future.keywords.in
+
 env_name = "RABBITMQ_PLUGINS_DIR"
 app_name = "rabbitmq"
-exclude_namespace = input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
-
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -21,7 +22,7 @@ violation[result] {
 }
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -55,3 +56,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

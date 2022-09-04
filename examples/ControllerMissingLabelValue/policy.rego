@@ -1,14 +1,16 @@
 package weave.advisor.labels.missing_label_value
 
+import future.keywords.in
+
 label := input.parameters.label
 value := input.parameters.value
-exclude_namespace := input.parameters.exclude_namespace
+exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 
 violation[result] {
-  not exclude_namespace == controller_input.metadata.namespace
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   # Filter the type of entity before moving on since this shouldn't apply to all entities
   contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
@@ -27,3 +29,8 @@ controller_input = input.review.object
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

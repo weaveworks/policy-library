@@ -5,44 +5,33 @@ metadata:
 spec:
   id: weave.templates.affinity-node-selector
   name: Affinity Node Selector
-  description: |
-    This Policy allows setting a key and value for `nodeSelector` when assigning pods to nodes. 
-
-    `nodeSelector` is a field of PodSpec. It specifies a map of key-value pairs. For the pod to be eligible to scheduled on a node, the node must have each of the indicated key-value pairs as labels (it can have additional labels as well). 
-  how_to_solve: |
-    When working with with `nodeSelector`, the indicated key-value pair will be matched to a node label.  
-
-    ```
-    ...
-      spec:
-        nodeSelector:
-          <key>: <value>
-    ```
-    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  description: "This Policy allows setting a key and value for `nodeSelector` when assigning pods to nodes. \n\n`nodeSelector` is a field of PodSpec. It specifies a map of key-value pairs. For the pod to be eligible to scheduled on a node, the node must have each of the indicated key-value pairs as labels (it can have additional labels as well). \n"
+  how_to_solve: "When working with with `nodeSelector`, the indicated key-value pair will be matched to a node label.  \n\n```\n...\n  spec:\n    nodeSelector:\n      <key>: <value>\n```\nhttps://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector\n"
   category: weave.categories.capacity-management
   severity: medium
   standards:
-  - id: weave.standards.soc2-type-i
-    controls:
-    - weave.controls.soc2-type-i.2.1.1
+    - id: weave.standards.soc2-type-i
+      controls:
+        - weave.controls.soc2-type-i.2.1.1
   parameters:
-  - name: key
-    type: string
-    required: true
-    value:
-  - name: value
-    type: string
-    required: true
-    value:
-  - name: exclude_namespace
-    type: string
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: key
+      type: string
+      required: true
+      value:
+    - name: value
+      type: string
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: "package weave.advisor.affinity.node_selector\n\nimport future.keywords.in\n\nkey := input.parameters.key\nvalue := input.parameters.value\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  not controller_spec.nodeSelector[key]\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Looking for key '%v'; found '%v'\", [key, controller_spec.nodeSelector]),\n    \"violating_key\": \"spec.template.spec.nodeSelector\",\n    \"recommended_value\": value  \n  }\n}\n\nviolation[result] {\n  isExcludedNamespace == false\n  not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n  selector_value := controller_spec.nodeSelector[key]\n  not selector_value == value\n  result = {\n    \"issue detected\": true,\n    \"msg\": sprintf(\"Looking for key value pair '%v:%v'; found '%v'\", [key, value, controller_spec.nodeSelector]),\n    \"recommended_value\": value,\n    \"violating_key\": \"spec.template.spec.nodeSelector[key]\"\n  }\n}\n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_container acts as an iterator to get containers from the template\ncontroller_spec = controller_input.spec.template.spec {\n  contains_kind(controller_input.kind, {\"StatefulSet\" , \"DaemonSet\", \"Deployment\", \"Job\"})\n} else = controller_input.spec {\n  controller_input.kind == \"Pod\"\n} else = controller_input.spec.jobTemplate.spec.template.spec {\n  controller_input.kind == \"CronJob\"\n}\n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n\nisExcludedNamespace = true {\n\tcontroller_input.metadata.namespace\n\tcontroller_input.metadata.namespace in exclude_namespaces\n} else = false\n"
