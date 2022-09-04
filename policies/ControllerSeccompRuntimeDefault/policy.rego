@@ -9,7 +9,7 @@ exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   annotation := input.review.object.metadata.annotations["seccomp.security.alpha.kubernetes.io/pod"]
   not annotation == seccomp_annotation
@@ -22,7 +22,7 @@ violation[result] {
 
 # Pods
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_spec.securityContext.seccompProfile.type
   not type == seccomp_type
@@ -35,7 +35,7 @@ violation[result] {
 
 # Non Pods - "StatefulSet" , "DaemonSet", "Deployment", "Job"
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type
@@ -48,7 +48,7 @@ violation[result] {
 
 # CronJobs
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   type := controller_input.spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type
@@ -74,3 +74,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

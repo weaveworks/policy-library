@@ -61,7 +61,7 @@ spec:
     exclude_label_value := input.parameters.exclude_label_value
 
     violation[result] {
-      not controller_input.metadata.namespace in exclude_namespaces
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       automount := controller_spec
       not has_key(automount, "automountServiceAccountToken")
@@ -73,7 +73,7 @@ spec:
     }
 
     violation[result] {
-      not controller_input.metadata.namespace in exclude_namespaces
+      isExcludedNamespace == false
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       automount := controller_spec.automountServiceAccountToken
       not automount == automount_token
@@ -104,3 +104,8 @@ spec:
     contains_kind(kind, kinds) {
       kinds[_] = kind
     }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

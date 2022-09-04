@@ -10,7 +10,7 @@ exclude_label_value := input.parameters.exclude_label_value
 
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   # Filter the type of entity before moving on since this shouldn't apply to all entities
   contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
@@ -29,3 +29,8 @@ controller_input = input.review.object
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

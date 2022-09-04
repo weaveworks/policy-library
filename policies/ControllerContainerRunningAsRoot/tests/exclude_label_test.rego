@@ -3,7 +3,7 @@ package weave.advisor.podSecurity.runningAsRoot
 test_exclude_label {
   testcase = {
     "parameters": {
-      "exclude_namespace": "",
+      "exclude_namespaces": [],
       "exclude_label_key": "allow-root",
       "exclude_label_value": "true",
     },

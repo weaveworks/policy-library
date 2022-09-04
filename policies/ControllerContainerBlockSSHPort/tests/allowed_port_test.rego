@@ -4,7 +4,7 @@ test_allowed_port {
 	testcase = {
 		"parameters": {
 			"container_port": 22,
-			"exclude_namespace": "",
+			"exclude_namespaces": [],
 			"exclude_label_key": "",
 			"exclude_label_value": "",
 		},

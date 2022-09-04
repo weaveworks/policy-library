@@ -12,7 +12,7 @@ exclude_label_value := input.parameters.exclude_label_value
 
 # Use this if you are using exec
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -28,7 +28,7 @@ violation[result] {
 
 # Use this if you are using httpGet
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -44,7 +44,7 @@ violation[result] {
 
 # Use this if you are using tcpSocket without a named port
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i
   containers := controller_spec.containers[i]
@@ -73,3 +73,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

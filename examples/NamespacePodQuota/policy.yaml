@@ -22,3 +22,4 @@ spec:
       type: string
       required: true
       value: magalix
+  code: "package weave.advisor.namespace.pod_quotas\n\npod_quota := input.parameters.pod_quota\nnamespace := input.parameters.namespace\n\nviolation[result] {\n  rq_namespace := input.review.object.metadata.namespace\n  rq_namespace == namespace\n  pods := rq_spec.hard.pods\n  not pods <= pod_quota\n  result = {\n  \t\"issue detected\": true,\n    \"msg\": sprintf(\"The numbers of pods should be '%v' or greater; detected '%v'\", [pod_quota, pods]),\n    \"violating_key\": \"spec.hard.pods\"\n  }\n}\n\nrq_spec = input.review.object.spec{\n  contains_kind(input.review.object.kind, {\"ResourceQuota\"})\n} \n\ncontains_kind(kind, kinds) {\n  kinds[_] = kind\n}\n"

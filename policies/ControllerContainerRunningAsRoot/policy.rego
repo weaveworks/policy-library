@@ -8,7 +8,7 @@ exclude_label_value := input.parameters.exclude_label_value
 
 # Check for missing securityContext.runAsNonRoot (missing in both, pod and container)
 violation[result] {
-	not controller_input.metadata.namespace in exclude_namespaces
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
@@ -31,7 +31,7 @@ violation[result] {
 # Container security context
 # Check if containers.securityContext.runAsNonRoot exists and = false
 violation[result] {
-	not controller_input.metadata.namespace in exclude_namespaces
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	some i
@@ -50,7 +50,7 @@ violation[result] {
 # Pod security context
 # Check if spec.securityContext.runAsNonRoot exists and = false
 violation[result] {
-	not controller_input.metadata.namespace in exclude_namespaces
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 
 	controller_spec.securityContext
@@ -77,3 +77,8 @@ controller_spec = controller_input.spec.template.spec {
 contains(kind, kinds) {
 	kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

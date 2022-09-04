@@ -8,7 +8,7 @@ exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i,container in controller_spec.containers
   splittedUrl = split(container.image, "/")
@@ -22,7 +22,7 @@ violation[result] {
 }
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i,container in controller_spec.containers
   splittedUrl = split(container.image, "/")
@@ -39,7 +39,7 @@ violation[result] {
 }
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   some i,container in controller_spec.containers
   splittedUrl = split(container.image, "/")
@@ -70,3 +70,8 @@ controller_spec = controller_input.spec.template.spec {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

@@ -9,7 +9,7 @@ exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   ingress_annotation := controller_input.metadata.annotations
   not has_key(ingress_annotation, annotation)
@@ -21,7 +21,7 @@ violation[result] {
 }
 
 violation[result] {
-  not controller_input.metadata.namespace in exclude_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   ingress_class:= controller_input.metadata.annotations[annotation]
   not ingress_class == class
@@ -38,7 +38,6 @@ has_key(x, k) {
   type_name(x[k])
 }
 
-
 controller_input = input.review.object {
 	contains_kind(input.review.object.kind, {"Ingress"})
 }
@@ -46,3 +45,8 @@ controller_input = input.review.object {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false

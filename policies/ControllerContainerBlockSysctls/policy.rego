@@ -7,7 +7,7 @@ exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-	not controller_input.metadata.namespace in exclude_namespaces
+	isExcludedNamespace == false
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.securityContext.sysctls
 	result = {
@@ -32,3 +32,8 @@ controller_spec = controller_input.spec.template.spec {
 } else = controller_input.spec.jobTemplate.spec.template.spec {
 	controller_input.kind == "CronJob"
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false
