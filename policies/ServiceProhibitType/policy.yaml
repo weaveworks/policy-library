@@ -35,7 +35,7 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.services.block_servicetype
 
     import future.keywords.in
@@ -67,3 +67,8 @@ spec:
     contains_kind(kind, kinds) {
       kinds[_] = kind
     }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false

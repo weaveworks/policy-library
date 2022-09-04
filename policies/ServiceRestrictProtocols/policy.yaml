@@ -37,7 +37,7 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.services.block_protocols
 
     import future.keywords.in
@@ -46,7 +46,6 @@ spec:
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
-
 
     violation[result] {
       isExcludedNamespace == false
@@ -73,3 +72,8 @@ spec:
     contains_kind(kind, kinds) {
       kinds[_] = kind
     }
+
+    isExcludedNamespace = true {
+    	controller_input.metadata.namespace
+    	controller_input.metadata.namespace in exclude_namespaces
+    } else = false
