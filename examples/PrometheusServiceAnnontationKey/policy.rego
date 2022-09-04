@@ -8,7 +8,7 @@ exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
-  not service_input.metadata.namespace in excluded_namespaces
+  isExcludedNamespace == false
   not exclude_label_value == service_input.metadata.labels[exclude_label_key]
   not service_input.metadata.annotations[annotation]
   result = {
@@ -25,3 +25,8 @@ service_input = input.review.object {
 contains_kind(kind, kinds) {
   kinds[_] = kind
 }
+
+isExcludedNamespace = true {
+	service_input.metadata.namespace
+	service_input.metadata.namespace in exclude_namespaces
+} else = false
