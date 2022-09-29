@@ -10,7 +10,7 @@ exclude_label_value := input.parameters.exclude_label_value
 controller_input := input.review.object
 
 violation[result] {
-	not controller_input.metadata.namespace in exclude_namespaces
+	isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 	not replicas >= min_replica_count
 	result = {
@@ -32,3 +32,8 @@ violating_key := "spec.replicas" {
 } else := "spec.minReplicas" {
 	controller_input.kind == "HorizontalPodAutoscaler"
 }
+
+isExcludedNamespace = true {
+	controller_input.metadata.namespace
+	controller_input.metadata.namespace in exclude_namespaces
+} else = false
