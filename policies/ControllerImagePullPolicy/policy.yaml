@@ -1,4 +1,4 @@
-apiVersion: pac.weave.works/v2beta1
+apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
   name: weave.policies.container-image-pull-policy
