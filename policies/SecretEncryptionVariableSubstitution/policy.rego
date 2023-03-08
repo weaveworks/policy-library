@@ -27,7 +27,7 @@ tpl_keys = [sprintf("data.%s", [key]) |
 ]
 
 violation[result] {
-  isExcludedNamespace == false
+  not isExcludedNamespace
   not exclude_label_value == obj.metadata.labels[exclude_label_key]
   has_key(obj, "sops")
   count(enc_keys) > 0
@@ -42,7 +42,7 @@ violation[result] {
 }
 
 violation[result] {
-  isExcludedNamespace == false
+  not isExcludedNamespace
   not exclude_label_value == obj.metadata.labels[exclude_label_key]
   not has_key(obj, "sops")
   count(tpl_keys) > 0
