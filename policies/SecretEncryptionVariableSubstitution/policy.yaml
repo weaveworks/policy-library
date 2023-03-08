@@ -1,0 +1,88 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.secrets
+spec:
+  id: weave.policies.secrets
+  name: Deny Secrets not Encrypted or not using Flux Variable Substitution
+  enabled: true
+  description: |
+    Checks the secrets in the repo to make sure there are none with unencrypted data or that Substitute Variables are used.
+  how_to_solve: |
+    Please recreate the secret data and encrypt the secret file using the appropriate commmands.
+  category: weave.categories.secrets
+  severity: critical
+  targets:
+    kinds:
+      - Secret
+  parameters:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: weave.policies.secrets
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: ignore
+  code: |
+    package weave.policies.secrets
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    has_key(x, k) {
+      _ = x[k]
+    }
+
+    isExcludedNamespace = true {
+      obj.metadata.namespace
+      obj.metadata.namespace in exclude_namespaces
+    } else = false
+
+    obj = input.review.object
+
+    enc_keys = [sprintf("data.%s", [key]) |
+      obj.data[key]
+      not startswith(obj.data[key], "ENC[")
+    ]
+
+    tpl_keys = [sprintf("data.%s", [key]) |
+      obj.data[key]
+      not startswith(obj.data[key], "${")
+    ]
+
+    violation[result] {
+      not isExcludedNamespace
+      not exclude_label_value == obj.metadata.labels[exclude_label_key]
+      has_key(obj, "sops")
+      count(enc_keys) > 0
+
+      some key in enc_keys
+
+      result = {
+        "issue_detected": true,
+        "msg": sprintf("Secret is either not encrypted or not using Flux Substitute Variables: %s", [key]),
+        "violating_key": key
+      }
+    }
+
+    violation[result] {
+      not isExcludedNamespace
+      not exclude_label_value == obj.metadata.labels[exclude_label_key]
+      not has_key(obj, "sops")
+      count(tpl_keys) > 0
+
+      some key in tpl_keys
+
+      result = {
+        "issue_detected": true,
+        "msg": sprintf("Secret is either not encrypted or not using Flux Substitute Variables: %s", [key]),
+        "violating_key": key
+      }
+    }
