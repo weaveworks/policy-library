@@ -14,20 +14,20 @@ spec:
   severity: critical
   targets:
     kinds:
-    - Secret
+      - Secret
   parameters:
-  - name: exclude_namespaces
-    type: array
-    required: false
-    value:
-  - name: exclude_label_key
-    type: string
-    required: false
-    value: weave.policies.secrets
-  - name: exclude_label_value
-    type: string
-    required: false
-    value: ignore
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: weave.policies.secrets
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: ignore
   code: |
     package weave.policies.secrets
     import future.keywords.in
