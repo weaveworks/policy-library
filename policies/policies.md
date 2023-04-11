@@ -1577,6 +1577,34 @@ high
 
 ---
 
+## Helm Release Rollback Should Be Disabled
+
+### ID
+weave.policies.helm-release-rollback
+
+### Description
+The rollback feature of a HelmRelease should be disabled.
+
+### How to solve?
+Set the rollback feature of the HelmRelease to false.
+
+### Category
+weave.categories.security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Missing Kubernetes App Managed By Label
 
 ### ID
