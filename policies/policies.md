@@ -1287,34 +1287,6 @@ high
 
 ---
 
-## Helm Repo URL Should Be in Organisation Domain
-
-### ID
-weave.policies.helm-repo-url-should-be-in-organisation-domain
-
-### Description
-The URL of a Helm repository should only be from the specified organisation domain.
-
-### How to solve?
-Change the URL of the Helm repository to one that is from the organisation domain.
-
-### Category
-weave.categories.security
-
-### Severity
-high
-
-### Targets
-{'kinds': ['HelmRepo']}
-
-### Tags
-['security']
-
-### Parameters
-[{'name': 'organisation_domain', 'type': 'string', 'required': True, 'value': 'my-org.com'}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': 'owner'}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': 'jane.doe'}]
-
----
-
 ## Helm Repo Type Should Be OCI
 
 ### ID
@@ -1333,10 +1305,10 @@ weave.categories.security
 high
 
 ### Targets
-{'kinds': ['HelmRepo']}
+{'kinds': ['HelmRepository']}
 
 ### Tags
-['security']
+['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': 'owner'}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': 'jane.doe'}]
