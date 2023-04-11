@@ -1,0 +1,58 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.helm-repo-url-should-be-in-organisation-domain
+spec:
+  id: weave.policies.helm-repo-url-should-be-in-organisation-domain
+  name: Helm Repo URL Should Be in Organisation Domain
+  enabled: true
+  description: "The URL of a Helm repository should only be from the specified organisation domain."
+  how_to_solve: "Change the URL of the Helm repository to one that is from the organisation domain."
+  category: weave.categories.security
+  severity: high
+  targets: {kinds: [HelmRepo]}
+  tags: [security]
+  parameters:
+    - name: organisation_domain
+      type: string
+      required: true
+      value: my-org.com
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: ["kube-system"]
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: owner
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: jane.doe
+  code: |
+    package weave.advisor.helm_repo_url
+
+    organisation_domain := input.parameters.organisation_domain
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+      not isExcludedNamespace
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      url := controller_spec.url
+      not startswith(url, "https://" + organisation_domain)
+      result = {
+        "issue detected": true,
+        "msg": sprintf("The HelmRepo url must only be from the organisation domain '%v'; found '%v'", [organisation_domain, url]),
+        "violating_key": "spec.url",
+      }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # Controller spec
+    controller_spec = controller_input.spec
+
+    isExcludedNamespace = controller_input.metadata.namespace in exclude_namespaces
