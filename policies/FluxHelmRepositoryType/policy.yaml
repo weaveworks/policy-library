@@ -1,7 +1,7 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-repo-type
+  name: weave.policies.helm-repo-type-should-be-oci
 spec:
   id: weave.policies.helm-repo-type
   name: Helm Repo Type Should Be OCI
@@ -10,8 +10,8 @@ spec:
   how_to_solve: "Change the type of the Helm repository to OCI."
   category: weave.categories.security
   severity: high
-  targets: {kinds: [HelmRepo]}
-  tags: [security]
+  targets: {kinds: [HelmRepository]}
+  tags: [flux]
   parameters:
     - name: exclude_namespaces
       type: array
@@ -36,15 +36,16 @@ spec:
     exclude_label_value := input.parameters.exclude_label_value
 
     violation[result] {
-        isExcludedNamespace == false
-        repository_type := controller_spec.type
-        repository_type != "oci"
-        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-        result = {
-            "issue detected": true,
-            "msg": sprintf("The HelmRepo type must be '%v'; found '%v'", ["oci", repository_type]),
-            "violating_key": "spec.type"
-        }
+      isExcludedNamespace == false
+      repository_type := controller_spec.type
+      repository_type != "oci"
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      result = {
+          "issue detected": true,
+          "msg": sprintf("The HelmRepository type must be oci; found '%s'",  repository_type),
+          "recommended_value": "oci",
+          "violating_key": "spec.type",
+      }
     }
 
     # Controller input

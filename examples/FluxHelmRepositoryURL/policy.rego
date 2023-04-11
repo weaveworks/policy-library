@@ -2,7 +2,7 @@ package weave.advisor.helm_repo_url
 
 import future.keywords.in
 
-domain := input.parameters.domain
+domains := input.parameters.domains
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
@@ -10,13 +10,21 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     repository_url := controller_spec.url
-    not startswith(repository_url, sprintf("https://%s", [domain]))
+    not domain_matches(repository_url, domains)
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRepo URL must be from the organization domain '%v'; found '%v'", [domain, repository_url]),
+        "msg": sprintf("The HelmRepo URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),
         "violating_key": "spec.url"
     }
+}
+
+domain_matches(url, domains) {
+    startswith(url, "https://")
+    parts := split(url, "/")
+    count(parts) > 2
+    domain := parts[2]
+    domain in domains
 }
 
 # Controller input
@@ -24,7 +32,7 @@ controller_input = input.review.object
 
 # controller_container acts as an iterator to get containers from the template
 controller_spec = controller_input.spec {
-  controller_input.kind == "HelmRepo"
+  controller_input.kind == "HelmRepository"
 }
 
 contains_kind(kind, kinds) {

@@ -14,7 +14,8 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRepo type must be '%v'; found '%v'", ["oci", repository_type]),
+        "msg": sprintf("The HelmRepository type must be oci; found '%s'",  repository_type),
+        "recommended_value": "oci",
         "violating_key": "spec.type"
     }
 }
