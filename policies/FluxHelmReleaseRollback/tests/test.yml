@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: my-release
+spec:
+  releaseName: my-release
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: wordpress
+    version: 10.3.14
+  values:
+    image:
+      tag: 5.8-apache
+  rollback:
+    enable: true

@@ -1,0 +1,7 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: test-repo
+  spec:
+    url: https://test-repo-2.com
+    type: other-type
