@@ -1,16 +1,16 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-repo-type-should-be-oci
+  name: weave.policies.helm-chart-cosign-verification
 spec:
-  id: weave.policies.helm-repo-type
-  name: Helm Repo Type Should Be OCI
+  id: weave.policies.helm-chart-cosign-verification
+  name: Helm Chart Cosign Verification
   enabled: true
-  description: "The type of a Helm repository should be OCI."
-  how_to_solve: "Change the type of the Helm repository to OCI."
+  description: "HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension."
+  how_to_solve: "Add cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension to the HelmChart object."
   category: weave.categories.security
   severity: high
-  targets: {kinds: [HelmRepository]}
+  targets: {kinds: [HelmChart]}
   tags: [flux]
   parameters:
     - name: exclude_namespaces
@@ -26,10 +26,9 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.helm_repo_type
+    package weave.advisor.helm_chart_reconcile_strategy
 
     import future.keywords.in
-
 
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
@@ -37,14 +36,13 @@ spec:
 
     violation[result] {
         isExcludedNamespace == false
-        repository_type := controller_spec.type
-        repository_type != "oci"
+        not controller_spec.verify.provider == "cosign"
+        not controller_spec.secretRef.name
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
         result = {
             "issue detected": true,
-            "msg": sprintf("The HelmRepository type must be oci; found '%s'",  repository_type),
-            "recommended_value": "oci",
-            "violating_key": "spec.type"
+            "msg": "The HelmChart must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension",
+            "violating_key": "spec.reconcileStrategy"
         }
     }
 
@@ -53,14 +51,14 @@ spec:
 
     # controller_container acts as an iterator to get containers from the template
     controller_spec = controller_input.spec {
-      controller_input.kind == "HelmRepository"
+      controller_input.kind == "HelmChart"
     }
 
     contains_kind(kind, kinds) {
-      kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
-      controller_input.metadata.namespace
-      controller_input.metadata.namespace in exclude_namespaces
+        controller_input.metadata.namespace
+        controller_input.metadata.namespace in exclude_namespaces
     } else = false
