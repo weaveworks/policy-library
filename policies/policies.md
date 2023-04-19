@@ -787,6 +787,34 @@ high
 
 ---
 
+## HelmChart Reconcile Strategy
+
+### ID
+weave.policies.helm-chart-reconcile-strategy
+
+### Description
+The HelmChart reconcile strategy can only specify one of 'revision' or 'chartVersion'.
+
+### How to solve?
+Set the reconcile strategy to either 'revision' or 'chartVersion' in the HelmChart.
+
+### Category
+weave.categories.security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Postgres Enforce Environment Variable - POSTGRES_HOST_AUTH_METHOD
 
 ### ID
@@ -1311,7 +1339,7 @@ high
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': 'owner'}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': 'jane.doe'}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -4180,6 +4208,34 @@ high
 
 ---
 
+## Helm Chart Cosign Verification
+
+### ID
+weave.policies.helm-chart-cosign-verification
+
+### Description
+HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension.
+
+### How to solve?
+Add cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension to the HelmChart object.
+
+### Category
+weave.categories.security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Mongo-Express Enforce Environment Variable - ME_CONFIG_MONGODB_ENABLE_ADMIN
 
 ### ID
@@ -4605,6 +4661,34 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Helm Repo Type Should Be OCI
+
+### ID
+weave.policies.helm-repo-type
+
+### Description
+The type of a Helm repository should be OCI.
+
+### How to solve?
+Change the type of the Helm repository to OCI.
+
+### Category
+weave.categories.security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['HelmRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
 
 ---
 
