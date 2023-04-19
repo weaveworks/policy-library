@@ -12,21 +12,21 @@ spec:
   severity: high
   targets:
     kinds:
-    - HelmChart
+      - HelmChart
   tags: [flux]
   parameters:
-  - name: exclude_namespaces
-    type: array
-    required: false
-    value: ["kube-system"]
-  - name: exclude_label_key
-    type: string
-    required: false
-    value:
-  - name: exclude_label_value
-    type: string
-    required: false
-    value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: ["kube-system"]
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
   code: |
     package weave.advisor.helm_chart_reconcile_strategy
 
@@ -57,10 +57,10 @@ spec:
     }
 
     contains_kind(kind, kinds) {
-      kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
-      controller_input.metadata.namespace
-      controller_input.metadata.namespace in exclude_namespaces
+        controller_input.metadata.namespace
+        controller_input.metadata.namespace in exclude_namespaces
     } else = false
