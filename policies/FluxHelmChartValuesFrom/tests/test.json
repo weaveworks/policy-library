@@ -1,0 +1,31 @@
+{
+      "review": {
+        "object": {
+          "apiVersion": "source.toolkit.fluxcd.io/v1",
+          "kind": "HelmChart",
+          "metadata": {
+            "name": "invalid-values-file",
+            "namespace": "default"
+          },
+          "spec": {
+            "chart": "some-chart",
+            "sourceRef": {
+              "kind": "HelmRepository",
+              "name": "some-repo",
+              "namespace": "default"
+            },
+            "valuesFrom": [
+              {
+                "name": "incorrect=valuesfile.yaml"
+              }
+            ]
+          }
+        }
+      },
+      "parameters": {
+        "exclude_namespaces": [],
+        "exclude_label_key": "",
+        "exclude_label_value": ""
+      }
+    }
+    

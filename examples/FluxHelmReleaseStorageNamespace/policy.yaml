@@ -1,0 +1,66 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.helm-release-storage-namespace
+spec:
+  id: weave.policies.helm-release-storage-namespace
+  name: Helm Release Storage Namespace
+  enabled: true
+  description: "HelmRelease storageNamespace must be one of the allowed storageNamespace list."
+  how_to_solve: "Set the storageNamespace of the HelmRelease to one of the allowed namespaces."
+  category: weave.categories.security
+  severity: high
+  targets:
+    kinds: [HelmRelease]
+  tags: [flux]
+  parameters:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: []
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+    - name: storage_namespace_list
+      type: array
+      required: true
+      value:
+        - allowed-storage-namespace1
+        - allowed-storage-namespace2
+  code: |
+    package helm_release_storage_namespace
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    storage_namespace_list := input.parameters.storage_namespace_list
+
+    violation[result] {
+        isExcludedNamespace == false
+        storage_namespace := controller_spec.storageNamespace
+        not storage_namespace in storage_namespace_list
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The HelmRelease '%s' storageNamespace must be one of the allowed storageNamespace list: %v; found '%s'", [controller_input.metadata.name, storage_namespace_list, storage_namespace]),
+            "violating_key": "spec.storageNamespace"
+        }
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+      controller_input.kind == "HelmRelease"
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false

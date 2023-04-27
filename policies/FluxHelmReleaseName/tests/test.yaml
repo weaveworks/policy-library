@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: abcdefghijkl-mnopqrstuvwx
+  namespace: default
+  labels:
+    app: myapp
+spec:
+  chart:
+    spec:
+      chart: my-chart
+      version: "1.0.0"
+      sourceRef:
+        kind: HelmRepository
+        name: my-repo
+        namespace: default
+  interval: 1m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3

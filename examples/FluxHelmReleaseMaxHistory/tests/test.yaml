@@ -1,0 +1,9 @@
+apiVersion: helm.toolkit.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: excessive-max-history-release
+  namespace: default
+spec:
+  maxHistory: 20
+  chart: some-chart
+   

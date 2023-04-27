@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: valid-values-file
+  namespace: default
+spec:
+  chart: some-chart
+  sourceRef:
+    kind: HelmRepository
+    name: some-repo
+    namespace: default
+  valuesFrom:
+    - name: production=values.yaml

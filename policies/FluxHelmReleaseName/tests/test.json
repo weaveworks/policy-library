@@ -1,0 +1,22 @@
+{
+      "review": {
+        "object": {
+          "apiVersion": "helm.toolkit.fluxcd.io/v1",
+          "kind": "HelmRelease",
+          "metadata": {
+            "name": "example-1234567890ab",
+            "namespace": "default",
+            "labels": {
+              "app": "myapp"
+            }
+          },
+          "spec": {}
+        }
+      },
+      "parameters": {
+        "exclude_namespaces": [],
+        "exclude_label_key": "",
+        "exclude_label_value": ""
+      }
+    }
+    

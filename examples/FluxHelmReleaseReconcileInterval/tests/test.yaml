@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: invalid-interval-release
+  namespace: default
+spec:
+  interval: 20
+  chart:
+    spec:
+      chart: some-chart
+      sourceRef:
+        kind: HelmRepository
+        name: some-repo
+        namespace: default
+  install:
+    createNamespace: true

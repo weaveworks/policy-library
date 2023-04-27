@@ -1,0 +1,33 @@
+{
+      "review": {
+        "object": {
+          "apiVersion": "helm.toolkit.fluxcd.io/v1",
+          "kind": "HelmRelease",
+          "metadata": {
+            "name": "invalid-target-namespace-release",
+            "namespace": "default"
+          },
+          "spec": {
+            "interval": 300,
+            "chart": {
+              "spec": {
+                "chart": "some-chart",
+                "sourceRef": {
+                  "kind": "HelmRepository",
+                  "name": "some-repo",
+                  "namespace": "default"
+                }
+              }
+            },
+            "targetNamespace": "disallowed-namespace"
+          }
+        }
+      },
+      "parameters": {
+        "exclude_namespaces": [],
+        "exclude_label_key": "",
+        "exclude_label_value": "",
+        "target_namespace_list": ["allowed-namespace1", "allowed-namespace2"]
+      }
+    }
+    

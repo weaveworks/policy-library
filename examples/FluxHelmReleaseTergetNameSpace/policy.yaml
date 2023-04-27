@@ -1,0 +1,72 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.helm-release-target-namespace
+spec:
+  id: weave.policies.helm-release-target-namespace
+  name: Helm Release Target Namespace
+  enabled: true
+  description: "HelmRelease targetNamespace must be one of the allowed targetNamespace list."
+  how_to_solve: "Set the targetNamespace of the HelmRelease to one of the allowed namespaces."
+  category: weave.categories.security
+  severity: high
+  targets:
+    kinds: [HelmRelease]
+  tags: [flux]
+  parameters:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: []
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+    - name: target_namespace_list
+      type: array
+      required: true
+      value:
+        - allowed-namespace1
+        - allowed-namespace2
+  code: |
+    package helm_release_target_namespace
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    target_namespace_list := input.parameters.target_namespace_list
+
+    violation[result] {
+        isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        not controller_spec.targetNamespace in target_namespace_list
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The HelmRelease '%s' targetNamespace must be one of the allowed target namespaces: %v; found '%s'", [controller_input.metadata.name, target_namespace_list, controller_spec.targetNamespace]),
+            "violating_key": "spec.targetNamespace"
+        }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec {
+      controller_input.kind == "HelmRelease"
+    }
+
+    contains_kind(kind, kinds) {
+    kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+

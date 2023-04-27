@@ -28,7 +28,7 @@ spec:
     - name: exclude_label_value
       type: string
       required: false
-      value: "true"
+      value:
   code: |
     package weave.advisor.helm_repo_url
 

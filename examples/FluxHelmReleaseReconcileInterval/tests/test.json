@@ -1,0 +1,50 @@
+{
+      "review": {
+        "object": {
+          "apiVersion": "helm.toolkit.fluxcd.io/v1",
+          "kind": "HelmRelease",
+          "metadata": {
+            "name": "release-with-missing-labels-annotations",
+            "namespace": "default",
+            "labels": {
+              "app": "myapp"
+            }
+          },
+          "spec": {
+            "interval": 300,
+            "chart": {
+              "spec": {
+                "chart": "some-chart",
+                "sourceRef": {
+                  "kind": "HelmRepository",
+                  "name": "some-repo",
+                  "namespace": "default"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": {
+        "exclude_namespaces": [],
+        "exclude_label_key": "",
+        "exclude_label_value": "",
+        "required_labels": [
+          {
+            "key": "team",
+            "value": "devops"
+          },
+          {
+            "key": "environment",
+            "value": "production"
+          }
+        ],
+        "required_annotations": [
+          {
+            "key": "author",
+            "value": "john_doe"
+          }
+        ]
+      }
+    }
+    

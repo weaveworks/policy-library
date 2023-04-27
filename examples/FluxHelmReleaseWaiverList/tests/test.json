@@ -1,0 +1,19 @@
+{
+      "review": {
+        "object": {
+          "apiVersion": "helm.toolkit.fluxcd.io/v1",
+          "kind": "HelmRelease",
+          "metadata": {
+            "name": "suspended-release",
+            "namespace": "default"
+          },
+          "spec": {
+            "suspend": true
+          }
+        }
+      },
+      "parameters": {
+        "waiver_list": ["waived-release"]
+      }
+    }
+    
