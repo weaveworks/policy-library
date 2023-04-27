@@ -27,10 +27,9 @@ spec:
       required: false
       value:
   code: |
-    package helm_chart_values_file_format
+    package helm_chart_values_files
 
     import future.keywords.in
-    import data.re
 
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
@@ -39,21 +38,28 @@ spec:
     violation[result] {
         isExcludedNamespace == false
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        values_file := controller_spec.valuesFrom[_].name
         not re_match(`^.+=values\.yaml$`, values_file)
         result = {
             "issue detected": true,
-            "msg": sprintf("HelmChart '%s' must reference values files in the format 'xxx=values.yaml'; found '%s'", [controller_input.metadata.name, values_from_entry.name]),
-            "violating_key": "spec.valuesFrom.name"
+            "msg": sprintf("The HelmChart '%s' must reference values files in the format 'xxx=values.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
+            "violating_key": "spec.valuesFrom[_].name"
         }
     }
 
     # Controller input
     controller_input = input.review.object
 
-    # ValuesFrom entry
-    values_from_entry = controller_input.spec.valuesFrom[_]
+    # Controller spec
+    controller_spec = controller_input.spec {
+      controller_input.kind == "HelmChart"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
 
     isExcludedNamespace = true {
-        controller_input.metadata.namespace
-        controller_input.metadata.namespace in exclude_namespaces
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
     } else = false

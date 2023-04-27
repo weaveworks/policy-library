@@ -52,14 +52,14 @@ spec:
 
     # controller_container acts as an iterator to get containers from the template
     controller_spec = controller_input.spec {
-        controller_input.kind == "HelmRelease"
+      controller_input.kind == "HelmRelease"
     }
 
     contains_kind(kind, kinds) {
-        kinds[_] = kind
+    kinds[_] = kind
     }
 
     isExcludedNamespace = true {
-        controller_input.metadata.namespace
-        controller_input.metadata.namespace in exclude_namespaces
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
     } else = false
