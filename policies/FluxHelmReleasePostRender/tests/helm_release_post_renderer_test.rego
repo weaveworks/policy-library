@@ -1,4 +1,4 @@
-package weave.advisor.helm_release_service_account_name_test
+package weave.advisor.helm_release_service_account_name
 
 import data.weave.advisor.helm_release_service_account_name.violation
 
