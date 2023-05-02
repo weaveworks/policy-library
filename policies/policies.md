@@ -398,7 +398,7 @@ Change the type of the Helm repository to OCI.
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmRepository']}
