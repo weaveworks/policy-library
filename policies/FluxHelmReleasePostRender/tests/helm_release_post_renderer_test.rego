@@ -1,14 +1,13 @@
-package weave.advisor.helm_release_service_account_name
+package weave.advisor.helm_release_post_renderer
 
-import data.weave.advisor.helm_release_service_account_name.violation
+import data.weave.advisor.helm_release_post_renderer.violation
 
-test_valid_service_account_name {
+test_valid_no_post_renderer {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "",
-      "exclude_label_value": "",
-      "allowed_service_accounts": ["valid-sa"]
+      "exclude_label_value": ""
     },
     "review": {
       "object": {
@@ -18,7 +17,6 @@ test_valid_service_account_name {
           "name": "valid-helm-release",
         },
         "spec": {
-          "serviceAccountName": "valid-sa"
         }
       }
     }
@@ -27,13 +25,12 @@ test_valid_service_account_name {
   count(violation) == 0 with input as testcase
 }
 
-test_invalid_service_account_name {
+test_invalid_post_renderer_enabled {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "",
-      "exclude_label_value": "",
-      "allowed_service_accounts": ["valid-sa"]
+      "exclude_label_value": ""
     },
     "review": {
       "object": {
@@ -43,7 +40,7 @@ test_invalid_service_account_name {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "serviceAccountName": "invalid-sa"
+          "postRenderers": ["some-renderer"]
         }
       }
     }
@@ -52,26 +49,25 @@ test_invalid_service_account_name {
   count(violation) == 1 with input as testcase
 }
 
-test_exclude_label_service_account_name {
+test_exclude_label_post_renderer_enabled {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "exclude",
-      "exclude_label_value": "true",
-      "allowed_service_accounts": ["valid-sa"]
+      "exclude_label_value": "true"
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "invalid-helm-release",
+          "name": "excluded-helm-release",
           "labels": {
             "exclude": "true"
           }
         },
         "spec": {
-          "serviceAccountName": "invalid-sa"
+          "postRenderers": ["some-renderer"]
         }
       }
     }
@@ -80,24 +76,23 @@ test_exclude_label_service_account_name {
   count(violation) == 0 with input as testcase
 }
 
-test_exclude_namespace_service_account_name {
+test_exclude_namespace_post_renderer_enabled {
   testcase = {
     "parameters": {
       "exclude_namespaces": ["excluded-namespace"],
       "exclude_label_key": "",
-      "exclude_label_value": "",
-      "allowed_service_accounts": ["valid-sa"]
+      "exclude_label_value": ""
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "invalid-helm-release",
+          "name": "excluded-helm-release",
           "namespace": "excluded-namespace",
         },
         "spec": {
-          "serviceAccountName": "invalid-sa"
+          "postRenderers": ["some-renderer"]
         }
       }
     }
