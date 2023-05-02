@@ -338,7 +338,7 @@ Set the reconcile strategy to either 'revision' or 'chartVersion' in the HelmCha
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmChart']}
@@ -2710,31 +2710,31 @@ medium
 
 ---
 
-## Helm Repo Type Should Be OCI
+## Helm Chart Source Reference
 
 ### ID
-weave.policies.helm-repo-type
+weave.policies.helm-chart-source-reference
 
 ### Description
-The type of a Helm repository should be OCI.
+The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository'.
 
 ### How to solve?
-Change the type of the Helm repository to OCI.
+Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository'.
 
 ### Category
-weave.categories.security
+weave.categories.configuration
 
 ### Severity
-high
+medium
 
 ### Targets
-{'kinds': ['HelmRepository']}
+{'kinds': ['HelmChart']}
 
 ### Tags
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -3328,7 +3328,7 @@ Add cosign verification and reference a secret containing the Cosign public keys
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmChart']}
