@@ -1,7 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
-metadata:
-  name: example-repo
-  namespace: default
-spec:
-  url: https://charts.organisation.com
