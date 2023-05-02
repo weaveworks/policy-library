@@ -1,4 +1,4 @@
-package weave.advisor.helm_chart_reconcile_strategy
+package weave.advisor.helm_chart_source_refrence
 
 test_source_ref_kind_invalid {
   testcase = {

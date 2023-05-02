@@ -1,4 +1,4 @@
-package weave.advisor.helm_chart_reconcile_strategy
+package weave.advisor.helm_chart_cosign_verification
 
 test_exclude_label {
   testcase = {

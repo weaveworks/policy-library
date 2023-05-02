@@ -1,17 +1,16 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-repo-type-should-be-oci
+  name: weave.policies.helm-chart-source-reference
 spec:
-  id: weave.policies.helm-repo-type
-  name: Helm Repo Type Should Be OCI
+  id: weave.policies.helm-chart-source-reference
+  name: Helm Chart Source Reference
   enabled: true
-  description: "The type of a Helm repository should be OCI."
-  how_to_solve: "Change the type of the Helm repository to OCI."
-  category: weave.categories.security
+  description: "The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository'."
+  how_to_solve: "Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository'."
+  category: weave.categories.configuration
   severity: medium
-  targets:
-    kinds: [HelmChart]
+  targets: {kinds: [HelmChart]}
   tags: [flux]
   parameters:
     - name: exclude_namespaces
@@ -21,13 +20,13 @@ spec:
     - name: exclude_label_key
       type: string
       required: false
-      value: ""
+      value:
     - name: exclude_label_value
       type: string
       required: false
-      value: ""
+      value:
   code: |
-    package weave.advisor.helm_chart_reconcile_strategy
+    package weave.advisor.helm_chart_source_refrence
 
     import future.keywords.in
 

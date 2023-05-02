@@ -9,7 +9,7 @@ spec:
   description: "The HelmChart reconcile strategy can only specify one of 'revision' or 'chartVersion'."
   how_to_solve: "Set the reconcile strategy to either 'revision' or 'chartVersion' in the HelmChart."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets:
     kinds:
       - HelmChart
