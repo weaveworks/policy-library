@@ -11,7 +11,7 @@ spec:
   category: weave.categories.security
   severity: high
   targets:
-    kinds: [HelmRepository]
+    kinds: [HelmChart]
   tags: [flux]
   parameters:
     - name: exclude_namespaces
