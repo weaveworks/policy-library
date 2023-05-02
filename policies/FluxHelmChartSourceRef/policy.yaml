@@ -9,7 +9,7 @@ spec:
   description: "The type of a Helm repository should be OCI."
   how_to_solve: "Change the type of the Helm repository to OCI."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets:
     kinds: [HelmChart]
   tags: [flux]

@@ -9,7 +9,7 @@ spec:
   description: "HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension."
   how_to_solve: "Add cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension to the HelmChart object."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets: {kinds: [HelmChart]}
   tags: [flux]
   parameters:
@@ -26,7 +26,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.helm_chart_reconcile_strategy
+    package weave.advisor.helm_chart_cosign_verification
 
     import future.keywords.in
 
