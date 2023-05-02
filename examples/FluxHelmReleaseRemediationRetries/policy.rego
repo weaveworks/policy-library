@@ -1,4 +1,4 @@
-package helm_release_remediation_retries
+package weave.advisor.helm_release_remediation_retries
 
 import future.keywords.in
 

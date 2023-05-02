@@ -9,7 +9,7 @@ spec:
   description: "HelmRelease cannot be suspended unless it's on the waiver list."
   how_to_solve: "Add the HelmRelease to the waiver list or set 'suspend' to false."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets: {kinds: [HelmRelease]}
   tags: [flux]
   parameters:
@@ -30,7 +30,7 @@ spec:
       required: true
       value: []
   code: |
-    package helm_release_suspended_waiver
+    package weave.advisor.helm_release_suspended_waiver
 
     import future.keywords.in
 

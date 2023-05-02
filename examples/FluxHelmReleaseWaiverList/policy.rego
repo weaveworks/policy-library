@@ -1,4 +1,4 @@
-package helm_release_suspended_waiver
+package weave.advisor.helm_release_suspended_waiver
 
 import future.keywords.in
 

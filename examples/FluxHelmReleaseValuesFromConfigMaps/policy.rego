@@ -3,7 +3,7 @@
 # It checks if the configMapKeyRef.name is in the allowed_configmaps list provided in the input parameters.
 # If the ConfigMap name is not in the allowed list, it triggers a violation with a descriptive message.
 
-package helm_release_values_from_configmaps
+package weave.advisor.helm_release_values_from_configmaps
 
 import future.keywords.in
 

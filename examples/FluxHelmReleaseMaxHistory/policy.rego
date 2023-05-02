@@ -1,4 +1,4 @@
-package helm_release_max_history
+package weave.advisor.helm_release_max_history
 
 import future.keywords.in
 

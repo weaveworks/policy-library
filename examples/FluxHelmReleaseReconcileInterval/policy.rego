@@ -1,4 +1,4 @@
-package helm_release_reconcile_interval
+package weave.advisor.helm_release_reconcile_interval
 
 import future.keywords.in
 

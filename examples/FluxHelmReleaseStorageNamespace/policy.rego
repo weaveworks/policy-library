@@ -1,4 +1,4 @@
-package helm_release_storage_namespace
+package weave.advisor.helm_release_storage_namespace
 
 import future.keywords.in
 

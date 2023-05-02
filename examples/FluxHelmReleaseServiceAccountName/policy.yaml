@@ -33,7 +33,7 @@ spec:
         - allowed-service-account-1
         - allowed-service-account-2
   code: |
-    package helm_release_service_account_name
+    package weave.advisor.helm_release_service_account_name
 
     import future.keywords.in
 

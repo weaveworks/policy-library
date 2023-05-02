@@ -1,4 +1,4 @@
-package helm_release_namespace_match
+package weave.advisor.helm_release_namespace_match
 
 import future.keywords.in
 

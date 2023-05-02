@@ -1,4 +1,4 @@
-package helm_release_post_renderer
+package weave.advisor.helm_release_post_renderer
 
 import future.keywords.in
 

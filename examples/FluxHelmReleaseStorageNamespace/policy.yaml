@@ -9,7 +9,7 @@ spec:
   description: "HelmRelease storageNamespace must be one of the allowed storageNamespace list."
   how_to_solve: "Set the storageNamespace of the HelmRelease to one of the allowed namespaces."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
@@ -33,7 +33,7 @@ spec:
         - allowed-storage-namespace1
         - allowed-storage-namespace2
   code: |
-    package helm_release_storage_namespace
+    package weave.advisor.helm_release_storage_namespace
 
     import future.keywords.in
 

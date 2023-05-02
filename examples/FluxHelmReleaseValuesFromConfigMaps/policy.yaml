@@ -9,7 +9,7 @@ spec:
   description: "HelmRelease valuesFrom must use correctly configured ConfigMaps."
   how_to_solve: "Ensure that the HelmRelease uses allowed ConfigMaps in the valuesFrom field."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
@@ -32,7 +32,7 @@ spec:
       value:
         - allowed-configmap
   code: |
-    package helm_release_values_from_configmaps
+    package weave.advisor.helm_release_values_from_configmaps
 
     import future.keywords.in
 

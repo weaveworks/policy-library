@@ -1,4 +1,4 @@
-package helm_release_name_regex
+package weave.advisor.helm_release_name_regex
 
 import future.keywords.in
 

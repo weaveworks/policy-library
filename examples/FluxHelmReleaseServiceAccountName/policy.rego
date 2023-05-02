@@ -1,4 +1,4 @@
-package helm_release_service_account_name
+package weave.advisor.helm_release_service_account_name
 
 import future.keywords.in
 

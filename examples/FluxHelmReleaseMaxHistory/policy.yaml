@@ -9,7 +9,7 @@ spec:
   description: "HelmRelease maxHistory cannot exceed the specified value."
   how_to_solve: "Set the maxHistory of the HelmRelease to a value less than or equal to the specified limit."
   category: weave.categories.security
-  severity: high
+  severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
@@ -31,7 +31,7 @@ spec:
       required: true
       value: 100
   code: |
-    package helm_release_max_history
+    package weave.advisor.helm_release_max_history
 
     import future.keywords.in
 
