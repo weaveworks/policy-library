@@ -716,7 +716,7 @@ Remove the post-renderers configuration from the HelmRelease.
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmRelease']}
@@ -3690,7 +3690,7 @@ Change the release name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmRelease']}
@@ -4635,7 +4635,7 @@ Set the rollback feature of the HelmRelease to false.
 weave.categories.security
 
 ### Severity
-high
+medium
 
 ### Targets
 {'kinds': ['HelmRelease']}
