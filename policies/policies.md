@@ -4599,8 +4599,74 @@ MARIADB_RANDOM_ROOT_PASSWORD:   The MARIADB_RANDOM_ROOT_PASSWORD environment var
 
 
 ### How to solve?
-If you encounter a violation, ensure the MARIADB_RANDOM_ROOT_PASSWORD environment variables is set.
-For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+Match the shared resource with either true or false, as set in your constraint. 
+```
+...
+  spec:
+    <shared_resource>: <resource_enabled>
+```
+https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
+
+
+### Category
+weave.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['cis-benchmark', 'nist800-190', 'gdpr', 'default']
+
+### Parameters
+[{'name': 'resource_enabled', 'type': 'boolean', 'required': True, 'value': False}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
+
+### ID
+weave.policies.rabbitmq-enforce-additional-erl-args-env-var
+
+### Description
+This Policy ensures RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: The RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS environment variable sets additional parameters for the erl command used when invoking the RabbitMQ Server. The value of this variable is appended to the default list of arguments (RABBITMQ_SERVER_ERL_ARGS).
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_BASICAUTH_USERNAME
+
+### ID
+weave.policies.mongo-express-enforce-auth-username-env-var
+
+### Description
+This Policy ensures ME_CONFIG_BASICAUTH_USERNAME environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_BASICAUTH_USERNAME: The ME_CONFIG_BASICAUTH_USERNAME environment variable sets the mongo-express web username.
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_BASICAUTH_USERNAME environment variables is set.
+For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
 
 
 ### Category
@@ -4613,14 +4679,80 @@ high
 {'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
 
 ### Tags
-['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+['pci-dss', 'mitre-attack', 'hipaa']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
-## Helm Release Rollback Should Be Disabled
+## RabbitMQ Enforce Environment Variable - RABBITMQ_VM_MEMORY_HIGH_WATERMARK
+
+### ID
+weave.policies.rabbitmq-enforce-vm-memory-env-var
+
+### Description
+This Policy ensures RABBITMQ_VM_MEMORY_HIGH_WATERMARK environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_VM_MEMORY_HIGH_WATERMARK: The RABBITMQ_VM_MEMORY_HIGH_WATERMARK environment variable sets the memory threshold at which the flow control is triggered. Can be absolute or relative to the amount of RAM available to the OS.
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_VM_MEMORY_HIGH_WATERMARK environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Container Running As Root
+
+### ID
+weave.policies.container-running-as-root
+
+### Description
+Running as root gives the container full access to all resources in the VM it is running on. Containers should not run with such access rights unless required by design. This Policy enforces that the `securityContext.runAsNonRoot` attribute is set to `true`. 
+
+
+### How to solve?
+You should set `securityContext.runAsNonRoot` to `true`. Not setting it will default to giving the container root user rights on the VM that it is running on. 
+```
+...
+  spec:
+    securityContext:
+      runAsNonRoot: true
+```
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+
+### Category
+weave.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'cis-benchmark', 'mitre-attack', 'nist800-190', 'gdpr', 'default']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Container Prohibit Image Tag
 
 ### ID
 weave.policies.helm-release-rollback
@@ -4642,6 +4774,1151 @@ medium
 
 ### Tags
 ['flux']
+['cis-benchmark', 'mitre-attack', 'gdpr', 'soc2-type1', 'default']
+
+### Parameters
+[{'name': 'image_tag', 'type': 'string', 'required': True, 'value': 'latest'}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Prometheus Rbac Prohibit Verbs
+
+### ID
+weave.policies.prometheus-rbac-prohibit-verbs
+
+### Description
+This Policy blocks certain verbs from being set for Prometheus RBAC. This Policy applies to RBAC names containing the word `prometheus`. 
+
+
+### How to solve?
+Check the `rules.verbs` for the verb(s) list and check the policy to see what value is set. 
+```
+metadata:
+  name: prometheus
+...
+rules:
+  - verbs:
+      - <prometheus_verb>
+```
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['ClusterRole']}
+
+### Tags
+['pci-dss', 'hipaa', 'soc2-type1']
+
+### Parameters
+[{'name': 'prometheus_verb', 'type': 'string', 'required': True, 'value': 'put'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Containers Sharing Host PID
+
+### ID
+weave.policies.containers-sharing-host-pid
+
+### Description
+This Policy allows check if sharing host PID namespace with the container should be allowed or not. Resources that can be shared with the container include:
+
+### hostNetwork
+Controls whether the pod may use the node network namespace. Doing so gives the pod access to the loopback device, services listening on localhost, and could be used to snoop on network activity of other pods on the same node.
+
+### hostPID
+Controls whether the pod containers can share the host process ID namespace. Note that when paired with ptrace this can be used to escalate privileges outside of the container (ptrace is forbidden by default).
+
+### shareProcessNamespace
+When process namespace sharing is enabled, processes in a container are visible to all other containers in that pod.
+
+### hostIPC
+Controls whether the pod containers can share the host IPC namespace.
+
+
+### How to solve?
+Match the shared resource with either true or false, as set in your constraint. 
+```
+...
+  spec:
+    <shared_resource>: <resource_enabled>
+```
+https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
+
+
+### Category
+weave.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['cis-benchmark', 'nist800-190', 'gdpr', 'default']
+
+### Parameters
+[{'name': 'resource_enabled', 'type': 'boolean', 'required': True, 'value': False}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_OPTIONS_EDITORTHEME
+
+### ID
+weave.policies.mongo-express-enforce-editor-theme-env-var
+
+### Description
+This Policy ensures ME_CONFIG_OPTIONS_EDITORTHEME environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_OPTIONS_EDITORTHEME: The ME_CONFIG_OPTIONS_EDITORTHEME environment variable sets the editor color theme, [more here](http://codemirror.net/demo/theme.html)
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_OPTIONS_EDITORTHEME environment variables is set.
+For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MARIADB_DATABASE
+
+### ID
+weave.policies.mariadb-enforce-database-env-var
+
+### Description
+This Policy ensures MARIADB_DATABASE environment variable are in place when using the official container images from Docker Hub.
+MARIADB_DATABASE:   The MARIADB_DATABASE environment variable sets a default MARIADB database instance up with the name of that DB being the value of  environment variable. 
+
+
+### How to solve?
+If you encounter a violation, ensure the MARIADB_DATABASE environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_SITE_SSL_KEY_PATH
+
+### ID
+weave.policies.mongo-express-enforce-ssl-key-path-env-var
+
+### Description
+This Policy ensures ME_CONFIG_SITE_SSL_KEY_PATH environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_SITE_SSL_KEY_PATH: The ME_CONFIG_SITE_SSL_KEY_PATH environment variable sets the SSL Key file path. 
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_SITE_SSL_KEY_PATH environment variables is set.
+## MariaDB Enforce Environment Variable - MYSQL_ROOT_PASSWORD
+
+### ID
+weave.policies.mariadb-enforce-mysql-root-password-env-var
+
+### Description
+This Policy ensures MYSQL_ROOT_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MYSQL_ROOT_PASSWORD: The MYSQL_ROOT_PASSWORD environment variable specifies a password for the MARIADB root account. 
+
+
+### How to solve?
+If you encounter a violation, ensure the MYSQL_ROOT_PASSWORD environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_USER
+
+### ID
+weave.policies.rabbitmq-enforce-default-user-env-var
+
+### Description
+This Policy ensures RABBITMQ_DEFAULT_USER environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_DEFAULT_USER: The RABBITMQ_DEFAULT_USER environment variable sets the User name to create when RabbitMQ creates a new database from scratch.
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_DEFAULT_USER environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Container Image Pull Policy
+
+### ID
+weave.policies.container-image-pull-policy
+
+### Description
+This Policy is to ensure you are setting a value for your `imagePullPolicy`. 
+
+The `imagePullPolicy` and the tag of the image affect when the kubelet attempts to pull the specified image.
+
+`imagePullPolicy`: IfNotPresent: the image is pulled only if it is not already present locally.
+
+`imagePullPolicy`: Always: every time the kubelet launches a container, the kubelet queries the container image registry to resolve the name to an image digest. If the kubelet has a container image with that exact digest cached locally, the kubelet uses its cached image; otherwise, the kubelet downloads (pulls) the image with the resolved digest, and uses that image to launch the container.
+
+`imagePullPolicy` is omitted and either the image tag is :latest or it is omitted: `imagePullPolicy` is automatically set to Always. Note that this will not be updated to IfNotPresent if the tag changes value.
+
+`imagePullPolicy` is omitted and the image tag is present but not :latest: `imagePullPolicy` is automatically set to IfNotPresent. Note that this will not be updated to Always if the tag is later removed or changed to :latest.
+
+`imagePullPolicy`: Never: the image is assumed to exist locally. No attempt is made to pull the image.
+
+
+### How to solve?
+Ensure you have an imagePullPolicy set that matches your policy. 
+```
+...
+  spec:
+    containers:
+    - imagePullPolicy: <policy>
+```
+https://kubernetes.io/docs/concepts/configuration/overview/#container-images
+
+
+### Category
+weave.categories.software-supply-chain
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'policy', 'type': 'string', 'required': True, 'value': 'Always'}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MARIADB_ROOT_PASSWORD
+
+### ID
+weave.policies.mariadb-enforce-root-password-env-var
+
+### Description
+This Policy ensures MARIADB_ROOT_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MARIADB_ROOT_PASSWORD: The MARIADB_ROOT_PASSWORD environment variable specifies a password for the MARIADB root account. 
+
+
+### How to solve?
+If you encounter a violation, ensure the MARIADB_ROOT_PASSWORD environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_MONGODB_ADMINPASSWORD
+
+### ID
+weave.policies.mongo-express-enforce-admin-password-env-var
+
+### Description
+This Policy ensures ME_CONFIG_MONGODB_ADMINPASSWORD environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_MONGODB_ADMINPASSWORD: The ME_CONFIG_MONGODB_ADMINPASSWORD environment variable sets the MongoDB admin password.
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_MONGODB_ADMINPASSWORD environment variables is set.
+For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Missing Kubernetes App Instance Label
+
+### ID
+weave.policies.missing-kubernetes-app-instance-label
+
+### Description
+Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
+
+### owner
+A label key of `owner` will help identify who the owner of this entity is. 
+
+### app.kubernetes.io/name
+The name of the application	
+
+### app.kubernetes.io/instance
+A unique name identifying the instance of an application	  
+
+### app.kubernetes.io/version
+The current version of the application (e.g., a semantic version, revision hash, etc.)
+
+### app.kubernetes.io/part-of
+The name of a higher level application this one is part of	
+
+### app.kubernetes.io/managed-by
+The tool being used to manage the operation of an application	
+
+### app.kubernetes.io/created-by
+The controller/user who created this resource
+
+
+### How to solve?
+Add these custom labels to `metadata`.
+* owner
+* app.kubernetes.io/name
+* app.kubernetes.io/instance
+* app.kubernetes.io/version
+* app.kubernetes.io/name
+* app.kubernetes.io/part-of
+* app.kubernetes.io/managed-by
+* app.kubernetes.io/created-by
+
+```
+metadata:
+  labels:
+    <label>: value
+```  
+For additional information, please check
+* https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+low
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+[]
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_SITE_BASEURL
+
+### ID
+weave.policies.mongo-express-enforce-base-url-env-var
+
+### Description
+This Policy ensures ME_CONFIG_SITE_BASEURL environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_SITE_BASEURL: The ME_CONFIG_SITE_BASEURL environment variable sets the baseUrl to ease mounting at a subdirectory. Remember to include a leading and trailing slash.
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_SITE_BASEURL environment variables is set.
+For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+
+
+### Category
+weave.categories.network-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Prohibit Creating Namespace Starting With Prefix
+
+### ID
+weave.policies.prohibit-creating-namespace-starting-with-prefix
+
+### Description
+Using this Policy, you can prohibit certain namespaces from containing a specified combination of letters and/or numbers. 
+
+
+### How to solve?
+Specify a `namespace` that is something other than what is listed in the Policy. 
+```
+metadata:
+  name: <namespace_name>
+```
+https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#working-with-namespaces
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Namespace']}
+
+### Tags
+[]
+
+### Parameters
+[{'name': 'namespace_name', 'type': 'string', 'required': True, 'value': 'kube-'}]
+
+---
+
+## Persistent Volume Reclaim Policy Should Be Set To Retain
+
+### ID
+weave.policies.persistent-volume-reclaim-policy-should-be-set-to-retain
+
+### Description
+This Policy checks to see whether or not the persistent volume reclaim policy is set.
+
+PersistentVolumes can have various reclaim policies, including "Retain", "Recycle", and "Delete". For dynamically provisioned PersistentVolumes, the default reclaim policy is "Delete". This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. This automatic behavior might be inappropriate if the volume contains precious data. In that case, it is more appropriate to use the "Retain" policy. With the "Retain" policy, if a user deletes a PersistentVolumeClaim, the corresponding PersistentVolume is not be deleted. Instead, it is moved to the Released phase, where all of its data can be manually recovered.
+
+
+### How to solve?
+Check your reclaim policy configuration within your PersistentVolume configuration. 
+```
+spec:
+  persistentVolumeReclaimPolicy: <pv_policy>
+```
+
+https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/#why-change-reclaim-policy-of-a-persistentvolume
+
+
+### Category
+weave.categories.data-protection
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['PersistentVolume']}
+
+### Tags
+['pci-dss', 'soc2-type1']
+
+### Parameters
+[{'name': 'pv_policy', 'type': 'string', 'required': True, 'value': 'Retain'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MARIADB_INITDB_SKIP_TZINFO
+
+### ID
+weave.policies.mariadb-enforce-initdb-skip-tzinfo-env-var
+
+### Description
+This Policy ensures MARIADB_INITDB_SKIP_TZINFO environment variable are in place when using the official container images from Docker Hub.
+MARIADB_INITDB_SKIP_TZINFO:   The MARIADB_INITDB_SKIP_TZINFO environment variable allows the skipping of timezone checking when initializing the DB.
+
+
+### How to solve?
+If you encounter a violation, ensure the MARIADB_INITDB_SKIP_TZINFO environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_VHOST
+
+### ID
+weave.policies.rabbitmq-enforce-default-vhost-env-var
+
+### Description
+This Policy ensures RABBITMQ_DEFAULT_VHOST environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_DEFAULT_VHOST: RABBITMQ_DEFAULT_VHOST sets a Virtual host to create from scratch.
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_DEFAULT_VHOST environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.network-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Containers Minimum Replica Count
+
+### ID
+weave.policies.containers-minimum-replica-count
+
+### Description
+Use this Policy to to check the replica count of your workloads. The value set in the Policy is greater than or equal to the amount desired, so if the replica count is lower than what is specified, the Policy will be in violation. 
+
+
+### How to solve?
+The replica count should be a value equal or greater than what is set in the Policy.
+```
+spec:
+  replicas: <replica_count>
+```
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment
+
+
+### Category
+weave.categories.reliability
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Deployment', 'StatefulSet', 'ReplicaSet', 'ReplicationController', 'HorizontalPodAutoscaler']}
+
+### Tags
+['soc2-type1']
+
+### Parameters
+[{'name': 'replica_count', 'type': 'integer', 'required': True, 'value': 2}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_MONGODB_SERVER
+
+### ID
+weave.policies.mysql-enforce-skip-tzinfo-env-var
+
+### Description
+This Policy ensures MYSQL_INITDB_SKIP_TZINFO environment variable are in place when using the official container images from Docker Hub.
+MYSQL_INITDB_SKIP_TZINFO: The MYSQL_INITDB_SKIP_TZINFO environment variable allows the skipping of timezone checking when initializing the DB.
+
+
+### How to solve?
+If you encounter a violation, ensure the MYSQL_INITDB_SKIP_TZINFO environment variables is set.
+For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Containers Block Ssh Port
+
+### ID
+weave.policies.containers-block-ssh-port
+
+### Description
+This Policy checks if the container is exposing ssh port.
+
+
+### How to solve?
+Make sure you are not exposing ssh port on containers.
+```
+...
+  spec:
+    containers:
+      ports:
+      - containerPort: <port>
+```
+
+
+### Category
+weave.categories.network-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss']
+
+### Parameters
+[{'name': 'container_port', 'type': 'integer', 'required': True, 'value': 22}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MYSQL Enforce Environment Variable - MYSQL_RANDOM_ROOT_PASSWORD
+
+### ID
+weave.policies.mysql-enforce-random-root-password-env-var
+
+### Description
+This Policy ensures MYSQL_RANDOM_ROOT_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MYSQL_RANDOM_ROOT_PASSWORD: The MYSQL_RANDOM_ROOT_PASSWORD environment variable creates random password for the server's root user when the Docker container is started.
+
+
+### How to solve?
+If you encounter a violation, ensure the MYSQL_RANDOM_ROOT_PASSWORD environment variables is set.
+For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_GENERATED_CONFIG_DIR
+
+### ID
+weave.policies.rabbitmq-enforce-generated-config-dir-env-var
+
+### Description
+This Policy ensures RABBITMQ_GENERATED_CONFIG_DIR environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_GENERATED_CONFIG_DIR: The directory where RabbitMQ writes its generated configuration files.
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_GENERATED_CONFIG_DIR environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MYSQL_PASSWORD
+
+### ID
+weave.policies.mariadb-enforce-mysql-password-env-var
+
+### Description
+This Policy ensures MYSQL_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MYSQL_PASSWORD: The MYSQL_PASSWORD environment variable specifies a password for MARIADB_USER user.
+
+
+### How to solve?
+If you encounter a violation, ensure the MYSQL_PASSWORD environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MYSQL_INITDB_SKIP_TZINFO
+
+### ID
+weave.policies.mariadb-enforce-mysql-initdb-skip-tzinfo-env-var
+
+### Description
+This Policy ensures MYSQL_INITDB_SKIP_TZINFO environment variable are in place when using the official container images from Docker Hub.
+MYSQL_INITDB_SKIP_TZINFO:   The MYSQL_INITDB_SKIP_TZINFO environment variable allows the skipping of timezone checking when initializing the DB.
+
+
+### How to solve?
+If you encounter a violation, ensure the MYSQL_INITDB_SKIP_TZINFO environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Missing Kubernetes App Label
+
+### ID
+weave.policies.missing-kubernetes-app-label
+
+### Description
+Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
+
+### owner
+A label key of `owner` will help identify who the owner of this entity is. 
+
+### app.kubernetes.io/name
+The name of the application	
+
+### app.kubernetes.io/instance
+A unique name identifying the instance of an application	  
+
+### app.kubernetes.io/version
+The current version of the application (e.g., a semantic version, revision hash, etc.)
+
+### app.kubernetes.io/part-of
+The name of a higher level application this one is part of	
+
+### app.kubernetes.io/managed-by
+The tool being used to manage the operation of an application	
+
+### app.kubernetes.io/created-by
+The controller/user who created this resource
+
+
+### How to solve?
+Add these custom labels to `metadata`.
+* owner
+* app.kubernetes.io/name
+* app.kubernetes.io/instance
+* app.kubernetes.io/version
+* app.kubernetes.io/name
+* app.kubernetes.io/part-of
+* app.kubernetes.io/managed-by
+* app.kubernetes.io/created-by
+
+```
+metadata:
+  labels:
+    <label>: value
+```  
+For additional information, please check
+* https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+low
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+[]
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Containers Read Only Root Filesystem
+
+### ID
+weave.policies.containers-read-only-root-filesystem
+
+### Description
+This Policy will cause a violation if the root file system is not mounted as specified. As a security practice, the root file system should be read-only or expose risk to your nodes if compromised. 
+
+This Policy requires containers must run with a read-only root filesystem (i.e. no writable layer).
+
+
+### How to solve?
+Set `readOnlyRootFilesystem` in your `securityContext` to the value specified in the Policy. 
+```
+...
+  spec:
+    containers:
+      - securityContext:
+          readOnlyRootFilesystem: <read_only>
+```
+
+https://kubernetes.io/docs/concepts/policy/pod-security-policy/#volumes-and-file-systems
+
+
+### Category
+weave.categories.pod-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['mitre-attack', 'nist800-190']
+
+### Parameters
+[{'name': 'read_only', 'type': 'boolean', 'required': True, 'value': True}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_PLUGINS_EXPAND_DIR
+
+### ID
+weave.policies.rabbitmq-enforce-plugins-expand-dir-env-var
+
+### Description
+This Policy ensures RABBITMQ_PLUGINS_EXPAND_DIR environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_PLUGINS_EXPAND_DIR: Working directory used to expand enabled plugins when starting the server. It is important that effective RabbitMQ user has sufficient permissions to read and create files and subdirectories in this directory.
+
+
+### How to solve?
+If you encounter a violation, ensure the RABBITMQ_PLUGINS_EXPAND_DIR environment variables is set.
+For futher information about the RabbitMQ Docker container, check here: https://hub.docker.com/_/rabbitmq
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MongoDB Enforce Environment Variable - MONGO_INITDB_ROOT_USERNAME_FILE
+
+### ID
+weave.policies.mongodb-enforce-root-username-file-env-var
+
+### Description
+This Policy ensures MONGO_INITDB_ROOT_USERNAME_FILE environment variable are in place when using the official container images from Docker Hub.
+MONGO_INITDB_ROOT_USERNAME_FILE: The MONGO_INITDB_ROOT_USERNAME_FILE environment variable is an alternative to passing sensitive information via environment variables, _FILE may be appended to the previously listed environment variables, causing the initialization script to load the values for those variables from files present in the container.
+
+
+### How to solve?
+If you encounter a violation, ensure the MONGO_INITDB_ROOT_USERNAME_FILE environment variables is set.
+For futher information about the MongoDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Mongo-Express Enforce Environment Variable - ME_CONFIG_SITE_SSL_ENABLED
+
+### ID
+weave.policies.mongo-express-enforce-ssl-enabled-env-var
+
+### Description
+This Policy ensures ME_CONFIG_SITE_SSL_ENABLED environment variable are in place when using the official container images from Docker Hub.
+ME_CONFIG_SITE_SSL_ENABLED: The ME_CONFIG_SITE_SSL_ENABLED environment variable enables SSL.
+
+
+### How to solve?
+If you encounter a violation, ensure the ME_CONFIG_SITE_SSL_ENABLED environment variables is set.
+For futher information about the Mongo-Express Docker container, check here: https://hub.docker.com/_/mongo-express
+
+
+### Category
+weave.categories.network-security
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Containers Missing Liveness Probe
+
+### ID
+weave.policies.containers-missing-liveness-probe
+
+### Description
+This Policy detects whether or not a livenessProbe has been set for containers. Containers probes are:
+
+### liveness 
+The kubelet uses liveness probes to know when to restart a container. For example, liveness probes could catch a deadlock, where an application is running, but unable to make progress. Restarting a container in such a state can help to make the application more available despite bugs.
+
+### readiness
+The kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready. One use of this signal is to control which Pods are used as backends for Services. When a Pod is not ready, it is removed from Service load balancers.
+
+### startup
+The kubelet uses startup probes to know when a container application has started. If such a probe is configured, it disables liveness and readiness checks until it succeeds, making sure those probes don't interfere with the application startup. This can be used to adopt liveness checks on slow starting containers, avoiding them getting killed by the kubelet before they are up and running.
+
+
+### How to solve?
+Check your entities to see if a probe has been set. 
+```
+...
+  spec:
+    containers:
+    - livenessProbe:
+      ...
+```
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+
+### Category
+weave.categories.reliability
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+[]
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Missing Kubernetes App Created By Label
+
+### ID
+weave.policies.missing-kubernetes-app-created-by-label
+
+### Description
+Custom labels can help enforce organizational standards for each artifact deployed. This Policy ensure a custom label key is set in the entity's `metadata`. The Policy detects the presence of the following: 
+
+### owner
+A label key of `owner` will help identify who the owner of this entity is. 
+
+### app.kubernetes.io/name
+The name of the application	
+
+### app.kubernetes.io/instance
+A unique name identifying the instance of an application	  
+
+### app.kubernetes.io/version
+The current version of the application (e.g., a semantic version, revision hash, etc.)
+
+### app.kubernetes.io/part-of
+The name of a higher level application this one is part of	
+
+### app.kubernetes.io/managed-by
+The tool being used to manage the operation of an application	
+
+### app.kubernetes.io/created-by
+The controller/user who created this resource	
+
+
+### How to solve?
+Add these custom labels to `metadata`.
+* owner
+* app.kubernetes.io/name
+* app.kubernetes.io/instance
+* app.kubernetes.io/version
+* app.kubernetes.io/name
+* app.kubernetes.io/part-of
+* app.kubernetes.io/managed-by
+* app.kubernetes.io/created-by
+
+```
+metadata:
+  labels:
+    <label>: value
+```  
+For additional information, please check
+* https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels 
+
+
+### Category
+weave.categories.organizational-standards
+
+### Severity
+low
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+[]
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MariaDB Enforce Environment Variable - MARIADB_RANDOM_ROOT_PASSWORD
+
+### ID
+weave.policies.mariadb-enforce-random-root-password-env-var
+
+### Description
+This Policy ensures MARIADB_RANDOM_ROOT_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MARIADB_RANDOM_ROOT_PASSWORD:   The MARIADB_RANDOM_ROOT_PASSWORD environment variable creates random password for the server's root user when the Docker container is started.
+
+
+### How to solve?
+If you encounter a violation, ensure the MARIADB_RANDOM_ROOT_PASSWORD environment variables is set.
+For futher information about the MariaDB Docker container, check here: https://hub.docker.com/_/mariadb
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Tags
+['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
