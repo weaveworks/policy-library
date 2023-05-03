@@ -22,10 +22,7 @@ jobs:
                weaveworks/polctl:v0.0.2 /scripts/test_policies/test_policies --root-dir /policies
     - name: OPA tests
       run: |
-        docker run -v ${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}/policies:/policies \
-               openpolicyagent/opa:latest test /policies -v --ignore '*.yml','*.yaml','.md','.csv'
-        docker run -v ${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}/examples:/examples \
-               openpolicyagent/opa:latest test /examples -v --ignore '*.yml','*.yaml','.md','.csv'
+        docker run -v ${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}:/workspace openpolicyagent/opa:latest test /workspace/policies /workspace/examples -v --ignore '*.yml','*.yaml','.md','.csv'
   automated_policies_doc:
     runs-on: ubuntu-latest
     needs: [automated_tests]
