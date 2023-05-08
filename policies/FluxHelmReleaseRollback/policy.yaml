@@ -11,7 +11,7 @@ spec:
   category: weave.categories.configuration
   severity: medium
   targets: {kinds: [HelmRelease]}
-  tags: [flux]  
+  tags: [flux]
   parameters:
     - name: exclude_namespaces
       type: array

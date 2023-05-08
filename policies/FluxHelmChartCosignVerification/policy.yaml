@@ -42,7 +42,7 @@ spec:
         result = {
             "issue detected": true,
             "msg": "The HelmChart must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension",
-            "violating_key": "spec.reconcileStrategy"
+            "violating_key": "spec.verify"
         }
     }
 
