@@ -14,7 +14,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRepo URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),
+        "msg": sprintf("The HelmRepository URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),
         "violating_key": "spec.url"
     }
 }

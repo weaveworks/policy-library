@@ -5,12 +5,12 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-allowed_storage_namespaces := input.parameters.allowed_storage_namespaces
+hostnames := input.parameters.hostnames
 
 violation[result] {
     isExcludedNamespace == false
     storage_namespace := controller_spec.chart.spec.storageNamespace
-    not storage_namespace in allowed_storage_namespaces
+    not storage_namespace in hostnames
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,

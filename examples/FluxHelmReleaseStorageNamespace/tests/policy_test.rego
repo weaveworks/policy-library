@@ -8,7 +8,7 @@ test_valid_storage_namespace {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_storage_namespaces": ["allowed-storage-namespace"]
+      "hostnames": ["allowed-storage-namespace"]
     },
     "review": {
       "object": {
@@ -37,7 +37,7 @@ test_invalid_storage_namespace {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_storage_namespaces": ["allowed-storage-namespace"]
+      "hostnames": ["allowed-storage-namespace"]
     },
     "review": {
       "object": {
@@ -66,7 +66,7 @@ test_exclude_label_storage_namespace {
       "exclude_namespaces": [],
       "exclude_label_key": "exclude",
       "exclude_label_value": "true",
-      "allowed_storage_namespaces": ["allowed-storage-namespace"]
+      "hostnames": ["allowed-storage-namespace"]
     },
     "review": {
       "object": {
@@ -98,7 +98,7 @@ test_exclude_namespace_storage_namespace {
       "exclude_namespaces": ["excluded-namespace"],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_storage_namespaces": ["allowed-storage-namespace"]
+      "hostnames": ["allowed-storage-namespace"]
     },
     "review": {
       "object": {

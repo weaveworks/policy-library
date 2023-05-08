@@ -1,14 +1,14 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-repo-type-should-be-oci
+  name: weave.policies.helm-repo-type
 spec:
   id: weave.policies.helm-repo-type
   name: Helm Repo Type Should Be OCI
   enabled: true
   description: "The type of a Helm repository should be OCI."
   how_to_solve: "Change the type of the Helm repository to OCI."
-  category: weave.categories.security
+  category: weave.categories.best-practices
   severity: medium
   targets: {kinds: [HelmRepository]}
   tags: [flux]

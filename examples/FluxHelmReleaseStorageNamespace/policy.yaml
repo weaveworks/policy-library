@@ -6,14 +6,18 @@ spec:
   id: weave.policies.helm-release-storage-namespace
   name: Helm Release Storage Namespace
   enabled: true
-  description: "HelmRelease storageNamespace must be one of the allowed storageNamespace list."
+  description: "HelmRelease storageNamespace must contain a value from hostnames."
   how_to_solve: "Set the storageNamespace of the HelmRelease to one of the allowed namespaces."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
   parameters:
+    - name: hostnames
+      type: array
+      required: true
+      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -26,12 +30,6 @@ spec:
       type: string
       required: false
       value:
-    - name: storage_namespace_list
-      type: array
-      required: true
-      value:
-        - allowed-storage-namespace1
-        - allowed-storage-namespace2
   code: |
     package weave.advisor.helm_release_storage_namespace
 
@@ -40,12 +38,12 @@ spec:
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
-    storage_namespace_list := input.parameters.storage_namespace_list
+    hostnames := input.parameters.hostnames
 
     violation[result] {
         isExcludedNamespace == false
         storage_namespace := controller_spec.storageNamespace
-        not storage_namespace in storage_namespace_list
+        not storage_namespace in hostnames
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
         result = {
             "issue detected": true,

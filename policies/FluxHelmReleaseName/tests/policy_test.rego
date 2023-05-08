@@ -46,7 +46,7 @@ test_invalid_helm_release_name {
   count(violation) == 1 with input as testcase
 }
 
-test_exclude_label_helm_release_name {
+test_exclude_label {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -71,7 +71,7 @@ test_exclude_label_helm_release_name {
   count(violation) == 0 with input as testcase
 }
 
-test_exclude_namespace_helm_release_name {
+test_exclude_namespace {
   testcase = {
     "parameters": {
       "exclude_namespaces": ["excluded-namespace"],

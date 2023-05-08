@@ -49,7 +49,7 @@ test_invalid_post_renderer_enabled {
   count(violation) == 1 with input as testcase
 }
 
-test_exclude_label_post_renderer_enabled {
+test_exclude_label {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -76,7 +76,7 @@ test_exclude_label_post_renderer_enabled {
   count(violation) == 0 with input as testcase
 }
 
-test_exclude_namespace_post_renderer_enabled {
+test_exclude_namespace {
   testcase = {
     "parameters": {
       "exclude_namespaces": ["excluded-namespace"],

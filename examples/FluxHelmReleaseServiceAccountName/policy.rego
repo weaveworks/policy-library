@@ -5,16 +5,16 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-allowed_service_accounts := input.parameters.allowed_service_accounts
+hostnames := input.parameters.hostnames
 
 violation[result] {
     isExcludedNamespace == false
     service_account_name := controller_spec.serviceAccountName
-    not service_account_name in allowed_service_accounts
+    not service_account_name in hostnames
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' serviceAccountName must be from the allowedServiceAccountsList; found '%s'", [controller_input.metadata.name, service_account_name]),
+        "msg": sprintf("The HelmRelease '%s' serviceAccountName must contain a value from parameters.hostnames; found '%s'", [controller_input.metadata.name, service_account_name]),
         "violating_key": "spec.serviceAccountName"
     }
 }

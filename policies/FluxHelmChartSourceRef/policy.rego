@@ -10,6 +10,7 @@ violation[result] {
     isExcludedNamespace == false
     controller_spec.sourceRef.kind != "HelmRepository"
     controller_spec.sourceRef.kind != "GitRepository"
+    controller_spec.sourceRef.kind != "Bucket"
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,

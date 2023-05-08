@@ -1,4 +1,4 @@
-package weave.advisor.helm_chart_values_files
+package weave.advisor.helm_chart_values_files_format
 
 import future.keywords.in
 
@@ -9,12 +9,12 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    values_file := controller_spec.valuesFrom[_].name
-    not re_match(`^.+=values\.yaml$`, values_file)
+    values_file := controller_spec.valuesFiles[_]
+    not re_match(`^values(-\w+)?\.yaml$`, values_file)
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmChart '%s' must reference values files in the format 'xxx=values.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
-        "violating_key": "spec.valuesFrom[_].name"
+        "msg": sprintf("The HelmChart '%s' must reference values files in the format 'values(-xxx)?.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
+        "violating_key": "spec.valuesFiles[_]"
     }
 }
 

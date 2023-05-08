@@ -43,9 +43,9 @@ test_cosign_verification_valid {
         "spec": {
           "verify": {
             "provider": "cosign",
-          },
-          "secretRef": {
-            "name": "my-cosign-keys"
+            "secretRef": {
+              "name": "my-cosign-keys"
+            }
           }
         }
       }

@@ -8,11 +8,15 @@ spec:
   enabled: true
   description: "HelmRelease cannot be suspended unless it's on the waiver list."
   how_to_solve: "Add the HelmRelease to the waiver list or set 'suspend' to false."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets: {kinds: [HelmRelease]}
   tags: [flux]
   parameters:
+    - name: waiver_list
+      type: array
+      required: true
+      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -25,10 +29,6 @@ spec:
       type: string
       required: false
       value:
-    - name: waiver_list
-      type: array
-      required: true
-      value: []
   code: |
     package weave.advisor.helm_release_suspended_waiver
 

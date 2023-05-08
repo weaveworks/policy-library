@@ -1,17 +1,17 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-release-rollback-should-be-disabled
+  name: weave.policies.helm-release-rollback
 spec:
   id: weave.policies.helm-release-rollback
   name: Helm Release Rollback Should Be Disabled
   enabled: true
   description: "The rollback feature of a HelmRelease should be disabled."
   how_to_solve: "Set the rollback feature of the HelmRelease to false."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets: {kinds: [HelmRelease]}
-  tags: [flux]
+  tags: [flux]  
   parameters:
     - name: exclude_namespaces
       type: array

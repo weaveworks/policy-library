@@ -48,6 +48,32 @@ test_invalid_helm_repo_type {
   count(violation) == 1 with input as testcase
 }
 
+test_exclude_label {
+  testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "exclude_label_key": "allow-non-oci-repo",
+      "exclude_label_value": "true",
+    },
+    "review": {
+      "object": {
+        "apiVersion": "v1",
+        "kind": "HelmRepository",
+        "metadata": {
+          "name": "my-helm-repo",
+          "labels": {
+            "allow-non-oci-repo": "true"
+          },
+        },
+        "spec": {
+          "type": "non-oci",
+        }
+      }
+    }
+  }
+
+  count(violation) == 0 with input as testcase
+}
 
 test_excluded_namespace {
   testcase = {
@@ -73,4 +99,5 @@ test_excluded_namespace {
 
   count(violation) == 0 with input as testcase
 }
+
 

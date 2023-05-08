@@ -8,12 +8,16 @@ spec:
   enabled: true
   description: "HelmRelease maxHistory cannot exceed the specified value."
   how_to_solve: "Set the maxHistory of the HelmRelease to a value less than or equal to the specified limit."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
   parameters:
+    - name: max_history
+      type: integer
+      required: true
+      value: 100
     - name: exclude_namespaces
       type: array
       required: false
@@ -26,10 +30,6 @@ spec:
       type: string
       required: false
       value:
-    - name: max_history
-      type: integer
-      required: true
-      value: 100
   code: |
     package weave.advisor.helm_release_max_history
 
@@ -48,7 +48,8 @@ spec:
         result = {
             "issue detected": true,
             "msg": sprintf("The HelmRelease '%s' maxHistory cannot exceed %d; found %d", [controller_input.metadata.name, max_history, max_history_value]),
-            "violating_key": "spec.maxHistory"
+            "violating_key": "spec.maxHistory",
+            "recommended_value": max_history
         }
     }
 

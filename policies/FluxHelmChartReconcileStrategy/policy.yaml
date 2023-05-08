@@ -6,9 +6,9 @@ spec:
   id: weave.policies.helm-chart-reconcile-strategy
   name: HelmChart Reconcile Strategy
   enabled: true
-  description: "The HelmChart reconcile strategy can only specify one of 'revision' or 'chartVersion'."
+  description: "The HelmChart reconcile strategy can only specify one of 'Revision' or 'ChartVersion'."
   how_to_solve: "Set the reconcile strategy to either 'revision' or 'chartVersion' in the HelmChart."
-  category: weave.categories.security
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds:
@@ -18,7 +18,7 @@ spec:
     - name: exclude_namespaces
       type: array
       required: false
-      value: ["kube-system"]
+      value:
     - name: exclude_label_key
       type: string
       required: false

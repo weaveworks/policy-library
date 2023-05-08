@@ -1,9 +1,9 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-repository-url-should-be-in-organization-domains
+  name: weave.policies.helm-repo-url
 spec:
-  id: weave.policies.helm-repository-url-should-be-in-organization-domains
+  id: weave.policies.helm-repo-url
   name: Helm Repo URL Should Be in Organisation Domain
   enabled: true
   description: "The URL of a Helm repository should only be from the specified organisation domain."
@@ -13,14 +13,14 @@ spec:
   targets: {kinds: [HelmRepository]}
   tags: [flux]
   parameters:
-    - name: organisation_domains
+    - name: domains
       type: array
       required: true
       value:
     - name: exclude_namespaces
       type: array
       required: false
-      value: ["kube-system"]
+      value:
     - name: exclude_label_key
       type: string
       required: false
@@ -32,7 +32,7 @@ spec:
   code: |
     package weave.advisor.helm_repo_url
 
-    domains := input.parameters.organisation_domains
+    domains := input.parameters.domains
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value

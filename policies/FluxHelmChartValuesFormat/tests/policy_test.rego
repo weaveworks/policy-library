@@ -1,4 +1,4 @@
-package weave.advisor.helm_chart_values_files
+package weave.advisor.helm_chart_values_files_format
 
 test_values_file_invalid {
   testcase = {
@@ -15,10 +15,8 @@ test_values_file_invalid {
           "name": "my-helm-chart",
         },
         "spec": {
-          "valuesFrom": [
-            {
-              "name": "invalid-values-file.yaml"
-            }
+          "valuesFiles": [
+            "invalid-values-file.yaml"
           ]
         }
       }
@@ -43,10 +41,9 @@ test_values_file_valid {
           "name": "my-helm-chart",
         },
         "spec": {
-          "valuesFrom": [
-            {
-              "name": "my-values=values.yaml"
-            }
+          "valuesFiles": [
+            "values.yaml",
+            "values-production.yaml"
           ]
         }
       }
@@ -74,10 +71,8 @@ test_exclude_label {
           },
         },
         "spec": {
-          "valuesFrom": [
-            {
-              "name": "invalid-values-file.yaml"
-            }
+          "valuesFiles": [
+            "invalid-values-file.yaml"
           ]
         }
       }
@@ -103,10 +98,8 @@ test_exclude_namespace {
           "namespace": "allow-invalid-values-file",
         },
         "spec": {
-          "valuesFrom": [
-            {
-              "name": "invalid-values-file.yaml"
-            }
+          "valuesFiles": [
+            "invalid-values-file.yaml"
           ]
         }
       }

@@ -8,12 +8,16 @@ spec:
   enabled: true
   description: "HelmRelease targetNamespace must be one of the allowed targetNamespace list."
   how_to_solve: "Set the targetNamespace of the HelmRelease to one of the allowed namespaces."
-  category: weave.categories.security
-  severity: high
+  category: weave.categories.configuration
+  severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
   parameters:
+    - name: target_namespace_list
+      type: array
+      required: true
+      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -26,12 +30,6 @@ spec:
       type: string
       required: false
       value:
-    - name: target_namespace_list
-      type: array
-      required: true
-      value:
-        - allowed-namespace1
-        - allowed-namespace2
   code: |
     package weave.advisor.helm_release_target_namespace
 

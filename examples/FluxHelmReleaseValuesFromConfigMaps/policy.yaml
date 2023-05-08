@@ -1,19 +1,23 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-release-values-from
+  name: weave.policies.helm-release-values-from-configmaps
 spec:
-  id: weave.policies.helm-release-values-from
+  id: weave.policies.helm-release-values-from-configmaps
   name: Helm Release Values From
   enabled: true
   description: "HelmRelease valuesFrom must use correctly configured ConfigMaps."
   how_to_solve: "Ensure that the HelmRelease uses allowed ConfigMaps in the valuesFrom field."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
   parameters:
+    - name: allowed_configmaps
+      type: array
+      required: true
+      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -26,11 +30,6 @@ spec:
       type: string
       required: false
       value:
-    - name: allowed_configmaps
-      type: array
-      required: true
-      value:
-        - allowed-configmap
   code: |
     package weave.advisor.helm_release_values_from_configmaps
 

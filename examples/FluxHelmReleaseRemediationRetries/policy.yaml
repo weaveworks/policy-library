@@ -8,12 +8,20 @@ spec:
   enabled: true
   description: "HelmRelease remediation retries must be within the specified lower and upper bounds."
   how_to_solve: "Set the remediation retries value of the HelmRelease to a value within the allowed range."
-  category: weave.categories.security
+  category: weave.categories.configuration
   severity: medium
   targets:
     kinds: [HelmRelease]
   tags: [flux]
   parameters:
+    - name: lower_bound
+      type: integer
+      required: true
+      value: 1
+    - name: upper_bound
+      type: integer
+      required: true
+      value: 10
     - name: exclude_namespaces
       type: array
       required: false
@@ -26,14 +34,6 @@ spec:
       type: string
       required: false
       value:
-    - name: lower_bound
-      type: integer
-      required: true
-      value: 1
-    - name: upper_bound
-      type: integer
-      required: true
-      value: 10
   code: |
     package weave.advisor.helm_release_remediation_retries
 

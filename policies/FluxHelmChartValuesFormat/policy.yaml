@@ -1,9 +1,9 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.helm-chart-values-file-format
+  name: weave.policies.helm-chart-values-files-format
 spec:
-  id: weave.policies.helm-chart-values-file-format
+  id: weave.policies.helm-chart-values-files-format
   name: Helm Chart Values File Format
   enabled: true
   description: "HelmChart must reference values files in the following format: 'xxx=values.yaml'."
@@ -17,7 +17,7 @@ spec:
     - name: exclude_namespaces
       type: array
       required: false
-      value: []
+      value:
     - name: exclude_label_key
       type: string
       required: false
@@ -27,7 +27,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.helm_chart_values_files
+    package weave.advisor.helm_chart_values_files_format
 
     import future.keywords.in
 
@@ -38,12 +38,12 @@ spec:
     violation[result] {
         isExcludedNamespace == false
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-        values_file := controller_spec.valuesFrom[_].name
-        not re_match(`^.+=values\.yaml$`, values_file)
+        values_file := controller_spec.valuesFiles[_]
+        not re_match(`^values(-\w+)?\.yaml$`, values_file)
         result = {
             "issue detected": true,
-            "msg": sprintf("The HelmChart '%s' must reference values files in the format 'xxx=values.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
-            "violating_key": "spec.valuesFrom[_].name"
+            "msg": sprintf("The HelmChart '%s' must reference values files in the format 'values(-xxx)?.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
+            "violating_key": "spec.valuesFiles[_]"
         }
     }
 
@@ -63,3 +63,4 @@ spec:
       controller_input.metadata.namespace
       controller_input.metadata.namespace in exclude_namespaces
     } else = false
+
