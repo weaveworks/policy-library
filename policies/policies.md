@@ -42,10 +42,10 @@ HelmRelease storageNamespace and targetNamespace must match.
 Set the storageNamespace and targetNamespace of the HelmRelease to the same value.
 
 ### Category
-weave.categories.security
+weave.categories.best-practices
 
 ### Severity
-low
+medium
 
 ### Targets
 {'kinds': ['HelmRelease']}
@@ -54,7 +54,7 @@ low
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -329,13 +329,13 @@ high
 weave.policies.helm-chart-reconcile-strategy
 
 ### Description
-The HelmChart reconcile strategy can only specify one of 'revision' or 'chartVersion'.
+The HelmChart reconcile strategy can only specify one of 'Revision' or 'ChartVersion'.
 
 ### How to solve?
 Set the reconcile strategy to either 'revision' or 'chartVersion' in the HelmChart.
 
 ### Category
-weave.categories.security
+weave.categories.best-practices
 
 ### Severity
 medium
@@ -347,7 +347,7 @@ medium
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -395,7 +395,7 @@ The type of a Helm repository should be OCI.
 Change the type of the Helm repository to OCI.
 
 ### Category
-weave.categories.security
+weave.categories.best-practices
 
 ### Severity
 medium
@@ -701,34 +701,6 @@ high
 
 ---
 
-## Helm Release Post Renderer
-
-### ID
-weave.policies.helm-release-post-renderer
-
-### Description
-HelmRelease must not have post-renderers enabled.
-
-### How to solve?
-Remove the post-renderers configuration from the HelmRelease.
-
-### Category
-weave.categories.security
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmRelease']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_PASS
 
 ### ID
@@ -967,6 +939,34 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Helm Chart Values File Format
+
+### ID
+weave.policies.helm-chart-values-files-format
+
+### Description
+HelmChart must reference values files in the following format: 'xxx=values.yaml'.
+
+### How to solve?
+Update the HelmChart valuesFrom field to use the correct format.
+
+### Category
+weave.categories.configuration
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -2682,35 +2682,7 @@ high
 
 ---
 
-## Helm Chart Values File Format
-
-### ID
-weave.policies.helm-chart-values-file-format
-
-### Description
-HelmChart must reference values files in the following format: 'xxx=values.yaml'.
-
-### How to solve?
-Update the HelmChart valuesFrom field to use the correct format.
-
-### Category
-weave.categories.configuration
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmChart']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## Helm Chart Source Reference
+## HelmChart Source Reference
 
 ### ID
 weave.policies.helm-chart-source-reference
@@ -2734,7 +2706,7 @@ medium
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -3121,6 +3093,34 @@ high
 
 ---
 
+## Helm Release Post Renderer
+
+### ID
+weave.policies.helm-release-post-renderer
+
+### Description
+HelmRelease must not have post-renderers enabled.
+
+### How to solve?
+Remove the post-renderers configuration from the HelmRelease.
+
+### Category
+weave.categories.configuration
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## RabbitMQ Enforce Environment Variable - RABBITMQ_MNESIA_BASE
 
 ### ID
@@ -3313,16 +3313,16 @@ low
 
 ---
 
-## Helm Chart Cosign Verification
+## HelmChart Cosign Verification
 
 ### ID
 weave.policies.helm-chart-cosign-verification
 
 ### Description
-HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension.
+HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors
 
 ### How to solve?
-Add cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension to the HelmChart object.
+Add cosign verification and reference a secret containing the Cosign public keys of trusted authors to the HelmChart object.
 
 ### Category
 weave.categories.security
@@ -3337,7 +3337,7 @@ medium
 ['flux']
 
 ### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -3687,7 +3687,7 @@ The release name of a HelmRelease must match the regex pattern of '[A-z]{12}-[A-
 Change the release name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
 
 ### Category
-weave.categories.security
+weave.categories.best-practices
 
 ### Severity
 medium
@@ -4632,7 +4632,7 @@ The rollback feature of a HelmRelease should be disabled.
 Set the rollback feature of the HelmRelease to false.
 
 ### Category
-weave.categories.security
+weave.categories.configuration
 
 ### Severity
 medium
