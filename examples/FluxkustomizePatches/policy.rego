@@ -40,8 +40,8 @@ contains_kind(kind, kinds) {
 }
 
 isExcludedNamespace = true {
-  controller_input.metadata.namespace
-  controller_input.metadata.namespace in exclude_namespaces
+    controller_input.metadata.namespace
+    controller_input.metadata.namespace in exclude_namespaces
 } else = false
 
 bool_to_present_tense(b) {

@@ -133,4 +133,5 @@ test_exclude_label {
             }
         }
     }
-    count
+    count(violation) == 0 with input as testcase
+}

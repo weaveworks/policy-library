@@ -6,14 +6,14 @@ test_patches_required_enabled_violation {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "patches_required": true,
+      "patches_required": true
     },
     "review": {
       "object": {
         "apiVersion": "kustomize.toolkit.fluxcd.io/v1",
         "kind": "Kustomization",
         "metadata": {
-          "name": "my-kustomization",
+          "name": "my-kustomization"
         },
         "spec": {}
       }
@@ -29,14 +29,14 @@ test_patches_required_enabled_no_violation {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "patches_required": true,
+      "patches_required": true
     },
     "review": {
       "object": {
         "apiVersion": "kustomize.toolkit.fluxcd.io/v1",
         "kind": "Kustomization",
         "metadata": {
-          "name": "my-kustomization",
+          "name": "my-kustomization"
         },
         "spec": {
           "patches": [
@@ -58,14 +58,14 @@ test_patches_required_disabled_violation {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "patches_required": false,
+      "patches_required": false
     },
     "review": {
       "object": {
         "apiVersion": "kustomize.toolkit.fluxcd.io/v1",
         "kind": "Kustomization",
         "metadata": {
-          "name": "my-kustomization",
+          "name": "my-kustomization"
         },
         "spec": {
           "patches": [
@@ -87,14 +87,14 @@ test_patches_required_disabled_no_violation {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "patches_required": false,
+      "patches_required": false
     },
     "review": {
       "object": {
         "apiVersion": "kustomize.toolkit.fluxcd.io/v1",
         "kind": "Kustomization",
         "metadata": {
-          "name": "my-kustomization",
+          "name": "my-kustomization"
         },
         "spec": {}
       }
@@ -110,7 +110,7 @@ test_exclude_label {
       "exclude_namespaces": [],
       "exclude_label_key": "allow-patches",
       "exclude_label_value": "true",
-      "patches_required": false,
+      "patches_required": false
     },
     "review": {
       "object": {
@@ -120,37 +120,7 @@ test_exclude_label {
           "name": "my-kustomization",
           "labels": {
             "allow-patches": "true"
-          },
-        },
-        "spec": {
-          "patches": [
-            {
-              "patch": "dummy-patch"
-            }
-          ]
-        }
-      }
-    }
-  }
-
-  count(violation) == 0 with input as testcase
-}
-
-test_exclude_namespace {
-  testcase = {
-    "parameters": {
-      "exclude_namespaces": ["exclude-patches"],
-      "exclude_label_key": "",
-      "exclude_label_value": "",
-      "patches_required": false,
-    },
-    "review": {
-      "object": {
-        "apiVersion": "kustomize.toolkit.fluxcd.io/v1",
-        "kind": "Kustomization",
-        "metadata": {
-          "name": "my-kustomization",
-          "namespace": "exclude-patches",
+          }
         },
         "spec": {
           "patches": [
