@@ -1,0 +1,74 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.kustomization-decryption-provider
+spec:
+  id: weave.policies.kustomization-decryption-provider
+  name: Kustomization Decryption Provider
+  enabled: true
+  description: "Spec.decryption.provider must be set to one of decryption_providers."
+  how_to_solve: "Set the Kustomization's Spec.decryption.provider to a valid value from the decryption_providers."
+  category: weave.categories.security
+  severity: medium
+  targets:
+    kinds: [Kustomization]
+  tags: [flux]
+  parameters:
+    - name: decryption_providers
+      type: array
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.kustomization_decryption_providers
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    decryption_providers := input.parameters.decryption_providers
+
+    violation[result] {
+        isExcludedNamespace == false
+        provider := controller_spec.decryption.provider
+        not valid_provider(provider)
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The Kustomization '%s' Spec.decryption.provider must be set to one of %v; found '%s'", [controller_input.metadata.name, decryption_providers, provider]),
+            "violating_key": "spec.decryption.provider",
+            "recommended_value": decryption_providers
+        }
+    }
+
+    valid_provider(provider) {
+        decryption_providers[_] == provider
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+      controller_input.kind == "Kustomization"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+

@@ -1,0 +1,86 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.kustomization-reconcile-interval
+spec:
+  id: weave.policies.kustomization-reconcile-interval
+  name: Kustomization Reconcile Interval
+  enabled: true
+  description: "Kustomization reconcile interval must be set between lower and upper values."
+  how_to_solve: "Update the reconcile interval to a value between the lower and upper limits."
+  category: weave.categories.configuration
+  severity: medium
+  targets:
+    kinds: [Kustomization]
+  tags: [flux]
+  parameters:
+    - name: lower_bound
+      type: integer
+      required: true
+      value: 5
+    - name: upper_bound
+      type: integer
+      required: true
+      value: 60
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value:
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.kustomization_reconcile_interval
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    lower_bound := input.parameters.lower_bound
+    upper_bound := input.parameters.upper_bound
+
+    violation[result] {
+        isExcludedNamespace == false
+        reconcile_interval := controller_spec.interval
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        reconcile_interval < lower_bound
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The Kustomization '%s' reconcile interval must be at least %d seconds; found %d", [controller_input.metadata.name, lower_bound, reconcile_interval]),
+            "violating_key": "spec.interval"
+        }
+    }
+
+    violation[result] {
+        isExcludedNamespace == false
+        reconcile_interval := controller_spec.interval
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        reconcile_interval > upper_bound
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The Kustomization '%s' reconcile interval must be at most %d seconds; found %d", [controller_input.metadata.name, upper_bound, reconcile_interval]),
+            "violating_key": "spec.interval"
+        }
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+      controller_input.kind == "Kustomization"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+

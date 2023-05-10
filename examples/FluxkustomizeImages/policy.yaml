@@ -1,0 +1,70 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.kustomization-images-requirement
+spec:
+  id: weave.policies.kustomization-images-requirement
+  name: Kustomization Images Requirement
+  enabled: true
+  description: "The 'spec.images' field in a Kustomization object must be enabled or disabled based on the policy input."
+  how_to_solve: "Update the 'spec.images' field in the Kustomization object based on the policy input."
+  category: weave.categories.configuration
+  severity: medium
+  targets: {kinds: [Kustomization]}
+  tags: [flux]
+  parameters:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: []
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: ""
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: ""
+    - name: images_required
+      type: boolean
+      required: true
+      value: true
+  code: |
+    package weave.advisor.kustomization_images_requirement
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    images_required := input.parameters.images_required
+
+    violation[result] {
+      isExcludedNamespace == false
+      hasImages := object_has_images(controller_spec)
+      hasImages != images_required
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+      result = {
+        "issue_detected": true,
+        "msg": sprintf("The 'spec.images' field in a Kustomization object must be %s based on the policy input.", [images_required ? "enabled" : "disabled"]),
+        "violating_key": "spec.images"
+      }
+    }
+
+    object_has_images(spec) {
+      count(spec.images) > 0
+    } else = false
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_spec acts as an iterator to get spec from the Kustomization object
+    controller_spec = controller_input.spec {
+      controller_input.kind == "Kustomization"
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+
