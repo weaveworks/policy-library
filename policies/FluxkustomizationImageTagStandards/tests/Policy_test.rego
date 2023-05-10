@@ -4,7 +4,7 @@ import future.keywords.in
 import data.weave.advisor.kustomization_image_tag_standards
 
 test_valid_image_tag {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -21,7 +21,7 @@ test_valid_image_tag {
                     "images": [
                         {
                             "name": "podinfo",
-                            "newTag": "v1.0.0"
+                            "newTag": "1.1.12-rc1+foo"
                         }
                     ]
                 }
@@ -32,7 +32,7 @@ test_valid_image_tag {
 }
 
 test_invalid_image_tag {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -60,7 +60,7 @@ test_invalid_image_tag {
 }
 
 test_excluded_namespace {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": ["kube-system"],
             "exclude_label_key": "",
@@ -88,7 +88,7 @@ test_excluded_namespace {
 }
 
 test_excluded_label {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "exclude-me",

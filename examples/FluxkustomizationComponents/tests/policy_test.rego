@@ -4,7 +4,7 @@ import future.keywords.in
 import data.weave.advisor.kustomization_components
 
 test_no_excluded_component {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_components": ["bad-component"],
             "exclude_namespaces": [],
@@ -28,7 +28,7 @@ test_no_excluded_component {
 }
 
 test_excluded_component_present {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_components": ["bad-component"],
             "exclude_namespaces": [],
@@ -52,7 +52,7 @@ test_excluded_component_present {
 }
 
 test_excluded_namespace {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_components": ["bad-component"],
             "exclude_namespaces": ["kube-system"],
@@ -76,7 +76,7 @@ test_excluded_namespace {
 }
 
 test_excluded_label {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_components": ["bad-component"],
             "exclude_namespaces": [],

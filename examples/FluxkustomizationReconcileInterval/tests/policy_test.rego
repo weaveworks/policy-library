@@ -3,9 +3,8 @@ package weave.advisor.kustomization_reconcile_interval
 import future.keywords.in
 import data.weave.advisor.kustomization_reconcile_interval
 
-# Test cases for valid reconcile interval
 test_valid_reconcile_interval {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -21,7 +20,7 @@ test_valid_reconcile_interval {
                     "namespace": "default"
                 },
                 "spec": {
-                    "interval": "5m"
+                    "interval": 300 
                 }
             }
         }
@@ -29,9 +28,9 @@ test_valid_reconcile_interval {
     count(violation) == 0 with input as testcase
 }
 
-# Test cases for reconcile interval too low
+
 test_reconcile_interval_too_low {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -55,9 +54,8 @@ test_reconcile_interval_too_low {
     count(violation) == 1 with input as testcase
 }
 
-# Test cases for reconcile interval too high
 test_reconcile_interval_too_high {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -81,9 +79,8 @@ test_reconcile_interval_too_high {
     count(violation) == 1 with input as testcase
 }
 
-# Test cases for exclude namespace
 test_exclude_namespace {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": ["excluded-namespace"],
             "exclude_label_key": "",
@@ -107,9 +104,8 @@ test_exclude_namespace {
     count(violation) == 0 with input as testcase
 }
 
-# Test cases for exclude label
 test_exclude_label {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "exclude-policy",

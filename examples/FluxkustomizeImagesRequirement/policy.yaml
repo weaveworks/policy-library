@@ -46,7 +46,7 @@ spec:
       not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       result = {
         "issue_detected": true,
-        "msg": sprintf("The 'spec.images' field in a Kustomization object must be %s based on the policy input.", [images_required ? "enabled" : "disabled"]),
+        "msg": "The 'spec.images' field in a Kustomization object must be  based on the policy input.",
         "violating_key": "spec.images"
       }
     }
@@ -67,4 +67,3 @@ spec:
       controller_input.metadata.namespace
       controller_input.metadata.namespace in exclude_namespaces
     } else = false
-

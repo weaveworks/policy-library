@@ -4,7 +4,7 @@ import future.keywords.in
 import data.weave.advisor.kustomization_excluded_paths
 
 test_valid_path {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -28,7 +28,7 @@ test_valid_path {
 }
 
 test_excluded_path {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "",
@@ -52,7 +52,7 @@ test_excluded_path {
 }
 
 test_excluded_namespace {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": ["kube-system"],
             "exclude_label_key": "",
@@ -76,7 +76,7 @@ test_excluded_namespace {
 }
 
 test_excluded_label {
-    input := {
+    testcase := {
         "parameters": {
             "exclude_namespaces": [],
             "exclude_label_key": "exclude-me",

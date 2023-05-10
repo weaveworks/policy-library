@@ -4,7 +4,7 @@ import future.keywords.in
 import data.weave.advisor.kustomization_decryption_provider
 
 test_valid_decryption_provider {
-    input := {
+    testcase := {
       "parameters": {
             "decryption_providers": ["sops", "mozilla-sops"],
             "exclude_namespaces": [],
@@ -30,7 +30,7 @@ test_valid_decryption_provider {
 }
 
 test_invalid_decryption_provider {
-    input := {
+    testcase := {
       "parameters": {
             "decryption_providers": ["sops", "mozilla-sops"],
             "exclude_namespaces": [],
@@ -56,7 +56,7 @@ test_invalid_decryption_provider {
 }
 
 test_excluded_namespace {
-    input := {
+    testcase := {
       "parameters": {
             "decryption_providers": ["sops", "mozilla-sops"],
             "exclude_namespaces": ["kube-system"],
@@ -82,7 +82,7 @@ test_excluded_namespace {
 }
 
 test_excluded_label {
-    input := {
+    testcase := {
       "parameters": {
             "decryption_providers": ["sops", "mozilla-sops"],
             "exclude_namespaces": [],

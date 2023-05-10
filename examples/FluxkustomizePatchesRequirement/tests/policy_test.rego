@@ -1,4 +1,4 @@
-package weave.advisor.kustomization_patches
+package weave.advisor.kustomization_patches_requirement
 
 test_patches_required_enabled_violation {
   testcase = {

@@ -4,7 +4,7 @@ import future.keywords.in
 import data.weave.advisor.kustomization_kubeconfig
 
 test_valid_kubeconfig {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_clusters": ["restricted-cluster"],
             "exclude_namespaces": [],
@@ -28,7 +28,7 @@ test_valid_kubeconfig {
 }
 
 test_invalid_kubeconfig {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_clusters": ["restricted-cluster"],
             "exclude_namespaces": [],
@@ -52,7 +52,7 @@ test_invalid_kubeconfig {
 }
 
 test_excluded_namespace {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_clusters": ["restricted-cluster"],
             "exclude_namespaces": ["kube-system"],
@@ -76,7 +76,7 @@ test_excluded_namespace {
 }
 
 test_excluded_label {
-    input := {
+    testcase := {
         "parameters": {
             "excluded_clusters": ["restricted-cluster"],
             "exclude_namespaces": [],
