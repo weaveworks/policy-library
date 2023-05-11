@@ -8,12 +8,12 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.reconcileStrategy != "Revision"
     controller_spec.reconcileStrategy != "ChartVersion"
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
-        "msg": "The HelmChart reconcile strategy can only specify one of 'revision' or 'chartVersion'",
+        "msg": "The HelmChart reconcile strategy can only specify one of 'Revision' or 'ChartVersion'",
         "violating_key": "spec.reconcileStrategy"
     }
 }

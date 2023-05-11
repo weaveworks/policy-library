@@ -15,7 +15,8 @@ violation[result] {
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' must not be suspended.", [controller_input.metadata.name]),
-        "violating_key": "spec.suspend"
+        "violating_key": "spec.suspend",
+        "recommended_value": false
     }
 }
 

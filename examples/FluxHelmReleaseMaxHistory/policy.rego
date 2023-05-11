@@ -9,9 +9,9 @@ max_history := input.parameters.max_history
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     max_history_value := controller_spec.maxHistory
     max_history_value > max_history
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' maxHistory cannot exceed %d; found %d", [controller_input.metadata.name, max_history, max_history_value]),

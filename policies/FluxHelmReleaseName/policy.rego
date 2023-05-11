@@ -8,11 +8,11 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
-    not re_match(`[A-z]{12}-[A-z]{12}`, controller_input.metadata.name)
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not exclude_label_value == controller_metadata.labels[exclude_label_key]
+    not re_match(`[A-z]{12}-[A-z]{12}`, controller_metadata.name)
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease name must match the regex pattern '[A-z]{12}-[A-z]{12}'; found '%s'", [controller_input.metadata.name]),
+        "msg": sprintf("The HelmRelease name must match the regex pattern '[A-z]{12}-[A-z]{12}'; found '%s'", [controller_metadata.name]),
         "violating_key": "metadata.name"
     }
 }
@@ -20,11 +20,15 @@ violation[result] {
 # Controller input
 controller_input = input.review.object
 
+controller_metadata = controller_input.metadata {
+  controller_input.kind == "HelmRelease"
+}
+
 contains_kind(kind, kinds) {
 kinds[_] = kind
 }
 
 isExcludedNamespace = true {
-  controller_input.metadata.namespace
-  controller_input.metadata.namespace in exclude_namespaces
+  controller_metadata.namespace
+  controller_metadata.namespace in exclude_namespaces
 } else = false

@@ -40,24 +40,28 @@ spec:
     waiver_list := input.parameters.waiver_list
 
     violation[result] {
-        not isExcludedNamespace
+        isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
         not controller_input.metadata.name in waiver_list
-        controller_input.spec.suspend == true
+        controller_spec.suspend == true
         result = {
             "issue detected": true,
-            "msg": sprintf("The HelmRelease '%s' cannot be suspended unless it's on the waiver list.", [controller_input.metadata.name]),
-            "violating_key": "spec.suspend"
+            "msg": sprintf("The HelmRelease '%s' must not be suspended.", [controller_input.metadata.name]),
+            "violating_key": "spec.suspend",
+            "recommended_value": false
         }
     }
 
     # Controller input
     controller_input = input.review.object
 
-    contains_kind(kind, kinds) {
-      kinds[_] = kind
+    # controller_spec acts as an iterator to get spec from the HelmRelease
+    controller_spec = controller_input.spec {
+        controller_input.kind == "HelmRelease"
     }
 
-    isExcludedNamespace {
+    isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
-    }
+    } else = false
+

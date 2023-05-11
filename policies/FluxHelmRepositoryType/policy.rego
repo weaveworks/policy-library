@@ -9,9 +9,9 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     repository_type := controller_spec.type
     repository_type != "oci"
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRepository type must be oci; found '%s'", [repository_type]),

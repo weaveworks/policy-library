@@ -8,6 +8,7 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     storage_namespace := controller_spec.storageNamespace
     target_namespace := controller_spec.targetNamespace
     storage_namespace != target_namespace
@@ -15,7 +16,7 @@ violation[result] {
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' storageNamespace and targetNamespace must match; found storageNamespace '%s' and targetNamespace '%s'", [controller_input.metadata.name, storage_namespace, target_namespace]),
-        "violating_key": "spec.storageNamespace and spec.targetNamespace"
+        "violating_key": "spec.targetNamespace"
     }
 }
 

@@ -36,8 +36,8 @@ spec:
 
     violation[result] {
         isExcludedNamespace == false
-    	controller_spec.rollback.enable == true
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        controller_spec.rollback.enable == true
         result = {
             "issue detected": true,
             "msg": "The HelmRelease rollback must be disabled; found 'true'",

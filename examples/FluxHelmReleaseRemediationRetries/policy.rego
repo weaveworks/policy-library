@@ -10,9 +10,9 @@ upper_bound := input.parameters.upper_bound
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     remediation_retries := controller_spec.remediation.retries
     remediation_retries < lower_bound
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' remediation retries must be between %d and %d; found %d", [controller_input.metadata.name, lower_bound, upper_bound, remediation_retries]),
@@ -22,9 +22,9 @@ violation[result] {
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     remediation_retries := controller_spec.remediation.retries
     remediation_retries > upper_bound
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' remediation retries must be between %d and %d; found %d", [controller_input.metadata.name, lower_bound, upper_bound, remediation_retries]),

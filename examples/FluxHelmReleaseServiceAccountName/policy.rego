@@ -9,9 +9,9 @@ hostnames := input.parameters.hostnames
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     service_account_name := controller_spec.serviceAccountName
     not service_account_name in hostnames
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' serviceAccountName must contain a value from parameters.hostnames; found '%s'", [controller_input.metadata.name, service_account_name]),

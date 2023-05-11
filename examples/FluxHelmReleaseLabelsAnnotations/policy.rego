@@ -10,24 +10,24 @@ required_annotations := input.parameters.required_annotations
 
 violation[result] {
     isExcludedNamespace == false
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not exclude_label_value == controller_metadata.labels[exclude_label_key]
     label := required_labels[_]
-    not controller_input.metadata.labels[label.key] == label.value
+    not controller_metadata.labels[label.key] == label.value
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' must have the label '%s' with value '%s'", [controller_input.metadata.name, label.key, label.value]),
+        "msg": sprintf("The HelmRelease '%s' must have the label '%s' with value '%s'", [controller_metadata.name, label.key, label.value]),
         "violating_key": sprintf("metadata.labels.%s", [label.key])
     }
 }
 
 violation[result] {
     isExcludedNamespace == false
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not exclude_label_value == controller_metadata.labels[exclude_label_key]
     annotation := required_annotations[_]
-    not controller_input.metadata.annotations[annotation.key] == annotation.value
+    not controller_metadata.annotations[annotation.key] == annotation.value
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' must have the annotation '%s' with value '%s'", [controller_input.metadata.name, annotation.key, annotation.value]),
+        "msg": sprintf("The HelmRelease '%s' must have the annotation '%s' with value '%s'", [controller_metadata.name, annotation.key, annotation.value]),
         "violating_key": sprintf("metadata.annotations.%s", [annotation.key])
     }
 }
@@ -35,11 +35,15 @@ violation[result] {
 # Controller input
 controller_input = input.review.object
 
+controller_metadata = controller_input.metadata {
+  controller_input.kind == "HelmRelease"
+}
+
 contains_kind(kind, kinds) {
 kinds[_] = kind
 }
 
 isExcludedNamespace = true {
-  controller_input.metadata.namespace
-  controller_input.metadata.namespace in exclude_namespaces
+  controller_metadata.namespace
+  controller_metadata.namespace in exclude_namespaces
 } else = false

@@ -9,9 +9,9 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     repository_url := controller_spec.url
     not domain_matches(repository_url, domains)
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRepository URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),

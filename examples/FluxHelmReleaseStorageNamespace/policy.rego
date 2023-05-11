@@ -9,9 +9,9 @@ hostnames := input.parameters.hostnames
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     storage_namespace := controller_spec.chart.spec.storageNamespace
     not storage_namespace in hostnames
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' storageNamespace must be one of the allowed storage namespaces; found '%s'", [controller_input.metadata.name, storage_namespace]),

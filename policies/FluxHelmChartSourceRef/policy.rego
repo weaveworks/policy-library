@@ -8,10 +8,10 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.sourceRef.kind != "HelmRepository"
     controller_spec.sourceRef.kind != "GitRepository"
     controller_spec.sourceRef.kind != "Bucket"
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository', but found '%s'", [controller_spec.sourceRef.kind]),

@@ -8,9 +8,9 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     hasPostRenderer := object.get(controller_spec, "postRenderers", false)
     hasPostRenderer != false
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' must not have post-renderers enabled.", [controller_input.metadata.name]),
