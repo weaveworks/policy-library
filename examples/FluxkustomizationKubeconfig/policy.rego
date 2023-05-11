@@ -9,9 +9,9 @@ excluded_clusters := input.parameters.excluded_clusters
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     kubeconfig := controller_spec.kubeConfig
     excluded_clusters[_] == kubeconfig
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The Kustomization '%s' spec.Kubeconfig cannot reference remote cluster from excludedClustersList: %v; found '%s'", [controller_input.metadata.name, excluded_clusters, kubeconfig]),

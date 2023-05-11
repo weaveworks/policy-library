@@ -42,9 +42,9 @@ spec:
 
     violation[result] {
         isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
         path := controller_spec.path
         path in excluded_paths
-        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
         result = {
             "issue detected": true,
             "msg": sprintf("The Kustomization '%s' spec.path '%s' is not allowed.", [controller_input.metadata.name, path]),

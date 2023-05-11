@@ -10,8 +10,8 @@ upper_bound := input.parameters.upper_bound
 
 violation[result] {
     isExcludedNamespace == false
-    reconcile_interval := controller_spec.interval
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    reconcile_interval := controller_spec.interval
     reconcile_interval < lower_bound
     result = {
         "issue detected": true,

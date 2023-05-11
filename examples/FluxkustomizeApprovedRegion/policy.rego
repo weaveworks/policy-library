@@ -9,8 +9,8 @@ regions := input.parameters.regions
 
 violation[result] {
     isExcludedNamespace == false
-    not controller_spec.region in regions
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not controller_spec.region in regions
     result = {
         "issue detected": true,
         "msg": sprintf("The Bucket '%s' region must be one of the approved regions: %v; found '%s'", [controller_input.metadata.name, regions, controller_spec.region]),

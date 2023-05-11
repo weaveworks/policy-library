@@ -8,9 +8,9 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     var_sub_enabled := controller_spec.postBuild.substitute.var_substitution_enabled
     var_sub_enabled
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The Kustomization '%s' spec.postBuild.substitute.var_substitution_enabled must be disabled", [controller_input.metadata.name]),

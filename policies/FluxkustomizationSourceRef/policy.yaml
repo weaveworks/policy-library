@@ -37,10 +37,10 @@ spec:
 
     violation[result] {
         isExcludedNamespace == false
+        not exclude_label_value == kustomization_input.metadata.labels[exclude_label_key]
         kustomization_input.spec.sourceRef.kind != "GitRepository"
         kustomization_input.spec.sourceRef.kind != "OCIRepository"
         kustomization_input.spec.sourceRef.kind != "Bucket"
-        not exclude_label_value == kustomization_input.metadata.labels[exclude_label_key]
         result = {
             "issue_detected": true,
             "msg": sprintf("The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket', but found '%s'", [kustomization_input.spec.sourceRef.kind]),

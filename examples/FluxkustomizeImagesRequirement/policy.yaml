@@ -41,9 +41,9 @@ spec:
 
     violation[result] {
       isExcludedNamespace == false
+      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       hasImages := object_has_images(controller_spec)
       hasImages != images_required
-      not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
       result = {
         "issue_detected": true,
         "msg": "The 'spec.images' field in a Kustomization object must be  based on the policy input.",

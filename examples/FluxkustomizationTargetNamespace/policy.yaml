@@ -44,6 +44,7 @@ spec:
         isExcludedNamespace == false
         not exclude_label_value == kustomization_input.metadata.labels[exclude_label_key]
         not kustomization_input.spec.targetNamespace in target_namespaces
+        target_namespace_list := concat(", ", target_namespaces)
         result = {
             "issue_detected": true,
             "msg": sprintf("The Kustomization '%s' targetNamespace must be one of the allowed target namespaces: %v; found '%s'", [kustomization_input.metadata.name, target_namespace_list, kustomization_input.spec.targetNamespace]),

@@ -9,9 +9,9 @@ decryption_providers := input.parameters.decryption_providers
 
 violation[result] {
     isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     provider := controller_spec.decryption.provider
     not valid_provider(provider)
-    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
         "issue detected": true,
         "msg": sprintf("The Kustomization '%s' Spec.decryption.provider must be set to one of %v; found '%s'", [controller_input.metadata.name, decryption_providers, provider]),

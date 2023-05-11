@@ -9,8 +9,8 @@ prune := input.parameters.prune
 
 violation[result] {
     isExcludedNamespace == false
-    controller_spec.prune != prune
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    controller_spec.prune != prune
     result = {
         "issue detected": true,
         "msg": sprintf("The 'spec.prune' field in the Kustomization object must be set to '%v', but found '%v'", [prune, controller_spec.prune]),

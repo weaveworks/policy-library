@@ -8,8 +8,8 @@ exclude_label_value := input.parameters.exclude_label_value
 
 violation[result] {
     isExcludedNamespace == false
-    controller_spec.insecure == true
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    controller_spec.insecure == true
     result = {
         "issue detected": true,
         "msg": "Insecure connections are not allowed for Bucket objects. Please set 'spec.insecure' to 'false' or remove the field.",
