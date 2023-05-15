@@ -1,0 +1,73 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.ocirepository_cosign_verification
+spec:
+  id: weave.policies.ocirepository_cosign_verification
+  name: OCIRepository Cosign Verification
+  description: "OCIRepository resources must provide Cosign verification and reference a specific key."
+  how_to_solve: "Ensure the OCIRepository verification provider is 'cosign' and references a specific key."
+  severity: high
+  category: weave.categories.configuration
+  enabled: true
+  targets:
+    kinds: [OCIRepository]
+  tags: [cosign]
+  parameters:
+    - name: secret_name
+      type: string
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: 
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: 
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: 
+  code: |
+    package weave.advisor.ocirepository_cosign_verification
+
+    import future.keywords.in
+
+    secret_name := input.parameters.secret_name
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+        isExcludedNamespace == false
+        isExcludedLabel == false
+        verify := controller_input.spec.verify
+        verify.provider != "cosign"
+        verify.secretRef.name != secret_name
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The OCIRepository '%s' must provide Cosign verification and reference the specific key '%s'. Found provider: '%s', secretRef.name: '%s'", [controller_input.metadata.name, secret_name, verify.provider, verify.secretRef.name]),
+            "violating_key": "spec.verify"
+        }
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+        controller_input.kind == "OCIRepository"
+    }
+
+    contains_kind(kind, kinds) {
+    kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+        controller_input.metadata.namespace
+        controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+
+    isExcludedLabel = true {
+        controller_input.metadata.labels[exclude_label_key] == exclude_label_value
+    } else = false
