@@ -2334,34 +2334,6 @@ high
 
 ---
 
-## Resource Name Must Match Regex
-
-### ID
-weave.policies.resource-name-regex
-
-### Description
-The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### How to solve?
-Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## MYSQL Enforce Environment Variable - MYSQL_USER
 
 ### ID
@@ -3763,6 +3735,34 @@ high
 
 ### Parameters
 [{'name': 'resource_enabled', 'type': 'boolean', 'required': True, 'value': False}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Resource Name Must Match Regex
+
+### ID
+weave.policies.resource-name-regex
+
+### Description
+The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+
+### How to solve?
+Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
