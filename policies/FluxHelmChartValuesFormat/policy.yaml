@@ -4,7 +4,7 @@ metadata:
   name: weave.policies.helm-chart-values-files-format
 spec:
   id: weave.policies.helm-chart-values-files-format
-  name: Helm Chart Values File Format
+  name: HelmChart Values File Format
   enabled: true
   description: "HelmChart must reference values files in the following format: 'xxx=values.yaml'."
   how_to_solve: "Update the HelmChart valuesFrom field to use the correct format."

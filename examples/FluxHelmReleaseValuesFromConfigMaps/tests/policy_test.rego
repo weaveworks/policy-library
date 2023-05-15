@@ -6,7 +6,7 @@ test_allowed_configmaps {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_configmaps": ["allowed-configmap"]
+      "configmaps": ["allowed-configmap"]
     },
     "review": {
       "object": {
@@ -38,7 +38,7 @@ test_unallowed_configmaps {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_configmaps": ["allowed-configmap"]
+      "configmaps": ["allowed-configmap"]
     },
     "review": {
       "object": {
@@ -70,7 +70,7 @@ test_exclude_namespace_configmaps {
       "exclude_namespaces": ["excluded-namespace"],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "allowed_configmaps": ["allowed-configmap"]
+      "configmaps": ["allowed-configmap"]
     },
     "review": {
       "object": {
@@ -102,7 +102,7 @@ test_exclude_label_configmaps {
       "exclude_namespaces": [],
       "exclude_label_key": "exclude-me",
       "exclude_label_value": "true",
-      "allowed_configmaps": ["allowed-configmap"]
+      "configmaps": ["allowed-configmap"]
     },
     "review": {
       "object": {

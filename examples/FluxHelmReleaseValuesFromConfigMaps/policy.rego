@@ -10,7 +10,7 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-allowed_configmaps := input.parameters.allowed_configmaps
+configmaps := input.parameters.configmaps
 
 violation[result] {
     isExcludedNamespace == false
@@ -18,7 +18,7 @@ violation[result] {
     some i
     value_from := controller_spec.valuesFrom[i]
     value_from.configMapKeyRef.name
-    not value_from.configMapKeyRef.name in allowed_configmaps
+    not value_from.configMapKeyRef.name in configmaps
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' is using an unallowed ConfigMap '%s' in valuesFrom.", [controller_input.metadata.name, value_from.configMapKeyRef.name]),

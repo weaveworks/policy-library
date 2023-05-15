@@ -1,8 +1,8 @@
-package weave.advisor.helm_release_name_regex
+package weave.advisor.resource_name_regex
 
-import data.weave.advisor.helm_release_name_regex.violation
+import data.weave.advisor.resource_name_regex.violation
 
-test_valid_helm_release_name {
+test_valid_resource_name {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -24,7 +24,7 @@ test_valid_helm_release_name {
   count(violation) == 0 with input as testcase
 }
 
-test_invalid_helm_release_name {
+test_invalid_resource_name {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],

@@ -1,4 +1,4 @@
-package weave.advisor.helm_release_suspended_waiver
+package weave.advisor.resource_suspended_waiver
 
 import future.keywords.in
 
@@ -14,7 +14,7 @@ violation[result] {
     controller_spec.suspend == true
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' must not be suspended.", [controller_input.metadata.name]),
+        "msg": sprintf("The resource '%s' of kind '%s' must not be suspended.", [controller_input.metadata.name, controller_input.kind]),
         "violating_key": "spec.suspend",
         "recommended_value": false
     }
@@ -23,9 +23,12 @@ violation[result] {
 # Controller input
 controller_input = input.review.object
 
-# controller_spec acts as an iterator to get spec from the HelmRelease
 controller_spec = controller_input.spec {
-    controller_input.kind == "HelmRelease"
+    contains_kind(controller_input.kind, ["HelmRelease", "GitRepository", "OCIRepository", "Bucket", "HelmChart", "HelmRepository", "Kustomization"])
+}
+
+contains_kind(kind, kinds) {
+kinds[_] = kind
 }
 
 isExcludedNamespace = true {

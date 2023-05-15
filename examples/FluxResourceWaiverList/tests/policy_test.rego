@@ -1,8 +1,8 @@
-package weave.advisor.helm_release_suspended_waiver
+package weave.advisor.resource_suspended_waiver
 
-import data.weave.advisor.helm_release_suspended_waiver.violation
+import data.weave.advisor.resource_suspended_waiver.violation
 
-test_valid_helm_release_not_suspended {
+test_valid_resource_not_suspended {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -27,7 +27,7 @@ test_valid_helm_release_not_suspended {
   count(violation) == 0 with input as testcase
 }
 
-test_invalid_helm_release_suspended {
+test_invalid_resource_suspended {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -52,7 +52,7 @@ test_invalid_helm_release_suspended {
   count(violation) == 1 with input as testcase
 }
 
-test_valid_helm_release_suspended_waiver {
+test_valid_resource_suspended_waiver {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],

@@ -1,6 +1,6 @@
-package weave.advisor.helm_release_reconcile_interval
+package weave.advisor.resource_reconcile_interval
 
-import data.weave.advisor.helm_release_reconcile_interval.violation
+import data.weave.advisor.resource_reconcile_interval.violation
 
 test_valid_reconcile_interval {
   testcase = {

@@ -5,15 +5,15 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-target_namespace_list := input.parameters.target_namespace_list
+target_namespaces := input.parameters.target_namespaces
 
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    not controller_spec.targetNamespace in target_namespace_list
+    not controller_spec.targetNamespace in target_namespaces
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' targetNamespace must be one of the allowed target namespaces: %v; found '%s'", [controller_input.metadata.name, target_namespace_list, controller_spec.targetNamespace]),
+        "msg": sprintf("The HelmRelease '%s' targetNamespace must be one of the allowed target namespaces: %v; found '%s'", [controller_input.metadata.name, target_namespaces, controller_spec.targetNamespace]),
         "violating_key": "spec.targetNamespace"
     }
 }

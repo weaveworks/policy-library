@@ -1,22 +1,22 @@
-package weave.advisor.helm_release_labels_annotations
+package weave.advisor.resource_labels_annotations
 
-import data.weave.advisor.helm_release_labels_annotations.violation
+import data.weave.advisor.resource_labels_annotations
 
-test_valid_helm_release {
+test_valid_resource {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "required_labels": [{"key": "app", "value": "my-app"}],
-      "required_annotations": [{"key": "version", "value": "1.0"}],
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "valid-helm-release",
+          "name": "valid-resource",
           "labels": {
             "app": "my-app",
           },
@@ -32,21 +32,21 @@ test_valid_helm_release {
   count(violation) == 0 with input as testcase
 }
 
-test_invalid_helm_release_missing_label {
+test_invalid_resource_missing_label {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "required_labels": [{"key": "app", "value": "my-app"}],
-      "required_annotations": [{"key": "version", "value": "1.0"}],
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "invalid-helm-release",
+          "name": "invalid-resource",
           "labels": {},
           "annotations": {
             "version": "1.0",
@@ -60,21 +60,21 @@ test_invalid_helm_release_missing_label {
   count(violation) == 1 with input as testcase
 }
 
-test_invalid_helm_release_missing_annotation {
+test_invalid_resource_missing_annotation {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "required_labels": [{"key": "app", "value": "my-app"}],
-      "required_annotations": [{"key": "version", "value": "1.0"}],
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "invalid-helm-release",
+          "name": "invalid-resource",
           "labels": {
             "app": "my-app",
           },
@@ -88,21 +88,53 @@ test_invalid_helm_release_missing_annotation {
   count(violation) == 1 with input as testcase
 }
 
-test_exclude_label_helm_release {
+# test_valid_gitrepository to demonstrates that the policy works correctly with different kinds of resources.
+
+test_valid_gitrepository {
+  testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
+    },
+    "review": {
+      "object": {
+        "apiVersion": "v1",
+        "kind": "GitRepository",
+        "metadata": {
+          "name": "valid-gitrepository",
+          "labels": {
+            "app": "my-app",
+          },
+          "annotations": {
+            "version": "1.0",
+          },
+        },
+        "spec": {}
+      }
+    }
+  }
+
+  count(violation) == 0 with input as testcase
+}
+
+test_exclude_label_resource {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
       "exclude_label_key": "exclude-me",
       "exclude_label_value": "true",
-      "required_labels": [{"key": "app", "value": "my-app"}],
-      "required_annotations": [{"key": "version", "value": "1.0"}],
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "excluded-helm-release",
+          "name": "excluded-resource",
           "labels": {
             "exclude-me": "true",
           },
@@ -116,21 +148,21 @@ test_exclude_label_helm_release {
   count(violation) == 0 with input as testcase
 }
 
-test_exclude_namespace_helm_release {
+test_exclude_namespace_resource {
   testcase = {
     "parameters": {
       "exclude_namespaces": ["excluded-namespace"],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "required_labels": [{"key": "app", "value": "my-app"}],
-      "required_annotations": [{"key": "version", "value": "1.0"}],
+      "labels": [{"key": "app", "value": "my-app"}],
+      "annotations": [{"key": "version", "value": "1.0"}],
     },
     "review": {
       "object": {
         "apiVersion": "v1",
         "kind": "HelmRelease",
         "metadata": {
-          "name": "excluded-helm-release",
+          "name": "excluded-resource",
           "namespace": "excluded-namespace",
           "labels": {},
           "annotations": {},
@@ -142,3 +174,5 @@ test_exclude_namespace_helm_release {
 
   count(violation) == 0 with input as testcase
 }
+
+

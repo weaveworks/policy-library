@@ -1,4 +1,4 @@
-package weave.advisor.helm_release_name_regex
+package weave.advisor.resource_name_regex
 
 import future.keywords.in
 
@@ -12,7 +12,7 @@ violation[result] {
     not re_match(`[A-z]{12}-[A-z]{12}`, controller_metadata.name)
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRelease name must match the regex pattern '[A-z]{12}-[A-z]{12}'; found '%s'", [controller_metadata.name]),
+        "msg": sprintf("The resource name of kind '%s' must match the regex pattern '[A-z]{12}-[A-z]{12}'; found '%s'", [controller_input.kind, controller_metadata.name]),
         "violating_key": "metadata.name"
     }
 }
@@ -21,7 +21,7 @@ violation[result] {
 controller_input = input.review.object
 
 controller_metadata = controller_input.metadata {
-  controller_input.kind == "HelmRelease"
+  contains_kind(controller_input.kind, ["HelmRelease", "GitRepository", "OCIRepository", "Bucket", "HelmChart", "HelmRepository", "Kustomization"])
 }
 
 contains_kind(kind, kinds) {
