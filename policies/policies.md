@@ -2334,16 +2334,16 @@ high
 
 ---
 
-## Helm Release Name Must Match Regex
+## Resource Name Must Match Regex
 
 ### ID
-weave.policies.helm-release-name-regex
+weave.policies.resource-name-regex
 
 ### Description
-The release name of a HelmRelease must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
 
 ### How to solve?
-Change the release name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
 
 ### Category
 weave.categories.best-practices
@@ -2352,7 +2352,7 @@ weave.categories.best-practices
 medium
 
 ### Targets
-{'kinds': ['HelmRelease']}
+{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
 
 ### Tags
 ['flux']
@@ -4165,7 +4165,7 @@ medium
 
 ---
 
-## Helm Chart Values File Format
+## HelmChart Values File Format
 
 ### ID
 weave.policies.helm-chart-values-files-format
