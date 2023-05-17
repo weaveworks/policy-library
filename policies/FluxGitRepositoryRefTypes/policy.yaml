@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "GitRepository resources must use only one of (Semver|Refname|Commit) in spec.ref."
   how_to_solve: "Ensure the GitRepository spec.ref uses only one of (Semver|Refname|Commit)."
-  category: weave.categories.configuration
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [GitRepository]

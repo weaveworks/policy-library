@@ -6,13 +6,13 @@ spec:
   id: weave.policies.ocirepository-ignore-suffixes
   name: OCIRepository Ignore Suffixes
   enabled: true
-  description: "OCIRepository resources must include specific suffixes in the ignore field."
-  how_to_solve: "Ensure the OCIRepository ignore field includes the required suffixes."
-  category: weave.categories.configuration
+  description: "OCIRepository resources must include specific suffixes in the spec.ignore field. The .gitignore field determines which files and directories to ignore before making a commit."
+  how_to_solve: "Ensure the spec.ignore field in the OCIRepository resource includes the required suffixes. The specified suffixes correspond to the file types that should not be included in the repository commit."
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [OCIRepository]
-  tags: [flux]
+  tags: [flux, oci, suffixes]
   parameters:
     - name: suffixes
       type: array

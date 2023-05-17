@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "GitRepository resources must reference a specific branch, e.g. 'main'."
   how_to_solve: "Ensure the GitRepository ref field points to the specific branch (e.g. 'main')."
-  category: weave.categories.configuration
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [GitRepository]

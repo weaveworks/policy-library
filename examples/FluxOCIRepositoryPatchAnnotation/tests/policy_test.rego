@@ -6,20 +6,22 @@ import data.weave.advisor.ocirepository_patch_annotation
 test_patch_annotation_matches_provider {
     testcase := {
         "parameters": {
-            "provider": "correct-provider",
+            "provider": "aws",
             "exclude_namespaces": [],
             "exclude_label_key": "",
             "exclude_label_value": ""
         },
         "review": {
             "object": {
-                "kind": "OCIRepository",
+                "kind": "Kustomization",
                 "metadata": {
                     "name": "example",
-                    "namespace": "default",
-                    "annotations": {
-                        "fluxcd.io/automated": "correct-provider"
-                    }
+                    "namespace": "default"
+                },
+                "spec": {
+                    "patches": [{
+                        "patch": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: source-controller\n  annotations:\n    eks.amazonaws.com/role-arn: <role arn>"
+                    }]
                 }
             }
         }
@@ -30,20 +32,22 @@ test_patch_annotation_matches_provider {
 test_patch_annotation_does_not_match_provider {
     testcase := {
         "parameters": {
-            "provider": "correct-provider",
+            "provider": "aws",
             "exclude_namespaces": [],
             "exclude_label_key": "",
             "exclude_label_value": ""
         },
         "review": {
             "object": {
-                "kind": "OCIRepository",
+                "kind": "Kustomization",
                 "metadata": {
                     "name": "example",
-                    "namespace": "default",
-                    "annotations": {
-                        "fluxcd.io/automated": "wrong-provider"
-                    }
+                    "namespace": "default"
+                },
+                "spec": {
+                    "patches": [{
+                        "patch": "some different patch"
+                    }]
                 }
             }
         }
@@ -54,20 +58,22 @@ test_patch_annotation_does_not_match_provider {
 test_exclude_namespace {
     testcase := {
         "parameters": {
-            "provider": "correct-provider",
+            "provider": "aws",
             "exclude_namespaces": ["kube-system"],
             "exclude_label_key": "",
             "exclude_label_value": ""
         },
         "review": {
             "object": {
-                "kind": "OCIRepository",
+                "kind": "Kustomization",
                 "metadata": {
                     "name": "example",
-                    "namespace": "kube-system",
-                    "annotations": {
-                        "fluxcd.io/automated": "wrong-provider"
-                    }
+                    "namespace": "kube-system"
+                },
+                "spec": {
+                    "patches": [{
+                        "patch": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: source-controller\n  annotations:\n    eks.amazonaws.com/role-arn: <role arn>"
+                    }]
                 }
             }
         }
@@ -78,23 +84,25 @@ test_exclude_namespace {
 test_exclude_label {
     testcase := {
         "parameters": {
-            "provider": "correct-provider",
+            "provider": "aws",
             "exclude_namespaces": [],
             "exclude_label_key": "exclude-policy",
             "exclude_label_value": "true"
         },
         "review": {
             "object": {
-                "kind": "OCIRepository",
+                "kind": "Kustomization",
                 "metadata": {
                     "name": "example",
                     "namespace": "default",
                     "labels": {
                         "exclude-policy": "true"
-                    },
-                    "annotations": {
-                        "fluxcd.io/automated": "wrong-provider"
                     }
+                },
+                "spec": {
+                    "patches": [{
+                        "patch": "apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: source-controller\n  annotations:\n    eks.amazonaws.com/role-arn: <role arn>"
+                    }]
                 }
             }
         }

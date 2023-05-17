@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "OCIRepository layer selector must only reference predefined media/operation type."
   how_to_solve: "Ensure the OCIRepository layer selector refers to a predefined media and operation type."
-  category: weave.categories.security
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [OCIRepository]
@@ -46,14 +46,26 @@ spec:
     exclude_label_value := input.parameters.exclude_label_value
 
     violation[result] {
-        isExcludedNamespace == false
+        not isExcludedNamespace
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-        not media_types[_] == controller_spec.layerSelector.mediaType
-        not operations[_] == controller_spec.layerSelector.operation
+        mediaType := controller_spec.layerSelector.mediaType
+        not mediaType in media_types
         result = {
             "issue detected": true,
-            "msg": sprintf("The OCIRepository '%s' layer selector must only reference predefined media/operation type.", [controller_input.metadata.name]),
-            "violating_key": "spec.layerSelector"
+            "msg": sprintf("The OCIRepository '%s' has a non-predefined media type. Found: '%s'", [controller_input.metadata.name, mediaType]),
+            "violating_key": "spec.layerSelector.mediaType"
+        }
+    }
+
+    violation[result] {
+        not isExcludedNamespace
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        operation := controller_spec.layerSelector.operation
+        not operation in operations
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The OCIRepository '%s' has a non-predefined operation. Found: '%s'", [controller_input.metadata.name, operation]),
+            "violating_key": "spec.layerSelector.operation"
         }
     }
 
@@ -64,10 +76,11 @@ spec:
     }
 
     contains_kind(kind, kinds) {
-    kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
+

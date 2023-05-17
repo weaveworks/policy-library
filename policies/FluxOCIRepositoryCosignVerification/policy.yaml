@@ -1,23 +1,19 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.ocirepository_cosign_verification
+  name: weave.policies.ocirepository-cosign-verification
 spec:
-  id: weave.policies.ocirepository_cosign_verification
+  id: weave.policies.ocirepository-cosign-verification
   name: OCIRepository Cosign Verification
   description: "OCIRepository resources must provide Cosign verification and reference a specific key."
   how_to_solve: "Ensure the OCIRepository verification provider is 'cosign' and references a specific key."
-  severity: high
-  category: weave.categories.configuration
+  severity: medium
+  category: weave.categories.security
   enabled: true
   targets:
     kinds: [OCIRepository]
-  tags: [cosign]
+  tags: [flux]
   parameters:
-    - name: secret_name
-      type: string
-      required: true
-      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -35,39 +31,35 @@ spec:
 
     import future.keywords.in
 
-    secret_name := input.parameters.secret_name
     exclude_namespaces := input.parameters.exclude_namespaces
     exclude_label_key := input.parameters.exclude_label_key
     exclude_label_value := input.parameters.exclude_label_value
 
     violation[result] {
         isExcludedNamespace == false
-        isExcludedLabel == false
-        verify := controller_input.spec.verify
-        verify.provider != "cosign"
-        verify.secretRef.name != secret_name
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        not controller_spec.verify.provider == "cosign"
+        not controller_spec.verify.secretRef.name
         result = {
             "issue detected": true,
-            "msg": sprintf("The OCIRepository '%s' must provide Cosign verification and reference the specific key '%s'. Found provider: '%s', secretRef.name: '%s'", [controller_input.metadata.name, secret_name, verify.provider, verify.secretRef.name]),
+            "msg": "The OCIRepository must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension",
             "violating_key": "spec.verify"
         }
     }
 
+    # Controller input
     controller_input = input.review.object
 
+    # controller_container acts as an iterator to get containers from the template
     controller_spec = controller_input.spec {
-        controller_input.kind == "OCIRepository"
+      controller_input.kind == "OCIRepository"
     }
 
     contains_kind(kind, kinds) {
-    kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
-    } else = false
-
-    isExcludedLabel = true {
-        controller_input.metadata.labels[exclude_label_key] == exclude_label_value
     } else = false

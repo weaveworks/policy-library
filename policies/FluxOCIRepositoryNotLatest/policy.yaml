@@ -1,9 +1,9 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.oci_repository_not_latest
+  name: weave.policies.ocirepository-not-latest
 spec:
-  id: weave.policies.oci_repository_not_latest
+  id: weave.policies.ocirepository-not-latest
   name: OCIRepository Not Latest Tag
   enabled: true
   description: "OCIRepository resources must not use 'latest' as a tag reference."

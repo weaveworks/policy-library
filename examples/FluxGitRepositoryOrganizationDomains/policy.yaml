@@ -1,17 +1,17 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.ocirepository-organization-domains
+  name: weave.policies.gitrepository-organization-domains
 spec:
-  id: weave.policies.ocirepository-organization-domains
-  name: OCIRepository Organization Domains
+  id: weave.policies.gitrepository-organization-domains
+  name: GitRepository Organization Domains
   enabled: true
-  description: "OCIRepository resources must only be from allowed organization domains."
-  how_to_solve: "Ensure the OCIRepository URL belongs to an allowed organization domain."
-  category: weave.categories.security
+  description: "GitRepository resources must only be from allowed organization domains."
+  how_to_solve: "Ensure the GitRepository URL belongs to an allowed organization domain."
+  category: weave.categories.software-supply-chain
   severity: medium
   targets:
-    kinds: [OCIRepository]
+    kinds: [GitRepository]
   tags: [flux]
   parameters:
     - name: domains
@@ -31,7 +31,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.ocirepository_organization_domains
+    package weave.advisor.gitrepository_organization_domains
 
     import future.keywords.in
 
@@ -47,7 +47,7 @@ spec:
         not domain_matches(repo_url, domains)
         result = {
             "issue detected": true,
-            "msg": sprintf("The OCIRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
+            "msg": sprintf("The GitRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
             "violating_key": "spec.url"
         }
     }
@@ -63,14 +63,15 @@ spec:
     controller_input = input.review.object
 
     controller_spec = controller_input.spec {
-        controller_input.kind == "OCIRepository"
+        controller_input.kind == "GitRepository"
     }
 
     contains_kind(kind, kinds) {
-      kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
+

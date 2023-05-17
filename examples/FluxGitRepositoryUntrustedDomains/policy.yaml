@@ -43,17 +43,30 @@ spec:
     violation[result] {
         isExcludedNamespace == false
         not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-        not isDomainTrusted(controller_spec.url)
+        repo_url := controller_spec.url
+        is_untrusted := domain_matches(repo_url, untrusted_domains)
+        is_untrusted
         result = {
             "issue detected": true,
-            "msg": sprintf("The GitRepository '%s' has a URL from an untrusted domain.", [controller_input.metadata.name]),
+            "msg": sprintf("The GitRepository '%s' targets an untrusted domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
             "violating_key": "spec.url"
         }
     }
 
-    isDomainTrusted(url) {
-        domain := split(url, "/")[2]
-        not domain in untrusted_domains
+    domain_matches(url, domains) {
+        startswith(url, "https://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
+    }
+
+    domain_matches(url, domains) {
+        startswith(url, "http://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
     }
 
     controller_input = input.review.object
@@ -63,11 +76,12 @@ spec:
     }
 
     contains_kind(kind, kinds) {
-    kinds[_] = kind
-    } 
+        kinds[_] = kind
+    }
 
     isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
+
 

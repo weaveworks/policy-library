@@ -1,17 +1,17 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.gitrepository-organization-domains
+  name: weave.policies.ocirepository-organization-domains
 spec:
-  id: weave.policies.gitrepository-organization-domains
-  name: GitRepository Organization Domains
+  id: weave.policies.ocirepository-organization-domains
+  name: OCIRepository Organization Domains
   enabled: true
-  description: "GitRepository resources must only be from allowed organization domains."
-  how_to_solve: "Ensure the GitRepository URL belongs to an allowed organization domain."
+  description: "OCIRepository resources must only be from allowed organization domains."
+  how_to_solve: "Ensure the OCIRepository URL belongs to an allowed organization domain."
   category: weave.categories.security
   severity: medium
   targets:
-    kinds: [GitRepository]
+    kinds: [OCIRepository]
   tags: [flux]
   parameters:
     - name: domains
@@ -31,7 +31,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.gitrepository_organization_domains
+    package weave.advisor.ocirepository_organization_domains
 
     import future.keywords.in
 
@@ -47,7 +47,7 @@ spec:
         not domain_matches(repo_url, domains)
         result = {
             "issue detected": true,
-            "msg": sprintf("The GitRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
+            "msg": sprintf("The OCIRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
             "violating_key": "spec.url"
         }
     }
@@ -60,17 +60,26 @@ spec:
         domain in domains
     }
 
+    domain_matches(url, domains) {
+        startswith(url, "http://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
+    }
+
     controller_input = input.review.object
 
     controller_spec = controller_input.spec {
-        controller_input.kind == "GitRepository"
+        controller_input.kind == "OCIRepository"
     }
 
     contains_kind(kind, kinds) {
-    kinds[_] = kind
+        kinds[_] = kind
     }
 
     isExcludedNamespace = true {
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
+
