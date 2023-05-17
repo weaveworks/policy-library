@@ -87,7 +87,7 @@
 'weave.categories.organizational-standards','Deployment,Job,ReplicationController,ReplicaSet,DaemonSet,StatefulSet,CronJob','Missing Kubernetes App Version Label','False','True','False','False','False','False','False','False','False','False'
 'weave.categories.organizational-standards','Deployment,Job,ReplicationController,ReplicaSet,DaemonSet,StatefulSet,CronJob','RabbitMQ Enforce Environment Variable - RABBITMQ_SCHEMA_DIR','False','True','False','False','False','False','False','False','False','False'
 'weave.categories.organizational-standards','Deployment,Job,ReplicationController,ReplicaSet,DaemonSet,StatefulSet,CronJob','Missing Owner Label','False','True','False','False','False','False','False','False','False','False'
-'weave.categories.best-practices','HelmRelease','Helm Release Namespace Match','False','True','False','False','False','False','False','False','False','False'
+'weave.categories.access-control','HelmRelease','Helm Release Namespace Match','False','True','False','False','False','False','False','False','False','False'
 'weave.categories.data-protection','PersistentVolume','Persistent Volume Reclaim Policy Should Be Set To Retain','False','True','False','False','False','False','False','False','False','False'
 'weave.categories.capacity-management','Deployment,Job,ReplicationController,ReplicaSet,DaemonSet,StatefulSet,CronJob','Containers Should Not Run On Kubernetes Control Plane Nodes','False','True','False','False','False','False','False','False','False','False'
 'weave.categories.organizational-standards','Deployment,Job,ReplicationController,ReplicaSet,DaemonSet,StatefulSet,CronJob','Missing Kubernetes App Label','False','True','False','False','False','False','False','False','False','False'
