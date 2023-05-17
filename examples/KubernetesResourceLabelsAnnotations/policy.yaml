@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "All resources must have the specified labels and annotations."
   how_to_solve: "Add the required labels and annotations to the resource."
-  category: weave.categories.configration
+  category: weave.categories.organizational-standards
   severity: medium
   targets:
     kinds: [HelmRelease, GitRepository, OCIRepository, Bucket, HelmChart, HelmRepository, Kustomization]

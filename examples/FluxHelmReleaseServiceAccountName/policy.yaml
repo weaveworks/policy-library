@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease serviceAccountName must contain a value from parameters.hostnames"
   how_to_solve: "Set the serviceAccountName of the HelmRelease to one of the allowed service accounts."
-  category: weave.categories.security
+  category: weave.categories.access-control
   severity: high
   targets:
     kinds: [HelmRelease]

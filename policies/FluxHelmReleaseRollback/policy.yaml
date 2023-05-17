@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The rollback feature of a HelmRelease should be disabled."
   how_to_solve: "Set the rollback feature of the HelmRelease to false."
-  category: weave.categories.configuration
+  category: weave.categories.best_practices
   severity: medium
   targets: {kinds: [HelmRelease]}
   tags: [flux]

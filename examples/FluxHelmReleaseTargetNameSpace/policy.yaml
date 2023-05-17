@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease targetNamespace must be one of the allowed targetNamespace list."
   how_to_solve: "Set the targetNamespace of the HelmRelease to one of the allowed namespaces."
-  category: weave.categories.configuration
+  category: weave.categories.access-control
   severity: medium
   targets:
     kinds: [HelmRelease]

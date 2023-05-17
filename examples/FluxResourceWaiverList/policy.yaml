@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Resource cannot be suspended unless it's on the waiver list."
   how_to_solve: "Add the Resource to the waiver list or set 'suspend' to false."
-  category: weave.categories.configuration
+  category: weave.categories.access-control
   severity: medium
   targets: {kinds: [HelmRelease, GitRepository, OCIRepository, Bucket, HelmChart, HelmRepository, Kustomization]}
   tags: [flux]

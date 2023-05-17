@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository' or 'Bucket'."
   how_to_solve: "Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository' or 'Bucket'."
-  category: weave.categories.configuration
+  category: weave.categories.software-supply-chain
   severity: medium
   targets: {kinds: [HelmChart]}
   tags: [flux]

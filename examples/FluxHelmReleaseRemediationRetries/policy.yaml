@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease remediation retries must be within the specified lower and upper bounds."
   how_to_solve: "Set the remediation retries value of the HelmRelease to a value within the allowed range."
-  category: weave.categories.configuration
+  category: weave.categories.reliability
   severity: medium
   targets:
     kinds: [HelmRelease]

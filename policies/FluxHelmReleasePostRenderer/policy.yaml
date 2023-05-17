@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease must not have post-renderers enabled."
   how_to_solve: "Remove the post-renderers configuration from the HelmRelease."
-  category: weave.categories.configuration
+  category: weave.categories.best_practices
   severity: medium
   targets:
     kinds: [HelmRelease]

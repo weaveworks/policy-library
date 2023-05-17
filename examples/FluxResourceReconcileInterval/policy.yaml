@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The reconcile interval of a Resource must be set between a lower and upper bound."
   how_to_solve: "Set the reconcile interval of the Resource between the specified lower and upper bounds."
-  category: weave.categories.best_practices
+  category: weave.categories.reliability
   severity: medium
   targets:
     kinds: [HelmRelease, GitRepository, OCIRepository, Bucket, HelmChart, HelmRepository, Kustomization]

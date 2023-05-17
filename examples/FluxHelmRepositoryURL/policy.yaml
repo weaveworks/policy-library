@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The URL of a Helm repository should only be from the specified organisation domain."
   how_to_solve: "Change the URL of the Helm repository to one that is from the organisation domain."
-  category: weave.categories.security
+  category: weave.categories.software-supply-chain
   severity: medium
   targets: {kinds: [HelmRepository]}
   tags: [flux]
