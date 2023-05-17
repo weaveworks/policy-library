@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The 'spec.prune' field in the Kustomization object must be set according to the input parameter 'prune'."
   how_to_solve: "Update the 'spec.prune' field in the Kustomization object to match the required value."
-  category: weave.categories.configuration
+  category: weave.categories.organizational-standard
   severity: medium
   targets: {kinds: [Kustomization]}
   tags: [flux]

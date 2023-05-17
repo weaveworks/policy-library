@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Spec.decryption.provider must be set to one of decryption_providers."
   how_to_solve: "Set the Kustomization's Spec.decryption.provider to a valid value from the decryption_providers."
-  category: weave.categories.security
+  category: weave.categories.reliability
   severity: medium
   targets:
     kinds: [Kustomization]

@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "spec.path cannot be one of excludedPathsList[]"
   how_to_solve: "Update the spec.path to a value not in the excluded paths list."
-  category: weave.categories.configuration
+  category: weave.categories.organizational-standard
   severity: medium
   targets:
     kinds: [Kustomization]

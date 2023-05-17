@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The 'spec.images' field in a Kustomization object must be enabled or disabled based on the policy input."
   how_to_solve: "Update the 'spec.images' field in the Kustomization object based on the policy input."
-  category: weave.categories.configuration
+  category: weave.categories.organizational-standard
   severity: medium
   targets: {kinds: [Kustomization]}
   tags: [flux]

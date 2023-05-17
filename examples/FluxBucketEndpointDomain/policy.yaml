@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Bucket endpoint domain must be one of the trusted domains."
   how_to_solve: "Update the Bucket endpoint domain to one of the trusted domains."
-  category: weave.categories.configuration
+  category: weave.categories.security
   severity: medium
   targets:
     kinds: [Bucket]

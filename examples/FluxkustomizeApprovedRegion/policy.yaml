@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Bucket region must be one of the approved regions."
   how_to_solve: "Set the region of the Bucket to one of the approved regions."
-  category: weave.categories.configuration
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [Bucket]

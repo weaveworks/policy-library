@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Bucket spec.provider must be set to one of AWS, Azure, GCP, or Generic."
   how_to_solve: "Set the spec.provider field of the Bucket to one of the allowed values: AWS, Azure, GCP, or Generic."
-  category: weave.categories.configuration
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [Bucket]

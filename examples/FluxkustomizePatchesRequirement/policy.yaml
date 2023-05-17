@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "Kustomization patches should be enabled or disabled based on input."
   how_to_solve: "Update the 'spec.patches' field in the Kustomization object according to the input."
-  category: weave.categories.configuration
+  category: weave.categories.organizational-standard
   severity: medium
   targets: {kinds: [Kustomization]}
   tags: [flux]

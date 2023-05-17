@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "spec.Images must comply with image tag/semver reference standards."
   how_to_solve: "Update the image tag to comply with semver reference standards."
-  category: weave.categories.best-practice
+  category: weave.categories.reliability
   severity: medium
   targets:
     kinds: [Kustomization]

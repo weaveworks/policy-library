@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket'."
   how_to_solve: "Update the 'sourceRef.kind' field in the 'spec' section of the Kustomization object to either 'GitRepository', 'OCIRepository' or 'Bucket'."
-  category: weave.categories.configuration
+  category: weave.categories.software-supply-chain
   severity: medium
   targets:
     kinds: [Kustomization]

@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "spec.components must not include components from excludedComponentsList[]."
   how_to_solve: "Remove the excluded components from the Kustomization's spec.components."
-  category: weave.categories.configuration
+  category: weave.categories.organizational-standard
   severity: medium
   targets:
     kinds: [Kustomization]

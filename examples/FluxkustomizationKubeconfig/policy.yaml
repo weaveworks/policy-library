@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "spec.Kubeconfig cannot reference remote cluster from excludedClustersList[]."
   how_to_solve: "Set the Kustomization's spec.Kubeconfig to a cluster that is not in the excludedClustersList[]."
-  category: weave.categories.configuration
+  category: weave.categories.access-control
   severity: medium
   targets:
     kinds: [Kustomization]
