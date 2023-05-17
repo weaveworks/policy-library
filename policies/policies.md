@@ -1365,7 +1365,7 @@ The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can
 Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository' or 'Bucket'.
 
 ### Category
-weave.categories.configuration
+weave.categories.software-supply-chain
 
 ### Severity
 medium
@@ -2803,7 +2803,7 @@ The rollback feature of a HelmRelease should be disabled.
 Set the rollback feature of the HelmRelease to false.
 
 ### Category
-weave.categories.configuration
+weave.categories.best_practices
 
 ### Severity
 medium
@@ -3415,7 +3415,7 @@ HelmRelease must not have post-renderers enabled.
 Remove the post-renderers configuration from the HelmRelease.
 
 ### Category
-weave.categories.configuration
+weave.categories.best_practices
 
 ### Severity
 medium
