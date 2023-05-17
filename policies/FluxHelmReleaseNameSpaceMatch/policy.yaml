@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease storageNamespace and targetNamespace must match."
   how_to_solve: "Set the storageNamespace and targetNamespace of the HelmRelease to the same value."
-  category: weave.categories.best-practices
+  category: weave.categories.access-control
   severity: medium
   targets:
     kinds: [HelmRelease]
