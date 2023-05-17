@@ -8,7 +8,7 @@ spec:
   enabled: true
   description: "HelmRelease valuesFrom must use correctly configured ConfigMaps."
   how_to_solve: "Ensure that the HelmRelease uses allowed ConfigMaps in the valuesFrom field."
-  category: weave.categories.best_practices
+  category: weave.categories.best-practices
   severity: medium
   targets:
     kinds: [HelmRelease]
