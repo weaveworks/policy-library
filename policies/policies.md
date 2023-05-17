@@ -3209,7 +3209,7 @@ HelmRelease storageNamespace and targetNamespace must match.
 Set the storageNamespace and targetNamespace of the HelmRelease to the same value.
 
 ### Category
-weave.categories.best-practices
+weave.categories.access-control
 
 ### Severity
 medium
