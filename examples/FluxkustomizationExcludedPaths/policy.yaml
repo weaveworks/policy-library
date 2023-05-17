@@ -48,8 +48,7 @@ spec:
         result = {
             "issue detected": true,
             "msg": sprintf("The Kustomization '%s' spec.path '%s' is not allowed.", [controller_input.metadata.name, path]),
-            "violating_key": "spec.path",
-            "recommended_action": "Update the spec.path to a value not in the excluded paths list."
+            "violating_key": "spec.path"
         }
     }
 

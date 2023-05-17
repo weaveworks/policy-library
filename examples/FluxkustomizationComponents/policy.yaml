@@ -48,8 +48,7 @@ spec:
         result = {
             "issue detected": true,
             "msg": sprintf("The Kustomization '%s' spec.components must not include '%s' from the excludedComponentsList", [controller_input.metadata.name, component]),
-            "violating_key": "spec.components",
-            "recommended_action": "Remove the excluded component from spec.components"
+            "violating_key": "spec.components"
         }
     }
 
