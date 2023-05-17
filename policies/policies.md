@@ -2803,7 +2803,7 @@ The rollback feature of a HelmRelease should be disabled.
 Set the rollback feature of the HelmRelease to false.
 
 ### Category
-weave.categories.best_practices
+weave.categories.best-practices
 
 ### Severity
 medium
@@ -3415,7 +3415,7 @@ HelmRelease must not have post-renderers enabled.
 Remove the post-renderers configuration from the HelmRelease.
 
 ### Category
-weave.categories.best_practices
+weave.categories.best-practices
 
 ### Severity
 medium
