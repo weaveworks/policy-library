@@ -59,4 +59,3 @@ spec:
         kustomization_input.metadata.namespace
         kustomization_input.metadata.namespace in exclude_namespaces
     } else = false
-
