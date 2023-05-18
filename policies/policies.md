@@ -833,34 +833,6 @@ high
 
 ---
 
-## Kustomization Var Substitution
-
-### ID
-weave.policies.kustomization-var-substitution
-
-### Description
-The property 'spec.postBuild.substitute.var_substitution_enabled' must be disabled.
-
-### How to solve?
-Set the Kustomization's spec.postBuild.substitute.var_substitution_enabled to false.
-
-### Category
-weave.categories.best-practice
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## MariaDB Enforce Environment Variable - MYSQL_RANDOM_ROOT_PASSWORD
 
 ### ID
@@ -1597,34 +1569,6 @@ high
 
 ---
 
-## Kustomization Image Tag Standards
-
-### ID
-weave.policies.kustomization-image-tag-standards
-
-### Description
-spec.Images must comply with image tag/semver reference standards.
-
-### How to solve?
-Update the image tag to comply with semver reference standards.
-
-### Category
-weave.categories.best-practice
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## Containers Sharing Host IPC
 
 ### ID
@@ -1803,7 +1747,7 @@ weave.policies.block-all-ingress-traffic
 ### Description
 ### Block all traffic
 If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic between namespaces. 
-ons a
+
 By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
 
 
@@ -2518,34 +2462,6 @@ high
 
 ---
 
-## Kustomization Source Reference
-
-### ID
-weave.policies.kustomization-source-reference
-
-### Description
-The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket'.
-
-### How to solve?
-Update the 'sourceRef.kind' field in the 'spec' section of the Kustomization object to either 'GitRepository', 'OCIRepository' or 'Bucket'.
-
-### Category
-weave.categories.configuration
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
-
----
-
 ## Containers Enforce Restart Policy
 
 ### ID
@@ -2843,17 +2759,6 @@ high
 
 ---
 
-## MYSQL Enforce Environment Variable - MYSQL_PASSWORD
-
-### ID
-weave.policies.mysql-enforce-password-env-var
-
-### Description
-This Policy ensures MYSQL_PASSWORD environment variable are in place when using the official container images from Docker Hub.
-MYSQL_PASSWORD: The MYSQL_PASSWORD environment variable specifies a password for MYSQL_USER user. 
-
-
-### How to solve?
 ## HelmChart Reconcile Strategy
 
 ### ID
@@ -2914,17 +2819,6 @@ high
 
 ---
 
-## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_VHOST
-
-### ID
-weave.policies.rabbitmq-enforce-default-vhost-env-var
-
-### Description
-This Policy ensures RABBITMQ_DEFAULT_VHOST environment variable are in place when using the official container images from Docker Hub.
-RABBITMQ_DEFAULT_VHOST: RABBITMQ_DEFAULT_VHOST sets a Virtual host to create from scratch.
-
-
-### How to solve?
 ## Helm Release Rollback Should Be Disabled
 
 ### ID
@@ -3537,12 +3431,6 @@ high
 
 ---
 
-## RabbitMQ Enforce Environment Variable - RABBITMQ_VM_MEMORY_HIGH_WATERMARK
-
-### ID
-weave.policies.rabbitmq-enforce-vm-memory-env-var
-
-### Description
 ## Helm Release Post Renderer
 
 ### ID
@@ -3562,6 +3450,34 @@ medium
 
 ### Targets
 {'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Kustomization Var Substitution
+
+### ID
+weave.policies.kustomization-var-substitution
+
+### Description
+The property 'spec.postBuild.substitute.var_substitution_enabled' must be disabled.
+
+### How to solve?
+Set the Kustomization's spec.postBuild.substitute.var_substitution_enabled to false.
+
+### Category
+weave.categories.best-practice
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
 
 ### Tags
 ['flux']
@@ -3665,6 +3581,34 @@ low
 
 ### Parameters
 [{'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Kustomization Image Tag Standards
+
+### ID
+weave.policies.kustomization-image-tag-standards
+
+### Description
+spec.Images must comply with image tag/semver reference standards.
+
+### How to solve?
+Update the image tag to comply with semver reference standards.
+
+### Category
+weave.categories.reliability
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -4226,6 +4170,34 @@ low
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Kustomization Source Reference
+
+### ID
+weave.policies.kustomization-source-reference
+
+### Description
+The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket'.
+
+### How to solve?
+Update the 'sourceRef.kind' field in the 'spec' section of the Kustomization object to either 'GitRepository', 'OCIRepository' or 'Bucket'.
+
+### Category
+weave.categories.software-supply-chain
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
 
 ---
 
@@ -4991,7 +4963,7 @@ Bucket spec.provider must be set to one of AWS, Azure, GCP, or Generic.
 Set the spec.provider field of the Bucket to one of the allowed values: AWS, Azure, GCP, or Generic.
 
 ### Category
-weave.categories.configuration
+weave.categories.best-practices
 
 ### Severity
 medium
