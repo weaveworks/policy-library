@@ -1722,7 +1722,7 @@ GitRepository resources must use only one of (Semver|Refname|Commit) in spec.ref
 Ensure the GitRepository spec.ref uses only one of (Semver|Refname|Commit).
 
 ### Category
-weave.categories.configuration
+weave.categories.best-practices
 
 ### Severity
 medium
@@ -2490,6 +2490,34 @@ high
 
 ---
 
+## OCIRepository Cosign Verification
+
+### ID
+weave.policies.ocirepository-cosign-verification
+
+### Description
+OCIRepository resources must provide Cosign verification and reference a specific key.
+
+### How to solve?
+Ensure the OCIRepository verification provider is 'cosign' and references a specific key.
+
+### Category
+weave.categories.security
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['OCIRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Containers Enforce Restart Policy
 
 ### ID
@@ -2787,17 +2815,6 @@ high
 
 ---
 
-## MYSQL Enforce Environment Variable - MYSQL_PASSWORD
-
-### ID
-weave.policies.mysql-enforce-password-env-var
-
-### Description
-This Policy ensures MYSQL_PASSWORD environment variable are in place when using the official container images from Docker Hub.
-MYSQL_PASSWORD: The MYSQL_PASSWORD environment variable specifies a password for MYSQL_USER user. 
-
-
-### How to solve?
 ## HelmChart Reconcile Strategy
 
 ### ID
@@ -2858,17 +2875,6 @@ high
 
 ---
 
-## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_VHOST
-
-### ID
-weave.policies.rabbitmq-enforce-default-vhost-env-var
-
-### Description
-This Policy ensures RABBITMQ_DEFAULT_VHOST environment variable are in place when using the official container images from Docker Hub.
-RABBITMQ_DEFAULT_VHOST: RABBITMQ_DEFAULT_VHOST sets a Virtual host to create from scratch.
-
-
-### How to solve?
 ## Helm Release Rollback Should Be Disabled
 
 ### ID
@@ -3481,12 +3487,6 @@ high
 
 ---
 
-## RabbitMQ Enforce Environment Variable - RABBITMQ_VM_MEMORY_HIGH_WATERMARK
-
-### ID
-weave.policies.rabbitmq-enforce-vm-memory-env-var
-
-### Description
 ## Helm Release Post Renderer
 
 ### ID
@@ -4338,7 +4338,7 @@ high
 ## OCIRepository Not Latest Tag
 
 ### ID
-weave.policies.oci_repository_not_latest
+weave.policies.ocirepository-not-latest
 
 ### Description
 OCIRepository resources must not use 'latest' as a tag reference.
@@ -4375,7 +4375,7 @@ OCIRepository spec.provider must be set to one of AWS, Azure, GCP, or Generic.
 Set the spec.provider field of the OCIRepository to one of the allowed values: AWS, Azure, GCP, or Generic.
 
 ### Category
-weave.categories.configuration
+weave.categories.best-practices
 
 ### Severity
 medium
