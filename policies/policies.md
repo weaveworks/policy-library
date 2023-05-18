@@ -1710,6 +1710,34 @@ high
 
 ---
 
+## GitRepository Ref Types
+
+### ID
+weave.policies.gitrepository-ref-types
+
+### Description
+GitRepository resources must use only one of (Semver|Refname|Commit) in spec.ref.
+
+### How to solve?
+Ensure the GitRepository spec.ref uses only one of (Semver|Refname|Commit).
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['GitRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## InfluxDB Enforce Environment Variable - DOCKER_INFLUXDB_INIT_ORG
 
 ### ID
@@ -1771,6 +1799,34 @@ medium
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## OCIRepository Ref Types
+
+### ID
+weave.policies.ocirepository-ref-types
+
+### Description
+OCIRepository resources must use only one of (Semver|Refname|Commit) in spec.ref.
+
+### How to solve?
+Ensure the OCIRepository spec.ref uses only one of (Semver|Refname|Commit).
+
+### Category
+weave.categories.configuration
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['OCIRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -2459,6 +2515,34 @@ high
 
 ### Parameters
 [{'name': 'privilege', 'type': 'boolean', 'required': True, 'value': False}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## OCIRepository Cosign Verification
+
+### ID
+weave.policies.ocirepository-cosign-verification
+
+### Description
+OCIRepository resources must provide Cosign verification and reference a specific key.
+
+### How to solve?
+Ensure the OCIRepository verification provider is 'cosign' and references a specific key.
+
+### Category
+weave.categories.security
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['OCIRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -4357,6 +4441,62 @@ high
 
 ### Targets
 {'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## OCIRepository Not Latest Tag
+
+### ID
+weave.policies.ocirepository-not-latest
+
+### Description
+OCIRepository resources must not use 'latest' as a tag reference.
+
+### How to solve?
+Specify a versioned tag for the OCIRepository instead of using 'latest'.
+
+### Category
+weave.categories.best_practice
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['OCIRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## OCIRepository Provider
+
+### ID
+weave.policies.ocirepository-provider
+
+### Description
+OCIRepository spec.provider must be set to one of AWS, Azure, GCP, or Generic.
+
+### How to solve?
+Set the spec.provider field of the OCIRepository to one of the allowed values: AWS, Azure, GCP, or Generic.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['OCIRepository']}
+
+### Tags
+['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
