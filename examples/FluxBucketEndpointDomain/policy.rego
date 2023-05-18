@@ -39,12 +39,12 @@ is_trusted_domain(endpoint) {
     # Split endpoint into parts
     domain_parts := split(endpoint, ".")
 
-    # Extract last two parts (main domain) from domain_parts
-    main_domain := {domain_parts[n] | n = count(domain_parts) - i - 1, i = [0, 1]}
+    # Check if we have more than one domain part
+    count(domain_parts) > 1
 
-    # Check if main_domain is in the trusted list
-    concat(".", main_domain) in domains
+    # Combine last two parts to get the main domain
+    main_domain := concat(".", [domain_parts[count(domain_parts) - 2], domain_parts[count(domain_parts) - 1]])
+
+    # Check if the main domain is in the trusted list
+    main_domain in domains
 }
-
-
-
