@@ -1,0 +1,65 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.helm-release-service-account-name
+spec:
+  id: weave.policies.helm-release-service-account-name
+  name: Helm Release Service Account Name
+  enabled: true
+  description: "HelmRelease serviceAccountName must contain a value from parameters.hostnames"
+  how_to_solve: "Set the serviceAccountName of the HelmRelease to one of the allowed service accounts."
+  category: weave.categories.access-control
+  severity: high
+  targets:
+    kinds: [HelmRelease]
+  tags: [flux]
+  parameters:
+    - name: hostnames
+      type: array
+      required: true
+      value:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: []
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.helm_release_service_account_name
+
+    import future.keywords.in
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+    hostnames := input.parameters.hostnames
+
+    violation[result] {
+        isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        service_account_name := controller_spec.serviceAccountName
+        not service_account_name in hostnames
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The HelmRelease '%s' serviceAccountName must contain a value from parameters.hostnames; found '%s'", [controller_input.metadata.name, service_account_name]),
+            "violating_key": "spec.serviceAccountName"
+        }
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+      controller_input.kind == "HelmRelease"
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+
