@@ -1,7 +1,7 @@
 package weave.advisor.gitrepository_specific_branch
 
 import future.keywords.in
-import data.weave.advisor.gitrepository_specific_branch
+import data.weave.advisor.gitrepository_specific_branch.violation
 
 test_correct_branch {
     testcase := {
@@ -19,7 +19,9 @@ test_correct_branch {
                     "namespace": "default"
                 },
                 "spec": {
-                    "ref": "main"
+                    "ref": {
+                        "branch": "main"
+                    }
                 }
             }
         }
@@ -43,7 +45,9 @@ test_wrong_branch {
                     "namespace": "default"
                 },
                 "spec": {
-                    "ref": "dev"
+                    "ref": {
+                        "branch": "dev"
+                    }
                 }
             }
         }
@@ -67,7 +71,9 @@ test_exclude_namespace {
                     "namespace": "kube-system"
                 },
                 "spec": {
-                    "ref": "dev"
+                    "ref": {
+                        "branch": "dev"
+                    }
                 }
             }
         }
@@ -94,7 +100,9 @@ test_exclude_label {
                     }
                 },
                 "spec": {
-                    "ref": "dev"
+                    "ref": {
+                        "branch": "dev"
+                    }
                 }
             }
         }

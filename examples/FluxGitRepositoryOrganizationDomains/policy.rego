@@ -27,6 +27,14 @@ domain_matches(url, domains) {
     domain in domains
 }
 
+domain_matches(url, domains) {
+    startswith(url, "http://")
+    parts := split(url, "/")
+    count(parts) > 2
+    domain := parts[2]
+    domain in domains
+}
+
 controller_input = input.review.object
 
 controller_spec = controller_input.spec {

@@ -6,9 +6,8 @@ spec:
   id: weave.policies.gitrepository-ignore-suffixes
   name: GitRepository Ignore Suffixes
   enabled: true
-  description: "GitRepository resources must include specific suffixes in the spec.ignore field. The .gitignore field determines which files and directories to ignore before making a commit."
+  description: "GitRepository resources must include specific suffixes in the spec.ignore field which determines the files to be ignored before making a commit."
   how_to_solve: "Ensure the spec.ignore field in the GitRepository resource includes the required suffixes. The specified suffixes correspond to the file types that should not be included in the repository commit."
-
   category: weave.categories.best-practices
   severity: medium
   targets:

@@ -10,12 +10,12 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    repo_ref := controller_spec.ref
+    repo_ref := controller_spec.ref.branch
     repo_ref != branch
     result = {
         "issue detected": true,
         "msg": sprintf("The GitRepository '%s' must reference the specific branch '%s'. Found: '%s'", [controller_input.metadata.name, branch, repo_ref]),
-        "violating_key": "spec.ref"
+        "violating_key": "spec.ref.branch"
     }
 }
 

@@ -18,7 +18,9 @@ test_not_latest_tag {
                     "namespace": "default"
                 },
                 "spec": {
-                    "tag": "1.0.0"
+                    "ref": {
+                        "tag": "1.0.0"
+                    }
                 }
             }
         }
@@ -41,7 +43,9 @@ test_latest_tag {
                     "namespace": "default"
                 },
                 "spec": {
-                    "tag": "latest"
+                    "ref": {
+                        "tag": "latest"
+                    }
                 }
             }
         }
@@ -64,7 +68,9 @@ test_exclude_namespace {
                     "namespace": "kube-system"
                 },
                 "spec": {
-                    "tag": "latest"
+                    "ref": {
+                        "tag": "latest"
+                    }
                 }
             }
         }
@@ -90,7 +96,9 @@ test_exclude_label {
                     }
                 },
                 "spec": {
-                    "tag": "latest"
+                    "ref": {
+                        "tag": "latest"
+                    }
                 }
             }
         }

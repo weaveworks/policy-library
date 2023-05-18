@@ -9,11 +9,11 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
 isExcludedNamespace == false
 not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-controller_spec.tag == "latest"
+controller_spec.ref.tag == "latest"
 result = {
-    "issue detected": true,
-    "msg": sprintf("The OCIRepository '%s' should not use 'latest' as a tag reference.", [controller_input.metadata.name]),
-    "violating_key": "spec.tag"
+"issue detected": true,
+"msg": sprintf("The OCIRepository '%s' should not use 'latest' as a tag reference.", [controller_input.metadata.name]),
+"violating_key": "spec.ref.tag"
 }
 }
 
