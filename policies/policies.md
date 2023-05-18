@@ -462,6 +462,34 @@ high
 
 ---
 
+## Helm Repo Type Should Be OCI
+
+### ID
+weave.policies.helm-repo-type
+
+### Description
+The type of a Helm repository should be OCI.
+
+### How to solve?
+Change the type of the Helm repository to OCI.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRepository']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': ['kube-system']}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Containers Minimum Replica Count
 
 ### ID
@@ -1099,6 +1127,34 @@ high
 
 ---
 
+## HelmChart Cosign Verification
+
+### ID
+weave.policies.helm-chart-cosign-verification
+
+### Description
+HelmChart objects must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors
+
+### How to solve?
+Add cosign verification and reference a secret containing the Cosign public keys of trusted authors to the HelmChart object.
+
+### Category
+weave.categories.security
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Containers Sharing Process Namespace
 
 ### ID
@@ -1319,6 +1375,34 @@ high
 
 ### Tags
 ['pci-dss']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## HelmChart Source Reference
+
+### ID
+weave.policies.helm-chart-source-reference
+
+### Description
+The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository' or 'Bucket'.
+
+### How to solve?
+Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository' or 'Bucket'.
+
+### Category
+weave.categories.software-supply-chain
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
@@ -1719,7 +1803,7 @@ weave.policies.block-all-ingress-traffic
 ### Description
 ### Block all traffic
 If you are using a CNI that allows for Network Policies, you can use this Policy to block all Ingress traffic between namespaces. 
-
+ons a
 By default, if no policies exist in a namespace, then all ingress and egress traffic is allowed to and from pods in that namespace. 
 
 
@@ -2334,6 +2418,34 @@ high
 
 ---
 
+## Resource Name Must Match Regex
+
+### ID
+weave.policies.resource-name-regex
+
+### Description
+The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+
+### How to solve?
+Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## MYSQL Enforce Environment Variable - MYSQL_USER
 
 ### ID
@@ -2742,6 +2854,45 @@ MYSQL_PASSWORD: The MYSQL_PASSWORD environment variable specifies a password for
 
 
 ### How to solve?
+## HelmChart Reconcile Strategy
+
+### ID
+weave.policies.helm-chart-reconcile-strategy
+
+### Description
+The HelmChart reconcile strategy can only specify one of 'Revision' or 'ChartVersion'.
+
+### How to solve?
+Set the reconcile strategy to either 'Revision' or 'ChartVersion' in the HelmChart.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## MYSQL Enforce Environment Variable - MYSQL_PASSWORD
+
+### ID
+weave.policies.mysql-enforce-password-env-var
+
+### Description
+This Policy ensures MYSQL_PASSWORD environment variable are in place when using the official container images from Docker Hub.
+MYSQL_PASSWORD: The MYSQL_PASSWORD environment variable specifies a password for MYSQL_USER user. 
+
+
+### How to solve?
 If you encounter a violation, ensure the MYSQL_PASSWORD environment variables is set.
 For futher information about the MYSQL Docker container, check here: https://hub.docker.com/_/mysql
 
@@ -2757,6 +2908,45 @@ high
 
 ### Tags
 ['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_VHOST
+
+### ID
+weave.policies.rabbitmq-enforce-default-vhost-env-var
+
+### Description
+This Policy ensures RABBITMQ_DEFAULT_VHOST environment variable are in place when using the official container images from Docker Hub.
+RABBITMQ_DEFAULT_VHOST: RABBITMQ_DEFAULT_VHOST sets a Virtual host to create from scratch.
+
+
+### How to solve?
+## Helm Release Rollback Should Be Disabled
+
+### ID
+weave.policies.helm-release-rollback
+
+### Description
+The rollback feature of a HelmRelease should be disabled.
+
+### How to solve?
+Set the rollback feature of the HelmRelease to false.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
@@ -3141,6 +3331,34 @@ low
 
 ---
 
+## Helm Release Namespace Match
+
+### ID
+weave.policies.helm-release-namespace-match
+
+### Description
+HelmRelease storageNamespace and targetNamespace must match.
+
+### How to solve?
+Set the storageNamespace and targetNamespace of the HelmRelease to the same value.
+
+### Category
+weave.categories.access-control
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Persistent Volume Reclaim Policy Should Be Set To Retain
 
 ### ID
@@ -3316,6 +3534,40 @@ high
 
 ### Parameters
 [{'name': 'target_port', 'type': 'integer', 'required': True, 'value': 1024}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## RabbitMQ Enforce Environment Variable - RABBITMQ_VM_MEMORY_HIGH_WATERMARK
+
+### ID
+weave.policies.rabbitmq-enforce-vm-memory-env-var
+
+### Description
+## Helm Release Post Renderer
+
+### ID
+weave.policies.helm-release-post-renderer
+
+### Description
+HelmRelease must not have post-renderers enabled.
+
+### How to solve?
+Remove the post-renderers configuration from the HelmRelease.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmRelease']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -4047,6 +4299,34 @@ medium
 
 ### Tags
 []
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## HelmChart Values File Format
+
+### ID
+weave.policies.helm-chart-values-files-format
+
+### Description
+HelmChart must reference values files in the following format: 'xxx=values.yaml'.
+
+### How to solve?
+Update the HelmChart valuesFrom field to use the correct format.
+
+### Category
+weave.categories.configuration
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['HelmChart']}
+
+### Tags
+['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]

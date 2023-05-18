@@ -1,0 +1,66 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.helm-repo-type
+spec:
+  id: weave.policies.helm-repo-type
+  name: Helm Repo Type Should Be OCI
+  enabled: true
+  description: "The type of a Helm repository should be OCI."
+  how_to_solve: "Change the type of the Helm repository to OCI."
+  category: weave.categories.best-practices
+  severity: medium
+  targets: {kinds: [HelmRepository]}
+  tags: [flux]
+  parameters:
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: ["kube-system"]
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.helm_repo_type
+
+    import future.keywords.in
+
+
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+        isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        repository_type := controller_spec.type
+        repository_type != "oci"
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The HelmRepository type must be oci; found '%s'", [repository_type]),
+            "recommended_value": "oci",
+            "violating_key": "spec.type"
+        }
+    }
+
+    # Controller input
+    controller_input = input.review.object
+
+    # controller_container acts as an iterator to get containers from the template
+    controller_spec = controller_input.spec {
+      controller_input.kind == "HelmRepository"
+    }
+
+    contains_kind(kind, kinds) {
+      kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+      controller_input.metadata.namespace
+      controller_input.metadata.namespace in exclude_namespaces
+    } else = false
