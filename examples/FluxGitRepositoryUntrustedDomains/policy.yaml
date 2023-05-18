@@ -1,0 +1,88 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.gitrepository-untrusted-domains
+spec:
+  id: weave.policies.gitrepository-untrusted-domains
+  name: GitRepository Untrusted Domains
+  enabled: true
+  description: "GitRepository resources must not use targets from untrusted domains."
+  how_to_solve: "Ensure the GitRepository URL does not belong to an untrusted domain."
+  category: weave.categories.security
+  severity: medium
+  targets:
+    kinds: [GitRepository]
+  tags: [flux]
+  parameters:
+    - name: untrusted_domains
+      type: array
+      required: true
+      value: 
+    - name: exclude_namespaces
+      type: array
+      required: false
+      value: []
+    - name: exclude_label_key
+      type: string
+      required: false
+      value:
+    - name: exclude_label_value
+      type: string
+      required: false
+      value:
+  code: |
+    package weave.advisor.gitrepository_untrusted_domains
+
+    import future.keywords.in
+
+    untrusted_domains := input.parameters.untrusted_domains
+    exclude_namespaces := input.parameters.exclude_namespaces
+    exclude_label_key := input.parameters.exclude_label_key
+    exclude_label_value := input.parameters.exclude_label_value
+
+    violation[result] {
+        isExcludedNamespace == false
+        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+        repo_url := controller_spec.url
+        is_untrusted := domain_matches(repo_url, untrusted_domains)
+        is_untrusted
+        result = {
+            "issue detected": true,
+            "msg": sprintf("The GitRepository '%s' targets an untrusted domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
+            "violating_key": "spec.url"
+        }
+    }
+
+    domain_matches(url, domains) {
+        startswith(url, "https://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
+    }
+
+    domain_matches(url, domains) {
+        startswith(url, "http://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
+    }
+
+    controller_input = input.review.object
+
+    controller_spec = controller_input.spec {
+        controller_input.kind == "GitRepository"
+    }
+
+    contains_kind(kind, kinds) {
+        kinds[_] = kind
+    }
+
+    isExcludedNamespace = true {
+        controller_input.metadata.namespace
+        controller_input.metadata.namespace in exclude_namespaces
+    } else = false
+
+
+
