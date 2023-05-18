@@ -5,7 +5,7 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-excluded_components := input.parameters.excluded_components
+exclude_components := input.parameters.exclude_components
 
 violation[result] {
     isExcludedNamespace == false
@@ -20,7 +20,7 @@ violation[result] {
 }
 
 component_in_excluded_list(component) {
-    excluded_components[_] == component
+    exclude_components[_] == component
 }
 
 controller_input = input.review.object

@@ -9,7 +9,7 @@ test_valid_path {
             "exclude_namespaces": [],
             "exclude_label_key": "",
             "exclude_label_value": "",
-            "excluded_paths": ["/forbidden"]
+            "exclude_paths": ["/forbidden"]
         },
         "review": {
             "object": {
@@ -33,7 +33,7 @@ test_excluded_path {
             "exclude_namespaces": [],
             "exclude_label_key": "",
             "exclude_label_value": "",
-            "excluded_paths": ["/forbidden"]
+            "exclude_paths": ["/forbidden"]
         },
         "review": {
             "object": {
@@ -57,7 +57,7 @@ test_excluded_namespace {
             "exclude_namespaces": ["kube-system"],
             "exclude_label_key": "",
             "exclude_label_value": "",
-            "excluded_paths": ["/forbidden"]
+            "exclude_paths": ["/forbidden"]
         },
         "review": {
             "object": {
@@ -81,7 +81,7 @@ test_excluded_label {
             "exclude_namespaces": [],
             "exclude_label_key": "exclude-me",
             "exclude_label_value": "true",
-            "excluded_paths": ["/forbidden"]
+            "exclude_paths": ["/forbidden"]
         },
         "review": {
             "object": {

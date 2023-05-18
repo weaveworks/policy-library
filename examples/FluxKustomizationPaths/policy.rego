@@ -5,13 +5,13 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-excluded_paths := input.parameters.excluded_paths
+exclude_paths := input.parameters.exclude_paths
 
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     path := controller_spec.path
-    path in excluded_paths
+    path in exclude_paths
     result = {
         "issue detected": true,
         "msg": sprintf("The Kustomization '%s' spec.path '%s' is not allowed.", [controller_input.metadata.name, path]),
