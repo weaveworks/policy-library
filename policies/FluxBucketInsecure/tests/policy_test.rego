@@ -24,7 +24,7 @@ test_insecure_connection_violation {
   count(violation) == 1 with input as testcase
 }
 
-test_secure_connection_no_violation {
+test_secure_connection_compliance {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],

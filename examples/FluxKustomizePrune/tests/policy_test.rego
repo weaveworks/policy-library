@@ -1,6 +1,6 @@
 package weave.advisor.kustomization_prune
 
-test_prune_enabled_but_disabled {
+test_prune_enabled_violation {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],
@@ -25,7 +25,7 @@ test_prune_enabled_but_disabled {
   count(violation) == 1 with input as testcase
 }
 
-test_prune_enabled_and_enabled {
+test_prune_enabled_compliance {
   testcase = {
     "parameters": {
       "exclude_namespaces": [],

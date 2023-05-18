@@ -15,8 +15,7 @@ violation[result] {
     result = {
         "issue detected": true,
         "msg": sprintf("The Kustomization '%s' Spec.decryption.provider must be set to one of %v; found '%s'", [controller_input.metadata.name, decryption_providers, provider]),
-        "violating_key": "spec.decryption.provider",
-        "recommended_value": decryption_providers
+        "violating_key": "spec.decryption.provider"
     }
 }
 

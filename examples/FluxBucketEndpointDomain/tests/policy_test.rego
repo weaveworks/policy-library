@@ -8,7 +8,7 @@ test_valid_endpoint_domain {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "domains": ["example", "trusted"]
+      "domains": ["example.com", "trusted.com"]
     },
     "review": {
       "object": {
@@ -33,7 +33,7 @@ test_invalid_endpoint_domain {
       "exclude_namespaces": [],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "domains": ["example", "trusted"]
+      "domains": ["example.com", "trusted.com"]
     },
     "review": {
       "object": {
@@ -58,7 +58,7 @@ test_exclude_label_endpoint_domain {
       "exclude_namespaces": [],
       "exclude_label_key": "exclude",
       "exclude_label_value": "true",
-      "domains": ["example", "trusted"]
+      "domains": ["example.com", "trusted.com"]
     },
     "review": {
       "object": {
@@ -86,7 +86,7 @@ test_exclude_namespace_endpoint_domain {
       "exclude_namespaces": ["excluded-namespace"],
       "exclude_label_key": "",
       "exclude_label_value": "",
-      "domains": ["example", "trusted"]
+      "domains": ["example.com", "trusted.com"]
     },
     "review": {
       "object": {

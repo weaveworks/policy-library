@@ -104,6 +104,33 @@ test_patches_required_disabled_no_violation {
   count(violation) == 0 with input as testcase
 }
 
+test_exclude_namespace {
+    testcase := {
+        "parameters": {
+            "patches_required": true,
+            "exclude_namespaces": ["kube-system"],
+            "exclude_label_key": "",
+            "exclude_label_value": ""
+        },
+        "review": {
+            "object": {
+                "kind": "Kustomization",
+                "metadata": {
+                    "name": "example",
+                    "namespace": "kube-system"
+                },
+                "spec": {
+                    "patches": [{
+                        "patch": "example patch"
+                    }]
+                }
+            }
+        }
+    }
+    count(violation) == 0 with input as testcase
+}
+
+
 test_exclude_label {
   testcase = {
     "parameters": {

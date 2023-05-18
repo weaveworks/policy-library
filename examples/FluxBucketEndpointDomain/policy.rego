@@ -36,6 +36,15 @@ isExcludedNamespace = true {
 } else = false
 
 is_trusted_domain(endpoint) {
-    domain := split(endpoint, ".")[1]
-    domain in domains
+    # Split endpoint into parts
+    domain_parts := split(endpoint, ".")
+
+    # Extract last two parts (main domain) from domain_parts
+    main_domain := {domain_parts[n] | n = count(domain_parts) - i - 1, i = [0, 1]}
+
+    # Check if main_domain is in the trusted list
+    concat(".", main_domain) in domains
 }
+
+
+
