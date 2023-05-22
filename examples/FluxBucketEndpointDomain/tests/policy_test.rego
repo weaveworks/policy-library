@@ -18,7 +18,7 @@ test_valid_endpoint_domain {
           "name": "valid-bucket",
         },
         "spec": {
-          "endpoint": "minio.example.com.eg"
+          "endpoint": "example.com"
         }
       }
     }

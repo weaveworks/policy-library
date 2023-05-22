@@ -10,7 +10,7 @@ domains := input.parameters.domains
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    not is_trusted_domain(controller_spec.endpoint)
+    not is_trusted_domain
     result = {
         "issue detected": true,
         "msg": sprintf("The Bucket '%s' has an endpoint domain that is not in the trusted domains list: %v; found '%s'", [controller_input.metadata.name, domains, controller_spec.endpoint]),
@@ -35,8 +35,6 @@ isExcludedNamespace = true {
     controller_input.metadata.namespace in exclude_namespaces
 } else = false
 
-is_trusted_domain(endpoint) {
-    domain := domains[_]
-    regex := concat("", ["(^|\\.)", domain, "(\\.|$)"])
-    re_match(regex, endpoint)
+is_trusted_domain {
+    domains[_] == controller_input.spec.endpoint
 }
