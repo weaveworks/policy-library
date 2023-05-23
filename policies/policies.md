@@ -1970,6 +1970,34 @@ high
 
 ---
 
+## Bucket Insecure Connections
+
+### ID
+weave.policies.bucket-insecure-connections
+
+### Description
+Ensure that Bucket objects do not use insecure connections
+
+### How to solve?
+Set 'spec.insecure' to 'false' or remove the field from the Bucket object.
+
+### Category
+weave.categories.security
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Bucket']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Containers Missing Liveness Probe
 
 ### ID
@@ -3515,6 +3543,34 @@ medium
 
 ---
 
+## Kustomization Var Substitution
+
+### ID
+weave.policies.kustomization-var-substitution
+
+### Description
+The property 'spec.postBuild.substitute.var_substitution_enabled' must be disabled.
+
+### How to solve?
+Set the Kustomization's spec.postBuild.substitute.var_substitution_enabled to false.
+
+### Category
+weave.categories.best-practice
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## RabbitMQ Enforce Environment Variable - RABBITMQ_VM_MEMORY_HIGH_WATERMARK
 
 ### ID
@@ -3609,6 +3665,34 @@ low
 
 ### Parameters
 [{'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Kustomization Image Tag Standards
+
+### ID
+weave.policies.kustomization-image-tag-standards
+
+### Description
+spec.Images must comply with image tag/semver reference standards.
+
+### How to solve?
+Update the image tag to comply with semver reference standards.
+
+### Category
+weave.categories.reliability
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -4170,6 +4254,34 @@ low
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Kustomization Source Reference
+
+### ID
+weave.policies.kustomization-source-reference
+
+### Description
+The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket'.
+
+### How to solve?
+Update the 'sourceRef.kind' field in the 'spec' section of the Kustomization object to either 'GitRepository', 'OCIRepository' or 'Bucket'.
+
+### Category
+weave.categories.software-supply-chain
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Kustomization']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
 
 ---
 
@@ -4976,6 +5088,34 @@ high
 
 ### Parameters
 [{'name': 'automount_token', 'type': 'boolean', 'required': True, 'value': False}, {'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Bucket Provider
+
+### ID
+weave.policies.bucket-provider
+
+### Description
+Bucket spec.provider must be set to one of AWS, Azure, GCP, or Generic.
+
+### How to solve?
+Set the spec.provider field of the Bucket to one of the allowed values: AWS, Azure, GCP, or Generic.
+
+### Category
+weave.categories.best-practices
+
+### Severity
+medium
+
+### Targets
+{'kinds': ['Bucket']}
+
+### Tags
+['flux']
+
+### Parameters
+[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
