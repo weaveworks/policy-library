@@ -33,7 +33,7 @@ jobs:
         registry: docker.io
         username: weaveworkstimberwolfci
         password: ${{ secrets.DOCKERHUB_TOKEN_WEAVEWORKSTIMBERWOLFCI }}
-    - name: Auto-generate Policies doc 
+    - name: Auto-generate Policies doc
       run: |
         export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
 
@@ -97,6 +97,10 @@ jobs:
         # Loop on policies CRDs and update the REGO code field
         export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
         for dir in ${REPO_PATH}/policies/*/; do
+          export POLICY_DIR=$dir
+          yq -i '.spec.code |= strload(env(POLICY_DIR)+"/policy.rego")' $POLICY_DIR/policy.yaml
+        done
+        for dir in ${REPO_PATH}/examples/*/; do
           export POLICY_DIR=$dir
           yq -i '.spec.code |= strload(env(POLICY_DIR)+"/policy.rego")' $POLICY_DIR/policy.yaml
         done
@@ -164,7 +168,7 @@ jobs:
   #       # categories
   #       docker run --rm --network host -v ${HOST_REPO_PATH}/categories:/categories weaveworks/polctl:v0.0.2 \
   #              python3 /scripts/sync/sync.py categories -d /categories --policies-service http://localhost:8080/api/v1
-        
+
   #       # standards and controls
   #       docker run --rm --network host -v ${HOST_REPO_PATH}/standards:/standards weaveworks/polctl:v0.0.2 \
   #              python3 /scripts/sync/sync.py standards -d /standards --policies-service http://localhost:8080/api/v1
@@ -172,7 +176,7 @@ jobs:
   #       # templates
   #       docker run --rm --network host -v ${HOST_REPO_PATH}/examples:/examples weaveworks/polctl:v0.0.2 \
   #              python3 /scripts/sync/sync.py templates -d /examples --policies-service http://localhost:8080/api/v1
-        
+
   #       # policies
   #       docker run --rm --network host -v ${HOST_REPO_PATH}/policies:/policies weaveworks/polctl:v0.0.2 \
   #              python3 /scripts/sync/sync.py policies -d /policies --policies-service http://localhost:8080/api/v1
