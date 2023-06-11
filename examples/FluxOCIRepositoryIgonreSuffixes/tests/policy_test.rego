@@ -28,7 +28,7 @@ test_ignore_suffixes_present {
     count(violation) == 0 with input as testcase
 }
 
-test_ignore_suffixes_missing {
+test_ignore_suffixes_unallowed {
     testcase := {
         "parameters": {
             "suffixes": [".md", ".txt"],
@@ -44,7 +44,7 @@ test_ignore_suffixes_missing {
                     "namespace": "default"
                 },
                 "spec": {
-                    "ignore": "/*.md"
+                    "ignore": "/*.md\n/*.yml"
                 }
             }
         }
@@ -102,4 +102,3 @@ test_exclude_label {
     }
     count(violation) == 0 with input as testcase
 }
-

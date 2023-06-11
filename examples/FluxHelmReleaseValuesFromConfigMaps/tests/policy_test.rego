@@ -14,14 +14,13 @@ test_allowed_configmaps {
         "kind": "HelmRelease",
         "metadata": {
           "name": "test-helm-release",
-          "namespace": "default",
+          "namespace": "default"
         },
         "spec": {
           "valuesFrom": [
             {
-              "configMapKeyRef": {
-                "name": "allowed-configmap"
-              }
+              "kind": "ConfigMap",
+              "name": "allowed-configmap"
             }
           ]
         }
@@ -46,14 +45,13 @@ test_unallowed_configmaps {
         "kind": "HelmRelease",
         "metadata": {
           "name": "test-helm-release",
-          "namespace": "default",
+          "namespace": "default"
         },
         "spec": {
           "valuesFrom": [
             {
-              "configMapKeyRef": {
-                "name": "unallowed-configmap"
-              }
+              "kind": "ConfigMap",
+              "name": "unallowed-configmap"
             }
           ]
         }
@@ -78,14 +76,13 @@ test_exclude_namespace_configmaps {
         "kind": "HelmRelease",
         "metadata": {
           "name": "excluded-helm-release",
-          "namespace": "excluded-namespace",
+          "namespace": "excluded-namespace"
         },
         "spec": {
           "valuesFrom": [
             {
-              "configMapKeyRef": {
-                "name": "unallowed-configmap"
-              }
+              "kind": "ConfigMap",
+              "name": "unallowed-configmap"
             }
           ]
         }
@@ -118,9 +115,8 @@ test_exclude_label_configmaps {
         "spec": {
           "valuesFrom": [
             {
-              "configMapKeyRef": {
-                "name": "unallowed-configmap"
-              }
+              "kind": "ConfigMap",
+              "name": "unallowed-configmap"
             }
           ]
         }

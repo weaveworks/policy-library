@@ -20,15 +20,7 @@ violation[result] {
 }
 
 domain_matches(url, domains) {
-    startswith(url, "https://")
-    parts := split(url, "/")
-    count(parts) > 2
-    domain := parts[2]
-    domain in domains
-}
-
-domain_matches(url, domains) {
-    startswith(url, "http://")
+    startswith(url, "oci://")
     parts := split(url, "/")
     count(parts) > 2
     domain := parts[2]

@@ -1,9 +1,9 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.ocirepository_layer_selector
+  name: weave.policies.ocirepository-layer-selector
 spec:
-  id: weave.policies.ocirepository_layer_selector
+  id: weave.policies.ocirepository-layer-selector
   name: OCIRepository Layer Selector
   enabled: true
   description: "OCIRepository layer selector must only reference predefined media/operation type."

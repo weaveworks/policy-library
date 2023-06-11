@@ -44,7 +44,7 @@ test_ignore_suffixes_missing {
                     "namespace": "default"
                 },
                 "spec": {
-                    "ignore": "/*.md"
+                    "ignore": "/*.md\n/*.yml"
                 }
             }
         }

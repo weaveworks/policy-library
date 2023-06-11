@@ -16,7 +16,7 @@ spec:
     - name: waiver_list
       type: array
       required: true
-      value:
+      value: ["asdfghjklzxc-qwertykgmdfa"]
     - name: exclude_namespaces
       type: array
       required: false
@@ -55,7 +55,7 @@ spec:
     # Controller input
     controller_input = input.review.object
 
-    controller_metadata = controller_input.metadata {
+    controller_spec = controller_input.spec {
         contains_kind(controller_input.kind, ["HelmRelease", "GitRepository", "OCIRepository", "Bucket", "HelmChart", "HelmRepository", "Kustomization"])
     }
 

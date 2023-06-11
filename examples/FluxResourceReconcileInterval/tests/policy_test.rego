@@ -19,7 +19,7 @@ test_valid_reconcile_interval {
           "name": "valid-helm-release",
         },
         "spec": {
-          "interval": 60,
+          "interval": "1m",
         }
       }
     }
@@ -45,7 +45,7 @@ test_invalid_reconcile_interval_lower_bound {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "interval": 20,
+          "interval": "20s",
         }
       }
     }
@@ -71,7 +71,7 @@ test_invalid_reconcile_interval_upper_bound {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "interval": 400,
+          "interval": "7m",
         }
       }
     }
@@ -98,7 +98,7 @@ test_excluded_namespace {
           "namespace": "kube-system",
         },
         "spec": {
-          "interval": 400,
+          "interval": "7m",
         }
       }
     }
@@ -127,7 +127,7 @@ test_exclude_label {
           },
         },
         "spec": {
-          "interval": 400,
+          "interval": "7m",
         }
       }
     }

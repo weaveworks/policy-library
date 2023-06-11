@@ -10,6 +10,7 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    has_type
     repository_type := controller_spec.type
     repository_type != "oci"
     result = {
@@ -26,6 +27,11 @@ controller_input = input.review.object
 # controller_container acts as an iterator to get containers from the template
 controller_spec = controller_input.spec {
   controller_input.kind == "HelmRepository"
+}
+
+# Check if type field is present
+has_type {
+  not is_null(controller_spec.type)
 }
 
 contains_kind(kind, kinds) {

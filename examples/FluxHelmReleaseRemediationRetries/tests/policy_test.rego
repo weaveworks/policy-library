@@ -19,8 +19,10 @@ test_valid_retries {
           "name": "valid-helm-release",
         },
         "spec": {
-          "remediation": {
-            "retries": 4
+          "install": {
+            "remediation": {
+              "retries": 4
+            }
           }
         }
       }
@@ -47,8 +49,10 @@ test_invalid_lower_bound_retries {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "remediation": {
-            "retries": 2
+          "update": {
+            "remediation": {
+              "retries": 2
+            }
           }
         }
       }
@@ -75,8 +79,10 @@ test_invalid_upper_bound_retries {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "remediation": {
-            "retries": 6
+          "install": {
+            "remediation": {
+              "retries": 6
+            }
           }
         }
       }
@@ -106,8 +112,10 @@ test_exclude_label_retries {
           }
         },
         "spec": {
-          "remediation": {
-            "retries": 6
+          "update": {
+            "remediation": {
+              "retries": 6
+            }
           }
         }
       }
@@ -135,8 +143,10 @@ test_exclude_namespace_retries {
           "namespace": "excluded-namespace",
         },
         "spec": {
-          "remediation": {
-            "retries": 6
+          "install": {
+            "remediation": {
+              "retries": 6
+            }
           }
         }
       }
