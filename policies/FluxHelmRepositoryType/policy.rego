@@ -10,15 +10,18 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    has_type
-    repository_type := controller_spec.type
-    repository_type != "oci"
+    not valid_type(controller_spec.type)
     result = {
         "issue detected": true,
-        "msg": sprintf("The HelmRepository type must be oci; found '%s'", [repository_type]),
+        "msg": sprintf("The HelmRepository type must be oci; found '%s'", [controller_spec.type]),
         "recommended_value": "oci",
         "violating_key": "spec.type"
     }
+}
+
+valid_type(type) {
+    not is_null(type)
+    type == "oci"
 }
 
 # Controller input
@@ -27,11 +30,6 @@ controller_input = input.review.object
 # controller_container acts as an iterator to get containers from the template
 controller_spec = controller_input.spec {
   controller_input.kind == "HelmRepository"
-}
-
-# Check if type field is present
-has_type {
-  not is_null(controller_spec.type)
 }
 
 contains_kind(kind, kinds) {

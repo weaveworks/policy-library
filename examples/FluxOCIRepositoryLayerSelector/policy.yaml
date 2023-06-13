@@ -17,11 +17,11 @@ spec:
     - name: media_types
       type: array
       required: true
-      value:
+      value: ["mp4"]
     - name: operations
       type: array
       required: true
-      value:
+      value: ["extract"]
     - name: exclude_namespaces
       type: array
       required: false

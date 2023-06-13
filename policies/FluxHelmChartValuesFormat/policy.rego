@@ -9,6 +9,17 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not has_valuesFiles
+    result = {
+        "issue detected": true,
+        "msg": sprintf("The HelmChart '%s' must have valuesFiles section in the spec.", [controller_input.metadata.name]),
+        "violating_key": "spec.valuesFiles"
+    }
+}
+
+violation[result] {
+    isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     has_valuesFiles
     values_file := controller_spec.valuesFiles[_]
     not re_match(`^values(-\w+)?\.yaml$`, values_file)

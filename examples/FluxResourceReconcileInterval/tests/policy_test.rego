@@ -9,7 +9,7 @@ test_valid_reconcile_interval {
       "exclude_label_key": "",
       "exclude_label_value": "",
       "lower_bound": 30,
-      "upper_bound": 300,
+      "upper_bound": 5000,
     },
     "review": {
       "object": {
@@ -19,7 +19,7 @@ test_valid_reconcile_interval {
           "name": "valid-helm-release",
         },
         "spec": {
-          "interval": "1m",
+          "interval": "1h2m3s",
         }
       }
     }
@@ -98,7 +98,7 @@ test_excluded_namespace {
           "namespace": "kube-system",
         },
         "spec": {
-          "interval": "7m",
+          "interval": "7m0s",
         }
       }
     }

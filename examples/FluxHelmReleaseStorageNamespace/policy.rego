@@ -5,13 +5,13 @@ import future.keywords.in
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
-hostnames := input.parameters.hostnames
+storage_namespaces := input.parameters.storage_namespaces
 
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     storage_namespace := controller_spec.chart.spec.storageNamespace
-    not storage_namespace in hostnames
+    not storage_namespace in storage_namespaces
     result = {
         "issue detected": true,
         "msg": sprintf("The HelmRelease '%s' storageNamespace must be one of the allowed storage namespaces; found '%s'", [controller_input.metadata.name, storage_namespace]),

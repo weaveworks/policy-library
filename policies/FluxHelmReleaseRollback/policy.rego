@@ -9,13 +9,25 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-    controller_spec.rollback.enable == true
+    rollback_is_enabled(controller_spec.rollback)
     result = {
         "issue detected": true,
-        "msg": "The HelmRelease rollback must be disabled; found 'true'",
+        "msg": "The HelmRelease rollback must be disabled; some rollback options are enabled.",
         "recommended_value": false,
-        "violating_key": "spec.rollback.enable"
+        "violating_key": "spec.rollback"
     }
+}
+
+rollback_is_enabled(rollback) {
+    rollback.DisableWait == true
+} else = true {
+    rollback.DisableHooks == true
+} else = true {
+    rollback.Recreate == true
+} else = true {
+    rollback.Force == true
+} else = true {
+    rollback.CleanupOnFail == true
 }
 
 # Controller input

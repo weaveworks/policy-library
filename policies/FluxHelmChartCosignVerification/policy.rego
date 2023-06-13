@@ -9,6 +9,17 @@ exclude_label_value := input.parameters.exclude_label_value
 violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
+    not controller_spec.verify
+    result = {
+        "issue detected": true,
+        "msg": "The HelmChart must provide cosign verification and reference a secret containing the Cosign public keys of trusted authors in '.tgz' extension",
+        "violating_key": "spec.verify"
+    }
+}
+
+violation[result] {
+    isExcludedNamespace == false
+    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.verify
     not correct_provider_and_secret(controller_spec.verify)
     result = {

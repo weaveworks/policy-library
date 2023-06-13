@@ -20,19 +20,26 @@ violation[result] {
 }
 
 domain_matches(url, domains) {
-    startswith(url, "https://")
+    is_http_or_https(url)
     parts := split(url, "/")
     count(parts) > 2
     domain := parts[2]
-    domain in domains
+    valid_domain(domain, domains)
 }
 
-domain_matches(url, domains) {
+is_http_or_https(url) {
+    startswith(url, "https://")
+} else {
     startswith(url, "http://")
-    parts := split(url, "/")
-    count(parts) > 2
-    domain := parts[2]
-    domain in domains
+}
+
+valid_domain(domain, domains) {
+    some d
+    domain == domains[d]
+} else {
+    some d
+    concat_domain := concat(".", ["www", domains[d]])
+    endswith(domain, concat_domain)
 }
 
 # Controller input
@@ -41,10 +48,6 @@ controller_input = input.review.object
 # controller_container acts as an iterator to get containers from the template
 controller_spec = controller_input.spec {
   controller_input.kind == "HelmRepository"
-}
-
-contains_kind(kind, kinds) {
-  kinds[_] = kind
 }
 
 isExcludedNamespace = true {
