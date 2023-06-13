@@ -1159,34 +1159,6 @@ medium
 
 ---
 
-## Resource Name Must Match Regex
-
-### ID
-weave.policies.resource-name-regex
-
-### Description
-The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### How to solve?
-Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## Containers Missing Liveness Probe
 
 ### ID
@@ -2893,34 +2865,6 @@ high
 
 ### Targets
 {'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## OCIRepository Provider
-
-### ID
-weave.policies.ocirepository-provider
-
-### Description
-OCIRepository spec.provider must be set to one of AWS, Azure, GCP, or Generic.
-
-### How to solve?
-Set the spec.provider field of the OCIRepository to one of the allowed values: AWS, Azure, GCP, or Generic.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['OCIRepository']}
-
-### Tags
-['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
