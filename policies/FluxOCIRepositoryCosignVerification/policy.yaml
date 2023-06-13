@@ -69,7 +69,7 @@ spec:
 
     # controller_container acts as an iterator to get containers from the template
     controller_spec = controller_input.spec {
-      controller_input.kind == "OCIRepository"
+        controller_input.kind == "OCIRepository"
     }
 
     contains_kind(kind, kinds) {
