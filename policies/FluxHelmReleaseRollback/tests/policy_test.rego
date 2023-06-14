@@ -18,11 +18,11 @@ test_valid_rollback_disabled {
         },
         "spec": {
           "rollback": {
-            "DisableWait": false,
-            "DisableHooks": false,
-            "Recreate": false,
-            "Force": false,
-            "CleanupOnFail": false
+            "disableWait": false,
+            "disableHooks": false,
+            "recreate": false,
+            "force": false,
+            "cleanupOnFail": false
           }
         }
       }
@@ -48,7 +48,7 @@ test_invalid_rollback_enabled {
         },
         "spec": {
           "rollback": {
-            "DisableWait": true
+            "disableWait": true
           }
         }
       }
@@ -77,7 +77,7 @@ test_exclude_label {
         },
         "spec": {
           "rollback": {
-            "DisableWait": true
+            "disableWait": true
           }
         }
       }
@@ -104,7 +104,7 @@ test_exclude_namespace {
         },
         "spec": {
           "rollback": {
-            "DisableWait": true
+            "disableWait": true
           }
         }
       }

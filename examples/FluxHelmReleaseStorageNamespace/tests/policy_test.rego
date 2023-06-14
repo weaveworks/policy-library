@@ -18,11 +18,7 @@ test_valid_storage_namespace {
           "name": "valid-helm-release",
         },
         "spec": {
-          "chart": {
-            "spec": {
-              "storageNamespace": "allowed-storage-namespace"
-            }
-          }
+            "storageNamespace": "allowed-storage-namespace"
         }
       }
     }
@@ -47,11 +43,7 @@ test_invalid_storage_namespace {
           "name": "invalid-helm-release",
         },
         "spec": {
-          "chart": {
-            "spec": {
-              "storageNamespace": "disallowed-storage-namespace"
-            }
-          }
+            "storageNamespace": "disallowed-storage-namespace"
         }
       }
     }
@@ -79,11 +71,7 @@ test_exclude_label_storage_namespace {
           }
         },
         "spec": {
-          "chart": {
-            "spec": {
-              "storageNamespace": "disallowed-storage-namespace"
-            }
-          }
+            "storageNamespace": "disallowed-storage-namespace"
         }
       }
     }
@@ -109,11 +97,7 @@ test_exclude_namespace_storage_namespace {
           "namespace": "excluded-namespace",
         },
         "spec": {
-          "chart": {
-            "spec": {
-              "storageNamespace": "disallowed-storage-namespace"
-            }
-          }
+            "storageNamespace": "disallowed-storage-namespace"
         }
       }
     }

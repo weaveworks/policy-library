@@ -19,15 +19,15 @@ violation[result] {
 }
 
 rollback_is_enabled(rollback) {
-    rollback.DisableWait == true
+    rollback.disableWait == true
 } else = true {
-    rollback.DisableHooks == true
+    rollback.disableHooks == true
 } else = true {
-    rollback.Recreate == true
+    rollback.recreate == true
 } else = true {
-    rollback.Force == true
+    rollback.force == true
 } else = true {
-    rollback.CleanupOnFail == true
+    rollback.cleanupOnFail == true
 }
 
 # Controller input
