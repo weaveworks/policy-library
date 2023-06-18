@@ -1,5 +1,7 @@
 package weave.advisor.helm_release_remediation_retries
 
+import future.keywords.in
+
 exclude_namespaces := input.parameters.exclude_namespaces
 exclude_label_key := input.parameters.exclude_label_key
 exclude_label_value := input.parameters.exclude_label_value
@@ -45,6 +47,10 @@ get_remediation_retries(controller_spec) = controller_spec.install.remediation.r
     not is_null(controller_spec.upgrade)
     not is_null(controller_spec.upgrade.remediation)
     not is_null(controller_spec.upgrade.remediation.retries)
+}
+
+contains_kind(kind, kinds) {
+  kinds[_] = kind
 }
 
 isExcludedNamespace = true {
