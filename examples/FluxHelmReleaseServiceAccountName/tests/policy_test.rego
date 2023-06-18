@@ -52,6 +52,28 @@ test_invalid_service_account_name {
   count(violation) == 1 with input as testcase
 }
 
+test_undefined_service_account_name {
+  testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+      "service_account_names": ["valid-sa"]
+    },
+    "review": {
+      "object": {
+        "apiVersion": "v1",
+        "kind": "HelmRelease",
+        "metadata": {
+          "name": "invalid-helm-release",
+        }
+      }
+    }
+  }
+
+  count(violation) == 1 with input as testcase
+}
+
 test_exclude_label_service_account_name {
   testcase = {
     "parameters": {

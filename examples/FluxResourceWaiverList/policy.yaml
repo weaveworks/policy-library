@@ -16,7 +16,7 @@ spec:
     - name: waiver_list
       type: array
       required: true
-      value: ["asdfghjklzxc-qwertykgmdfa"]
+      value:
     - name: exclude_namespaces
       type: array
       required: false

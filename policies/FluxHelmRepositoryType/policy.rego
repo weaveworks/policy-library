@@ -13,7 +13,6 @@ violation[result] {
     result = {
         "issue detected": true,
         "msg": "The HelmRepository type is missing.",
-        "recommended_value": "oci",
         "violating_key": "spec.type"
     }
 }
