@@ -32,7 +32,7 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.pods.not_namespace
 
     custom_namespace := input.parameters.custom_namespace
