@@ -13,7 +13,7 @@ violation[result] {
   automount := controller_spec
   not has_key(automount, "automountServiceAccountToken")
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'automountServiceAccountToken' must be set; found '%v'",[automount]),
     "violating_key": "spec.template.spec"
   }
@@ -25,7 +25,7 @@ violation[result] {
   automount := controller_spec.automountServiceAccountToken
   not automount == automount_token
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("automountServiceAccountToken must be '%v'; found '%v'",[automount_token, automount]),
     "violating_key": "spec.template.spec.automountServiceAccountToken",
     "recommended_value": automount_token

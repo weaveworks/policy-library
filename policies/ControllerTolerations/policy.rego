@@ -15,7 +15,7 @@ violation[result] {
   key := tolerations.key
   key == toleration_key
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Toleration key must not contain '%v'; found '%v'", [toleration_key, key]),
     "violating_key": sprintf("spec.template.spec.tolerations[%v].key", [i]),
   }

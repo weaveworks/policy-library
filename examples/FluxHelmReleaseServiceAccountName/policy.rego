@@ -15,7 +15,7 @@ violation[result] {
     service_account_name := controller_spec.serviceAccountName
     not service_account_name in service_account_names
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' serviceAccountName must contain a value from parameters.service_account_names; found '%s'", [controller_input.metadata.name, service_account_name]),
         "violating_key": "spec.serviceAccountName"
     }
@@ -27,7 +27,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     not has_service_account_name
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' must have a serviceAccountName specified.", [controller_input.metadata.name]),
         "violating_key": "spec.serviceAccountName"
     }

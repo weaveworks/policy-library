@@ -17,7 +17,7 @@ violation[result] {
   not contains(image, ":")
   array_contains(restricted_image_names, image)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("These images should be blocked: '%v'; found '%v'", [restricted_image_names, image]),
     "image": image,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])  
@@ -35,7 +35,7 @@ violation[result] {
   [image_name, tag] = split(image, ":")
   array_contains(restricted_image_names, image_name)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("These images should be blocked: '%v'; found '%v'", [restricted_image_names, image]),
     "image": image_name,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])  
@@ -53,7 +53,7 @@ violation[result] {
   [image_name, tag] = split(image, ":")
   array_contains(restricted_image_names, image_name)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("These images should be blocked: '%v'; found '%v'", [restricted_image_names, image]),
     "image": image_name,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])  

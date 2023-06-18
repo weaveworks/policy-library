@@ -8,7 +8,7 @@ violation[result] {
   rq_namespace == namespace
   not rq_spec.hard[resource_type]
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("You are missing '%v'", [resource_type]),
     "violating_key": "spec.hard"
   }

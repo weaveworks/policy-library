@@ -14,7 +14,7 @@ violation[result] {
   annotation := input.review.object.metadata.annotations["seccomp.security.alpha.kubernetes.io/pod"]
   not annotation == seccomp_annotation
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The value of the annotation must be '%v'; found '%v'",[seccomp_annotation, annotation]),
     "violating_key": "spec.metadata.annotations"  
   }
@@ -27,7 +27,7 @@ violation[result] {
   type := controller_spec.securityContext.seccompProfile.type
   not type == seccomp_type
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The secompProfile type must be '%v'; found '%v'",[seccomp_type, type]),
     "violating_key": "spec.template.spec.securityContext.seccompProfile.type"  
   }
@@ -40,7 +40,7 @@ violation[result] {
   type := controller_spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The secompProfile type must be '%v'; found '%v'",[seccomp_type, type]),
     "violating_key": "spec.template.spec.securityContext.seccompProfile.type"  
   }
@@ -53,7 +53,7 @@ violation[result] {
   type := controller_input.spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type
   not type == seccomp_type
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The secompProfile type must be '%v'; found '%v'",[seccomp_type, type]),
     "violating_key": "spec.jobTemplate.spec.template.spec.securityContext.seccompProfile.type"  
   }

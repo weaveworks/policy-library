@@ -13,7 +13,7 @@ violation[result] {
     repository_url := controller_spec.url
     not domain_matches(repository_url, domains)
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRepository URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),
         "violating_key": "spec.url"
     }

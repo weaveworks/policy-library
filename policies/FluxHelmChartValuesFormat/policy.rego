@@ -11,7 +11,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     not has_valuesFiles
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmChart '%s' must have valuesFiles section in the spec.", [controller_input.metadata.name]),
         "violating_key": "spec.valuesFiles"
     }
@@ -24,7 +24,7 @@ violation[result] {
     values_file := controller_spec.valuesFiles[_]
     not re_match(`^values(-\w+)?\.yaml$`, values_file)
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmChart '%s' must reference values files in the format 'values(-xxx)?.yaml'; found '%s'", [controller_input.metadata.name, values_file]),
         "violating_key": "spec.valuesFiles[_]"
     }

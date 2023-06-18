@@ -14,7 +14,7 @@ violation[result] {
     remediation_retries := get_remediation_retries(controller_spec)
     remediation_retries < lower_bound
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' remediation retries must be between %d and %d; found %d", [controller_input.metadata.name, lower_bound, upper_bound, remediation_retries]),
         "violating_key": "spec.install.remediation.retries/spec.upgrade.remediation.retries"
     }
@@ -26,7 +26,7 @@ violation[result] {
     remediation_retries := get_remediation_retries(controller_spec)
     remediation_retries > upper_bound
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' remediation retries must be between %d and %d; found %d", [controller_input.metadata.name, lower_bound, upper_bound, remediation_retries]),
         "violating_key": "spec.install.remediation.retries/spec.upgrade.remediation.retries"
     }

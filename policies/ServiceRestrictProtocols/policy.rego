@@ -15,7 +15,7 @@ violation[result] {
   existing_protocol := ports.protocol
   not service_protocol == existing_protocol
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Protocol should be '%v'; found '%v'", [service_protocol, existing_protocol]),
     "violating_key": sprintf("spec.ports[%v].protocol", [i]),
     "recommended_value": service_protocol

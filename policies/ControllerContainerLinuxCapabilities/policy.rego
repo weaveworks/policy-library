@@ -11,7 +11,7 @@ violation[result] {
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   isViolatingTheCapabilities
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": "Running unapproved capabilities",
     "violating_key": "spec.template.spec.containers.securityContext.capabilities"  
   }

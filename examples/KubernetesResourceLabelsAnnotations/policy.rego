@@ -15,7 +15,7 @@
         label := labels[_]
         not controller_metadata.labels[label.key] == label.value
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The resource '%s' must have the label '%s' with value '%s'", [controller_metadata.name, label.key, label.value]),
             "violating_key": sprintf("metadata.labels.%s", [label.key])
         }
@@ -27,7 +27,7 @@
         annotation := annotations[_]
         not controller_metadata.annotations[annotation.key] == annotation.value
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The resource '%s' must have the annotation '%s' with value '%s'", [controller_metadata.name, annotation.key, annotation.value]),
             "violating_key": sprintf("metadata.annotations.%s", [annotation.key])
         }

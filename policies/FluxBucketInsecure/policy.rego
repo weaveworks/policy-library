@@ -11,7 +11,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.insecure == true
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": "Insecure connections are not allowed for Bucket objects. Please set 'spec.insecure' to 'false' or remove the field.",
         "violating_key": "spec.insecure",
         "recommended_value": "false"  

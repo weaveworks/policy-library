@@ -12,7 +12,7 @@ violation[result] {
   subjects := crb_input.subjects[i]
   not subjects.kind == subjects_kind
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("expected kind '%v'; found '%v'",[subjects_kind, subjects.name]),
     "violating_key": sprintf("subjects[%v]", [i])
   }
@@ -25,7 +25,7 @@ violation[result] {
   subjects := crb_input.subjects[i]
   not subjects.name == subjects_name
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("expected name '%v'; found '%v'",[subjects_name, subjects.name]),
     "violating_key": sprintf("subjects[%v].name", [i])
   }

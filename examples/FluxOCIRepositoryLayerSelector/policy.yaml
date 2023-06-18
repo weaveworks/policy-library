@@ -51,7 +51,7 @@ spec:
         mediaType := controller_spec.layerSelector.mediaType
         not mediaType in media_types
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The OCIRepository '%s' has a non-predefined media type. Found: '%s'", [controller_input.metadata.name, mediaType]),
             "violating_key": "spec.layerSelector.mediaType"
         }
@@ -63,7 +63,7 @@ spec:
         operation := controller_spec.layerSelector.operation
         not operation in operations
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The OCIRepository '%s' has a non-predefined operation. Found: '%s'", [controller_input.metadata.name, operation]),
             "violating_key": "spec.layerSelector.operation"
         }

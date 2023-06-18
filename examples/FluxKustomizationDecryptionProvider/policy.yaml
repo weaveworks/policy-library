@@ -46,7 +46,7 @@ spec:
         provider := controller_spec.decryption.provider
         not valid_provider(provider)
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The Kustomization '%s' Spec.decryption.provider must be set to one of %v; found '%s'", [controller_input.metadata.name, decryption_providers, provider]),
             "violating_key": "spec.decryption.provider"
         }

@@ -10,7 +10,7 @@ violation[result] {
   snapshot := volume_spec.volumeSnapshotClassName
   not snapshot == snapshot_class
   result = {
-	"issue detected": true,
+	"issue_detected": true,
     "msg": sprintf("VolumeSnapshotClassName names should be '%v', detected '%v'",[snapshot_class, snapshot]),
     "violating_key": "spec.volumeSnapshotClassName",
     "recommended_value": snapshot_class

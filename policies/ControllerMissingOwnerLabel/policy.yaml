@@ -42,7 +42,7 @@ spec:
       contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
       not controller_input.metadata.labels[label]
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("you are missing a label with the key '%v'", [label]),
         "violating_key": "metadata.labels",
         "recommended_value": label

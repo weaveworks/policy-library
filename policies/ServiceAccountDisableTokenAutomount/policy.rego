@@ -12,7 +12,7 @@ violation[result] {
   automount := sa_input
   not has_key(automount, "automountServiceAccountToken")
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'automountServiceAccountToken' must be set; found '%v'",[automount]),
     "violating_key": ""
   }
@@ -25,7 +25,7 @@ violation[result] {
   automount := sa_input.automountServiceAccountToken
   not automount_value = automount
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("automountServiceAccountToken must be set to '%v'; found '%v'",[automount_value, automount]),
     "violating_key":"automountServiceAccountToken",
     "recommended_value": automount_value

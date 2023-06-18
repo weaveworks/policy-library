@@ -14,7 +14,7 @@ violation[result] {
   containers := controller_spec.containers[i]
   not containers[probe]
   result = {
-		"issue detected": true,
+		"issue_detected": true,
     "msg": sprintf("%v has not been set", [probe]),
     "violating_key": sprintf("spec.template.spec.containers[%v]", [i])  
 	}

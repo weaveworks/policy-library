@@ -12,7 +12,7 @@ violation[result] {
     image := controller_spec.images[_]
     not valid_image_tag(image.newTag)
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The Kustomization '%s' spec.images entry for image '%s' must comply with image tag/semver reference standards. Invalid tag: '%s'", [controller_input.metadata.name, image.name, image.newTag]),
         "violating_key": "spec.images"
     }

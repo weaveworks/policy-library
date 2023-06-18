@@ -50,7 +50,7 @@ spec:
       hosts := rules.host
       not array_contains(hostnames, hosts)
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("Approved domain names should be '%v'; detected '%v'", [hostnames, hosts]),
         "violating_key": sprintf("spec.rules[%v].host", [i])
       }

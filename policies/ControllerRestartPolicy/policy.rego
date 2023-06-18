@@ -14,7 +14,7 @@ violation[result] {
   policy = controller_spec["restartPolicy"]
   policy != restart_policy
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("restartPolicy should be '%v'; found '%v'", [restart_policy, policy]),
     "violating_key": "spec.template.spec"
   }

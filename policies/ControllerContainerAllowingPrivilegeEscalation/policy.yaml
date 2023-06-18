@@ -78,7 +78,7 @@ spec:
       allow_priv := containers.securityContext.allowPrivilegeEscalation
       not allow_priv == allow_privilege_escalation
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("Container %s privilegeEscalation should be set to '%v'; detected '%v'", [containers[i].name, allow_privilege_escalation, allow_priv]),
         "violating_key": sprintf("spec.template.spec.containers[%v].securityContext.allowPrivilegeEscalation", [i]),
         "recommended_value": allow_privilege_escalation

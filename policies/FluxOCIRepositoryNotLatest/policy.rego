@@ -11,7 +11,7 @@ isExcludedNamespace == false
 not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 controller_spec.ref.tag == "latest"
 result = {
-"issue detected": true,
+"issue_detected": true,
 "msg": sprintf("The OCIRepository '%s' should not use 'latest' as a tag reference.", [controller_input.metadata.name]),
 "violating_key": "spec.ref.tag"
 }

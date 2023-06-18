@@ -8,7 +8,7 @@ violation[result] {
   pv_policy := storage_spec.persistentVolumeReclaimPolicy
   not pv_policy == policy
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("persistentVolumeReclaimPolicy must be '%v'; found '%v'", [policy, pv_policy]),
     "violating_key": "spec.persistentVolumeReclaimPolicy",
     "recommened_value": policy

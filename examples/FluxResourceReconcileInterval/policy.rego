@@ -14,7 +14,7 @@ violation[result] {
     reconcile_interval := parse_interval(controller_spec.interval)
     reconcile_interval < lower_bound
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The resource '%s' of kind '%s' reconcile interval must be at least %d seconds; found %d", [controller_input.metadata.name, controller_input.kind, lower_bound, reconcile_interval]),
         "violating_key": "spec.interval"
     }
@@ -26,7 +26,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     reconcile_interval > upper_bound
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The resource '%s' of kind '%s' reconcile interval must be at most %d seconds; found %d", [controller_input.metadata.name, controller_input.kind, upper_bound, reconcile_interval]),
         "violating_key": "spec.interval"
     }
