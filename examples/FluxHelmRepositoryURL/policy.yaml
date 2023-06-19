@@ -16,7 +16,7 @@ spec:
     - name: domains
       type: array
       required: true
-      value: ["github.com"]
+      value:
     - name: exclude_namespaces
       type: array
       required: false
