@@ -17,7 +17,7 @@ violation[result] {
   max_size_value := units.parse_bytes(max_size)
   mem_requests_value > max_size_value
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Memory requests must be a maximum of '%v'; found '%v'", [max_size, mem_requests]),
     "violating_key": sprintf("spec.template.spec.containers[%v].resources.requests.memory", [i]),
     "recommended_value": max_size

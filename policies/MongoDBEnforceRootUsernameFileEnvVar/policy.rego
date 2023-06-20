@@ -18,7 +18,7 @@ violation[result] {
   not contains(containers.image, exclude_app_name)
   not containers.env
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": "environment variables needs to be set",
     "violating_key": sprintf("spec.template.spec.containers[%v]", [i]),
   }
@@ -35,7 +35,7 @@ violation[result] {
   envs := containers.env
   not array_contains(envs, env_name)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'%v' is missing'; detected '%v'", [env_name, envs]),
     "violating_key": sprintf("spec.template.spec.containers[%v].env.name", [i]),
   }

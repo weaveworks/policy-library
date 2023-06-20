@@ -26,6 +26,27 @@ test_values_file_invalid {
   count(violation) == 1 with input as testcase
 }
 
+test_values_file_undefined {
+  testcase = {
+    "parameters": {
+      "exclude_namespaces": [],
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
+    "review": {
+      "object": {
+        "apiVersion": "v1",
+        "kind": "HelmChart",
+        "metadata": {
+          "name": "my-helm-chart",
+        }
+      }
+    }
+  }
+
+  count(violation) == 1 with input as testcase
+}
+
 test_values_file_valid {
   testcase = {
     "parameters": {

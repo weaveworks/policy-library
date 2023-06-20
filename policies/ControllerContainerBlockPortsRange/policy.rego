@@ -16,7 +16,7 @@ violation[result] {
   port := container_ports.containerPort
   not port >= target_port
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("containerPort is not greater than '%v'; found %v", [target_port, port]),
     "violating_key": sprintf("spec.template.spec.containers[%v].ports[%v].containerPort", [i,j]) 
   }

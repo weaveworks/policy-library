@@ -1,8 +1,3 @@
-# It checks if the HelmRelease is not in the excluded namespaces.
-# It iterates through the valuesFrom array in the HelmRelease spec.
-# It checks if the configMapKeyRef.name is in the allowed_configmaps list provided in the input parameters.
-# If the ConfigMap name is not in the allowed list, it triggers a violation with a descriptive message.
-
 package weave.advisor.helm_release_values_from_configmaps
 
 import future.keywords.in
@@ -17,12 +12,12 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     some i
     value_from := controller_spec.valuesFrom[i]
-    value_from.configMapKeyRef.name
-    not value_from.configMapKeyRef.name in configmaps
+    value_from.kind == "ConfigMap"
+    not value_from.name in configmaps
     result = {
-        "issue detected": true,
-        "msg": sprintf("The HelmRelease '%s' is using an unallowed ConfigMap '%s' in valuesFrom.", [controller_input.metadata.name, value_from.configMapKeyRef.name]),
-        "violating_key": sprintf("spec.valuesFrom[%d].configMapKeyRef.name", [i])
+        "issue_detected": true,
+        "msg": sprintf("The HelmRelease '%s' is using an unallowed ConfigMap '%s' in valuesFrom.", [controller_input.metadata.name, value_from.name]),
+        "violating_key": sprintf("spec.valuesFrom[%d].name", [i])
     }
 }
 

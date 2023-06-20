@@ -8,7 +8,7 @@ violation[result] {
   values := lr_spec.limits[_]
   not values[resource_setting][resource_type]
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("You are missing '%v': '%v'", [resource_setting, resource_type]),
     "violating_key": "spec.limits"
 

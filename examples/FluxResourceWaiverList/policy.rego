@@ -13,7 +13,7 @@ violation[result] {
     not controller_input.metadata.name in waiver_list
     controller_spec.suspend == true
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The resource '%s' of kind '%s' must not be suspended.", [controller_input.metadata.name, controller_input.kind]),
         "violating_key": "spec.suspend",
         "recommended_value": false

@@ -12,7 +12,7 @@ violation[result] {
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   not controller_input.spec.template.metadata.annotations[annotation]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'%v' annotation not found",[annotation]),
     "violating_key": "spec.template.metadata.annotation"
   }

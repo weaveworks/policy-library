@@ -15,7 +15,7 @@ violation[result] {
   image_policy := containers.imagePullPolicy
 	not containers.imagePullPolicy == policy
     result = {
-    	"issue detected": true,
+    	"issue_detected": true,
       "msg": sprintf("imagePolicyPolicy must be '%v'; found '%v'",[policy, image_policy]),
       "violating_key": sprintf("spec.template.spec.containers[%v].imagePullPolicy", [i]),
       "recommended_value": policy  

@@ -16,7 +16,7 @@ violation[result] {
   registry := get_registry(image_path)
   not array_contains(my_registries, registry)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("regsitry must be from '%v'; found '%v'", [my_registries, registry]),
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
   }

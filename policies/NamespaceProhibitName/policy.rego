@@ -6,7 +6,7 @@ violation[result] {
 	name := namespace_input.metadata.name
   startswith(name, namespace_name)
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("Namespaces should not start with '%v'; you have specified '%v'", [namespace_name, name]),
     "violating_key": "metadata.name"
   }

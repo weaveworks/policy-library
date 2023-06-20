@@ -18,7 +18,7 @@ violation[result] {
   envs := containers.env[j]
   envs.name == env_name
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'%v' should not be set, but has been detected here '%v'", [env_name, envs]),
     "violating_key": sprintf("spec.template.spec.containers[%v].securityContext.allowPrivilegeEscalation", [i]),
   }

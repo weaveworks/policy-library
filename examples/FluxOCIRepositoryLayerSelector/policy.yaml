@@ -1,9 +1,9 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.policies.ocirepository_layer_selector
+  name: weave.policies.ocirepository-layer-selector
 spec:
-  id: weave.policies.ocirepository_layer_selector
+  id: weave.policies.ocirepository-layer-selector
   name: OCIRepository Layer Selector
   enabled: true
   description: "OCIRepository layer selector must only reference predefined media/operation type."
@@ -21,7 +21,7 @@ spec:
     - name: operations
       type: array
       required: true
-      value:
+      value: ["extract"]
     - name: exclude_namespaces
       type: array
       required: false
@@ -51,7 +51,7 @@ spec:
         mediaType := controller_spec.layerSelector.mediaType
         not mediaType in media_types
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The OCIRepository '%s' has a non-predefined media type. Found: '%s'", [controller_input.metadata.name, mediaType]),
             "violating_key": "spec.layerSelector.mediaType"
         }
@@ -63,7 +63,7 @@ spec:
         operation := controller_spec.layerSelector.operation
         not operation in operations
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The OCIRepository '%s' has a non-predefined operation. Found: '%s'", [controller_input.metadata.name, operation]),
             "violating_key": "spec.layerSelector.operation"
         }

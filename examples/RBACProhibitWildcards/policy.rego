@@ -14,7 +14,7 @@ violation[result] {
   path := rules[attributes][j]
   path == "*"
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("'%v' cannot be set to '*'; found '%v'",[attributes, path]),
     "violating_key": sprintf("rules[%v].attributes[%v]", [i,j])
   }

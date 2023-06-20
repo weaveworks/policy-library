@@ -17,7 +17,7 @@ violation[result] {
   min_size_value := units.parse_bytes(min_size)
   cpu_limits_value < min_size_value
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("CPU limits must be a minimum of '%v'; found '%v'", [min_size, cpu_limits]),
     "violating_key": "spec.template.spec.containers.resources.limits.cpu"  
   }

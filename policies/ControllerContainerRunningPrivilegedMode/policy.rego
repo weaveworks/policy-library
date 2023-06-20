@@ -15,7 +15,7 @@ violation[result] {
   security_context_priv := container.securityContext.privileged
   not security_context_priv == privilege
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Container %s should set privileged to '%v'; detected '%v'", [container.name, privilege, security_context_priv]),
     "violating_key": sprintf("spec.template.spec.containers[%v].securityContext.privileged", [i]),
     "recommended_value": privilege

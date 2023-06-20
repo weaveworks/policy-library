@@ -9,7 +9,7 @@ violation[result] {
   pods := rq_spec.hard.pods
   not pods <= pod_quota
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("The numbers of pods should be '%v' or greater; detected '%v'", [pod_quota, pods]),
     "violating_key": "spec.hard.pods"
   }

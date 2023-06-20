@@ -13,7 +13,7 @@ violation[result] {
   selector_label := controller_spec.selector.matchLabels
   not has_key(selector_label, label)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Expecting key '%v'; found '%v'", [label, selector_label]),
     "violating_key": "spec.selector.matchLabels"  
   }

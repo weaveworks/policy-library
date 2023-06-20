@@ -46,22 +46,14 @@ spec:
         repo_url := controller_spec.url
         not domain_matches(repo_url, domains)
         result = {
-            "issue detected": true,
+            "issue_detected": true,
             "msg": sprintf("The OCIRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
             "violating_key": "spec.url"
         }
     }
 
     domain_matches(url, domains) {
-        startswith(url, "https://")
-        parts := split(url, "/")
-        count(parts) > 2
-        domain := parts[2]
-        domain in domains
-    }
-
-    domain_matches(url, domains) {
-        startswith(url, "http://")
+        startswith(url, "oci://")
         parts := split(url, "/")
         count(parts) > 2
         domain := parts[2]
@@ -82,4 +74,3 @@ spec:
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
-

@@ -72,7 +72,7 @@ spec:
       resource := controller_spec[shared_resource]
       not resource == resource_enabled
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("'%v' should be set to '%v'; found '%v'", [shared_resource, resource_enabled, resource]),
         "violating_key": sprintf("spec.template.spec[%v]", [shared_resource]),
         "recommended_value": resource_enabled

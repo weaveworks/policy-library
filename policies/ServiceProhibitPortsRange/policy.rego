@@ -15,7 +15,7 @@ violation[result] {
   service_port := spec_port.targetPort
   not service_port > target_port
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("targetPort is not greater than '%v'; found %v", [target_port, service_port]),
     "violating_key": sprintf("spec.ports[%v].targetPort", [i])
   }
