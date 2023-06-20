@@ -25,12 +25,21 @@ domain_matches(url, domains) {
     count(parts) > 2
     domain := parts[2]
     valid_domain(domain, domains)
+} else {
+    is_oci(url)
+    parts := split(trim(url, "oci://"), "/")
+    domain := parts[0]
+    valid_domain(domain, domains)
 }
 
 is_http_or_https(url) {
     startswith(url, "https://")
 } else {
     startswith(url, "http://")
+}
+
+is_oci(url) {
+    startswith(url, "oci://")
 }
 
 valid_domain(domain, domains) {
