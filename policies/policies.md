@@ -2840,6 +2840,49 @@ high
 
 ---
 
+## Rbac Prohibit Wildcards on
+
+### ID
+weave.templates.rbac-prohibit-resources-wildcards
+
+### Description
+This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
+
+### Resources
+In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
+
+### Verbs
+API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
+
+### API Groups
+The API Group being accessed (for resource requests only).
+
+### Non Resource URLs
+Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
+
+
+### How to solve?
+Replace the `*` with the appropriate resource. The type of 
+```
+rules:
+- <attributes>:
+  - '*'
+    
+```
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Parameters
+[{'name': 'attributes', 'type': 'string', 'required': True, 'value': 'verbs'}, {'name': 'exclude_role_name', 'type': 'string', 'required': True, 'value': ''}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
 ## Missing Owner Label
 
 ### ID
@@ -3324,6 +3367,49 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Rbac Prohibit Wildcards on
+
+### ID
+weave.templates.rbac-prohibit-resources-wildcards
+
+### Description
+This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
+
+### Resources
+In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
+
+### Verbs
+API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
+
+### API Groups
+The API Group being accessed (for resource requests only).
+
+### Non Resource URLs
+Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
+
+
+### How to solve?
+Replace the `*` with the appropriate resource. The type of 
+```
+rules:
+- <attributes>:
+  - '*'
+    
+```
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Parameters
+[{'name': 'attributes', 'type': 'string', 'required': True, 'value': 'resources'}, {'name': 'exclude_role_name', 'type': 'string', 'required': True, 'value': ''}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
