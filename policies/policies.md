@@ -2840,10 +2840,10 @@ high
 
 ---
 
-## Rbac Prohibit Wildcards on
+## Rbac Prohibit Wildcards on Policy Rule Verbs
 
 ### ID
-weave.templates.rbac-prohibit-resources-wildcards
+weave.templates.rbac-prohibit-wildcards-policyrule-verbs
 
 ### Description
 This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
@@ -3370,10 +3370,10 @@ high
 
 ---
 
-## Rbac Prohibit Wildcards on
+## Rbac Prohibit Wildcards on Policy Rule Resources
 
 ### ID
-weave.templates.rbac-prohibit-resources-wildcards
+weave.templates.rbac-prohibit-wildcards-policyrule-resources
 
 ### Description
 This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
