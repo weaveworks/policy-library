@@ -1,10 +1,10 @@
 apiVersion: pac.weave.works/v2beta2
 kind: Policy
 metadata:
-  name: weave.templates.rbac-prohibit-resources-wildcards
+  name: weave.templates.rbac-prohibit-wildcards-policyrule-verbs
 spec:
-  id: weave.templates.rbac-prohibit-resources-wildcards
-  name: Rbac Prohibit Wildcards on
+  id: weave.templates.rbac-prohibit-wildcards-policyrule-verbs
+  name: Rbac Prohibit Wildcards on Policy Rule Verbs
   description: "This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:\n\n### Resources\nIn the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. \n\n### Verbs\nAPI verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. \n\n### API Groups\nThe API Group being accessed (for resource requests only).\n\n### Non Resource URLs\nRequests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered \"non-resource requests\", and use the lower-cased HTTP method of the request as the verb.\n"
   how_to_solve: "Replace the `*` with the appropriate resource. The type of \n```\nrules:\n- <attributes>:\n  - '*'\n    \n```\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
