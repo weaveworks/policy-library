@@ -15,21 +15,19 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: policy-library
-  namespace: flux-system
 spec:
   interval: 10m0s
   url: https://github.com/weaveworks/policy-library.git
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1b
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: rbac-secrets-good-practices
-  namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: policy-library
   path: ./goodpractices/kubernetes/rbac/secrets
   prune: true
 ```
