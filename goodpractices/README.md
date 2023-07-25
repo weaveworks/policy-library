@@ -5,10 +5,10 @@ to provide a baseline security for any weave gitops or kubernetes environment.
 
 ## Getting Started
 
-1. Select the policies to use from [Available Good Practices Policies](#available-good-practices-policies)
+1. Select the policies to use from [Available Good Practices Policies](#available-good-practices-policies).
 2. Add them via Kustomization to your environment.
 
-An example for deploying RBAC Secrets good practices could be: 
+An example for deploying RBAC Secrets good practices using this GitRepository as a source is shown below.
 
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -31,6 +31,9 @@ spec:
   path: ./goodpractices/kubernetes/rbac/secrets
   prune: true
 ```
+
+In case that you have your own custom Policy Library, add these policies and deploy as usual.
+
 
 ## Available Good Practices Policies
 
