@@ -5,7 +5,7 @@ metadata:
 spec:
   id: weave.policies.rbac-protect-list-secrets
   name: Rbac Prohibit List On Secrets
-  description: "This Policy will violate if any RBAC ClusterRoles or Roles are designated with a specific Resource and Verb combination. For example, if you wanted to deny deployments, you would create a Policy with a resource of `deployments` and the verb `create`. \n"
+  description: "This Policy will violate if any RBAC ClusterRoles or Roles are designated with 'list' verb on 'secrets' resource.\n"
   how_to_solve: "When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. \n```\nrules:\n- resources: <resources>\n  verbs: <verb>\n```\n\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
   severity: high
