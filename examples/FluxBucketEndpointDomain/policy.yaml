@@ -71,4 +71,3 @@ spec:
     is_trusted_domain {
         domains[_] == controller_input.spec.endpoint
     }
-    

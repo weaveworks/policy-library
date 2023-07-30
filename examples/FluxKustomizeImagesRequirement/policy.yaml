@@ -29,46 +29,4 @@ spec:
       type: boolean
       required: true
       value: true
-  code: |
-    package weave.advisor.kustomization_images_requirement
-
-    import future.keywords.in
-
-    exclude_namespaces := input.parameters.exclude_namespaces
-    exclude_label_key := input.parameters.exclude_label_key
-    exclude_label_value := input.parameters.exclude_label_value
-    images_required := input.parameters.images_required
-
-    violation[result] {
-        isExcludedNamespace == false
-        not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
-        hasImages := object_has_images(controller_spec)
-        hasImages != images_required
-        msg := get_message(images_required)
-        result = {
-            "issue_detected": true,
-            "msg": msg,
-            "violating_key": "spec.images"
-        }
-    }
-
-    object_has_images(spec) {
-        count(spec.images) > 0
-    } else = false
-
-    get_message(true) = "The 'spec.images' field in a Kustomization object must have values based on the policy input" 
-
-    get_message(false) = "The 'spec.images' field in a Kustomization object must be empty based on the policy input" 
-
-    # Controller input
-    controller_input = input.review.object
-
-    # controller_spec acts as an iterator to get spec from the Kustomization object
-    controller_spec = controller_input.spec {
-        controller_input.kind == "Kustomization"
-    }
-
-    isExcludedNamespace = true {
-        controller_input.metadata.namespace
-        controller_input.metadata.namespace in exclude_namespaces
-    } else = false
+  code: "package weave.advisor.kustomization_images_requirement\n\nimport future.keywords.in\n\nexclude_namespaces := input.parameters.exclude_namespaces\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\nimages_required := input.parameters.images_required\n\nviolation[result] {\n    isExcludedNamespace == false\n    not exclude_label_value == controller_input.metadata.labels[exclude_label_key]\n    hasImages := object_has_images(controller_spec)\n    hasImages != images_required\n    msg := get_message(images_required)\n    result = {\n        \"issue_detected\": true,\n        \"msg\": msg,\n        \"violating_key\": \"spec.images\"\n    }\n}\n\nobject_has_images(spec) {\n    count(spec.images) > 0\n} else = false\n\nget_message(true) = \"The 'spec.images' field in a Kustomization object must have values based on the policy input\" \n\nget_message(false) = \"The 'spec.images' field in a Kustomization object must be empty based on the policy input\" \n\n# Controller input\ncontroller_input = input.review.object\n\n# controller_spec acts as an iterator to get spec from the Kustomization object\ncontroller_spec = controller_input.spec {\n    controller_input.kind == \"Kustomization\"\n}\n\nisExcludedNamespace = true {\n    controller_input.metadata.namespace\n    controller_input.metadata.namespace in exclude_namespaces\n} else = false\n"

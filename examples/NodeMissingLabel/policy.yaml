@@ -43,7 +43,7 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.nodes.label
 
     label := input.parameters.node_label

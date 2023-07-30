@@ -61,11 +61,11 @@ spec:
     }
 
     domain_matches(url, domains) {
-    startswith(url, "http://")
-    parts := split(url, "/")
-    count(parts) > 2
-    domain := parts[2]
-    domain in domains
+        startswith(url, "http://")
+        parts := split(url, "/")
+        count(parts) > 2
+        domain := parts[2]
+        domain in domains
     }
 
     controller_input = input.review.object
@@ -82,4 +82,3 @@ spec:
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
-

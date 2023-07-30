@@ -22,7 +22,7 @@ spec:
       type: string
       required: false
       value:
-  code: |-
+  code: |
     package weave.advisor.nodes.os_version
 
     desired_os := input.parameters.os
