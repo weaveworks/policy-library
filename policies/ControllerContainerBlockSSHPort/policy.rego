@@ -15,7 +15,7 @@ violation[result] {
 	port := container.ports[j]
 	port.containerPort == container_port
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Container should not expose port %v", [container_port]),
 		"violating_key": sprintf("spec.template.spec.containers[%v].ports[%v]", [i, j]),
 	}

@@ -14,7 +14,7 @@ violation[result] {
   ingress_annotation := controller_input.metadata.annotations
   not has_key(ingress_annotation, annotation)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Ingress is missing the annoation '%v'", [annotation]),
     "violating_key": "metadata.annotations"
   }
@@ -26,7 +26,7 @@ violation[result] {
   ingress_class:= controller_input.metadata.annotations[annotation]
   not ingress_class == class
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Ingress class should '%v'; found '%v' ", [class, ingress_class]),
     "violating_key": "metadata.annotations",
     "recommended_value": class

@@ -12,7 +12,7 @@ violation[result] {
     hasPostRenderer := object.get(controller_spec, "postRenderers", false)
     hasPostRenderer != false
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' must not have post-renderers enabled.", [controller_input.metadata.name]),
         "violating_key": "spec.postRenderers"
     }

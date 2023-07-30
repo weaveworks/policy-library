@@ -6,7 +6,7 @@ import data.weave.advisor.ocirepository_organization_domains
 test_allowed_domain {
     testcase := {
         "parameters": {
-            "domains": ["github.com"],
+            "domains": ["ghcr.io"],
             "exclude_namespaces": [],
             "exclude_label_key": "",
             "exclude_label_value": ""
@@ -19,7 +19,7 @@ test_allowed_domain {
                     "namespace": "default"
                 },
                 "spec": {
-                    "url": "https://github.com/allowed-org/repo"
+                    "url": "oci://ghcr.io/stefanprodan"
                 }
             }
         }
@@ -43,7 +43,7 @@ test_disallowed_domain {
                     "namespace": "default"
                 },
                 "spec": {
-                    "url": "https://github.com/disallowed-org/repo"
+                    "url": "oci://ghcr.io/disallowed-org/repo"
                 }
             }
         }
@@ -67,7 +67,7 @@ test_exclude_namespace {
                     "namespace": "kube-system"
                 },
                 "spec": {
-                    "url": "https://github.com/disallowed-org/repo"
+                    "url": "oci://ghcr.io/disallowed-org/repo"
                 }
             }
         }
@@ -94,7 +94,7 @@ test_exclude_label {
                     }
                 },
                 "spec": {
-                    "url": "https://github.com/disallowed-org/repo"
+                    "url": "oci://ghcr.io/disallowed-org/repo"
                 }
             }
         }

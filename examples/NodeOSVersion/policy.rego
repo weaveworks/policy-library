@@ -9,7 +9,7 @@ violation[result] {
   current_os := node_status.nodeInfo.osImage
   not current_os == desired_os
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Node OS should be'%v'; found %v", [desired_os, current_os]),
     "violating_key": "status.nodeInfo.osImage"
   }

@@ -12,7 +12,7 @@ violation[result] {
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   not controller_spec[key]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Missing spec '%v'", [key]),
     "violating_key": "spec.template.spec"
   }

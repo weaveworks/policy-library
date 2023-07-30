@@ -21,7 +21,7 @@ violation[result] {
 	not containers.securityContext.runAsUser
 
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Missing spec.template.spec.containers[%v].securityContext.runAsUser and spec.template.spec.securityContext.runAsUser is not defined as well.", [i]),
 		"violating_key": sprintf("spec.template.spec.containers[%v].securityContext", [i]),
 	}
@@ -40,7 +40,7 @@ violation[result] {
 	containers.securityContext.runAsUser <= uid
 	
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Container is potentially running as root. Please check spec.template.spec.containers[%v].securityContext.runAsUser to see if the UID is correct.", [i]),
 		"violating_key": sprintf("spec.template.spec.containers[%v].securityContext", [i]),
 	}
@@ -57,7 +57,7 @@ violation[result] {
 	controller_spec.securityContext.runAsUser <= uid
 
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": "A container is potentially running as root. Please check spec.template.spec.securityContext.runAsUser to see if the UID is correct.",
 		"violating_key": "spec.template.spec.securityContext",
 	}

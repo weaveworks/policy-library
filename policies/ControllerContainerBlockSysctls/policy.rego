@@ -11,7 +11,7 @@ violation[result] {
 	not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     controller_spec.securityContext.sysctls
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": "Adding sysctls could lead to unauthorized escalated privileges to the underlying node",
 		"violating_key": "spec.template.spec.securityContext.sysctls"
 	}

@@ -13,7 +13,7 @@ violation[result] {
     path := controller_spec.path
     path in exclude_paths
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The Kustomization '%s' spec.path '%s' is not allowed.", [controller_input.metadata.name, path]),
         "violating_key": "spec.path"
     }

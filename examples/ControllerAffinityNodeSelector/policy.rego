@@ -13,7 +13,7 @@ violation[result] {
   not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
   not controller_spec.nodeSelector[key]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Looking for key '%v'; found '%v'", [key, controller_spec.nodeSelector]),
     "violating_key": "spec.template.spec.nodeSelector",
     "recommended_value": value  
@@ -26,7 +26,7 @@ violation[result] {
   selector_value := controller_spec.nodeSelector[key]
   not selector_value == value
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Looking for key value pair '%v:%v'; found '%v'", [key, value, controller_spec.nodeSelector]),
     "recommended_value": value,
     "violating_key": "spec.template.spec.nodeSelector[key]"

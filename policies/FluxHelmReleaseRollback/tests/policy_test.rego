@@ -18,7 +18,11 @@ test_valid_rollback_disabled {
         },
         "spec": {
           "rollback": {
-            "enable": false
+            "disableWait": false,
+            "disableHooks": false,
+            "recreate": false,
+            "force": false,
+            "cleanupOnFail": false
           }
         }
       }
@@ -44,7 +48,7 @@ test_invalid_rollback_enabled {
         },
         "spec": {
           "rollback": {
-            "enable": true
+            "disableWait": true
           }
         }
       }
@@ -73,7 +77,7 @@ test_exclude_label {
         },
         "spec": {
           "rollback": {
-            "enable": true
+            "disableWait": true
           }
         }
       }
@@ -100,7 +104,7 @@ test_exclude_namespace {
         },
         "spec": {
           "rollback": {
-            "enable": true
+            "disableWait": true
           }
         }
       }

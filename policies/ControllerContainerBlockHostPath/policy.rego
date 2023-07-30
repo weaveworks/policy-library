@@ -14,7 +14,7 @@ violation[result] {
   volumes := controller_spec.volumes[i]
   has_key(volumes, hostpath_key)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Containers should not be using hostPath; found %v", [volumes]),
     "violating_key": sprintf("spec.template.spec.volumes[%v]", [i])
   }

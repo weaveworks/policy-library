@@ -11,7 +11,7 @@ violation[result] {
   unit_max_value := units.parse_bytes(max_size)
   unit_max_value < unit_type_value
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Storage must be a maximum of '%v'; found '%v'", [max_size, storage_value]),
     "violating_key": "spec.spec.resources.requests.storage"
   }

@@ -22,7 +22,7 @@ violation[result] {
 	not containers.securityContext.runAsNonRoot == false
 
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Container missing spec.template.spec.containers[%v].securityContext.runAsNonRoot while Pod spec.template.spec.securityContext.runAsNonRoot is not defined as well.", [i]),
 		"violating_key": sprintf("spec.template.spec.containers[%v].securityContext", [i]),
 	}
@@ -40,7 +40,7 @@ violation[result] {
 	containers.securityContext.runAsNonRoot == false
 
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Container spec.template.spec.containers[%v].securityContext.runAsNonRoot should be set to true ", [i]),
 		"violating_key": sprintf("spec.template.spec.containers[%v].securityContext.runAsNonRoot", [i]),
 		"recommended_value": true,
@@ -57,7 +57,7 @@ violation[result] {
 	controller_spec.securityContext.runAsNonRoot == false
 
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": "Pod spec.template.spec.securityContext.runAsNonRoot should be set to true",
 		"violating_key": "spec.template.spec.securityContext.runAsNonRoot",
 		"recommended_value": true,

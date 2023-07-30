@@ -15,7 +15,7 @@ violation[result] {
   ports := container.ports[j]
   has_key(ports, host_port)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'%v' should not be used unless absolutely necessary; found %v", [host_port, ports]),
     "violating_key": sprintf("spec.template.spec.containers[%v].ports[%v]", [i,j])  
   }

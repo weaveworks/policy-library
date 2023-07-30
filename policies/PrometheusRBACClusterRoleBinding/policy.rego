@@ -11,7 +11,7 @@ vviolation[result] {
   subjects = crb_input.subjects[i]
   not subjects.kind == "ServiceAccount"
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("subject kind must be ServiceAccount; found '%v'", [subjects.kind]),
     "violating_key": sprintf("subjects[%v].kind", [i])
   }
@@ -24,7 +24,7 @@ violation[result] {
   subjects = crb_input.subjects[i]
   not contains(subjects.name, subject_name)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("subject name must contain '%v'; found '%v'", [subject_name, subjects.name]),
     "violating_key": sprintf("subjects[%v].name", [i]),
     "recommended_value": subject_name
@@ -37,7 +37,7 @@ violation[result] {
   contains(crb_input.metadata.name, "prometheus")
   not contains(crb_input.roleRef.kind, "ClusterRole")
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("roleRef kind must contain be a Role or ClusterRole; found '%v'", [crb_input.roleRef.kind]),
     "violating_key": "roleRef.kind"
   }
@@ -49,7 +49,7 @@ violation[result] {
   contains(crb_input.metadata.name, "prometheus")
   not contains(crb_input.roleRef.name, "prometheus")
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("roleRef name must contain prometheus; found '%v'", [crb_input.roleRef.name]),
     "violating_key": "roleRef.name"
   }

@@ -55,7 +55,7 @@ spec:
     	node_labels := node_metadata.labels
     	not node_labels[label]
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("Node is missing label '%v'; found %v", [label, node_metadata.labels]),
         "violating_key": "metadata.labels"
       }

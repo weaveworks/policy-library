@@ -13,7 +13,7 @@ violation[result] {
     max_history_value := controller_spec.maxHistory
     max_history_value > max_history
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' maxHistory cannot exceed %d; found %d", [controller_input.metadata.name, max_history, max_history_value]),
         "violating_key": "spec.maxHistory",
         "recommended_value": max_history

@@ -15,7 +15,7 @@ violation[result] {
   image = splittedUrl[count(splittedUrl)-1]
   not contains(image, ":")
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Container %s image is not tagged", container.name),
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
   }
@@ -31,7 +31,7 @@ violation[result] {
   [image_name, tag] = split(image, ":")
   tag == image_tag
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Container %s image contains unapproved tag '%v'", [container.name, image_tag]),
     "image": image,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])
@@ -48,7 +48,7 @@ violation[result] {
   [image_name, port, tag] = split(image, ":")
   tag == image_tag
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Container %s image contains unapproved tag:'%v'", [container.name, image_tag]),
     "image": image,
     "violating_key": sprintf("spec.template.spec.containers[%v].image", [i])

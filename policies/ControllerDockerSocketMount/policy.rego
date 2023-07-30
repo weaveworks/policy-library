@@ -16,7 +16,7 @@ violation[result] {
   sock_path := vmounts.hostPath.path 
   contains(sock_path, docker_socket_name) 
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("'%v' is being mounted. The hostPath we found was '%v'",[docker_socket_name, sock_path]),
     "violating_key": sprintf("spec.template.spec.containers[%v].volumeMonuts[%v].hostPath.path", [i,j])  
   }

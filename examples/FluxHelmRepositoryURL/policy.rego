@@ -13,18 +13,42 @@ violation[result] {
     repository_url := controller_spec.url
     not domain_matches(repository_url, domains)
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRepository URL must be from one of the allowed domains '%s'; found '%s'", [domains, repository_url]),
         "violating_key": "spec.url"
     }
 }
 
 domain_matches(url, domains) {
-    startswith(url, "https://")
+    is_http_or_https(url)
     parts := split(url, "/")
     count(parts) > 2
     domain := parts[2]
-    domain in domains
+    valid_domain(domain, domains)
+} else {
+    is_oci(url)
+    parts := split(trim(url, "oci://"), "/")
+    domain := parts[0]
+    valid_domain(domain, domains)
+}
+
+is_http_or_https(url) {
+    startswith(url, "https://")
+} else {
+    startswith(url, "http://")
+}
+
+is_oci(url) {
+    startswith(url, "oci://")
+}
+
+valid_domain(domain, domains) {
+    some d
+    domain == domains[d]
+} else {
+    some d
+    concat_domain := concat(".", ["www", domains[d]])
+    endswith(domain, concat_domain)
 }
 
 # Controller input
@@ -33,10 +57,6 @@ controller_input = input.review.object
 # controller_container acts as an iterator to get containers from the template
 controller_spec = controller_input.spec {
   controller_input.kind == "HelmRepository"
-}
-
-contains_kind(kind, kinds) {
-  kinds[_] = kind
 }
 
 isExcludedNamespace = true {

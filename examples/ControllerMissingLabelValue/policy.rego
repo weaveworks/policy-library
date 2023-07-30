@@ -16,7 +16,7 @@ violation[result] {
   contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
   not value == controller_input.metadata.labels[label]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The key:value pair '%v:%v' was not found; detected labels: '%v", [label, value, controller_input.metadata.labels]),
     "violating_key": sprintf("metadata.labels.%v", [label]),
     "recommended_value": value

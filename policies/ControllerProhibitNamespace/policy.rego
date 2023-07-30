@@ -9,7 +9,7 @@ violation[result] {
   namespace := controller_input.metadata.namespace
   namespace == custom_namespace
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Workloads must not be running in the namespace '%v'; found '%v'", [custom_namespace, namespace]),
     "violating_key": "metadata.namespace"
   }

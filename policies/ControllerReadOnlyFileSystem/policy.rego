@@ -15,7 +15,7 @@ violation[result] {
   root_fs := containers.securityContext.readOnlyRootFilesystem
   not root_fs == read_only
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("readOnlyRootFilesystem should equal '%v'; detected '%v'", [read_only, root_fs]),
     "recommended_value": read_only,
     "violating_key": sprintf("spec.template.spec.containers[%v].securityContext.readOnlyRootFilesystem", [i]) 
