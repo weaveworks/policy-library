@@ -113,6 +113,7 @@ jobs:
           git checkout ${{ github.event.pull_request.head.ref }}
           git pull
           git add ${REPO_PATH}/policies
+          git add ${REPO_PATH}/examples
           git commit -m "Update Policies CRDs REGO code"
           git push origin ${{ github.event.pull_request.head.ref }}
         else
