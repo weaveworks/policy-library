@@ -36,6 +36,11 @@ jobs:
     - name: Auto-generate Policies doc
       run: |
         export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git fetch
+        git checkout ${{ github.event.pull_request.head.ref }}
+        git pull
 
         docker run --rm -v ${REPO_PATH}/policies:/policies weaveworks/polctl:v0.0.2 \
                python3 /scripts/generate_policies_doc.py -d /policies -p /policies
@@ -43,11 +48,6 @@ jobs:
         if [[ `git status --porcelain` ]]
         then
           echo "Pushing auto-generated policies doc"
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
           git add ${REPO_PATH}/policies/policies.md
           git commit -m "add auto-generated policies doc"
           git push origin ${{ github.event.pull_request.head.ref }}
