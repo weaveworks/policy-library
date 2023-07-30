@@ -500,34 +500,6 @@ high
 
 ---
 
-## Bucket Provider
-
-### ID
-weave.policies.bucket-provider
-
-### Description
-Bucket spec.provider must be set to one of AWS, Azure, GCP, or Generic.
-
-### How to solve?
-Set the spec.provider field of the Bucket to one of the allowed values: AWS, Azure, GCP, or Generic.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['Bucket']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## Missing Kubernetes App Instance Label
 
 ### ID
@@ -820,34 +792,6 @@ medium
 
 ### Tags
 ['pci-dss', 'mitre-attack', 'nist800-190', 'gdpr', 'soc2-type1']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## HelmChart Source Reference
-
-### ID
-weave.policies.helm-chart-source-reference
-
-### Description
-The 'sourceRef.kind' field in the 'spec.chart' section of a HelmChart object can only be one of 'HelmRepository' or 'GitRepository' or 'Bucket'.
-
-### How to solve?
-Update the 'sourceRef.kind' field in the 'spec.chart' section of the HelmChart object to either 'HelmRepository' or 'GitRepository' or 'Bucket'.
-
-### Category
-weave.categories.software-supply-chain
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmChart']}
-
-### Tags
-['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
@@ -1169,62 +1113,6 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## HelmChart Reconcile Strategy
-
-### ID
-weave.policies.helm-chart-reconcile-strategy
-
-### Description
-The HelmChart reconcile strategy can only specify one of 'Revision' or 'ChartVersion'.
-
-### How to solve?
-Set the reconcile strategy to either 'Revision' or 'ChartVersion' in the HelmChart.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmChart']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## OCIRepository Ref Types
-
-### ID
-weave.policies.ocirepository-ref-types
-
-### Description
-OCIRepository resources must use only one of (Semver|Refname|Commit) in spec.ref.
-
-### How to solve?
-Ensure the OCIRepository spec.ref uses only one of (Semver|Refname|Commit).
-
-### Category
-weave.categories.configuration
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['OCIRepository']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -3439,34 +3327,6 @@ high
 
 ---
 
-## Kustomization Source Reference
-
-### ID
-weave.policies.kustomization-source-reference
-
-### Description
-The 'sourceRef.kind' field in the 'spec' section of a Kustomization object can only be one of 'GitRepository', 'OCIRepository' or 'Bucket'.
-
-### How to solve?
-Update the 'sourceRef.kind' field in the 'spec' section of the Kustomization object to either 'GitRepository', 'OCIRepository' or 'Bucket'.
-
-### Category
-weave.categories.software-supply-chain
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['Kustomization']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
-
----
-
 ## Containers Minimum Replica Count
 
 ### ID
@@ -3557,34 +3417,6 @@ high
 
 ### Targets
 {'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## OCIRepository Provider
-
-### ID
-weave.policies.ocirepository-provider
-
-### Description
-OCIRepository spec.provider must be set to one of AWS, Azure, GCP, or Generic.
-
-### How to solve?
-Set the spec.provider field of the OCIRepository to one of the allowed values: AWS, Azure, GCP, or Generic.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['OCIRepository']}
-
-### Tags
-['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
@@ -4768,34 +4600,6 @@ medium
 
 ---
 
-## GitRepository Ref Types
-
-### ID
-weave.policies.gitrepository-ref-types
-
-### Description
-GitRepository resources must use only one of (Semver|Refname|Commit) in spec.ref.
-
-### How to solve?
-Ensure the GitRepository spec.ref uses only one of (Semver|Refname|Commit).
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['GitRepository']}
-
-### Tags
-['flux']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': []}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
 ## Postgres Enforce Environment Variable - POSTGRES_PASSWORD
 
 ### ID
@@ -5024,34 +4828,6 @@ high
 
 ### Tags
 ['pci-dss', 'mitre-attack', 'hipaa', 'gdpr']
-
-### Parameters
-[{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
-
----
-
-## Resource Name Must Match Regex
-
-### ID
-weave.policies.resource-name-regex
-
-### Description
-The name of a Resource must match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### How to solve?
-Change the resource name to match the regex pattern of '[A-z]{12}-[A-z]{12}'.
-
-### Category
-weave.categories.best-practices
-
-### Severity
-medium
-
-### Targets
-{'kinds': ['HelmRelease', 'GitRepository', 'OCIRepository', 'Bucket', 'HelmChart', 'HelmRepository', 'Kustomization']}
-
-### Tags
-['flux']
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
