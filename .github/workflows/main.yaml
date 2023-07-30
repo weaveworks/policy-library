@@ -68,6 +68,11 @@ jobs:
     - name: Export Datastudio CSV
       run: |
         export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git fetch
+        git checkout ${{ github.event.pull_request.head.ref }}
+        git pull
 
         docker run --rm -v ${REPO_PATH}/policies:/policies weaveworks/polctl:v0.0.2 \
                python3 /scripts/generate_datastudio_csv.py -d /policies -p /policies
@@ -75,11 +80,7 @@ jobs:
         if [[ `git status --porcelain` ]]
         then
           echo "Pushing auto-generated datastudio csv"
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
+
           git add ${REPO_PATH}/policies/datastudio.csv
           git commit -m "add auto-generated datastudio csv"
           git push origin ${{ github.event.pull_request.head.ref }}
@@ -96,6 +97,12 @@ jobs:
       run: |
         # Loop on policies CRDs and update the REGO code field
         export REPO_PATH=${RUNNER_WORKSPACE}/${GITHUB_REPOSITORY#*/}
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git fetch
+        git checkout ${{ github.event.pull_request.head.ref }}
+        git pull
+
         for dir in ${REPO_PATH}/policies/*/; do
           export POLICY_DIR=$dir
           yq -i '.spec.code |= strload(env(POLICY_DIR)+"/policy.rego")' $POLICY_DIR/policy.yaml
@@ -107,11 +114,6 @@ jobs:
         if [[ `git status --porcelain` ]]
         then
           echo "Updating Policies CRDs REGO code"
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull
           git add ${REPO_PATH}/policies
           git add ${REPO_PATH}/examples
           git commit -m "Update Policies CRDs REGO code"
