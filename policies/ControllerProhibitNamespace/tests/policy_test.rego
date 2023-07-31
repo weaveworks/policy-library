@@ -1,6 +1,42 @@
-package weave.advisor.pods.not_namespace
+package weave.advisor.pods.containers_not_namespace
 
-import data.weave.advisor.pods.not_namespace.violation
+import data.weave.advisor.pods.containers_not_namespace.violation
+
+test_valid_case {
+  testcase = {
+    "parameters": {
+      "custom_namespace": "flux-system",
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
+    "review": {
+      "object": {
+       "apiVersion": "v1",
+       "kind": "Pod",
+       "metadata": {
+         "name": "pod-execution-escalation",
+         "namespace": "default"
+       },
+       "spec": {
+         "containers": [
+           {
+             "name": "attack-container",
+             "image": "busybox:1.36",
+             "command": [
+               "sleep"
+             ],
+             "args": [
+               "infinity"
+             ]
+           }
+         ]
+       }
+      }
+    }
+  }
+
+  count(violation) == 0 with input as testcase
+}
 
 test_invalid_pod {
   testcase = {

@@ -1,6 +1,42 @@
-package weave.advisor.rbac.prohibit_wildcards
+package weave.advisor.rbac.prohibit_wildcards_policyrule_verbs
 
-import data.weave.advisor.rbac.prohibit_wildcards.violation
+import data.weave.advisor.rbac.prohibit_wildcards_policyrule_verbs.violation
+
+test_valid_cluster_role {
+  testcase = {
+    "parameters": {
+      "attributes": "verbs",
+      "exclude_role_name": "",
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
+    "review": {
+      "object": {
+        "kind": "ClusterRole",
+        "apiVersion": "rbac.authorization.k8s.io/v1",
+        "metadata": {
+          "name": "list-secrets"
+        },
+        "rules": [
+          {
+            "apiGroups": [
+              "*"
+            ],
+            "resources": [
+              "secrets"
+            ],
+            "verbs": [
+              "get"
+            ]
+          }
+        ]
+      }
+    }
+  }
+
+  count(violation) == 0 with input as testcase
+}
+
 
 test_invalid_cluster_role {
   testcase = {
