@@ -9,7 +9,7 @@ spec:
   how_to_solve: "Replace the `*` with the appropriate resource. The type of \n```\nrules:\n- <attributes>:\n  - '*'\n    \n```\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
   severity: high
-  targets: { kinds: [ Role, ClusterRole ] }
+  targets: {kinds: [Role, ClusterRole]}
   parameters:
     - name: attributes
       type: string
