@@ -9,6 +9,7 @@ spec:
   how_to_solve: "When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. \n```\nrules:\n- resources: <resources>\n  verbs: <verb>\n```\n\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
   category: weave.categories.access-control
   severity: high
+  targets: {kinds: [Role, ClusterRole]}
   parameters:
     - name: resource
       type: string
