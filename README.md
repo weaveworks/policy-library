@@ -49,6 +49,9 @@ controls:
 ```
 
 ## Testing Policies using OPA Testing Framework
+
+Download it [here](https://www.openpolicyagent.org/docs/latest/#running-opa) 
+
 ```bash
 # test all policies and examples
 opa test examples/ policies/ -v --ignore '*.yml','*.yaml','.md','.csv'
