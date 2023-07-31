@@ -31,7 +31,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.kustomization_decryption_providers
+    package weave.advisor.kustomization_decryption_provider
 
     import future.keywords.in
 
@@ -70,4 +70,3 @@ spec:
       controller_input.metadata.namespace
       controller_input.metadata.namespace in exclude_namespaces
     } else = false
-

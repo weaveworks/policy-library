@@ -80,5 +80,3 @@ spec:
         controller_meta.namespace
         controller_meta.namespace in exclude_namespaces
     } else = false
-
-

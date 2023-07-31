@@ -17,7 +17,7 @@ spec:
     - name: untrusted_domains
       type: array
       required: true
-      value: 
+      value:
     - name: exclude_namespaces
       type: array
       required: false
@@ -83,6 +83,3 @@ spec:
         controller_input.metadata.namespace
         controller_input.metadata.namespace in exclude_namespaces
     } else = false
-
-
-
