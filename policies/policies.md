@@ -65,6 +65,40 @@ low
 
 ---
 
+## Rbac Prohibit Watch On Secrets
+
+### ID
+weave.policies.rbac-prohibit-watch-secrets
+
+### Description
+This Policy will violate if any RBAC ClusterRoles or Roles are designated with 'watch' verb on 'secrets' resource.
+
+
+### How to solve?
+When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. 
+```
+rules:
+- resources: <resources>
+  verbs: <verb>
+```
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Role', 'ClusterRole']}
+
+### Parameters
+[{'name': 'resource', 'type': 'string', 'required': True, 'value': 'secrets'}, {'name': 'verb', 'type': 'string', 'required': True, 'value': 'watch'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
+
+---
+
 ## RabbitMQ Enforce Environment Variable - RABBITMQ_DEFAULT_PASS
 
 ### ID
@@ -949,6 +983,40 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Rbac Prohibit Wildcard On Secrets
+
+### ID
+weave.policies.rbac-prohibit-wildcard-secrets
+
+### Description
+This Policy will violate if any RBAC ClusterRoles or Roles are designated with 'wildcard' verb on 'secrets' resource.
+
+
+### How to solve?
+When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. 
+```
+rules:
+- resources: <resources>
+  verbs: <verb>
+```
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Role', 'ClusterRole']}
+
+### Parameters
+[{'name': 'resource', 'type': 'string', 'required': True, 'value': 'secrets'}, {'name': 'verb', 'type': 'string', 'required': True, 'value': '*'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
 
 ---
 
@@ -2170,6 +2238,40 @@ high
 
 ---
 
+## Rbac Prohibit List On Secrets
+
+### ID
+weave.policies.rbac-prohibit-list-secrets
+
+### Description
+This Policy will violate if any RBAC ClusterRoles or Roles are designated with 'list' verb on 'secrets' resource.
+
+
+### How to solve?
+When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. 
+```
+rules:
+- resources: <resources>
+  verbs: <verb>
+```
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Role', 'ClusterRole']}
+
+### Parameters
+[{'name': 'resource', 'type': 'string', 'required': True, 'value': 'secrets'}, {'name': 'verb', 'type': 'string', 'required': True, 'value': 'list'}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': ''}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': ''}]
+
+---
+
 ## HelmChart Values File Format
 
 ### ID
@@ -2498,7 +2600,7 @@ weave.categories.organizational-standards
 low
 
 ### Targets
-{'kinds': ['Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
+{'kinds': ['Pod', 'Deployment', 'Job', 'ReplicationController', 'ReplicaSet', 'DaemonSet', 'StatefulSet', 'CronJob']}
 
 ### Tags
 ['cis-benchmark', 'soc2-type1']
@@ -2837,6 +2939,52 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Rbac Prohibit Wildcards on Policy Rule Verbs
+
+### ID
+weave.templates.rbac-prohibit-wildcards-policyrule-verbs
+
+### Description
+This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
+
+### Resources
+In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
+
+### Verbs
+API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
+
+### API Groups
+The API Group being accessed (for resource requests only).
+
+### Non Resource URLs
+Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
+
+
+### How to solve?
+Replace the `*` with the appropriate resource. The type of 
+```
+rules:
+- <attributes>:
+  - '*'
+    
+```
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Role', 'ClusterRole']}
+
+### Parameters
+[{'name': 'attributes', 'type': 'string', 'required': True, 'value': 'verbs'}, {'name': 'exclude_role_name', 'type': 'string', 'required': True, 'value': ''}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 
@@ -3324,6 +3472,52 @@ high
 
 ### Parameters
 [{'name': 'exclude_namespaces', 'type': 'array', 'required': False, 'value': None}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
+
+---
+
+## Rbac Prohibit Wildcards on Policy Rule Resources
+
+### ID
+weave.templates.rbac-prohibit-wildcards-policyrule-resources
+
+### Description
+This Policy prohibits various resources from being set with wildcards for Role or ClusterRole resources, except for the `cluster-admin` ClusterRole. It will check each resource specified for the verb specified. The wildcards will be checked in:
+
+### Resources
+In the Kubernetes API, most resources are represented and accessed using a string representation of their object name, such as pods for a Pod. RBAC refers to resources using exactly the same name that appears in the URL for the relevant API endpoint. 
+
+### Verbs
+API verbs like get, list, create, update, patch, watch, delete, and deletecollection are used for resource requests. 
+
+### API Groups
+The API Group being accessed (for resource requests only).
+
+### Non Resource URLs
+Requests to endpoints other than /api/v1/... or /apis/<group>/<version>/... are considered "non-resource requests", and use the lower-cased HTTP method of the request as the verb.
+
+
+### How to solve?
+Replace the `*` with the appropriate resource. The type of 
+```
+rules:
+- <attributes>:
+  - '*'
+    
+```
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+
+### Category
+weave.categories.access-control
+
+### Severity
+high
+
+### Targets
+{'kinds': ['Role', 'ClusterRole']}
+
+### Parameters
+[{'name': 'attributes', 'type': 'string', 'required': True, 'value': 'resources'}, {'name': 'exclude_role_name', 'type': 'string', 'required': True, 'value': ''}, {'name': 'exclude_label_key', 'type': 'string', 'required': False, 'value': None}, {'name': 'exclude_label_value', 'type': 'string', 'required': False, 'value': None}]
 
 ---
 

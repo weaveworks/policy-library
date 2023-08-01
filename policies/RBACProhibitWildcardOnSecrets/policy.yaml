@@ -1,0 +1,30 @@
+apiVersion: pac.weave.works/v2beta2
+kind: Policy
+metadata:
+  name: weave.policies.rbac-prohibit-wildcard-secrets
+spec:
+  id: weave.policies.rbac-prohibit-wildcard-secrets
+  name: Rbac Prohibit Wildcard On Secrets
+  description: "This Policy will violate if any RBAC ClusterRoles or Roles are designated with 'wildcard' verb on 'secrets' resource.\n"
+  how_to_solve: "When deploying RBAC roles, ensure the resource and verb combination you choose are allowed by the Policy. \n```\nrules:\n- resources: <resources>\n  verbs: <verb>\n```\n\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/\n"
+  category: weave.categories.access-control
+  severity: high
+  targets: {kinds: [Role, ClusterRole]}
+  parameters:
+    - name: resource
+      type: string
+      required: true
+      value: "secrets"
+    - name: verb
+      type: string
+      required: true
+      value: "*"
+    - name: exclude_label_key
+      type: string
+      required: false
+      value: ""
+    - name: exclude_label_value
+      type: string
+      required: false
+      value: ""
+  code: "package weave.advisor.rbac.prohibit_wildcard_secrets\n\nresource := input.parameters.resource\nverb := input.parameters.verb\nexclude_label_key := input.parameters.exclude_label_key\nexclude_label_value := input.parameters.exclude_label_value\n\nviolation[result] {\n  not exclude_label_value == cr_input.metadata.labels[exclude_label_key]\n  some i\n  rules := cr_input.rules[i]\n  set_resources := rules.resources\n  array_contains(set_resources, resource)\n  set_verbs := rules.verbs\n  array_contains(set_verbs, verb)\n  result = {\n  \t\"issue_detected\": true,\n    \"msg\": sprintf(\"Resource '%v' must not contain the verb '%v'; found resource '%v' with verbs '%v'\",[resource, verb, set_resources, set_verbs]),\n    \"violating_key\": sprintf(\"rules[%v].verbs\", [i])\n  }\n}\n\narray_contains(array, element) {\n  array[_] = element\n}\n\ncr_input = input.review.object {\n\tcontains(input.review.object.kind, \"Role\")\n} \n"

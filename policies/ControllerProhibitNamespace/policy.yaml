@@ -10,7 +10,7 @@ spec:
   how_to_solve: "Use a `namespace` that differs from the one specified in the Policy. \n```\nmetadata:\n  namespace: <custom_namespace>\n```\n\nhttps://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/\n"
   category: weave.categories.organizational-standards
   severity: low
-  targets: {kinds: [Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
+  targets: {kinds: [Pod, Deployment, Job, ReplicationController, ReplicaSet, DaemonSet, StatefulSet, CronJob]}
   standards:
     - id: weave.standards.cis-benchmark
       controls:
@@ -33,7 +33,7 @@ spec:
       required: false
       value:
   code: |
-    package weave.advisor.pods.not_namespace
+    package weave.advisor.pods.containers_not_namespace
 
     custom_namespace := input.parameters.custom_namespace
     exclude_label_key := input.parameters.exclude_label_key
