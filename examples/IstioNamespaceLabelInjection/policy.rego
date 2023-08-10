@@ -7,7 +7,7 @@ violation[result] {
   array_contains(namespaces, namespace_name)
   not namespace_input.metadata.labels["istio-injection"]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The namespace '%v' is missing the label 'istio-injection'", [namespaces[_]]),
     "violating_key": "metadata.name"
   }
@@ -19,7 +19,7 @@ violation[result] {
   label := namespace_input.metadata.labels["istio-injection"]
   not label == "enabled"
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("The 'istio-injection' lable should be 'enabled'; found '%v'", [label]),
     "violating_key": "metadata.name.labels"
   }

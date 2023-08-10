@@ -15,7 +15,7 @@ violation[result] {
   value := annotation
   not annotation_value == value
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Annotation '%v' expected value '%v'; found '%v'",[annotation_key, annotation_value, value ]),
     "violating_key": sprintf("spec.template.metadata.annotation[%v]", [annotation_key]),
     "recommended_value": annotation_value

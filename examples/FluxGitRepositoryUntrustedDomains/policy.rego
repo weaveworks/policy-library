@@ -14,7 +14,7 @@ violation[result] {
     is_untrusted := domain_matches(repo_url, untrusted_domains)
     is_untrusted
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The GitRepository '%s' targets an untrusted domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
         "violating_key": "spec.url"
     }

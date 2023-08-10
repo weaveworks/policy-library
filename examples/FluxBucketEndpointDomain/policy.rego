@@ -12,7 +12,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     not is_trusted_domain
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The Bucket '%s' has an endpoint domain that is not in the trusted domains list: %v; found '%s'", [controller_input.metadata.name, domains, controller_spec.endpoint]),
         "violating_key": "spec.endpoint"
     }

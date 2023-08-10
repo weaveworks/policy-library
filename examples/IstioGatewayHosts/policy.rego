@@ -14,7 +14,7 @@ violation[result] {
   hosts := servers.hosts[_]
   not array_contains(hostnames, hosts)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("You have specified hosts: '%v'; detected '%v'", [hostnames, hosts]),
     "violating_key": "spec.servers.hosts"
   }

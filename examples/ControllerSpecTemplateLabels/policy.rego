@@ -13,7 +13,7 @@ violation[result] {
   contains_kind(controller_input.kind, {"StatefulSet" , "DaemonSet", "Deployment", "Job"})
   not controller_input.spec.template.metadata.labels[label]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("you are missing a template spec label with the key '%v'", [label]),
     "violating_key": "spec.template.metadata.labels"  
   }

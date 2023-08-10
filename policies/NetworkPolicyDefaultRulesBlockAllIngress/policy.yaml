@@ -67,7 +67,7 @@ spec:
       policyTypes := np_spec.policyTypes
       not array_contains(policyTypes, policy_type)
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("policyTypes should contain '%v'; found %v", [policy_type, np_spec.policyTypes]),
         "violating_key": "spec.policyTypes"
       }

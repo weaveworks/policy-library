@@ -15,7 +15,7 @@ violation[result] {
   key == "key"
   not array_contains(keys, value)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Expecting key '%v'; detected '%v'", [keys, value]),
     "violating_key": "spec.template.spec.affinity.nodeAffinity"
   }

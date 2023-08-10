@@ -14,7 +14,7 @@ violation[result] {
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
 	not replicas >= min_replica_count
 	result = {
-		"issue detected": true,
+		"issue_detected": true,
 		"msg": sprintf("Replica count must be greater than or equal to '%v'; found '%v'.", [min_replica_count, replicas]),
 		"violating_key": violating_key,
 		"recommended_value": min_replica_count,

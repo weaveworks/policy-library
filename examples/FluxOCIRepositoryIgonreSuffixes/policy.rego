@@ -11,30 +11,38 @@ violation[result] {
     isExcludedNamespace == false
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     ignore := split(controller_spec.ignore, "\n")
-    not all_suffixes_present(ignore, suffixes)
+    not all_lines_have_allowed_suffixes(ignore, suffixes)
     result = {
-        "issue detected": true,
-        "msg": sprintf("The OCIRepository '%s' must include the required suffixes in the ignore field. Required suffixes: %v", [controller_input.metadata.name, suffixes]),
+        "issue_detected": true,
+        "msg": sprintf("The OCIRepository '%s' must only include allowed suffixes in the ignore field. Allowed suffixes: %v", [controller_input.metadata.name, suffixes]),
         "violating_key": "spec.ignore"
     }
 }
 
-all_suffixes_present(ignore, suffixes) {
-    all_suffixes_count(ignore, suffixes) == count(suffixes)
+all_lines_have_allowed_suffixes(ignore, suffixes) {
+    not any_line_with_unallowed_suffix(ignore, suffixes)
 }
 
-all_suffixes_count(ignore, suffixes) = total {
-    total := count({suffix | suffix := suffixes[_]; line := ignore[_]; endswith(line, suffix)})
+any_line_with_unallowed_suffix(ignore, suffixes) {
+    line := ignore[_]
+    is_extension_pattern(line)
+    not line_has_allowed_suffix(line, suffixes)
+}
+
+line_has_allowed_suffix(line, suffixes) {
+    suffix := suffixes[_]
+    endswith(line, suffix)
+}
+
+is_extension_pattern(line) {
+    # Check if the line has a file extension pattern (e.g., "*.md" or "/**/*.txt")
+    re_match(`.*\*\.[a-zA-Z0-9]+`, line)
 }
 
 controller_input = input.review.object
 
 controller_spec = controller_input.spec {
     controller_input.kind == "OCIRepository"
-}
-
-contains_kind(kind, kinds) {
-    kinds[_] = kind
 }
 
 isExcludedNamespace = true {

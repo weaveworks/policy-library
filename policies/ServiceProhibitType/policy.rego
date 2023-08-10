@@ -13,7 +13,7 @@ violation[result] {
   service_type := service_spec.type
   service_type == type
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Users not allowed to create a service type '%v'", [type]),
     "violating_key": "spec.type"
   }

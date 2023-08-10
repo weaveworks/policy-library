@@ -12,7 +12,7 @@ violation[result] {
   verbs := rules.verbs[j]
   contains(verbs, verb)
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Found unapproved verb '%v'", [verb]),
     "violating_key": sprintf("rules[%v].verbs[%v]",[i,j])
   }

@@ -12,7 +12,7 @@ violation[result] {
     var_sub_enabled := controller_spec.postBuild.substitute.var_substitution_enabled
     var_sub_enabled
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The Kustomization '%s' spec.postBuild.substitute.var_substitution_enabled must be disabled", [controller_input.metadata.name]),
         "violating_key": "spec.postBuild.substitute.var_substitution_enabled",
         "recommended_value": false

@@ -13,7 +13,7 @@ violation[result] {
     repo_url := controller_spec.url
     not domain_matches(repo_url, domains)
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The GitRepository '%s' must be from an allowed organization domain. Found: '%s'", [controller_input.metadata.name, repo_url]),
         "violating_key": "spec.url"
     }

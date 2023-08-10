@@ -12,7 +12,7 @@ violation[result] {
   not exclude_label_value == service_input.metadata.labels[exclude_label_key]
   not service_input.metadata.annotations[annotation]
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Annotation must contain '%v'; found '%v'", [annotation, service_input.metadata.annotations]),
     "violating_key": "metadata.annotations"
   }

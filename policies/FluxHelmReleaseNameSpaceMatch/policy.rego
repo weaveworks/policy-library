@@ -14,7 +14,7 @@ violation[result] {
     storage_namespace != target_namespace
     not exclude_label_value == controller_input.metadata.labels[exclude_label_key]
     result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("The HelmRelease '%s' storageNamespace and targetNamespace must match; found storageNamespace '%s' and targetNamespace '%s'", [controller_input.metadata.name, storage_namespace, target_namespace]),
         "violating_key": "spec.targetNamespace"
     }

@@ -7,7 +7,7 @@ violation[result] {
 	lower_specified_kind := lower(specified_kind)
   lower_kind == lower_specified_kind
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "msg": sprintf("Naked Pods are prohibited",[]),
     "violating_key": "kind"
   }

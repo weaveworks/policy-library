@@ -41,7 +41,7 @@ violation[result] {
   verify < 0
   
   result = {
-    "issue detected": true,
+    "issue_detected": true,
     "osImage": osImage,
     "kernel_version": kernel_version,
     "latest_kernel": latest_kernel,

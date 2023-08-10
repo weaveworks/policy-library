@@ -16,7 +16,7 @@ violation[result] {
   set_verbs := rules.verbs
   array_contains(set_verbs, verb)
   result = {
-  	"issue detected": true,
+  	"issue_detected": true,
     "msg": sprintf("ResourceName '%v' must not contain the verb '%v'; found resource '%v' with verbs '%v'",[resource_name, verb, set_resource_names, set_verbs]),
     "violating_key": sprintf("rules[%v].verbs", [i])
   }

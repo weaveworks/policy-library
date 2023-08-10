@@ -105,3 +105,28 @@ test_excluded_label {
 
   count(violation) == 0 with input as testcase
 }
+
+test_valid_oci_helm_repo_url {
+  testcase = {
+    "parameters": {
+      "domains": ["example-registry.com"],
+      "exclude_namespaces": [],
+      "exclude_label_key": "",
+      "exclude_label_value": "",
+    },
+    "review": {
+      "object": {
+        "apiVersion": "v1",
+        "kind": "HelmRepository",
+        "metadata": {
+          "name": "valid-oci-helm-repo",
+        },
+        "spec": {
+          "url": "oci://example-registry.com/my-repo/charts",
+        }
+      }
+    }
+  }
+
+  count(violation) == 0 with input as testcase
+}

@@ -60,7 +60,7 @@ spec:
       max_size_value := units.parse_bytes(max_size)
       cpu_requests_value > max_size_value
       result = {
-        "issue detected": true,
+        "issue_detected": true,
         "msg": sprintf("CPU requests must be a maximum of '%v'; found '%v'", [max_size, cpu_requests]),
         "violating_key": sprintf("spec.template.spec.containers[%v].resources.requests.cpu", [i]),
         "recommended_value": max_size
